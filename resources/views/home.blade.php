@@ -6,7 +6,8 @@
 
 <div class="main-panel">
     <div class="content">
-        ini home / nothin's here yet
+        ini home / nothin's here yet for now
+        test home
     </div>
 
 </div>
