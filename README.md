@@ -1,3 +1,23 @@
+After cloning, run the "composer update" command and put in the .env file filled with the correct db and credentials
+
+to connect to postgresql, go to the php.ini file in the xampp folder, find "pgsql" extensions, should be 2 of them, and delete the ";" whatever that is.
+
+to add a new feature, please make a new feature branch and commit there first, then ask for a pull request to be merged to the master branch
+
+thanks
+
+
+
+
+
+
+
+
+
+
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
