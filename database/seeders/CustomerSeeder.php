@@ -14,7 +14,7 @@ class CustomerSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('customer')->insert([
+        DB::table('customers')->insert([
             'customer_id' => 'CU001',
             'customer_name' => 'inem',
             'address' => 'jatiwarna',
@@ -27,7 +27,7 @@ class CustomerSeeder extends Seeder
             'pic_phone' => '081111111112',
             'npwp_perusahaan' => '08.178.554.2-123.321',
         ]);
-        DB::table('customer')->insert([
+        DB::table('customers')->insert([
             'customer_id' => 'CU002',
             'customer_name' => 'mari',
             'address' => 'gamprit',
@@ -40,7 +40,7 @@ class CustomerSeeder extends Seeder
             'pic_phone' => '081111111113',
             'npwp_perusahaan' => '10.178.554.2-123.321',
         ]);
-        DB::table('customer')->insert([
+        DB::table('customers')->insert([
             'customer_id' => 'CU003',
             'customer_name' => 'joel',
             'address' => 'morio',

@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="add-row" class="display table table-striped table-hover" >
+                            <table id="add-row" class="display table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
@@ -40,22 +40,27 @@
 
                                     @foreach ($user as $data)
                                         <tr>
-                                            <td>{{$data->name}}</td>
-                                            <td>{{$data->email}}</td>
-                                            <td>{{$data->level}}</td>
+                                            <td>{{ $data->name }}</td>
+                                            <td>{{ $data->email }}</td>
+                                            <td>{{ $data->level }}</td>
                                             <td>
                                                 <div class="form-button-action">
-                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit User">
+                                                    <button type="button" data-toggle="tooltip" title=""
+                                                        class="btn btn-link btn-primary btn-lg"
+                                                        data-original-title="Edit User">
                                                         <i class="fa fa-edit"></i>
                                                     </button>
                                                     @if (auth()->user()->id == $data->id)
                                                         <a href="#">
-                                                            <i class="fas fa-user mt-3 text-danger" data-toggle="tooltip" data-original-title="Cannot delete yourself">
+                                                            <i class="fas fa-user mt-3 text-danger"
+                                                                data-toggle="tooltip"
+                                                                data-original-title="Cannot delete yourself">
                                                             </i>
                                                         </a>
                                                     @else
-                                                        <a href="/deleteUser/{{$data->id}}">
-                                                            <i class="fa fa-times mt-3 text-danger" data-toggle="tooltip" data-original-title="Delete User">
+                                                        <a href="/deleteUser/{{ $data->id }}">
+                                                            <i class="fa fa-times mt-3 text-danger"
+                                                                data-toggle="tooltip" data-original-title="Delete User">
                                                             </i>
                                                         </a>
                                                     @endif
@@ -63,7 +68,6 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
                                 </tbody>
                             </table>
                         </div>

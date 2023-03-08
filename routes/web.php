@@ -38,6 +38,6 @@ Route::get('/deleteUser/{id}', [UserController::class, 'destroy']);
 // buat tombol navbar samping
 
 //customer
-Route::get('/manageCustomer', [CustomerController::class,'manage_customer_page'])->middleware('login');
-Route::get('/newCustomer', [CustomerController::class,'new_customer_page'])->middleware('login');
-
+Route::get('/manageCustomer', [CustomerController::class, 'manage_customer_page'])->middleware('login');
+Route::get('/newCustomer', [CustomerController::class, 'new_customer_page'])->middleware('login');
+Route::post('/makeCustomer', [CustomerController::class, 'makeCustomer'])->middleware('login');

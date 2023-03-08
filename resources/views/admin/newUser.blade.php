@@ -22,25 +22,31 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Username</label>
-                                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"  name="username" required>
+                                    <input type="text" class="form-control" placeholder="Username"
+                                        aria-label="Username" aria-describedby="basic-addon1" name="username" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email2">Email Address</label>
-                                    <input type="email" class="form-control" id="email2" placeholder="Enter Email"  name="email" required>
-                                    <small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                    <label for="email1">Email Address</label>
+                                    <input type="email" class="form-control" id="email1" placeholder="Enter Email"
+                                        name="email" required>
+                                    <small id="emailHelp2" class="form-text text-muted">We'll never share your email
+                                        with anyone else.</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input type="password" class="form-control" id="password" placeholder="Password"  name="password" required>
+                                    <input type="password" class="form-control" id="password" placeholder="Password"
+                                        name="password" required>
                                 </div>
                                 <div class="form-check">
-                                    <label>Role</label><br/>
+                                    <label>Role</label><br />
                                     <label class="form-radio-label">
-                                        <input class="form-radio-input" type="radio" name="optionsRadios" value="admin"  checked="">
+                                        <input class="form-radio-input" type="radio" name="optionsRadios"
+                                            value="admin" checked="">
                                         <span class="form-radio-sign">Admin</span>
                                     </label>
                                     <label class="form-radio-label ml-3">
-                                        <input class="form-radio-input" type="radio" name="optionsRadios" value="gudang">
+                                        <input class="form-radio-input" type="radio" name="optionsRadios"
+                                            value="gudang">
                                         <span class="form-radio-sign">Gudang</span>
                                     </label>
                                 </div>
