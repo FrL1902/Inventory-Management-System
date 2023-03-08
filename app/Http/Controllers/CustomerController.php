@@ -51,6 +51,7 @@ class CustomerController extends Controller
         $customer->save();
 
 
-        return view('newCustomer');
+        // return view('newCustomer');
+        return redirect()->back();
     }
 }

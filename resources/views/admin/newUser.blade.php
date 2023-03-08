@@ -23,19 +23,17 @@
                                 <div class="form-group">
                                     <label>Username</label>
                                     <input type="text" class="form-control" placeholder="Username"
-                                        aria-label="Username" aria-describedby="basic-addon1" name="username" required>
+                                        aria-label="Usernameform" aria-describedby="basic-addon1" name="username" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="email1">Email Address</label>
                                     <input type="email" class="form-control" id="email1" placeholder="Enter Email"
-                                        name="email" required>
-                                    <small id="emailHelp2" class="form-text text-muted">We'll never share your email
-                                        with anyone else.</small>
+                                        name="emailform" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
                                     <input type="password" class="form-control" id="password" placeholder="Password"
-                                        name="password" required>
+                                        name="passwordform" required>
                                 </div>
                                 <div class="form-check">
                                     <label>Role</label><br />
@@ -53,6 +51,9 @@
                                 <div class="card mt-4">
                                     <button class="btn btn-success">Make New Account</button>
                                 </div>
+                                @if ($errors->any())
+                                    <span class="text-danger">{{ $errors->first() }}</span>
+                                @endif
                             </div>
                         </form>
                     </div>

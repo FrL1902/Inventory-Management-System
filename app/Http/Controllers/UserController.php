@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -28,6 +29,30 @@ class UserController extends Controller
         //     'password' => 'required|alpha_num|confirmed|min:6',
         // ]);
 
+        // $request->validate([
+        //     'Username' => 'min:10|unique:users',
+        //     'email' => 'unique:users',
+        //     'password' => 'min:6',
+        // ]);
+
+        $request->validate([
+            'name' => 'unique:users|min:6',
+            'emailform' => 'unique:users',
+            'passwordform' => 'min:6',
+        ]);
+
+        // $rules = [
+        //     'Usernameform' => 'unique:users|min:6',
+        //     'emailform' => 'unique:users',
+        //     'passwordform' => 'min:6',
+        // ];
+
+        // $validator = Validator::make($request->all(), $rules);
+
+        // if ($validator->fails()) {
+        //     return back()->withErrors($validator);
+        // }
+
 
         // dd('tes');
         // User::create([
@@ -40,18 +65,14 @@ class UserController extends Controller
         $account = new User();
         $account->name = $request->username;
         $account->email = $request->email;
-        // $account->level = 'admin';
         $account->level = $request->optionsRadios;
         $account->password = Hash::make($request->password);
 
         $account->save();
 
-        // // return view('admin.manageUser');
 
-        // $page = $this->manage_user_page();
-        // return $page;
-        // return view('admin.newUser');
         return redirect()->back();
+        // return $request->input();
     }
 
     public function destroy($id)
