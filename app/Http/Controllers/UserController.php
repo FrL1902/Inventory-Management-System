@@ -20,7 +20,8 @@ class UserController extends Controller
         return view('admin.manageUser', compact('user'));
     }
 
-    public function makeUser(Request $request){
+    public function makeUser(Request $request)
+    {
         // $request->validate([
         //     'username' => 'required|unique:users|min:5',
         //     'email' => 'required|email|unique:users',
@@ -28,7 +29,7 @@ class UserController extends Controller
         // ]);
 
 
-            // dd('tes');
+        // dd('tes');
         // User::create([
         //     'level' => $request->optionsRadios,
         //     'email' => $request->email,
@@ -49,10 +50,12 @@ class UserController extends Controller
 
         // $page = $this->manage_user_page();
         // return $page;
-        return view('admin.newUser');
+        // return view('admin.newUser');
+        return redirect()->back();
     }
 
-    public function destroy ($id){
+    public function destroy($id)
+    {
         $user = User::find($id);
         $user->delete();
 
