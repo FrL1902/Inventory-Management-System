@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -35,11 +36,11 @@ class UserController extends Controller
         //     'password' => 'min:6',
         // ]);
 
-        $request->validate([
-            'name' => 'unique:users|min:6',
-            'emailform' => 'unique:users',
-            'passwordform' => 'min:6',
-        ]);
+        // $request->validate([
+        //     'name' => 'unique:users|min:6',
+        //     'emailform' => 'unique:users',
+        //     'passwordform' => 'min:6',
+        // ]);
 
         // $rules = [
         //     'Usernameform' => 'unique:users|min:6',
@@ -63,15 +64,18 @@ class UserController extends Controller
         // ]);
 
         $account = new User();
-        $account->name = $request->username;
-        $account->email = $request->email;
+        $account->name = $request->usernameform;
+        $account->email = $request->emailform;
         $account->level = $request->optionsRadios;
-        $account->password = Hash::make($request->password);
+        $account->password = Hash::make($request->passwordform);
 
         $account->save();
 
+        // return redirect()->back()->with('berhasil 1', 'berhasil 2');
 
+        // return redirect()->with('berhasil 1', 'berhasil 2')->back();
         return redirect()->back();
+
         // return $request->input();
     }
 

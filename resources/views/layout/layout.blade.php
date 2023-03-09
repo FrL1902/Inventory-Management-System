@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Inventory System</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="../../assets/img/icon.ico" type="image/x-icon" />
+    <link rel="icon" href="/assets/img/icon.ico" type="image/x-icon" />
 
     <!-- Fonts and icons -->
-    <script src="../../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
         WebFont.load({
             google: {
@@ -16,7 +16,7 @@
             },
             custom: {
                 "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"],
-                urls: ['../../assets/css/fonts.css']
+                urls: ['/assets/css/fonts.css']
             },
             active: function() {
                 sessionStorage.fonts = true;
@@ -38,8 +38,8 @@
             <!-- Logo Header -->
             <div class="logo-header">
 
-                <a href="../index.html" class="logo">
-                    <img src="../../assets/img/logoazzara.svg" alt="navbar brand" class="navbar-brand">
+                <a href="#" class="logo">
+                    <img src="/assets/img/logoazzara.svg" alt="navbar brand" class="navbar-brand">
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
                     data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,7 @@
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
                                 aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img src="../../assets/img/profile.jpg" alt="..."
+                                    <img src="/assets/img/profile.jpg" alt="..."
                                         class="avatar-img rounded-circle">
                                 </div>
                             </a>
@@ -200,6 +200,7 @@
             </div>
         </div>
         @yield('content')
+        @include('sweetalert::alert')
     </div>
     <!--   Core JS Files   -->
     <script src="/assets/js/core/jquery.3.2.1.min.js"></script>

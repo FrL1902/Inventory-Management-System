@@ -22,8 +22,8 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Username</label>
-                                    <input type="text" class="form-control" placeholder="Username"
-                                        aria-label="Usernameform" aria-describedby="basic-addon1" name="username" required>
+                                    <input type="text" class="form-control" placeholder="Username" aria-label=""
+                                        aria-describedby="basic-addon1" name="usernameform" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="email1">Email Address</label>
@@ -59,7 +59,9 @@
                     </div>
                 </div>
             </div>
+            @include('sweetalert::alert')
         </div>
     </div>
 </div>
+
 @endsection
