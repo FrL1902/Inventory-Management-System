@@ -22,5 +22,4 @@ class Customer extends Model
         'pic_phone',
         'npwp_perusahaan',
     ];
-
 }
