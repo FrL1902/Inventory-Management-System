@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -74,6 +75,9 @@ class UserController extends Controller
         // return redirect()->back()->with('berhasil 1', 'berhasil 2');
 
         // return redirect()->with('berhasil 1', 'berhasil 2')->back();
+        // Session::flash('alert', $request->emailform . ' has been deleted successfully!');
+        // Session::flash('message', 'This is a message!');
+        // $request->session()->flash('status', 'Task was successful!');
         return redirect()->back();
 
         // return $request->input();

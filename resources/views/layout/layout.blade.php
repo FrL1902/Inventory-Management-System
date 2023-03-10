@@ -162,6 +162,27 @@
                                 </ul>
                             </div>
                         </li>
+                        <li class="nav-item @yield('managebrandbutton')">
+                            <a data-toggle="collapse" href="#brand">
+                                <i class="fas fa-user"></i>
+                                <p>Manage Brands</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse @yield('showmanagebrand')" id="brand">
+                                <ul class="nav nav-collapse">
+                                    <li class="@yield('newbrand')">
+                                        <a href="/newBrand">
+                                            <span class="sub-item">Add New Brand</span>
+                                        </a>
+                                    </li>
+                                    <li class="@yield('managebrand')">
+                                        <a href="/manageBrand">
+                                            <span class="sub-item">Edit Brands</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                         @auth
                             @if (Auth::user()->level == 'admin')
                                 <li class="nav-section">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
@@ -41,3 +42,7 @@ Route::get('/deleteUser/{id}', [UserController::class, 'destroy']);
 Route::get('/manageCustomer', [CustomerController::class, 'manage_customer_page'])->middleware('login');
 Route::get('/newCustomer', [CustomerController::class, 'new_customer_page'])->middleware('login');
 Route::post('/makeCustomer', [CustomerController::class, 'makeCustomer'])->middleware('login');
+
+//brand
+Route::get('/newBrand', [BrandController::class, 'new_brand_page'])->middleware('login');
+Route::get('/manageBrand', [BrandController::class, 'manage_brand_page'])->middleware('login');

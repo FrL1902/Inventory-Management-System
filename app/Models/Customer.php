@@ -23,4 +23,9 @@ class Customer extends Model
         'pic_phone',
         'npwp_perusahaan',
     ];
+
+    public function brand()
+    {
+        return $this->hasMany(Brand::class, 'customer_id', 'id');
+    }
 }
