@@ -49,17 +49,17 @@
                                     </label>
                                 </div>
                                 <div class="card mt-4">
-                                    <button class="btn btn-success">Make New Account</button>
+                                    <button id="" class="btn btn-success">Make New Account</button>
                                 </div>
                                 @if ($errors->any())
                                     <span class="text-danger">{{ $errors->first() }}</span>
                                 @endif
+                                @include('sweetalert::alert')
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            @include('sweetalert::alert')
         </div>
     </div>
 </div>

@@ -46,3 +46,4 @@ Route::post('/makeCustomer', [CustomerController::class, 'makeCustomer'])->middl
 //brand
 Route::get('/newBrand', [BrandController::class, 'new_brand_page'])->middleware('login');
 Route::get('/manageBrand', [BrandController::class, 'manage_brand_page'])->middleware('login');
+Route::post('/makeBrand', [BrandController::class, 'makeBrand'])->middleware('login');
