@@ -13,7 +13,6 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
-                            {{-- masih ga tau cara input id nya gmn  --}}
                             <form action="/makeBrand" method="post">
                                 @csrf
                                 <div class="card-header">
@@ -21,11 +20,13 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect1">The owner of the brand</label>
-                                        <select class="form-control" id="exampleFormControlSelect1"
-                                            name="exampleFormControlSelect1">
+                                        <label for="customeridforbrand">The owner of the brand</label>
+                                        <select class="form-control" id="customeridforbrand"
+                                            name="customeridforbrand">
                                             @foreach ($customer as $cust)
-                                                <option value="{{ $cust->customer_id }}">{{ $cust->customer_name }}</option>
+                                                {{-- <option value="{{ $cust->customer_id }}">{{ $cust->customer_name }}</option> --}}
+                                                <option value="{{ $cust->id }}">{{ $cust->customer_name }}</option>
+                                                {{-- ^ini diatas diganti ke id yang auto increment di tabel customer soalnya fk ga tau knp selalu constraintnya bigint, ga bisa string --}}
                                             @endforeach
 
                                         </select>
