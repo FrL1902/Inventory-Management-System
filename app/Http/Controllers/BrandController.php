@@ -18,8 +18,8 @@ class BrandController extends Controller
 
     public function manage_brand_page()
     {
-
-        return view('manageBrand');
+        $brand = Brand::all();
+        return view('manageBrand', compact('brand'));
     }
 
     public function makeBrand(Request $request)

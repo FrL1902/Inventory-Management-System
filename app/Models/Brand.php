@@ -11,7 +11,8 @@ class Brand extends Model
 
     protected $table = "brand";
 
-    public function user(){
-        return $this->belongsTo(User::class, 'customer_id', 'id');
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }
