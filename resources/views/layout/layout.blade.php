@@ -5,8 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Inventory System</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="/assets/img/icon.ico" type="image/x-icon" />
-
+    {{-- <link rel="icon" href="/assets/img/icon.ico" type="image/x-icon" /> --}}
+    {{-- bawah ini buat ganti icon di bar atas web --}}
+    <link rel="icon" href="/assets/img/warehouse logo.png" type="image/x-icon" />
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
@@ -34,12 +35,14 @@
         <!--
     Tip 1: You can change the background color of the main header using: data-background-color="blue | purple | light-blue | green | orange | red"
   -->
-        <div class="main-header" data-background-color="purple">
+
+        <div class="main-header" data-background-color="light-blue">
             <!-- Logo Header -->
             <div class="logo-header">
 
-                <a href="#" class="logo">
-                    <img src="/assets/img/logoazzara.svg" alt="navbar brand" class="navbar-brand">
+                <a href="#" class="logo text-center">
+                    {{-- <img src="/assets/img/logoazzara.svg" alt="navbar brand" class="navbar-brand"> --}}
+                    <h2 alt="navbar brand" class="navbar-brand font-weight-bold" style="color: white">Warehouse</h2>
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
                     data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,27 +86,27 @@
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
                                 aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img src="/assets/img/profile.jpg" alt="..."
+                                    <img src="/assets/img/552721 user logo.png" alt="..."
                                         class="avatar-img rounded-circle">
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
                                 <li>
                                     <div class="user-box">
-                                        <div class="avatar-lg"><img src="../../assets/img/profile.jpg"
+                                        <div class="avatar-lg"><img src="../../assets/img/552721 user logo.png"
                                                 alt="image profile" class="avatar-img rounded"></div>
                                         <div class="u-text">
                                             <h4>{{ auth()->user()->name }}</h4>
-                                            <p class="text-muted">{{ auth()->user()->email }}</p><a href="profile.html"
-                                                class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                                            <p class="text-muted">{{ auth()->user()->email }}</p>
+                                            {{-- <a href="profile.html"
+                                                class="btn btn-rounded btn-danger btn-sm">View Profile</a> --}}
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">My Profile</a>
-                                    <a class="dropdown-item" href="#">Account Setting</a>
-                                    <div class="dropdown-divider"></div>
+                                    {{-- <div class="dropdown-divider"></div> --}}
                                     <a class="dropdown-item" href="/logout">Logout</a>
                                 </li>
                             </ul>
@@ -121,7 +124,8 @@
                 <div class="sidebar-content">
                     <div class="user">
                         <div class="avatar-sm float-left mr-2">
-                            <img src="../../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                            <img src="../../assets/img/552721 user logo.png" alt="..."
+                                class="avatar-img rounded-circle">
                         </div>
                         <div class="info">
                             <a data-toggle="collapse" aria-expanded="true">
