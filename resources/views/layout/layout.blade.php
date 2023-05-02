@@ -95,7 +95,7 @@
                                     <div class="user-box">
                                         <div class="avatar-lg"><img src="../../assets/img/552721 user logo.png"
                                                 alt="image profile" class="avatar-img rounded"></div>
-                                        <div class="u-text">
+                                        <div class="u-text mt-2">
                                             <h4>{{ auth()->user()->name }}</h4>
                                             <p class="text-muted">{{ auth()->user()->email }}</p>
                                             {{-- <a href="profile.html"
