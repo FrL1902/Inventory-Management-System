@@ -7,12 +7,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function cek_login(Request $request){
+    public function cek_login(Request $request)
+    {
 
         $request->validate([
             'email' => 'required',
             'password' => 'required',
-        ],[
+        ], [
             'email.required' => 'Email harus diisi',
             'password.required' => 'password harus diisi'
         ]);
@@ -22,13 +23,15 @@ class AuthController extends Controller
             'password' => $request->password,
         ];
 
-        if(Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)) {
             // return 'sukses';
             return redirect(route('home'));
-        }
-
-        else{
-            return 'Gagal. Informasi yang dimasukkan salah';
+        } else {
+            // return 'Gagal. Informasi yang dimasukkan salah';
+            // return redirect()->back()->withErrors('Gagal. informasi yang dimasukkan salah');
+            // $failmsg = "informasi yang dimasukkan salah";
+            $request->session()->flash('status', 'informasi yang dimasukkan salah');
+            return redirect('/');
         }
     }
 
@@ -39,5 +42,4 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/');
     }
-
 }
