@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
+use Symfony\Component\Console\Input\Input;
 
 class UserController extends Controller
 {
@@ -21,6 +22,12 @@ class UserController extends Controller
         $user = User::all();
 
         return view('admin.manageUser', compact('user'));
+    }
+
+    public function update(Request $request)
+    {
+
+        dd($request->userIdHidden);
     }
 
     public function makeUser(Request $request)
@@ -78,6 +85,11 @@ class UserController extends Controller
         // Session::flash('alert', $request->emailform . ' has been deleted successfully!');
         // Session::flash('message', 'This is a message!');
         // $request->session()->flash('status', 'Task was successful!');
+
+        $userAdded = $request->usernameform . " [" . $request->optionsRadios . "] " . "berhasil di tambahkan";
+
+        $request->session()->flash('sukses_add', $userAdded);
+
         return redirect()->back();
 
         // return $request->input();

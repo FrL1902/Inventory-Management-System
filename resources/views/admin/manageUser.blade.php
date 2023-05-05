@@ -43,13 +43,72 @@
                                             <td>{{ $data->name }}</td>
                                             <td>{{ $data->email }}</td>
                                             <td>{{ $data->level }}</td>
+                                            @section('lemparID')
+                                                <input type="hidden" class="form-control" name="userIdHidden"
+                                                    value="{{ $data->name }}">
+                                            @endsection
                                             <td>
                                                 <div class="form-button-action">
-                                                    <button type="button" data-toggle="tooltip" title=""
-                                                        class="btn btn-link btn-primary btn-lg"
+
+                                                    {{-- <form method="post" action="/tex">
+                                                        @csrf
+                                                        <button type="button" data-toggle="tooltip" title=""
+                                                            class="btn btn-link btn-primary btn-lg"
+                                                            data-original-title="Edit User">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                    </form> --}}
+
+
+                                                    <button type="button" class="btn btn-link btn-primary btn-lg"
+                                                        data-toggle="modal" data-target="#userUpdateModal"
                                                         data-original-title="Edit User">
                                                         <i class="fa fa-edit"></i>
                                                     </button>
+
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="userUpdateModal" tabindex="-1"
+                                                        role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLongTitle">
+                                                                        Modal title</h5>
+
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <form method="post" action="/tex">
+                                                                    @csrf
+
+                                                                    @yield('lemparID')
+
+                                                                    <div class="modal-body">
+                                                                        <div class="form-group">
+                                                                            <label>Username </label>
+                                                                            <input type="text" class="form-control"
+                                                                                placeholder="Username" aria-label=""
+                                                                                aria-describedby="basic-addon1"
+                                                                                name="usernameform" required>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="modal-footer">
+                                                                        {{-- ini gak tau knp tapi yg btn secondarynya yg buat nutup harus ditambahin "type="button"", terus yg dibawahnya yg buat save ngga. aneh bat dah. kalo ga gini ntar error 401 ato apa gt --}}
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Close</button>
+                                                                        <button class="btn btn-primary">Save
+                                                                            changes</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                     @if (auth()->user()->id == $data->id)
                                                         <a href="#">
                                                             <i class="fas fa-user mt-3 text-danger"

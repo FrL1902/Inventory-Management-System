@@ -35,6 +35,7 @@ Route::get('/newUser', [UserController::class, 'new_user_page'])->middleware('se
 Route::get('/manageUser', [UserController::class, 'manage_user_page'])->middleware('security');
 Route::post('/makeUser', [Usercontroller::class, 'makeUser']);
 Route::get('/deleteUser/{id}', [UserController::class, 'destroy']);
+Route::post('/tex',            [UserController::class, 'update']);
 
 // buat tombol navbar samping
 

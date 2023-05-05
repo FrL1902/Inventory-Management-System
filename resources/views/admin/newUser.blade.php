@@ -11,6 +11,14 @@
     <div class="content">
         ini buat create new user / udah bisa add, tapi kurang validations
         <div class="page-inner">
+
+            @if (session('sukses_add'))
+                <div class="alert alert-success alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ session('sukses_add') }}</strong>
+                </div>
+            @endif
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -54,7 +62,7 @@
                                 @if ($errors->any())
                                     <span class="text-danger">{{ $errors->first() }}</span>
                                 @endif
-                                @include('sweetalert::alert')
+                                {{-- @include('sweetalert::alert') --}}
                             </div>
                         </form>
                     </div>
