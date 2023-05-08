@@ -10,6 +10,13 @@
             ini page buat add new brands
             <div class="page-inner">
 
+                @if (session('sukses_addNewBrand'))
+                    <div class="alert alert-success alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ session('sukses_addNewBrand') }}</strong>
+                    </div>
+                @endif
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
@@ -21,8 +28,7 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="customeridforbrand">The owner of the brand</label>
-                                        <select class="form-control" id="customeridforbrand"
-                                            name="customeridforbrand">
+                                        <select class="form-control" id="customeridforbrand" name="customeridforbrand">
                                             @foreach ($customer as $cust)
                                                 {{-- <option value="{{ $cust->customer_id }}">{{ $cust->customer_name }}</option> --}}
                                                 <option value="{{ $cust->id }}">{{ $cust->customer_name }}</option>

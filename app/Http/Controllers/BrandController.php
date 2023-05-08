@@ -32,6 +32,10 @@ class BrandController extends Controller
 
         $item->save();
 
+        $itemAdded = "Brand " . "\"" . $request->brandname . "\"" . " berhasil di tambahkan";
+
+        $request->session()->flash('sukses_addNewBrand', $itemAdded);
+
         return redirect()->back();
 
         // return $request->input();

@@ -36,22 +36,12 @@ class CustomerController extends Controller
         $customer->pic_phone = $request->picnumber;
         $customer->npwp_perusahaan = $request->npwp;
 
-        // $data->customer_id = "asdflkjh";
-        // $data->customer_name = "asdflkjh";
-        // $data->address = "asdflkjh";
-        // $data->email = "asdflkjh";
-        // $data->phone1 = "asdflkjh";
-        // $data->phone2 = "asdflkjh";
-        // $data->fax = "asdflkjh";
-        // $data->website = "asdflkjh";
-        // $data->pic = "asdflkjh";
-        // $data->pic_phone = "asdflkjh";
-        // $data->npwp_perusahaan = "asdflkjh";
-
         $customer->save();
 
+        $customerAdded = "Customer " . "\"" . $request->customername . "\"" . " berhasil di tambahkan";
 
-        // return view('newCustomer');
+        $request->session()->flash('sukses_addNewCustomer', $customerAdded);
+
         return redirect()->back();
     }
 }
