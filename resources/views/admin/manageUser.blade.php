@@ -134,21 +134,33 @@
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h5 class="modal-title" id="exampleModalLabel">
-                                                                            Modal title</h5>
+                                                                            <strong>PENGHAPUSAN USER</strong>
+                                                                        </h5>
                                                                         <button type="button" class="close"
                                                                             data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <p>Are you sure you want to
-                                                                            delete?{{ $data->name }}</p>
+                                                                        <p>Apakah anda yakin untuk menghapus user
+                                                                            {{ $data->name }}?</p>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"
-                                                                            id="close-modal">No</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-danger">Yes</button>
+                                                                            id="close-modal">Tidak</button>
+                                                                        {{-- <button type="button"
+                                                                            class="btn btn-danger">Yakin</button> --}}
+
+                                                                        {{-- jadi kalo mau delete pake ini aja deh, jadi tombol href didalem modalnya, nah skrg yg aku mau itu gmn caranya tombol icon yang dari manage usernya bisa ngaktifin modal, tombol icon, bukan tombol kotaknya, terus yg href delete di modalnya baru tombol kotak  --}}
+
+                                                                        <a href="/deleteUser/{{ $data->id }}"
+                                                                            class="btn btn-danger">
+                                                                            {{-- <i class="btn btn-danger"
+                                                                                data-original-title="Delete User"> SETUJU
+                                                                            </i> --}}YAKIN
+                                                                        </a>
+
+                                                                        {{-- UDAH BISA, DESAIN DALEM MODAL UDAH KYK GITU, BENER. tp yg iconnya yg diluar modal belom, sama tambahin delete notificationnya, kyk diatas gt, "user apalah telah berhasil didelete" --}}
                                                                     </div>
                                                                 </div>
                                                             </div>
