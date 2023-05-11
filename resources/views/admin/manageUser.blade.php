@@ -10,6 +10,14 @@
     <div class="content">
         ini buat manage user / udah bisa view, ga tau tombol editnya enaknya buat apa
         <div class="page-inner">
+
+            @if (session('sukses_delete'))
+                <div class="alert alert-warning alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ session('sukses_delete') }}</strong>
+                </div>
+            @endif
+
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -98,7 +106,7 @@
                                                                     </div>
 
                                                                     <div class="modal-footer">
-                                                                        {{-- ini gak tau knp tapi yg btn secondarynya yg buat nutup harus ditambahin "type="button"", terus yg dibawahnya yg buat save ngga. aneh bat dah. kalo ga gini ntar error 401 ato apa gt --}}
+                                                                        {{-- ini gak tau knp tapi yg btn secondarynya yg buat nutup harus ditambahin "type="button"", terus yg dibawahnya yg buat save ngga. aneh bat dah. kalo ga gini ntar error 401 ato apa gt 1 --}}
                                                                         <button type="button" class="btn btn-secondary"
                                                                             data-dismiss="modal">Close</button>
                                                                         <button class="btn btn-primary">Save
@@ -110,24 +118,37 @@
                                                     </div>
 
                                                     @if (auth()->user()->id == $data->id)
-                                                        <a href="#">
+                                                        <a style="cursor: pointer">
                                                             <i class="fas fa-user mt-3 text-danger"
                                                                 data-toggle="tooltip"
                                                                 data-original-title="Cannot delete yourself">
                                                             </i>
                                                         </a>
                                                     @else
-                                                        <a href="/deleteUser/{{ $data->id }}">
+                                                        {{-- <a href="/deleteUser/{{ $data->id }}">
                                                             <i class="fa fa-times mt-3 text-danger"
                                                                 data-toggle="tooltip" data-original-title="Delete User">
                                                             </i>
-                                                        </a>
+                                                        </a> --}}
 
-                                                        {{-- DIBAWAH INI CUMA BUAT PERCOBAAN DULU YG BUG FOREACH DATA CUMA KEBACA SEKALI DOANG. INI UDH BENER, NANTI DITERUSIN BESOK AE --}}
-                                                        <button type="button" class="btn btn-danger"
+                                                        {{-- ini -pake style cursor pake pointer buat efek hover. knp gak pake href? soalnya href bisa ngasihtau linknya dibawah gt, linknya tuh bisa berisi data penting, jadinya jgn pake itu kalo buttons
+                                                            https://www.w3schools.com/cssref/tryit.php?filename=trycss_cursor
+                                                            tapi yg tombol delete aslinya yg di modal masih apke href, gak tau gmn caranya biar delete ga pake href dan method "get" 5 --}}
+                                                        <a style="cursor: pointer"
+                                                            data-target="#deleteModal{{ $data->id }}"
+                                                            data-toggle="modal"><i class="fa fa-times mt-3 text-danger"
+                                                                data-toggle="tooltip" data-original-title="Delete User">
+                                                            </i></a>
+                                                        {{-- <button type="button"
+                                                            data-target="#deleteModal{{ $data->id }}"
+                                                            data-toggle="modal"><i class="fa fa-times mt-3 text-danger">
+                                                            </i></button> --}}
+
+                                                        {{-- DIBAWAH INI CUMA BUAT PERCOBAAN DULU YG BUG FOREACH DATA CUMA KEBACA SEKALI DOANG. INI UDH BENER, NANTI DITERUSIN BESOK AE 2 --}}
+                                                        {{-- <button type="button" class="btn btn-danger"
                                                             data-target="#deleteModal{{ $data->id }}"
                                                             data-toggle="modal">Delete
-                                                            Item</button>
+                                                            Item</button> --}}
                                                         <!-- Modal -->
                                                         <div class="modal fade" id="deleteModal{{ $data->id }}">
                                                             <div class="modal-dialog">
@@ -147,11 +168,11 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"
-                                                                            id="close-modal">Tidak</button>
+                                                                            id="close-modal" data-dismiss="modal">Tidak</button>
                                                                         {{-- <button type="button"
                                                                             class="btn btn-danger">Yakin</button> --}}
 
-                                                                        {{-- jadi kalo mau delete pake ini aja deh, jadi tombol href didalem modalnya, nah skrg yg aku mau itu gmn caranya tombol icon yang dari manage usernya bisa ngaktifin modal, tombol icon, bukan tombol kotaknya, terus yg href delete di modalnya baru tombol kotak  --}}
+                                                                        {{-- jadi kalo mau delete pake ini aja deh, jadi tombol href didalem modalnya, nah skrg yg aku mau itu gmn caranya tombol icon yang dari manage usernya bisa ngaktifin modal, tombol icon, bukan tombol kotaknya, terus yg href delete di modalnya baru tombol kotak  3 --}}
 
                                                                         <a href="/deleteUser/{{ $data->id }}"
                                                                             class="btn btn-danger">
@@ -160,7 +181,7 @@
                                                                             </i> --}}YAKIN
                                                                         </a>
 
-                                                                        {{-- UDAH BISA, DESAIN DALEM MODAL UDAH KYK GITU, BENER. tp yg iconnya yg diluar modal belom, sama tambahin delete notificationnya, kyk diatas gt, "user apalah telah berhasil didelete" --}}
+                                                                        {{-- UDAH BISA, DESAIN DALEM MODAL UDAH KYK GITU, BENER. tp yg iconnya yg diluar modal belom, sama tambahin delete notificationnya, kyk diatas gt, "user apalah telah berhasil didelete" 4 --}}
                                                                     </div>
                                                                 </div>
                                                             </div>
