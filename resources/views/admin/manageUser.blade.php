@@ -51,10 +51,10 @@
                                             <td>{{ $data->name }}</td>
                                             <td>{{ $data->email }}</td>
                                             <td>{{ $data->level }}</td>
-                                            @section('lemparID')
+                                            {{-- @section('lemparID')
                                                 <input type="hidden" class="form-control" name="userIdHidden"
                                                     value="{{ $data->name }}">
-                                            @endsection
+                                            @endsection --}}
                                             <td>
                                                 <div class="form-button-action">
 
@@ -68,15 +68,55 @@
                                                     </form> --}}
 
 
-                                                    <button type="button" class="btn btn-link btn-primary btn-lg"
+                                                    {{-- <button type="button" class="btn btn-link btn-primary btn-lg"
                                                         data-toggle="modal" data-target="#userUpdateModal"
                                                         data-original-title="Edit User">
                                                         <i class="fa fa-edit"></i>
-                                                    </button>
+                                                    </button> --}}
+
+
+                                                    <!-- Button trigger modal -->
+                                                    {{-- <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#editModalCenter{{$data->id}}">
+                                                        Edit
+                                                    </button> --}}
+
+                                                    <a style="cursor: pointer"
+                                                        data-target="#editModalCenter{{ $data->id }}"
+                                                        data-toggle="modal"><i class="fa fa-edit mt-3 text-primary"
+                                                            data-toggle="tooltip" data-original-title="edit user">
+                                                        </i></a>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="editModalCenter{{ $data->id }}"
+                                                        tabindex="-1" role="dialog"
+                                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLongTitle">
+                                                                        {{ $data->name }}</h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    ...
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-primary">Save
+                                                                        changes</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
 
                                                     <!-- Modal -->
-                                                    <div class="modal fade" id="userUpdateModal" tabindex="-1"
+                                                    {{-- <div class="modal fade" id="userUpdateModal" tabindex="-1"
                                                         role="dialog" aria-labelledby="exampleModalCenterTitle"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -107,15 +147,15 @@
 
                                                                     <div class="modal-footer">
                                                                         {{-- ini gak tau knp tapi yg btn secondarynya yg buat nutup harus ditambahin "type="button"", terus yg dibawahnya yg buat save ngga. aneh bat dah. kalo ga gini ntar error 401 ato apa gt 1 --}}
-                                                                        <button type="button" class="btn btn-secondary"
+                                                    {{-- <button type="button" class="btn btn-secondary"
                                                                             data-dismiss="modal">Close</button>
                                                                         <button class="btn btn-primary">Save
-                                                                            changes</button>
-                                                                    </div>
+                                                                            changes</button> --}}
+                                                    {{-- </div>
                                                                 </form>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
 
                                                     @if (auth()->user()->id == $data->id)
                                                         <a style="cursor: pointer">
@@ -139,56 +179,58 @@
                                                             data-toggle="modal"><i class="fa fa-times mt-3 text-danger"
                                                                 data-toggle="tooltip" data-original-title="Delete User">
                                                             </i></a>
-                                                        {{-- <button type="button"
+                                                    @endif
+                                                    {{-- <button type="button"
                                                             data-target="#deleteModal{{ $data->id }}"
                                                             data-toggle="modal"><i class="fa fa-times mt-3 text-danger">
                                                             </i></button> --}}
 
-                                                        {{-- DIBAWAH INI CUMA BUAT PERCOBAAN DULU YG BUG FOREACH DATA CUMA KEBACA SEKALI DOANG. INI UDH BENER, NANTI DITERUSIN BESOK AE 2 --}}
-                                                        {{-- <button type="button" class="btn btn-danger"
+                                                    {{-- DIBAWAH INI CUMA BUAT PERCOBAAN DULU YG BUG FOREACH DATA CUMA KEBACA SEKALI DOANG. INI UDH BENER, NANTI DITERUSIN BESOK AE 2 --}}
+                                                    {{-- <button type="button" class="btn btn-danger"
                                                             data-target="#deleteModal{{ $data->id }}"
                                                             data-toggle="modal">Delete
                                                             Item</button> --}}
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="deleteModal{{ $data->id }}">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                                            <strong>PENGHAPUSAN USER</strong>
-                                                                        </h5>
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <p>Apakah anda yakin untuk menghapus user
-                                                                            {{ $data->name }}?</p>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary"
-                                                                            id="close-modal" data-dismiss="modal">Tidak</button>
-                                                                        {{-- <button type="button"
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="deleteModal{{ $data->id }}">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">
+                                                                        <strong>PENGHAPUSAN USER</strong>
+                                                                    </h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Apakah anda yakin untuk menghapus user
+                                                                        {{ $data->name }}?</p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        id="close-modal"
+                                                                        data-dismiss="modal">Tidak</button>
+                                                                    {{-- <button type="button"
                                                                             class="btn btn-danger">Yakin</button> --}}
 
-                                                                        {{-- jadi kalo mau delete pake ini aja deh, jadi tombol href didalem modalnya, nah skrg yg aku mau itu gmn caranya tombol icon yang dari manage usernya bisa ngaktifin modal, tombol icon, bukan tombol kotaknya, terus yg href delete di modalnya baru tombol kotak  3 --}}
+                                                                    {{-- jadi kalo mau delete pake ini aja deh, jadi tombol href didalem modalnya, nah skrg yg aku mau itu gmn caranya tombol icon yang dari manage usernya bisa ngaktifin modal, tombol icon, bukan tombol kotaknya, terus yg href delete di modalnya baru tombol kotak  3 --}}
 
-                                                                        <a href="/deleteUser/{{ $data->id }}"
-                                                                            class="btn btn-danger">
-                                                                            {{-- <i class="btn btn-danger"
+                                                                    <a href="/deleteUser/{{ $data->id }}"
+                                                                        class="btn btn-danger">
+                                                                        {{-- <i class="btn btn-danger"
                                                                                 data-original-title="Delete User"> SETUJU
                                                                             </i> --}}YAKIN
-                                                                        </a>
+                                                                    </a>
 
-                                                                        {{-- UDAH BISA, DESAIN DALEM MODAL UDAH KYK GITU, BENER. tp yg iconnya yg diluar modal belom, sama tambahin delete notificationnya, kyk diatas gt, "user apalah telah berhasil didelete" 4 --}}
-                                                                    </div>
+                                                                    {{-- UDAH BISA, DESAIN DALEM MODAL UDAH KYK GITU, BENER. tp yg iconnya yg diluar modal belom, sama tambahin delete notificationnya, kyk diatas gt, "user apalah telah berhasil didelete" 4 --}}
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
 
-                                                        {{-- SAMPE SINI --}}
-                                                    @endif
+                                                    {{-- SAMPE SINI --}}
+                                                    {{-- @endif --}}
                                                 </div>
                                             </td>
                                         </tr>
