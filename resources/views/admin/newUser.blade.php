@@ -9,7 +9,6 @@
 
 <div class="main-panel">
     <div class="content">
-        ini buat create new user / udah bisa add, tapi kurang validations
         <div class="page-inner">
 
             @if (session('sukses_add'))
