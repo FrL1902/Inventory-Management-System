@@ -59,8 +59,14 @@
                                 <div class="card mt-4">
                                     <button id="" class="btn btn-success">Make New Account</button>
                                 </div>
-                                @if ($errors->any())
+                                {{-- @if ($errors->any())
                                     <span class="text-danger">{{ $errors->first() }}</span>
+                                @endif --}}
+
+                                @if($errors->any())
+                                    @foreach ($errors->all() as $err)
+                                        <li class="text-danger">{{$err}}</li>
+                                    @endforeach
                                 @endif
                                 {{-- @include('sweetalert::alert') --}}
                             </div>

@@ -8,7 +8,6 @@
 
 <div class="main-panel">
     <div class="content">
-        {{-- ini buat manage user / udah bisa view, ga tau tombol editnya enaknya buat apa --}}
         <div class="page-inner">
 
             @if (session('sukses_delete'))
@@ -16,8 +15,30 @@
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('sukses_delete') }}</strong>
                 </div>
+
+            @elseif (session('sukses_editUser'))
+                <div class="alert alert-primary alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>informasi user "{{ session('sukses_editUser') }}" telah diubah</strong>
+                </div>
+
+            @elseif ($errors->any())
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Update Failed, validation not met, error is: </strong>
+                    {{-- <span class="text-danger">{{ $errors->first() }}</span> --}}
+
+                    @if ($errors->first() == "The usernameformupdate must be at least 4 characters.")
+                        <span class="text-danger">The edited username must be at least 4 characters.</span>
+                    @elseif ($errors->first() == "The usernameformupdate must not be greater than 16 characters.")
+                        <span class="text-danger">The edited username must not be greater than 16 characters.</span>
+                    @endif
+                </div>
             @endif
 
+
+
+            <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -51,10 +72,6 @@
                                             <td>{{ $data->name }}</td>
                                             <td>{{ $data->email }}</td>
                                             <td>{{ $data->level }}</td>
-                                            {{-- @section('lemparID')
-                                                <input type="hidden" class="form-control" name="userIdHidden"
-                                                    value="{{ $data->name }}">
-                                            @endsection --}}
                                             <td>
                                                 <div class="form-button-action">
 
@@ -95,7 +112,7 @@
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="exampleModalLongTitle">
-                                                                        {{ $data->name }}</h5>
+                                                                        Update data for "{{ $data->name }}"</h5>
                                                                     <button type="button" class="close"
                                                                         data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
@@ -109,25 +126,30 @@
                                                                                 <label>Username</label>
                                                                                 <input type="text" class="form-control" placeholder="Username" aria-label=""
                                                                                     aria-describedby="basic-addon1" name="usernameformupdate" required>
-                                                                            </div>
-                                                                            <div class="card mt-4">
-                                                                                <button id="" class="btn btn-success">Make New Account</button>
+                                                                                    <div class="card mt-5 ">
+                                                                                        <button id="" class="btn btn-primary">Update Data</button>
+                                                                                    </div>
+                                                                                    {{-- @if ($errors->any())
+                                                                                <span class="text-danger" id="editModalCenter{{ $data->id }}">{{ $errors->first() }}</span>
+                                                                                <div class="alert alert-warning alert-block">
+                                                                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                                                                    <strong>Update Failed, validation not met</strong>
+                                                                                </div> --}}
+
+                                                                                {{-- ini gak tau knp errornya muncul dimodal semua user, sama ketutup gt modalnya, ga tau gmn caranya biar tetep kebuka pas refresh --}}
+                                                                            {{-- @endif --}}
                                                                             </div>
 
                                                                             <input type="hidden" class="form-control" name="userIdHidden" value="{{ $data->id }}">
-                                                                            {{-- DAH BENER DIATAS LEZGOOOO --}}
-                                                                            @if ($errors->any())
-                                                                                <span class="text-danger">{{ $errors->first() }}</span>
-                                                                            @endif
                                                                         </div>
                                                                     </form>
                                                                 </div>
-                                                                <div class="modal-footer">
+                                                                {{-- <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-dismiss="modal">Close</button>
                                                                     <button type="button" class="btn btn-primary">Save
                                                                         changes</button>
-                                                                </div>
+                                                                </div> --}}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -259,6 +281,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 </div>

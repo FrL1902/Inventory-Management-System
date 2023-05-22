@@ -32,44 +32,12 @@ class UserController extends Controller
 
     public function makeUser(Request $request)
     {
-        // $request->validate([
-        //     'username' => 'required|unique:users|min:5',
-        //     'email' => 'required|email|unique:users',
-        //     'password' => 'required|alpha_num|confirmed|min:6',
-        // ]);
 
-        // $request->validate([
-        //     'Username' => 'min:10|unique:users',
-        //     'email' => 'unique:users',
-        //     'password' => 'min:6',
-        // ]);
-
-        // $request->validate([
-        //     'name' => 'unique:users|min:6',
-        //     'emailform' => 'unique:users',
-        //     'passwordform' => 'min:6',
-        // ]);
-
-        // $rules = [
-        //     'Usernameform' => 'unique:users|min:6',
-        //     'emailform' => 'unique:users',
-        //     'passwordform' => 'min:6',
-        // ];
-
-        // $validator = Validator::make($request->all(), $rules);
-
-        // if ($validator->fails()) {
-        //     return back()->withErrors($validator);
-        // }
-
-
-        // dd('tes');
-        // User::create([
-        //     'level' => $request->optionsRadios,
-        //     'email' => $request->email,
-        //     'name' => $request->username,
-        //     'password' => Hash::make($request->password),
-        // ]);
+        $request->validate([
+            'usernameform' => 'required|unique:App\Models\User,name|min:4|max:16',
+            'emailform' => 'required|unique:App\Models\User,email',
+            'passwordform' => 'required|min:6|max:20'
+        ]);
 
         $account = new User();
         $account->name = $request->usernameform;
@@ -79,15 +47,7 @@ class UserController extends Controller
 
         $account->save();
 
-        // return redirect()->back()->with('berhasil 1', 'berhasil 2');
-
-        // return redirect()->with('berhasil 1', 'berhasil 2')->back();
-        // Session::flash('alert', $request->emailform . ' has been deleted successfully!');
-        // Session::flash('message', 'This is a message!');
-        // $request->session()->flash('status', 'Task was successful!');
-
         $userAdded = $request->usernameform . " [" . $request->optionsRadios . "] " . "berhasil di tambahkan";
-
         $request->session()->flash('sukses_add', $userAdded);
 
         return redirect()->back();
@@ -113,17 +73,18 @@ class UserController extends Controller
 
     public function tex(Request $request)
     {
+        $userInfo = User::where('id', $request->userIdHidden)->first();
+        $oldUsername = $userInfo->name;
 
-        // $userInfo = User::where('id', '=', $request->usernameformupdate)->get()->first();
-        // dd('towd');
-
-        // dd($request->userIdHidden);
-        // dd($request->usernameformupdate);
-        // dd($userInfo->email);
+        $request->validate([
+            'usernameformupdate' => 'required|unique:App\Models\User,name|min:4|max:16',
+        ]);
 
         User::where('id',$request->userIdHidden)->update([
             'name' => $request->usernameformupdate,
         ]);
+
+        $request->session()->flash('sukses_editUser', $oldUsername);
 
         return redirect('manageUser');
     }
