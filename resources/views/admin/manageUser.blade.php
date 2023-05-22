@@ -8,7 +8,7 @@
 
 <div class="main-panel">
     <div class="content">
-        ini buat manage user / udah bisa view, ga tau tombol editnya enaknya buat apa
+        {{-- ini buat manage user / udah bisa view, ga tau tombol editnya enaknya buat apa --}}
         <div class="page-inner">
 
             @if (session('sukses_delete'))
@@ -102,7 +102,25 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    ...
+                                                                    <form method="post" action="/tex">
+                                                                        @csrf
+                                                                        <div class="card-body">
+                                                                            <div class="form-group">
+                                                                                <label>Username</label>
+                                                                                <input type="text" class="form-control" placeholder="Username" aria-label=""
+                                                                                    aria-describedby="basic-addon1" name="usernameformupdate" required>
+                                                                            </div>
+                                                                            <div class="card mt-4">
+                                                                                <button id="" class="btn btn-success">Make New Account</button>
+                                                                            </div>
+
+                                                                            <input type="hidden" class="form-control" name="userIdHidden" value="{{ $data->id }}">
+                                                                            {{-- DAH BENER DIATAS LEZGOOOO --}}
+                                                                            @if ($errors->any())
+                                                                                <span class="text-danger">{{ $errors->first() }}</span>
+                                                                            @endif
+                                                                        </div>
+                                                                    </form>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"

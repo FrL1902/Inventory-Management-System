@@ -109,4 +109,22 @@ class UserController extends Controller
 
         return redirect('manageUser');
     }
+
+
+    public function tex(Request $request)
+    {
+
+        // $userInfo = User::where('id', '=', $request->usernameformupdate)->get()->first();
+        // dd('towd');
+
+        // dd($request->userIdHidden);
+        // dd($request->usernameformupdate);
+        // dd($userInfo->email);
+
+        User::where('id',$request->userIdHidden)->update([
+            'name' => $request->usernameformupdate,
+        ]);
+
+        return redirect('manageUser');
+    }
 }
