@@ -21,20 +21,81 @@ class CustomerController extends Controller
 
     public function makeCustomer(Request $request)
     {
-        $customer = new Customer();
-        // dd('masuk');
 
+        // if (is_null($request->customername)) {
+        //     dd("ini null cok");
+        // }
+
+        // validate the required inputs first
+        $request->validate([
+            'customerid' => 'required|unique:App\Models\Customer,customer_id|min:4|max:10',
+            'customername' => 'required|min:4|max:30',
+            'email' => 'required',
+            'phone1' => 'required'
+        ]);
+
+        $customer = new Customer();
+
+        // $customer->customer_id = $request->customerid;       yang dibutuhin ini
+        // $customer->customer_name = $request->customername;   yang dibutuhin ini
+        // $customer->address = $request->address;
+        // $customer->email = $request->email;                  yang dibutuhin ini
+        // $customer->phone1 = $request->phone1;                yang dibutuhin ini, work
+        // $customer->phone2 = $request->phone2;
+        // $customer->fax = $request->fax;
+        // $customer->website = $request->website;
+        // $customer->pic = $request->picname;
+        // $customer->pic_phone = $request->picnumber;
+        // $customer->npwp_perusahaan = $request->npwp;
+
+        // check if input is null, set to "no-input"
+        if (is_null($request->address)) {
+            $customer->address = "no-input";
+        } else {
+            $customer->address = $request->address;
+        }
+
+        if (is_null($request->phone2)) {
+            $customer->phone2 = "no-input";
+        } else {
+            $customer->phone2 = $request->phone2;
+        }
+
+        if (is_null($request->fax)) {
+            $customer->fax = "no-input";
+        } else {
+            $customer->fax = $request->fax;
+        }
+
+        if (is_null($request->website)) {
+            $customer->website = "no-input";
+        } else {
+            $customer->website = $request->website;
+        }
+
+        if (is_null($request->picname)) {
+            $customer->pic = "no-input";
+        } else {
+            $customer->pic = $request->picname;
+        }
+
+        if (is_null($request->picnumber)) {
+            $customer->pic_phone = "no-input";
+        } else {
+            $customer->pic_phone = $request->picnumber;
+        }
+
+        if (is_null($request->npwp)) {
+            $customer->npwp_perusahaan = "no-input";
+        } else {
+            $customer->npwp_perusahaan = $request->npwp;
+        }
+
+        // input the required variables in
         $customer->customer_id = $request->customerid;
         $customer->customer_name = $request->customername;
-        $customer->address = $request->address;
         $customer->email = $request->email;
         $customer->phone1 = $request->phone1;
-        $customer->phone2 = $request->phone2;
-        $customer->fax = $request->fax;
-        $customer->website = $request->website;
-        $customer->pic = $request->picname;
-        $customer->pic_phone = $request->picnumber;
-        $customer->npwp_perusahaan = $request->npwp;
 
         $customer->save();
 
@@ -42,6 +103,8 @@ class CustomerController extends Controller
 
         $request->session()->flash('sukses_addNewCustomer', $customerAdded);
 
-        return redirect()->back();
+        return redirect()->back()->withInput();
+
+        // return back()->withInput();
     }
 }

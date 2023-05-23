@@ -30,17 +30,20 @@
                                 <div class="form-group">
                                     <label>Username</label>
                                     <input type="text" class="form-control" placeholder="Username" aria-label=""
-                                        aria-describedby="basic-addon1" name="usernameform" required>
+                                        aria-describedby="basic-addon1" name="usernameform">
                                 </div>
                                 <div class="form-group">
                                     <label for="email1">Email Address</label>
                                     <input type="email" class="form-control" id="email1" placeholder="Enter Email"
-                                        name="emailform" required>
+                                        name="emailform">
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
+                                    {{-- <input type="password" class="form-control" id="password" placeholder="Password"
+                                        name="passwordform" required> --}}
+                                    {{-- contoh "required" kalo lgsg dari htmlnya^, tp sih pake aja yg dari phpnya --}}
                                     <input type="password" class="form-control" id="password" placeholder="Password"
-                                        name="passwordform" required>
+                                        name="passwordform">
                                 </div>
                                 <div class="form-check">
                                     <label>Role</label><br />
@@ -62,9 +65,9 @@
                                     <span class="text-danger">{{ $errors->first() }}</span>
                                 @endif --}}
 
-                                @if($errors->any())
+                                @if ($errors->any())
                                     @foreach ($errors->all() as $err)
-                                        <li class="text-danger">{{$err}}</li>
+                                        <li class="text-danger">{{ $err }}</li>
                                     @endforeach
                                 @endif
                                 {{-- @include('sweetalert::alert') --}}

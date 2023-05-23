@@ -20,6 +20,13 @@
                 </div>
             @endif
 
+            @if ($errors->any())
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Customer input failed, validation not met, check error in the bottom</strong>
+                </div>
+            @endif
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -87,6 +94,12 @@
                                 <div class="card mt-4">
                                     <button class="btn btn-success">Insert New User</button>
                                 </div>
+
+                                @if ($errors->any())
+                                    @foreach ($errors->all() as $err)
+                                        <li class="text-danger">{{ $err }}</li>
+                                    @endforeach
+                                @endif
                             </div>
 
                         </form>
