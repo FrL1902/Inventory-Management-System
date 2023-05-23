@@ -103,8 +103,8 @@ class CustomerController extends Controller
 
         $request->session()->flash('sukses_addNewCustomer', $customerAdded);
 
-        return redirect()->back()->withInput();
+        return redirect()->back();
 
-        // return back()->withInput();
+        // return back()->withInput(); ini gak tau kenapa ga bisa, ya ga harus bgt sih tp sebagai Quality of Life aja
     }
 }
