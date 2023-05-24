@@ -28,14 +28,13 @@ Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('
 
 Route::post('/login', [AuthController::class, 'cek_login']);
 
-Route::get('/logout', [AuthController::class, 'logout']);
-
+Route::get('/logout', [AuthController::class, 'logout'])->middleware('login');
 // admin
 Route::get('/newUser', [UserController::class, 'new_user_page'])->middleware('security');
 Route::get('/manageUser', [UserController::class, 'manage_user_page'])->middleware('security');
-Route::post('/makeUser', [Usercontroller::class, 'makeUser']);
-Route::get('/deleteUser/{id}', [UserController::class, 'destroy']);
-Route::post('/tex',            [UserController::class, 'tex']);
+Route::post('/makeUser', [Usercontroller::class, 'makeUser'])->middleware('security');
+Route::get('/deleteUser/{id}', [UserController::class, 'destroy'])->middleware('security');
+Route::post('/tex',            [UserController::class, 'tex'])->middleware('security');
 
 // buat tombol navbar samping
 
@@ -44,6 +43,7 @@ Route::get('/manageCustomer', [CustomerController::class, 'manage_customer_page'
 Route::get('/newCustomer', [CustomerController::class, 'new_customer_page'])->middleware('login');
 Route::post('/makeCustomer', [CustomerController::class, 'makeCustomer'])->middleware('login');
 Route::get('/deleteCustomer/{id}', [CustomerController::class, 'deleteCustomer'])->middleware('login');
+Route::post('/updateCustomer', [CustomerController::class, 'updateCustomer'])->middleware('login');
 
 //brand
 Route::get('/newBrand', [BrandController::class, 'new_brand_page'])->middleware('login');

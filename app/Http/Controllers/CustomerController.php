@@ -110,6 +110,75 @@ class CustomerController extends Controller
 
     public function updateCustomer(Request $request)
     {
+        // dd('yes');
+
+        $customer = Customer::where('id', $request->customerIdHidden)->first();
+
+        // dd($custInfo->customer_name);
+
+        if (is_null($request->address)) {
+        } else {
+            $request->validate([
+                'address' => 'min:4|max:100',
+            ]);
+            $customer->address = $request->address;
+        }
+
+        if (is_null($request->phone2)) {
+        } else {
+            $request->validate([
+                'phone2' => 'min:4|max:30',
+            ]);
+            $customer->phone2 = $request->phone2;
+        }
+
+        if (is_null($request->fax)) {
+        } else {
+            $request->validate([
+                'fax' => 'min:4|max:30',
+            ]);
+            $customer->fax = $request->fax;
+        }
+
+        if (is_null($request->website)) {
+        } else {
+            $request->validate([
+                'website' => 'min:4|max:100',
+            ]);
+            $customer->website = $request->website;
+        }
+
+        if (is_null($request->picname)) {
+        } else {
+            $request->validate([
+                'picname' => 'min:4|max:100',
+            ]);
+            $customer->pic = $request->picname;
+        }
+
+        if (is_null($request->picnumber)) {
+        } else {
+            $request->validate([
+                'picnumber' => 'min:4|max:50',
+            ]);
+            $customer->pic_phone = $request->picnumber;
+        }
+
+        if (is_null($request->npwp)) {
+        } else {
+            $request->validate([
+                'npwp' => 'min:4|max:100',
+            ]);
+            $customer->npwp_perusahaan = $request->npwp;
+        }
+
+        $customer->update();
+
+        $customerUpdated = "Customer" . " \"" . $customer->customer_name . "\" " . "berhasil di update";
+
+        session()->flash('sukses_update_customer', $customerUpdated);
+
+        return redirect('manageCustomer');
     }
 
     public function deleteCustomer($id)
@@ -122,7 +191,7 @@ class CustomerController extends Controller
 
         $cust->delete();
 
-        $customerDeleted = "Customerr" . " \"" . $deletedCustomer . "\" " . "berhasil di hapus";
+        $customerDeleted = "Customer" . " \"" . $deletedCustomer . "\" " . "berhasil di hapus";
 
         session()->flash('sukses_delete_customer', $customerDeleted);
 
