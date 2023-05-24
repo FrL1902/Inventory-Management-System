@@ -107,4 +107,25 @@ class CustomerController extends Controller
 
         // return back()->withInput(); ini gak tau kenapa ga bisa, ya ga harus bgt sih tp sebagai Quality of Life aja
     }
+
+    public function updateCustomer(Request $request)
+    {
+    }
+
+    public function deleteCustomer($id)
+    {
+        $cust = Customer::find($id);
+
+        $deletedCustomer = $cust->customer_name;
+
+        // dd($deletedCustomer);
+
+        $cust->delete();
+
+        $customerDeleted = "Customerr" . " \"" . $deletedCustomer . "\" " . "berhasil di hapus";
+
+        session()->flash('sukses_delete_customer', $customerDeleted);
+
+        return redirect('manageCustomer');
+    }
 }

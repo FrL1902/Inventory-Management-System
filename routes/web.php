@@ -43,6 +43,7 @@ Route::post('/tex',            [UserController::class, 'tex']);
 Route::get('/manageCustomer', [CustomerController::class, 'manage_customer_page'])->middleware('login');
 Route::get('/newCustomer', [CustomerController::class, 'new_customer_page'])->middleware('login');
 Route::post('/makeCustomer', [CustomerController::class, 'makeCustomer'])->middleware('login');
+Route::get('/deleteCustomer/{id}', [CustomerController::class, 'deleteCustomer'])->middleware('login');
 
 //brand
 Route::get('/newBrand', [BrandController::class, 'new_brand_page'])->middleware('login');
