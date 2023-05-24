@@ -35,6 +35,10 @@
     }
 </style>
 
+{{-- tolong coba cari tau gmn connect css file
+    harusnya pake ini <link rel="stylesheet" href="{{ asset('css/master.css') }}">, tapi gak tau knp ga bisa
+    https://stackoverflow.com/questions/33988896/where-to-put-css-file-in-laravel-project --}}
+
 {{-- TEST ANIMATIONS
 https://www.w3schools.com/cssref/sel_id.php
 https://www.w3schools.com/css/css3_animations.asp --}}
