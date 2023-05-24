@@ -6,22 +6,55 @@
 @section('showmanageuser', 'show')
 @section('manageuser', 'active')
 
+<style>
+    #alerts {
+        position: relative;
+        animation-name: example;
+        animation-duration: 1s;
+        animation-iteration-count: 1;
+        /* animation-delay: 2s; */
+    }
+
+    /* div {
+  position: relative;
+  animation-name: example;
+  animation-duration: 4s;
+  animation-delay: 2s;
+} */
+
+    @keyframes example {
+        0% {
+            left: 200px;
+            top: 0px;
+        }
+
+        100% {
+            left: 0px;
+            top: 0px;
+        }
+    }
+</style>
+
+{{-- TEST ANIMATIONS
+https://www.w3schools.com/cssref/sel_id.php
+https://www.w3schools.com/css/css3_animations.asp --}}
+
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
 
             @if (session('sukses_delete'))
-                <div class="alert alert-warning alert-block">
+                <div class="alert alert-warning alert-block" id="alerts">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('sukses_delete') }}</strong>
                 </div>
             @elseif (session('sukses_editUser'))
-                <div class="alert alert-primary alert-block">
+                <div class="alert alert-primary alert-block" id="alerts">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>informasi user "{{ session('sukses_editUser') }}" telah diubah</strong>
                 </div>
             @elseif ($errors->any())
-                <div class="alert alert-danger alert-block">
+                <div class="alert alert-danger alert-block" id="alerts">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>Update Failed, validation not met, error is: </strong>
 
