@@ -24,11 +24,11 @@ class UserController extends Controller
         return view('admin.manageUser', compact('user'));
     }
 
-    public function update(Request $request)
-    {
+    // public function update(Request $request)
+    // {
 
-        dd($request->userIdHidden);
-    }
+    //     dd($request->userIdHidden);
+    // }
 
     public function makeUser(Request $request)
     {
