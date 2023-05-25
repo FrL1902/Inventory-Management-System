@@ -20,12 +20,14 @@
                 </div>
             @endif --}}
 
-            @if ($errors->any())
+            
+
+            {{-- @if ($errors->any())
                 <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>Customer input failed, validation not met, check error in the bottom</strong>
                 </div>
-            @endif
+            @endif --}}
 
             <div class="row">
                 <div class="col-md-12">
@@ -36,6 +38,14 @@
                                 <div class="card-title">Add New Item</div>
                             </div>
                             <div class="card-body">
+                                <div class="form-group">
+                                    <label for="brandidforitem">The brand of the item</label>
+                                    <select class="form-control" id="brandidforitem" name="brandidforitem">
+                                        @foreach ($brand as $brand)
+                                            <option value="{{ $brand->id }}">{{ $brand->brand_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
 
                                 @if ($errors->any())

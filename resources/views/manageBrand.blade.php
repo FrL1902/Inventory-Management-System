@@ -9,6 +9,13 @@
         <div class="content">
             ini page buat manage brands
             <div class="page-inner">
+
+                @if (session('sukses_delete_brand'))
+                    <div class="alert alert-warning alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ session('sukses_delete_brand') }}</strong>
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
@@ -66,6 +73,36 @@
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Delete Brand"></i>
                                                             </a>
+                                                        </div>
+
+                                                        <div class="modal fade" id="deleteModal{{ $brand->id }}">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                                            <strong>PENGHAPUSAN BRAND</strong>
+                                                                        </h5>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>Apakah anda yakin untuk menghapus brand
+                                                                            "{{ $brand->brand_name }}" ?</p>
+                                                                        <p>Jika dihapus, item dan stock yang dimiliki brand
+                                                                            ini juga terhapus</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            id="close-modal"
+                                                                            data-dismiss="modal">Tidak</button>
+                                                                        <a href="/deleteBrand/{{ $brand->id }}"
+                                                                            class="btn btn-danger">YAKIN
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>
