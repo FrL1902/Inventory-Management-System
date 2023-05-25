@@ -110,36 +110,41 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                 <td>{{ $data->email }}</td>
                                                 <td>{{ $data->level }}</td>
                                                 <td>
-                                                    <div class="form-button-action">
-
-                                                        {{-- <form method="post" action="/tex">
-                                                        @csrf
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-primary btn-lg"
-                                                            data-original-title="Edit User">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                    </form> --}}
-
-
-                                                        {{-- <button type="button" class="btn btn-link btn-primary btn-lg"
-                                                        data-toggle="modal" data-target="#userUpdateModal"
-                                                        data-original-title="Edit User">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button> --}}
-
-
-                                                        <!-- Button trigger modal -->
-                                                        {{-- <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#editModalCenter{{$data->id}}">
-                                                        Edit
-                                                    </button> --}}
-
+                                                    <div class="d-flex justify-content-center">
                                                         <a style="cursor: pointer"
                                                             data-target="#editModalCenter{{ $data->id }}"
                                                             data-toggle="modal"><i class="fa fa-edit mt-3 text-primary"
                                                                 data-toggle="tooltip" data-original-title="edit user">
                                                             </i></a>
+
+                                                        @if (auth()->user()->id == $data->id)
+                                                            <a class="ml-3" style="cursor: pointer">
+                                                                <i class="fas fa-user mt-3 text-danger"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Cannot delete yourself">
+                                                                </i>
+                                                            </a>
+                                                        @else
+                                                            {{-- <a href="/deleteUser/{{ $data->id }}">
+                                                        <i class="fa fa-times mt-3 text-danger"
+                                                            data-toggle="tooltip" data-original-title="Delete User">
+                                                        </i>
+                                                    </a> --}}
+
+                                                            {{-- ini -pake style cursor pake pointer buat efek hover. knp gak pake href kyk diatas? soalnya href bisa ngasihtau linknya dibawah gt, linknya tuh bisa berisi data penting, jadinya jgn pake itu kalo buttons
+                                                        https://www.w3schools.com/cssref/tryit.php?filename=trycss_cursor
+                                                        tapi yg tombol delete aslinya yg di modal masih apke href, gak tau gmn caranya biar delete ga pake href dan method "get" 5 --}}
+                                                            <a class="ml-3" style="cursor: pointer"
+                                                                data-target="#deleteModal{{ $data->id }}"
+                                                                data-toggle="modal"><i
+                                                                    class="fa fa-times mt-3 text-danger"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Delete User">
+                                                                </i></a>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="form-button-action">
 
                                                         <!-- Modal -->
                                                         <div class="modal fade" id="editModalCenter{{ $data->id }}"
@@ -247,36 +252,6 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                         </div>
                                                     </div> --}}
 
-                                                        @if (auth()->user()->id == $data->id)
-                                                            <a style="cursor: pointer">
-                                                                <i class="fas fa-user mt-3 text-danger"
-                                                                    data-toggle="tooltip"
-                                                                    data-original-title="Cannot delete yourself">
-                                                                </i>
-                                                            </a>
-                                                        @else
-                                                            {{-- <a href="/deleteUser/{{ $data->id }}">
-                                                            <i class="fa fa-times mt-3 text-danger"
-                                                                data-toggle="tooltip" data-original-title="Delete User">
-                                                            </i>
-                                                        </a> --}}
-
-                                                            {{-- ini -pake style cursor pake pointer buat efek hover. knp gak pake href? soalnya href bisa ngasihtau linknya dibawah gt, linknya tuh bisa berisi data penting, jadinya jgn pake itu kalo buttons
-                                                            https://www.w3schools.com/cssref/tryit.php?filename=trycss_cursor
-                                                            tapi yg tombol delete aslinya yg di modal masih apke href, gak tau gmn caranya biar delete ga pake href dan method "get" 5 --}}
-                                                            <a style="cursor: pointer"
-                                                                data-target="#deleteModal{{ $data->id }}"
-                                                                data-toggle="modal"><i
-                                                                    class="fa fa-times mt-3 text-danger"
-                                                                    data-toggle="tooltip"
-                                                                    data-original-title="Delete User">
-                                                                </i></a>
-                                                        @endif
-                                                        {{-- <button type="button"
-                                                            data-target="#deleteModal{{ $data->id }}"
-                                                            data-toggle="modal"><i class="fa fa-times mt-3 text-danger">
-                                                            </i></button> --}}
-
                                                         {{-- DIBAWAH INI CUMA BUAT PERCOBAAN DULU YG BUG FOREACH DATA CUMA KEBACA SEKALI DOANG. INI UDH BENER, NANTI DITERUSIN BESOK AE 2 --}}
                                                         {{-- <button type="button" class="btn btn-danger"
                                                             data-target="#deleteModal{{ $data->id }}"
@@ -300,8 +275,8 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                             {{ $data->name }}?</p>
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary"
-                                                                            id="close-modal"
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary" id="close-modal"
                                                                             data-dismiss="modal">Tidak</button>
                                                                         {{-- <button type="button"
                                                                             class="btn btn-danger">Yakin</button> --}}
@@ -320,9 +295,6 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        {{-- SAMPE SINI --}}
-                                                        {{-- @endif --}}
                                                     </div>
                                                 </td>
                                             </tr>

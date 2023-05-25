@@ -97,7 +97,7 @@
                                                                 data-toggle="tooltip"
                                                                 data-original-title="Edit Customer"></i>
                                                         </a>
-                                                        <a class="ml-2" style="cursor: pointer"
+                                                        <a class="ml-2 mb-2" style="cursor: pointer"
                                                             data-target="#deleteModal{{ $data->id }}"
                                                             data-toggle="modal">
                                                             <i class="fa fa-times mt-3 text-danger"
