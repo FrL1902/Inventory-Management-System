@@ -15,7 +15,18 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>{{ session('sukses_delete_brand') }}</strong>
                     </div>
+                @elseif (session('sukses_editBrand'))
+                    <div class="alert alert-primary alert-block" id="alerts">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Sukses mengupdate data "{{ session('sukses_editBrand') }}"</strong>
+                    </div>
+                @elseif ($errors->any())
+                    <div class="alert alert-danger alert-block" id="alerts">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Update Failed, validation not met</strong>
+                    </div>
                 @endif
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
@@ -100,6 +111,46 @@
                                                                         <a href="/deleteBrand/{{ $brand->id }}"
                                                                             class="btn btn-danger">YAKIN
                                                                         </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal fade" id="editModalCenter{{ $brand->id }}"
+                                                            tabindex="-1" role="dialog"
+                                                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLongTitle">
+                                                                            Update data for "{{ $brand->brand_name }}"</h5>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form method="post" action="/updateBrand">
+                                                                            @csrf
+                                                                            <div class="card-body">
+                                                                                <div class="form-group">
+                                                                                    <label>Brand Name</label>
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="brand name"
+                                                                                        aria-label=""
+                                                                                        aria-describedby="basic-addon1"
+                                                                                        name="brandnameformupdate" required>
+                                                                                    <div class="card mt-5 ">
+                                                                                        <button id=""
+                                                                                            class="btn btn-primary">Update
+                                                                                            Data</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <input type="hidden" class="form-control"
+                                                                                    name="brandIdHidden"
+                                                                                    value="{{ $brand->id }}">
+                                                                            </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>

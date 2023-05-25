@@ -61,4 +61,22 @@ class BrandController extends Controller
 
         return redirect('manageBrand');
     }
+
+    public function updateBrand(Request $request)
+    {
+        $brandInfo = Brand::where('id', $request->brandIdHidden)->first();
+        $oldBrandName = $brandInfo->brand_name;
+
+        $request->validate([
+            'brandnameformupdate' => 'required|min:2|max:50',
+        ]);
+
+        Brand::where('id', $request->brandIdHidden)->update([
+            'brand_name' => $request->brandnameformupdate,
+        ]);
+
+        $request->session()->flash('sukses_editBrand', $oldBrandName);
+
+        return redirect('manageBrand');
+    }
 }

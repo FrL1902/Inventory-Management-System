@@ -50,7 +50,8 @@ Route::post('/updateCustomer', [CustomerController::class, 'updateCustomer'])->m
 Route::get('/newBrand', [BrandController::class, 'new_brand_page'])->middleware('login');
 Route::get('/manageBrand', [BrandController::class, 'manage_brand_page'])->middleware('login');
 Route::post('/makeBrand', [BrandController::class, 'makeBrand'])->middleware('login');
-Route::get('/deleteBrand/{id}',[BrandController::class, 'deleteBrand'])->middleware('login');
+Route::get('/deleteBrand/{id}', [BrandController::class, 'deleteBrand'])->middleware('login');
+Route::post('/updateBrand', [BrandController::class, 'updateBrand'])->middleware('login');
 
 //item
 Route::get('/newItem', [ItemController::class, 'new_item_page']);
