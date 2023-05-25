@@ -15,13 +15,6 @@
         /* animation-delay: 2s; */
     }
 
-    /* div {
-  position: relative;
-  animation-name: example;
-  animation-duration: 4s;
-  animation-delay: 2s;
-} */
-
     @keyframes example {
         0% {
             left: 200px;
