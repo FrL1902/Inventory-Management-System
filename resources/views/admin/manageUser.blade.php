@@ -36,6 +36,8 @@
 https://www.w3schools.com/cssref/sel_id.php
 https://www.w3schools.com/css/css3_animations.asp --}}
 
+{{-- kalo mau seluruh block notificationnya berwarna, ga warna putih doang, pake ini di css inlinenya, style="background-color:yellow", terserah warnanya --}}
+
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
