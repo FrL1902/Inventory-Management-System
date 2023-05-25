@@ -46,4 +46,19 @@ class BrandController extends Controller
 
         // return $request->input();
     }
+
+    public function deleteBrand($id)
+    {
+        $brand = Brand::find($id);
+
+        $deletedBrand = $brand->brand_name;
+
+        $brand->delete();
+
+        $brandDeleted = "Brand" . " \"" . $deletedBrand . "\" " . "berhasil di hapus";
+
+        session()->flash('sukses_delete_brand', $brandDeleted);
+
+        return redirect('manageBrand');
+    }
 }
