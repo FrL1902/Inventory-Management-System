@@ -15,6 +15,11 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>{{ session('sukses_addNewBrand') }}</strong>
                     </div>
+                @elseif ($errors->any())
+                    <div class="alert alert-danger alert-block" id="alerts">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Update Failed, validation not met, error is: {{ $errors->first() }}</strong>
+                    </div>
                 @endif
 
                 <div class="row">

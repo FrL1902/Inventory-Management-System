@@ -25,6 +25,12 @@ class BrandController extends Controller
     public function makeBrand(Request $request)
     {
         // dd('masuk');
+
+        $request->validate([
+            'brandid' => 'required|unique:App\Models\Brand,brand_id|min:3|max:20',
+            'brandname' => 'required|min:2|max:50',
+        ]);
+
         $item = new Brand();
         $item->customer_id = $request->customeridforbrand;
         $item->brand_id = $request->brandid;
