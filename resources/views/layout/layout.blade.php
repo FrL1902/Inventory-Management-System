@@ -187,6 +187,27 @@
                                 </ul>
                             </div>
                         </li>
+                        <li class="nav-item @yield('manageitembutton')">
+                            <a data-toggle="collapse" href="#item">
+                                <i class="fas fa-user"></i>
+                                <p>Manage Items</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse @yield('showmanageitem')" id="item">
+                                <ul class="nav nav-collapse">
+                                    <li class="@yield('newitem')">
+                                        <a href="/newItem">
+                                            <span class="sub-item">Add New Item</span>
+                                        </a>
+                                    </li>
+                                    <li class="@yield('manageitem')">
+                                        <a href="/manageItem">
+                                            <span class="sub-item">Edit Items</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                         @auth
                             @if (Auth::user()->level == 'admin')
                                 <li class="nav-section">
