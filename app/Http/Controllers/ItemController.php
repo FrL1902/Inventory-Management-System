@@ -43,4 +43,10 @@ class ItemController extends Controller
         // dd($request->itemStock);
         return redirect()->back();
     }
+
+    public function manage_item_page()
+    {
+        $item = Item::all();
+        return view('manageItem', compact('item'));
+    }
 }
