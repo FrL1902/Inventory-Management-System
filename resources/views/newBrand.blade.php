@@ -52,11 +52,15 @@
                                         <input type="text" class="form-control form-control" placeholder="Oreo"
                                             id="brandname" name="brandname">
                                     </div>
+                                    {{-- <div class="form-group">
+                                    </div> --}}
+                                    <div class="card mt-4">
+                                        <button class="btn btn-success">Insert New Item</button>
+                                    </div>
                                 </div>
-                                <div class="card-action">
+                                {{-- <div class="card-action">
                                     <button class="btn btn-success">Submit</button>
-                                    <button class="btn btn-danger">Cancel</button>
-                                </div>
+                                </div> --}}
                             </form>
                         </div>
                     </div>
