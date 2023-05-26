@@ -57,3 +57,6 @@ Route::post('/updateBrand', [BrandController::class, 'updateBrand'])->middleware
 Route::get('/newItem', [ItemController::class, 'new_item_page']);
 Route::post('/makeItem', [ItemController::class, 'makeItem']);
 Route::get('/manageItem',[ItemController::class, 'manage_item_page']);
+Route::get('/deleteItem/{id}',[ItemController::class, 'deleteItem']);
+Route::post('/updateItem',[ItemController::class, 'updateItem']);
+Route::get('/manageHistory',[ItemController::class, 'item_history_page']);

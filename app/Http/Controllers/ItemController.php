@@ -49,4 +49,47 @@ class ItemController extends Controller
         $item = Item::all();
         return view('manageItem', compact('item'));
     }
+
+    public function item_history_page()
+    {
+        $item = Item::all();
+        return view('itemHistory', compact('item')); //ini cuma sementara doang pake item, ntar harusnya bikin tabel baru lagi
+    }
+
+    public function deleteItem($id)
+    {
+
+        $item = Item::find($id);
+
+        $deletedItem = $item->item_name;
+
+        $item->delete();
+
+        $itemDeleted = "Item" . " \"" . $deletedItem . "\" " . "berhasil di hapus";
+
+        session()->flash('sukses_delete_item', $itemDeleted);
+
+        return redirect('manageItem');
+    }
+
+    public function updateItem(Request $request)
+    {
+        $itemInfo = Item::where('id', $request->itemIdHidden)->first();
+
+        // dd($request->itemnameformupdate);
+
+        $oldItemName = $itemInfo->item_name;
+
+        $request->validate([
+            'itemnameformupdate' => 'required|unique:App\Models\Item,item_name|min:3|max:75',
+        ]);
+
+        Item::where('id', $request->itemIdHidden)->update([
+            'item_name' => $request->itemnameformupdate,
+        ]);
+
+        $request->session()->flash('sukses_editItem', $oldItemName);
+
+        return redirect('manageItem');
+    }
 }
