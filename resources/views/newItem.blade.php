@@ -13,26 +13,24 @@
 
         <div class="page-inner">
 
-            {{-- @if (session('sukses_addNewCustomer'))
+            @if (session('sukses_addNewItem'))
                 <div class="alert alert-success alert-block">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{{ session('sukses_addNewCustomer') }}</strong>
+                    <strong>Item "{{ session('sukses_addNewItem') }}" is successfully added</strong>
                 </div>
-            @endif --}}
+            @endif
 
-            
-
-            {{-- @if ($errors->any())
+            @if ($errors->any())
                 <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Customer input failed, validation not met, check error in the bottom</strong>
+                    <strong>Item input failed, validation not met: {{ $errors->first() }}</strong>
                 </div>
-            @endif --}}
+            @endif
 
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <form method="post" action="">
+                        <form method="post" action="/makeItem">
                             @csrf
                             <div class="card-header">
                                 <div class="card-title">Add New Item</div>
@@ -46,15 +44,20 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-
-                                @if ($errors->any())
-                                    @foreach ($errors->all() as $err)
-                                        <li class="text-danger">{{ $err }}</li>
-                                    @endforeach
-                                @endif
+                                <div class="form-group">
+                                    <label for="largeInput">Item Name</label>
+                                    <input type="text" class="form-control form-control" placeholder="pancake"
+                                        id="itemname" name="itemname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="quantity">Stock</label>
+                                    <input type="number" id="quantity" name="itemStock" min="0" max="1000000"
+                                        style="width: 200px" class="form-control">
+                                </div>
+                                <div class="card mt-4">
+                                    <button class="btn btn-success">Insert New Item</button>
+                                </div>
                             </div>
-
                         </form>
                     </div>
                 </div>

@@ -62,13 +62,6 @@
                                                     <td>{{ $brand->brand_id }}</td>
                                                     <td>{{ $brand->brand_name }}</td>
                                                     <td>
-                                                        {{-- <div class="form-button-action">
-                                                            <button type="button" data-toggle="tooltip" title=""
-                                                                class="btn btn-link btn-primary btn-lg"
-                                                                data-original-title="Edit User">
-                                                                <i class="fa fa-edit"></i>
-                                                            </button>
-                                                        </div> --}}
                                                         <div class="d-flex justify-content-center">
                                                             <a style="cursor: pointer"
                                                                 data-target="#editModalCenter{{ $brand->id }}"
