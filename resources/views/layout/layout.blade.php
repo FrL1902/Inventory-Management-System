@@ -147,7 +147,7 @@
                         </li>
                         <li class="nav-item @yield('managecustomerbutton')">
                             <a data-toggle="collapse" href="#customer">
-                                <i class="fas fa-user"></i>
+                                <i class="fa fa-users"></i>
                                 <p>Manage Customer</p>
                                 <span class="caret"></span>
                             </a>
@@ -168,7 +168,7 @@
                         </li>
                         <li class="nav-item @yield('managebrandbutton')">
                             <a data-toggle="collapse" href="#brand">
-                                <i class="fas fa-user"></i>
+                                <i class="fa fa-th-large"></i>
                                 <p>Manage Brands</p>
                                 <span class="caret"></span>
                             </a>
@@ -189,10 +189,11 @@
                         </li>
                         <li class="nav-item @yield('manageitembutton')">
                             <a data-toggle="collapse" href="#item">
-                                <i class="fas fa-user"></i>
+                                <i class="fa fa-truck"></i>
                                 <p>Manage Items</p>
                                 <span class="caret"></span>
                             </a>
+                            {{-- color of the pressed button is style="background-color: #f7f7f7" --}}
                             <div class="collapse @yield('showmanageitem')" id="item">
                                 <ul class="nav nav-collapse">
                                     <li class="@yield('newitem')">
@@ -203,6 +204,11 @@
                                     <li class="@yield('manageitem')">
                                         <a href="/manageItem">
                                             <span class="sub-item">Edit Items</span>
+                                        </a>
+                                    </li>
+                                    <li class="@yield('managehistory')">
+                                        <a href="/manageHistory">
+                                            <span class="sub-item">History</span>
                                         </a>
                                     </li>
                                 </ul>
