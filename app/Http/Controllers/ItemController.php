@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Item;
+use App\Models\StockHistory;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -61,8 +63,8 @@ class ItemController extends Controller
 
     public function item_history_page()
     {
-        $item = Item::all();
-        return view('itemHistory', compact('item')); //ini cuma sementara doang pake item, ntar harusnya bikin tabel baru lagi
+        $history = StockHistory::all();
+        return view('itemHistory', compact('history')); //ini cuma sementara doang pake item, ntar harusnya bikin tabel baru lagi
     }
 
     public function deleteItem($id)
@@ -104,7 +106,11 @@ class ItemController extends Controller
 
     public function addItemStock(Request $request)
     {
-        // dd($request->itemAddStock);
+        // dd($request->userIdHidden);
+
+        $userInfo = User::where('id', $request->userIdHidden)->first();
+
+        //proses add item
         $itemInfo = Item::where('id', $request->itemIdHidden)->first();
 
         $newValue = $itemInfo->stocks + $request->itemAddStock;
@@ -114,6 +120,19 @@ class ItemController extends Controller
         ]);
 
         $request->session()->flash('sukses_addStock', $itemInfo->item_name);
+        //end process add item
+
+        //proses history
+        $history = new StockHistory();
+        $history->item_name = $itemInfo->item_name;
+        $history->stock_before = $itemInfo->stocks;
+        $history->stock_added = $request->itemAddStock;
+        $history->stock_taken = 0;
+        $history->stock_now = $newValue;
+        $history->user_who_did = $userInfo->name;
+
+        $history->save();
+
 
         return redirect('manageItem');
     }
@@ -121,6 +140,7 @@ class ItemController extends Controller
     public function reduceItemStock(Request $request)
     {
 
+        $userInfo = User::where('id', $request->userIdHidden)->first();
         // dd($request->itemReduceStock);
 
         $itemInfo = Item::where('id', $request->itemIdHidden)->first();
@@ -132,6 +152,17 @@ class ItemController extends Controller
         ]);
 
         $request->session()->flash('sukses_reduceStock', $itemInfo->item_name);
+
+        $history = new StockHistory();
+        $history->item_name = $itemInfo->item_name;
+        $history->stock_before = $itemInfo->stocks;
+        $history->stock_added = 0;
+        $history->stock_taken = $request->itemReduceStock;
+        $history->stock_now = $newValue;
+        $history->user_who_did = $userInfo->name;
+
+        $history->save();
+
 
         return redirect('manageItem');
     }

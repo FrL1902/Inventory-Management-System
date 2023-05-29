@@ -219,6 +219,9 @@
                                                                                 <input type="hidden" class="form-control"
                                                                                     name="itemIdHidden"
                                                                                     value="{{ $item->id }}">
+                                                                                <input type="hidden" class="form-control"
+                                                                                    name="userIdHidden"
+                                                                                    value="{{ auth()->user()->id }}">
                                                                             </div>
                                                                         </form>
                                                                     </div>
@@ -265,6 +268,9 @@
                                                                                 <input type="hidden" class="form-control"
                                                                                     name="itemIdHidden"
                                                                                     value="{{ $item->id }}">
+                                                                                <input type="hidden" class="form-control"
+                                                                                    name="userIdHidden"
+                                                                                    value="{{ auth()->user()->id }}">
                                                                             </div>
                                                                         </form>
                                                                     </div>

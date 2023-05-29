@@ -77,16 +77,16 @@
                                         </tfoot>
                                         <tbody>
 
-                                            @foreach ($item as $item)
+                                            @foreach ($history as $history)
                                                 <tr>
-                                                    <td>{{ $item->stocks }}</td>
-                                                    <td>{{ $item->stocks }}</td>
-                                                    <td>{{ $item->stocks }}</td>
-                                                    <td>{{ $item->stocks }}</td>
-                                                    <td>{{ $item->stocks }}</td>
-                                                    <td>{{ $item->stocks }}</td>
-                                                    <td>{{ $item->stocks }}</td>
-                                                    <td>{{ $item->stocks }}
+                                                    <td>{{ $history->id }}</td>
+                                                    <td>{{ $history->item_name }}</td>
+                                                    <td>{{ $history->stock_before }}</td>
+                                                    <td>{{ $history->stock_added }}</td>
+                                                    <td>{{ $history->stock_taken }}</td>
+                                                    <td>{{ $history->stock_now }}</td>
+                                                    <td>{{ $history->created_at }}</td>
+                                                    <td>{{ $history->user_who_did }}
                                                     </td>
                                                 </tr>
                                             @endforeach
