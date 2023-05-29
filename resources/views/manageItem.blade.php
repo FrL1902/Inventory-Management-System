@@ -20,6 +20,16 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Sukses mengupdate data "{{ session('sukses_editItem') }}"</strong>
                     </div>
+                @elseif (session('sukses_addStock'))
+                    <div class="alert alert-primary alert-block" id="alerts">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Sukses menambah stock"{{ session('sukses_addStock') }}"</strong>
+                    </div>
+                @elseif (session('sukses_reduceStock'))
+                    <div class="alert alert-primary alert-block" id="alerts">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Sukses mengurangi stock "{{ session('sukses_reduceStock') }}"</strong>
+                    </div>
                 @elseif ($errors->any())
                     <div class="alert alert-danger alert-block" id="alerts">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -69,6 +79,20 @@
                                                     <td>
                                                         <div class="d-flex justify-content-center">
                                                             <a style="cursor: pointer"
+                                                                data-target="#addModalCenter{{ $item->id }}"
+                                                                data-toggle="modal">
+                                                                <i class="fa fa-arrow-up mt-3 text-warning"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Add Stock"></i>
+                                                            </a>
+                                                            <a class="ml-3 mb-2" style="cursor: pointer"
+                                                                data-target="#reduceModalCenter{{ $item->id }}"
+                                                                data-toggle="modal">
+                                                                <i class="fa fa-arrow-down mt-3 text-warning"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Reduce Stock"></i>
+                                                            </a>
+                                                            <a style="cursor: pointer" class="ml-3 mb-2"
                                                                 data-target="#editModalCenter{{ $item->id }}"
                                                                 data-toggle="modal">
                                                                 <i class="fa fa-edit mt-3 text-primary"
@@ -139,6 +163,96 @@
                                                                                         aria-label=""
                                                                                         aria-describedby="basic-addon1"
                                                                                         name="itemnameformupdate" required>
+                                                                                    <div class="card mt-5 ">
+                                                                                        <button id=""
+                                                                                            class="btn btn-primary">Update
+                                                                                            Data</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <input type="hidden" class="form-control"
+                                                                                    name="itemIdHidden"
+                                                                                    value="{{ $item->id }}">
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="modal fade" id="addModalCenter{{ $item->id }}"
+                                                            tabindex="-1" role="dialog"
+                                                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title"
+                                                                            id="exampleModalLongTitle">
+                                                                            Update Stock for "{{ $item->item_name }}"</h5>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form method="post" action="/addItemStock">
+                                                                            @csrf
+                                                                            <div class="card-body">
+                                                                                <div class="form-group">
+
+                                                                                    <label for="quantity">Stock</label>
+                                                                                    <input type="number" id="quantity"
+                                                                                        name="itemAddStock" min="1"
+                                                                                        max="1000000" style="width: 100%"
+                                                                                        class="form-control"
+                                                                                        placeholder="minimum 1">
+
+                                                                                    <div class="card mt-5 ">
+                                                                                        <button id=""
+                                                                                            class="btn btn-primary">Update
+                                                                                            Data</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <input type="hidden" class="form-control"
+                                                                                    name="itemIdHidden"
+                                                                                    value="{{ $item->id }}">
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="modal fade" id="reduceModalCenter{{ $item->id }}"
+                                                            tabindex="-1" role="dialog"
+                                                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title"
+                                                                            id="exampleModalLongTitle">
+                                                                            Reduce Stock for "{{ $item->item_name }}"</h5>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form method="post" action="/reduceItemStock">
+                                                                            @csrf
+                                                                            <div class="card-body">
+                                                                                <div class="form-group">
+
+                                                                                    <label for="quantity">Stock</label>
+                                                                                    <input type="number" id="quantity"
+                                                                                        name="itemReduceStock"
+                                                                                        min="1"
+                                                                                        max="{{ $item->stocks }}"
+                                                                                        style="width: 100%"
+                                                                                        class="form-control"
+                                                                                        placeholder="minimum 1">
+
                                                                                     <div class="card mt-5 ">
                                                                                         <button id=""
                                                                                             class="btn btn-primary">Update

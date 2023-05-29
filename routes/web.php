@@ -59,4 +59,6 @@ Route::post('/makeItem', [ItemController::class, 'makeItem']);
 Route::get('/manageItem',[ItemController::class, 'manage_item_page']);
 Route::get('/deleteItem/{id}',[ItemController::class, 'deleteItem']);
 Route::post('/updateItem',[ItemController::class, 'updateItem']);
+Route::post('/addItemStock',[ItemController::class, 'addItemStock']);
+Route::post('/reduceItemStock',[ItemController::class, 'reduceItemStock']);
 Route::get('/manageHistory',[ItemController::class, 'item_history_page']);

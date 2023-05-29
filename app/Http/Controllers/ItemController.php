@@ -30,7 +30,14 @@ class ItemController extends Controller
         // ini pada kurang validasi, terutama angkanya tuh, harus pake php biar validasi manual kyknya, sebenernhya kyknya sihudah bisa sama html, tp ya validasi aja lg
         $item->brand_id = $request->brandidforitem;
         $item->item_name = $request->itemname;
-        $item->stocks = $request->itemStock;
+
+        //ini kalo input angkanya null, di set ke 0
+        if (is_null($request->itemStock)) {
+            $item->stocks = 0;
+        } else {
+            $item->stocks = $request->itemStock;
+        }
+
 
         $item->save();
 
@@ -89,6 +96,40 @@ class ItemController extends Controller
         ]);
 
         $request->session()->flash('sukses_editItem', $oldItemName);
+
+        return redirect('manageItem');
+    }
+
+    public function addItemStock(Request $request)
+    {
+        // dd($request->itemAddStock);
+        $itemInfo = Item::where('id', $request->itemIdHidden)->first();
+
+        $newValue = $itemInfo->stocks + $request->itemAddStock;
+
+        Item::where('id', $request->itemIdHidden)->update([
+            'stocks' => $newValue,
+        ]);
+
+        $request->session()->flash('sukses_addStock', $itemInfo->item_name);
+
+        return redirect('manageItem');
+    }
+
+    public function reduceItemStock(Request $request)
+    {
+
+        // dd($request->itemReduceStock);
+
+        $itemInfo = Item::where('id', $request->itemIdHidden)->first();
+
+        $newValue = $itemInfo->stocks - $request->itemReduceStock;
+
+        Item::where('id', $request->itemIdHidden)->update([
+            'stocks' => $newValue,
+        ]);
+
+        $request->session()->flash('sukses_reduceStock', $itemInfo->item_name);
 
         return redirect('manageItem');
     }
