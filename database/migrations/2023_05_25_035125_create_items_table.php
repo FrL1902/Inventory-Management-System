@@ -15,6 +15,7 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
+            $table->string('item_id')->unique();
             $table->string('item_name');
             $table->foreignId('brand_id');
             $table->foreign('brand_id')->references('id')->on('brand')->onDelete('cascade'); //cascade maksudnya kalo parent nya di delete, anaknya jg

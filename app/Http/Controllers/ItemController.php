@@ -24,9 +24,11 @@ class ItemController extends Controller
         // ]);
 
         $request->validate([
+            'itemid' => 'required|unique:App\Models\Item,item_id|min:3|max:50',
             'itemname' => 'required|unique:App\Models\Item,item_name|min:3|max:75',
         ]);
 
+        $item->item_id = $request->itemid;
         // ini pada kurang validasi, terutama angkanya tuh, harus pake php biar validasi manual kyknya, sebenernhya kyknya sihudah bisa sama html, tp ya validasi aja lg
         $item->brand_id = $request->brandidforitem;
         $item->item_name = $request->itemname;

@@ -51,6 +51,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Brand</th>
+                                                <th>Item ID</th>
                                                 <th>Item Name</th>
                                                 <th>Stocks</th>
                                                 <th>First Added at</th>
@@ -61,6 +62,7 @@
                                         <tfoot>
                                             <tr>
                                                 <th>Brand</th>
+                                                <th>Item ID</th>
                                                 <th>Item Name</th>
                                                 <th>Stocks</th>
                                                 <th>First Added at</th>
@@ -72,6 +74,7 @@
                                             @foreach ($item as $item)
                                                 <tr>
                                                     <td>{{ $item->brand->brand_name }}</td>
+                                                    <td>{{ $item->item_id }}</td>
                                                     <td>{{ $item->item_name }}</td>
                                                     <td>{{ $item->stocks }}</td>
                                                     <td>{{ $item->created_at }}</td>

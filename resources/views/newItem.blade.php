@@ -45,6 +45,11 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <label for="largeInput">Item ID</label>
+                                    <input type="text" class="form-control form-control" placeholder="AA001"
+                                        id="itemid" name="itemid">
+                                </div>
+                                <div class="form-group">
                                     <label for="largeInput">Item Name</label>
                                     <input type="text" class="form-control form-control" placeholder="pancake"
                                         id="itemname" name="itemname">
