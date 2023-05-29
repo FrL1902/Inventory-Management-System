@@ -1,8 +1,8 @@
 @extends('layout.layout')
 
-@section('managehistorybutton', 'active')
+@section('manageitembutton', 'active')
 @section('managehistory', 'active')
-@section('showmanagehistory', 'show')
+@section('showmanageitem', 'show')
 
 @section('content')
     <div class="main-panel">
@@ -61,7 +61,7 @@
                                                 Stock Added // jelas kali ya darimana, figure it out
                                                 Stock Taken // jelas kali ya darimana, figure it out
                                                 Stock Now // jelas kali ya darimana, figure it out
-                                                Updated At : ini pake created at
+                                                Updated At : ini tunjukin created at
                                                 By User : ini pake auth --}}
 
                                                 <th>History ID</th>
@@ -86,95 +86,7 @@
                                                     <td>{{ $item->stocks }}</td>
                                                     <td>{{ $item->stocks }}</td>
                                                     <td>{{ $item->stocks }}</td>
-
-
                                                     <td>{{ $item->stocks }}
-                                                        {{-- <div class="d-flex justify-content-center">
-                                                            <a style="cursor: pointer"
-                                                                data-target="#editModalCenter{{ $brand->id }}"
-                                                                data-toggle="modal">
-                                                                <i class="fa fa-edit mt-3 text-primary"
-                                                                    data-toggle="tooltip"
-                                                                    data-original-title="Edit Brand"></i>
-                                                            </a>
-                                                            <a class="ml-3 mb-2" style="cursor: pointer"
-                                                                data-target="#deleteModal{{ $brand->id }}"
-                                                                data-toggle="modal">
-                                                                <i class="fa fa-times mt-3 text-danger"
-                                                                    data-toggle="tooltip"
-                                                                    data-original-title="Delete Brand"></i>
-                                                            </a>
-                                                        </div>
-
-                                                        <div class="modal fade" id="deleteModal{{ $brand->id }}">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                                            <strong>PENGHAPUSAN BRAND</strong>
-                                                                        </h5>
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <p>Apakah anda yakin untuk menghapus brand
-                                                                            "{{ $brand->brand_name }}" ?</p>
-                                                                        <p>Jika dihapus, item dan stock yang dimiliki brand
-                                                                            ini juga terhapus</p>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary"
-                                                                            id="close-modal"
-                                                                            data-dismiss="modal">Tidak</button>
-                                                                        <a href="/deleteBrand/{{ $brand->id }}"
-                                                                            class="btn btn-danger">YAKIN
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal fade" id="editModalCenter{{ $brand->id }}"
-                                                            tabindex="-1" role="dialog"
-                                                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLongTitle">
-                                                                            Update data for "{{ $brand->brand_name }}"</h5>
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <form method="post" action="/updateBrand">
-                                                                            @csrf
-                                                                            <div class="card-body">
-                                                                                <div class="form-group">
-                                                                                    <label>Brand Name</label>
-                                                                                    <input type="text"
-                                                                                        class="form-control"
-                                                                                        placeholder="brand name"
-                                                                                        aria-label=""
-                                                                                        aria-describedby="basic-addon1"
-                                                                                        name="brandnameformupdate" required>
-                                                                                    <div class="card mt-5 ">
-                                                                                        <button id=""
-                                                                                            class="btn btn-primary">Update
-                                                                                            Data</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <input type="hidden" class="form-control"
-                                                                                    name="brandIdHidden"
-                                                                                    value="{{ $brand->id }}">
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div> --}}
                                                     </td>
                                                 </tr>
                                             @endforeach
