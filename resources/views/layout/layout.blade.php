@@ -206,6 +206,16 @@
                                             <span class="sub-item">Edit Items</span>
                                         </a>
                                     </li>
+                                    <li class="@yield('newincoming')">
+                                        <a href="/newIncoming">
+                                            <span class="sub-item">Incoming Package</span>
+                                        </a>
+                                    </li>
+                                    <li class="@yield('newoutgoing')">
+                                        <a href="/newOutgoing">
+                                            <span class="sub-item">Outgoing Package</span>
+                                        </a>
+                                    </li>
                                     <li class="@yield('managehistory')">
                                         <a href="/manageHistory">
                                             <span class="sub-item">History</span>

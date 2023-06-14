@@ -64,7 +64,7 @@ class ItemController extends Controller
     public function item_history_page()
     {
         $history = StockHistory::all();
-        return view('itemHistory', compact('history')); //ini cuma sementara doang pake item, ntar harusnya bikin tabel baru lagi
+        return view('itemHistory', compact('history'));
     }
 
     public function deleteItem($id)
@@ -107,15 +107,20 @@ class ItemController extends Controller
     public function addItemStock(Request $request)
     {
         // dd($request->userIdHidden);
+        // dd(item_name)
+        // dd($request->incomingiditem);
 
         $userInfo = User::where('id', $request->userIdHidden)->first();
 
         //proses add item
-        $itemInfo = Item::where('id', $request->itemIdHidden)->first();
+        $itemInfo = Item::where('id', $request->incomingiditem)->first();
+
+        // dd($userInfo->name);
+        // dd($itemInfo->item_name);
 
         $newValue = $itemInfo->stocks + $request->itemAddStock;
 
-        Item::where('id', $request->itemIdHidden)->update([
+        Item::where('id', $request->incomingiditem)->update([
             'stocks' => $newValue,
         ]);
 
@@ -143,11 +148,11 @@ class ItemController extends Controller
         $userInfo = User::where('id', $request->userIdHidden)->first();
         // dd($request->itemReduceStock);
 
-        $itemInfo = Item::where('id', $request->itemIdHidden)->first();
+        $itemInfo = Item::where('id', $request->outgoingiditem)->first();
 
         $newValue = $itemInfo->stocks - $request->itemReduceStock;
 
-        Item::where('id', $request->itemIdHidden)->update([
+        Item::where('id', $request->outgoingiditem)->update([
             'stocks' => $newValue,
         ]);
 
@@ -165,5 +170,19 @@ class ItemController extends Controller
 
 
         return redirect('manageItem');
+    }
+
+    public function add_incoming_item_page()
+    {
+        $item = Item::all();
+        $history = StockHistory::all();
+        return view('incomingItem', compact('history', 'item'));
+    }
+
+    public function add_outgoing_item_page()
+    {
+        $item = Item::all();
+        $history = StockHistory::all();
+        return view('outgoingItem', compact('history', 'item'));
     }
 }

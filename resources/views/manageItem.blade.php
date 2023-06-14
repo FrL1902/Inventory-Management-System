@@ -42,7 +42,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">Manage Existing Items and its Stocks</h4>
+                                    <h4 class="card-title">Manage Existing Items Data</h4>
+                                    {{-- <h4 class="card-title">Manage Existing Items and its Stocks</h4> --}}
                                 </div>
                             </div>
                             <div class="card-body">
@@ -81,7 +82,7 @@
                                                     <td>{{ $item->updated_at }}</td>
                                                     <td>
                                                         <div class="d-flex justify-content-center">
-                                                            <a style="cursor: pointer"
+                                                            {{-- <a style="cursor: pointer"
                                                                 data-target="#addModalCenter{{ $item->id }}"
                                                                 data-toggle="modal">
                                                                 <i class="fa fa-arrow-up mt-3 text-warning"
@@ -94,7 +95,7 @@
                                                                 <i class="fa fa-arrow-down mt-3 text-warning"
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Reduce Stock"></i>
-                                                            </a>
+                                                            </a> --}}
                                                             <a style="cursor: pointer" class="ml-3 mb-2"
                                                                 data-target="#editModalCenter{{ $item->id }}"
                                                                 data-toggle="modal">

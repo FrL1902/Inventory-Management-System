@@ -62,3 +62,5 @@ Route::post('/updateItem',[ItemController::class, 'updateItem']);
 Route::post('/addItemStock',[ItemController::class, 'addItemStock']);
 Route::post('/reduceItemStock',[ItemController::class, 'reduceItemStock']);
 Route::get('/manageHistory',[ItemController::class, 'item_history_page']);
+Route::get('/newIncoming', [ItemController::class, 'add_incoming_item_page']);
+Route::get('/newOutgoing', [ItemController::class, 'add_outgoing_item_page']);
