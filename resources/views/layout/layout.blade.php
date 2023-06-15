@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="/assets/css/azzara.min.css">
 </head>
 
+{{-- <body onload=display_ct();> --}}
 <body>
     <div class="wrapper">
         <!--
@@ -82,6 +83,11 @@
                                 <i class="fa fa-search"></i>
                             </a>
                         </li> --}}
+                        {{-- clock in navbar --}}
+                        {{-- <span id='ct'></span> --}}
+                        <div id="time" class="d-flex p-2" style="color: white; font-weight:bold"></div>
+
+
                         <li class="nav-item dropdown hidden-caret">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
                                 aria-expanded="false">
@@ -290,6 +296,38 @@
             });
         });
     </script>
+    {{-- <script type="text/javascript">
+        function display_c() {
+            var refresh = 1000; // Refresh rate in milli seconds
+            mytime = setTimeout('display_ct()', refresh)
+        }
+
+        // function display_ct() {
+        //     var x = new Date()
+        //     document.getElementById('ct').innerHTML = x;
+        //     display_c();
+        // }
+    </script> --}}
+
+    <script type="text/javascript">
+        function showTime() {
+          var date = new Date(),
+              utc = new Date(Date.UTC(
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate(),
+                date.getHours() - 7,
+                date.getMinutes(),
+                date.getSeconds()
+              ));
+
+          document.getElementById('time').innerHTML = utc.toLocaleTimeString();
+        }
+
+        setInterval(showTime, 1000);
+
+        // https://stackoverflow.com/questions/45944210/laravel-carbon-reloading-current-time
+      </script>
 </body>
 
 </html>
