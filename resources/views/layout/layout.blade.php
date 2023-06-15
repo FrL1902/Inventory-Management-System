@@ -281,7 +281,13 @@
     <script src="/assets/js/ready.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#add-row').DataTable({});
+            $('#add-row').DataTable({
+                //     dom: 'Bfrtip',
+                //     buttons: [
+                //         'copy', 'csv', 'excel', 'pdf', 'print'
+                //     ]
+                //
+            });
         });
     </script>
 </body>
