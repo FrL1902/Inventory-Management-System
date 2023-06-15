@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Exports;
+// namespace App;
 
 use App\Models\StockHistory;
 use App\Models\User;
+use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 // use Maatwebsite\Excel\Concerns\FromCollection;
 
@@ -19,10 +21,16 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 // }
 
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class UserExport implements FromQuery
+
+class UserExport implements FromQuery, ShouldAutoSize, WithHeadings
 {
     use Exportable;
+
+
 
     public function __construct(string $year)
     {
@@ -42,5 +50,8 @@ class UserExport implements FromQuery
         }
     }
 
-    // return (new InvoicesExport(2018))->download('invoices.xlsx');
+    public function headings(): array
+    {
+        return ["ID", "username", "Email", "Joined At", "Role", "Created At", "Updated At"];
+    }
 }
