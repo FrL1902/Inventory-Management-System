@@ -64,3 +64,7 @@ Route::post('/reduceItemStock',[ItemController::class, 'reduceItemStock']);
 Route::get('/manageHistory',[ItemController::class, 'item_history_page']);
 Route::get('/newIncoming', [ItemController::class, 'add_incoming_item_page']);
 Route::get('/newOutgoing', [ItemController::class, 'add_outgoing_item_page']);
+
+
+// export
+Route::post('/exportExcel',[UserController::class, 'exportExcel'])->name('exportExcel');

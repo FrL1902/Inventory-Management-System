@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UserExport;
 use App\Models\User;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use Symfony\Component\Console\Input\Input;
 
@@ -80,12 +82,19 @@ class UserController extends Controller
             'usernameformupdate' => 'required|unique:App\Models\User,name|min:4|max:16',
         ]);
 
-        User::where('id',$request->userIdHidden)->update([
+        User::where('id', $request->userIdHidden)->update([
             'name' => $request->usernameformupdate,
         ]);
 
         $request->session()->flash('sukses_editUser', $oldUsername);
 
         return redirect('manageUser');
+    }
+
+    public function exportExcel(Request $request)
+    {
+        // dd($request->userLevel);
+        // return Excel::download(new UserExport, 'User Warehouse.xlsx');
+        return (new UserExport($request->userLevel))->download('User Warehouse.xlsx');
     }
 }
