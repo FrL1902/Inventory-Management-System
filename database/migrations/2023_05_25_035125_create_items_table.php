@@ -19,6 +19,8 @@ class CreateItemsTable extends Migration
             $table->string('item_name');
             $table->foreignId('brand_id');
             $table->foreign('brand_id')->references('id')->on('brand')->onDelete('cascade'); //cascade maksudnya kalo parent nya di delete, anaknya jg
+            $table->foreignId('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customer')->onDelete('cascade');
             $table->integer('stocks');
             $table->string('item_pictures');
             $table->timestamps();
