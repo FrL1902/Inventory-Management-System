@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Customer;
 use App\Models\Item;
 use App\Models\StockHistory;
 use App\Models\User;
@@ -26,21 +27,28 @@ class ItemController extends Controller
         //     'brandname' => 'required|min:2|max:50',
         // ]);
 
-        $file = $request->file('itemImage');
-        $imageName = time().'.'.$file->getClientOriginalExtension();
-        Storage::putFileAs('public/itemImages', $file, $imageName);
-        $imageName = 'itemImages/'.$imageName;
+        $customer = Brand::where('id', $request->brandidforitem)->first();
+
+        // dd($customer->customer_id);
+
 
         $request->validate([
             'itemid' => 'required|unique:App\Models\Item,item_id|min:3|max:50',
             'itemname' => 'required|unique:App\Models\Item,item_name|min:3|max:75',
+            'itemImage' => 'required|mimes:jpeg,png,jpg',
         ]);
+
+        $file = $request->file('itemImage');
+        $imageName = time() . '.' . $file->getClientOriginalExtension();
+        Storage::putFileAs('public/itemImages', $file, $imageName);
+        $imageName = 'itemImages/' . $imageName;
 
         $item->item_id = $request->itemid;
         // ini pada kurang validasi, terutama angkanya tuh, harus pake php biar validasi manual kyknya, sebenernhya kyknya sihudah bisa sama html, tp ya validasi aja lg
         $item->brand_id = $request->brandidforitem;
         $item->item_name = $request->itemname;
         $item->item_pictures = $imageName;
+        $item->customer_id = $customer->customer_id;
 
         //ini kalo input angkanya null, di set ke 0
         if (is_null($request->itemStock)) {
@@ -92,21 +100,69 @@ class ItemController extends Controller
 
     public function updateItem(Request $request)
     {
-        $itemInfo = Item::where('id', $request->itemIdHidden)->first();
+        // kalo ada data yang dimasukin
+        if ($request->file('itemImage') || $request->itemnameformupdate) {
 
-        // dd($request->itemnameformupdate);
+            $itemInfo = Item::where('id', $request->itemIdHidden)->first();
 
-        $oldItemName = $itemInfo->item_name;
+            $file = $request->file('itemImage');
 
-        $request->validate([
-            'itemnameformupdate' => 'required|unique:App\Models\Item,item_name|min:3|max:75',
-        ]);
 
-        Item::where('id', $request->itemIdHidden)->update([
-            'item_name' => $request->itemnameformupdate,
-        ]);
+            // validasi data buat mastiin nggak null
+            if ($file != null) {
+                $request->validate([
+                    'itemImage' => 'mimes:jpeg,png,jpg',
+                ]);
+            }
+            if ($request->itemnameformupdate != null) {
+                $request->validate([
+                    'itemnameformupdate' => 'required|unique:App\Models\Item,item_name|min:3|max:75',
+                ]);
+            }
 
-        $request->session()->flash('sukses_editItem', $oldItemName);
+
+            // buat update image
+            if ($file != null) {
+                // dd("ms");
+                $request->validate([
+                    'itemImage' => 'mimes:jpeg,png,jpg',
+                ]);
+
+                $imageName = time() . '.' . $file->getClientOriginalExtension();
+                Storage::putFileAs('public/itemImages', $file, $imageName);
+                $imageName = 'itemImages/' . $imageName;
+
+                Storage::delete('public/' . $itemInfo->item_pictures);
+
+                Item::where('id', $request->itemIdHidden)->update([
+                    'item_pictures' => $imageName,
+                ]);
+            } else {
+                // dd("lha");
+                Item::where('id', $request->itemIdHidden)->update([
+                    'item_pictures' => $itemInfo->item_pictures,
+                ]);
+            }
+
+            // buat update nama
+            if ($request->itemnameformupdate != null) {
+
+                $oldItemName = $itemInfo->item_name;
+
+                Item::where('id', $request->itemIdHidden)->update([
+                    'item_name' => $request->itemnameformupdate,
+                ]);
+
+                $request->session()->flash('sukses_editItem', $oldItemName);
+            } else {
+                $request->session()->flash('sukses_editItem', $request->item_name);
+            }
+        } else {
+            $request->session()->flash('noData_editItem', 'tidak ada');
+        }
+
+
+
 
         return redirect('manageItem');
     }

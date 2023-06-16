@@ -30,6 +30,11 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Sukses mengurangi stock "{{ session('sukses_reduceStock') }}"</strong>
                     </div>
+                @elseif (session('noData_editItem'))
+                    <div class="alert alert-danger alert-block" id="alerts">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Update Failed: no inputted data</strong>
+                    </div>
                 @elseif ($errors->any())
                     <div class="alert alert-danger alert-block" id="alerts">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -51,6 +56,7 @@
                                     <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
+                                                <th>Customer</th>
                                                 <th>Brand</th>
                                                 <th>Item ID</th>
                                                 <th>Item Name</th>
@@ -63,6 +69,7 @@
                                         </thead>
                                         <tfoot>
                                             <tr>
+                                                <th>Customer</th>
                                                 <th>Brand</th>
                                                 <th>Item ID</th>
                                                 <th>Item Name</th>
@@ -76,13 +83,18 @@
                                         <tbody>
                                             @foreach ($item as $item)
                                                 <tr>
+                                                    <td>{{ $item->customer->customer_name }}</td>
                                                     <td>{{ $item->brand->brand_name }}</td>
                                                     <td>{{ $item->item_id }}</td>
                                                     <td>{{ $item->item_name }}</td>
                                                     <td>{{ $item->stocks }}</td>
                                                     <td>{{ $item->created_at }}</td>
                                                     <td>{{ $item->updated_at }}</td>
-                                                    <td><img class="img-fluid max-width: 200px" src="{{ Storage::url($item->item_pictures)}}" alt="bruh"></td>
+                                                    <td><img class="rounded mx-auto d-block"
+                                                            style="width: 100px;
+                                                        height: auto;"
+                                                            src="{{ Storage::url($item->item_pictures) }}"
+                                                            alt="no picture"></td>
                                                     <td>
                                                         <div class="d-flex justify-content-center">
                                                             {{-- <a style="cursor: pointer"
@@ -151,31 +163,63 @@
                                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLongTitle">
-                                                                            Update data for "{{ $item->item_name }}"</h5>
+                                                                        <div class="d-flex flex-column">
+                                                                            <div class="p-2">
+                                                                                <h3 class="modal-title"
+                                                                                    id="exampleModalLongTitle">
+                                                                                    <strong> Update data for
+                                                                                        "{{ $item->item_name }}"<br></strong>
+                                                                                </h3>
+                                                                            </div>
+                                                                            <div class="p-2">
+                                                                                <h5> Isi
+                                                                                    data yang ingin diubah</h5>
+                                                                            </div>
+                                                                        </div>
                                                                         <button type="button" class="close"
                                                                             data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <form method="post" action="/updateItem">
+                                                                        <form enctype="multipart/form-data" method="post"
+                                                                            action="/updateItem">
                                                                             @csrf
                                                                             <div class="card-body">
                                                                                 <div class="form-group">
-                                                                                    <label>Item Name</label>
-                                                                                    <input type="text"
-                                                                                        class="form-control"
-                                                                                        placeholder="item name"
-                                                                                        aria-label=""
-                                                                                        aria-describedby="basic-addon1"
-                                                                                        name="itemnameformupdate" required>
-                                                                                    <div class="card mt-5 ">
-                                                                                        <button id=""
-                                                                                            class="btn btn-primary">Update
-                                                                                            Data</button>
+                                                                                    <div class="form-group">
+                                                                                        <label>Item Name</label>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            placeholder="item name"
+                                                                                            aria-label=""
+                                                                                            aria-describedby="basic-addon1"
+                                                                                            name="itemnameformupdate">
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label for="largeInput">Item
+                                                                                            Image</label>
+                                                                                        <input type="file"
+                                                                                            class="form-control form-control"
+                                                                                            id="itemImage"
+                                                                                            name="itemImage">
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <div class="card mt-5 ">
+                                                                                            <button id=""
+                                                                                                class="btn btn-primary">Update
+                                                                                                Data</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <h5 style="text-align: center;">
+                                                                                            kolom
+                                                                                            yang tidak diisi
+                                                                                            akan menggunakan data yang
+                                                                                            sebelumnya</h5>
                                                                                     </div>
                                                                                 </div>
+
                                                                                 <input type="hidden" class="form-control"
                                                                                     name="itemIdHidden"
                                                                                     value="{{ $item->id }}">
