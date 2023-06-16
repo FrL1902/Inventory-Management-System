@@ -105,6 +105,13 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                 <option value="gudang">gudang</option>
                                                                 <option value="all">SEMUA USER</option>
                                                             </select>
+
+                                                            <label for="startRange">Start Date Range</label>
+                                                            <input type="date" class="form-control" id="startRange"
+                                                                required name="startRange">
+                                                            <label for="endRange">End Date Range</label>
+                                                            <input type="date" class="form-control" id="endRange"
+                                                                required name="endRange">
                                                         </div>
 
                                                         <div class="form-group">

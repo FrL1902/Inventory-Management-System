@@ -32,9 +32,11 @@ class UserExport implements FromQuery, ShouldAutoSize, WithHeadings
 
 
 
-    public function __construct(string $year)
+    public function __construct(string $role, string $startDate, string $endDate)
     {
-        $this->year = $year;
+        $this->level = $role;
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
 
     // INI PAKE YEAR CUMA RANDOM VARIABEL DOANG BUAT TESTING, PLS DONT USE LIKE THIS
@@ -43,11 +45,35 @@ class UserExport implements FromQuery, ShouldAutoSize, WithHeadings
     {
         // return User::query();
         // return User::query()->where('level', 'admin');
-        if ($this->year == "all") {
-            return User::query(); //kalo dikosongin bakal milih semua
+        // dd($this->startDate, $this->endDate);
+
+
+        $from = date($this->startDate);
+        $to = date($this->endDate);
+        // dd(132);
+
+
+        if ($this->level == "all") {
+            // return User::query(); //kalo dikosongin bakal milih semua
+            // return User::query()->whereBetween('joined_at', [$from, $to]);
+            return User::query()->whereBetween('joined_at', [$this->startDate, $this->endDate]);
         } else {
-            return User::query()->where('level', $this->year);
+            // $tes = User::query()->where('level', $this->year)->whereBetween('joined_at', [$this->startDate, $this->endDate]);
+            // dd($tes);
+            // return User::query()->where('level', $this->level)->whereBetween('joined_at', [$from, $to]);
+            return User::query()->where('level', $this->level)->whereBetween('joined_at', [$this->startDate, $this->endDate]);
         }
+
+        // $bookingDate = DateTime::createFromFormat('Y-m-d', $request->bookingDate);
+        // $bookingDate->setTime(0, 0, 0);
+        // $from = clone $bookingDate;
+        // $bookingDate->setTime(23, 59, 59);
+        // $to = clone $bookingDate;
+
+        // $booking = Booking::where('area_id', '=',  $request->areaId)
+        //         ->where('cancelled', '=',  '0')
+        //         ->whereBetween('start_date', [$from, $to])
+        //         ->get();
     }
 
     public function headings(): array
