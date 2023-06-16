@@ -200,9 +200,11 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                 role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title"
+                                                                        <h3 class="modal-title"
                                                                             id="exampleModalLongTitle">
-                                                                            Update data for "{{ $data->name }}"</h5>
+                                                                            <strong>Update data for
+                                                                                "{{ $data->name }}"</strong>
+                                                                        </h3>
                                                                         <button type="button" class="close"
                                                                             data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
@@ -216,7 +218,7 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                                     <label>Username</label>
                                                                                     <input type="text"
                                                                                         class="form-control"
-                                                                                        placeholder="Username"
+                                                                                        placeholder="enter new username"
                                                                                         aria-label=""
                                                                                         aria-describedby="basic-addon1"
                                                                                         name="usernameformupdate"
