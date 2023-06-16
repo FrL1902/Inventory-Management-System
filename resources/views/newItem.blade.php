@@ -30,7 +30,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <form method="post" action="/makeItem">
+                        <form enctype="multipart/form-data" method="post" action="/makeItem">
                             @csrf
                             <div class="card-header">
                                 <div class="card-title">Add New Item</div>
@@ -58,6 +58,11 @@
                                     <label for="quantity">Stock</label>
                                     <input type="number" id="quantity" name="itemStock" min="0" max="1000000"
                                         style="width: 200px" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="largeInput">Item Image</label>
+                                    <input type="file" class="form-control form-control" id="itemImage"
+                                        name="itemImage">
                                 </div>
                                 <div class="card mt-4">
                                     <button class="btn btn-success">Insert New Item</button>

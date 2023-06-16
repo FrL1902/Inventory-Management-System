@@ -57,6 +57,7 @@
                                                 <th>Stocks</th>
                                                 <th>First Added at</th>
                                                 <th>Last Updated at</th>
+                                                <th>Item Image</th>
                                                 <th style="width: 10%">Action</th>
                                             </tr>
                                         </thead>
@@ -68,6 +69,7 @@
                                                 <th>Stocks</th>
                                                 <th>First Added at</th>
                                                 <th>Last Updated at</th>
+                                                <th>Item Image</th>
                                                 <th>Action</th>
                                             </tr>
                                         </tfoot>
@@ -80,6 +82,7 @@
                                                     <td>{{ $item->stocks }}</td>
                                                     <td>{{ $item->created_at }}</td>
                                                     <td>{{ $item->updated_at }}</td>
+                                                    <td><img class="img-fluid max-width: 200px" src="{{ Storage::url($item->item_pictures)}}" alt="bruh"></td>
                                                     <td>
                                                         <div class="d-flex justify-content-center">
                                                             {{-- <a style="cursor: pointer"

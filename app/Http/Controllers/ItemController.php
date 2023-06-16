@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\StockHistory;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -25,6 +26,11 @@ class ItemController extends Controller
         //     'brandname' => 'required|min:2|max:50',
         // ]);
 
+        $file = $request->file('itemImage');
+        $imageName = time().'.'.$file->getClientOriginalExtension();
+        Storage::putFileAs('public/itemImages', $file, $imageName);
+        $imageName = 'itemImages/'.$imageName;
+
         $request->validate([
             'itemid' => 'required|unique:App\Models\Item,item_id|min:3|max:50',
             'itemname' => 'required|unique:App\Models\Item,item_name|min:3|max:75',
@@ -34,6 +40,7 @@ class ItemController extends Controller
         // ini pada kurang validasi, terutama angkanya tuh, harus pake php biar validasi manual kyknya, sebenernhya kyknya sihudah bisa sama html, tp ya validasi aja lg
         $item->brand_id = $request->brandidforitem;
         $item->item_name = $request->itemname;
+        $item->item_pictures = $imageName;
 
         //ini kalo input angkanya null, di set ke 0
         if (is_null($request->itemStock)) {
