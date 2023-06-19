@@ -36,7 +36,8 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form method="post" action="/addItemStock">
+                                                    <form enctype="multipart/form-data" method="post"
+                                                        action="/addItemStock">
                                                         @csrf
 
                                                         <div class="card-body">
@@ -52,40 +53,44 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="incomingidforitem">Images</label>
-                                                                <input class="form-control" type="text"
-                                                                    placeholder="Image, not implemented yet" readonly>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label for="incomingidforitem">Description</label>
-                                                                <input class="form-control" type="text"
-                                                                    placeholder="Description, not implemented yet" readonly>
-                                                            </div>
-
-
-                                                            <div class="form-group">
-
                                                                 <label for="quantity">Stock</label>
                                                                 <input type="number" id="quantity" name="itemAddStock"
                                                                     min="1" max="1000000" style="width: 100%"
                                                                     class="form-control" placeholder="minimum 1" required>
+                                                            </div>
 
+                                                            <div class="form-group">
+                                                                <label for="incomingidforitem">Description</label>
+                                                                <textarea class="form-control" id="incomingidforitem" rows="3" placeholder="deskripsi incoming package"
+                                                                    name="incomingItemDesc" required></textarea>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="largeInput">Incoming Package Image</label>
+                                                                <input type="file" class="form-control form-control"
+                                                                    id="itemImage" name="incomingItemImage" required>
                                                                 <div class="card mt-5 ">
                                                                     <button id="" class="btn btn-primary">Insert
                                                                         Data</button>
                                                                 </div>
                                                             </div>
+
                                                             <input type="hidden" class="form-control" name="userIdHidden"
                                                                 value="{{ auth()->user()->id }}">
+
+                                                            <input type="hidden" class="form-control"
+                                                                name="customerIdHidden" value="{{ $item->customer->id }}">
+                                                            <input type="hidden" class="form-control" name="brandIdHidden"
+                                                                value="{{ $item->brand->id }}">
+                                                            <input type="hidden" class="form-control" name="itemIdHidden"
+                                                                value="{{ $item->id }}">
+
                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    {{-- <h4 class="card-title">Manage Existing Items and its Stocks</h4> --}}
                                 </div>
                             </div>
                             <div class="card-body">
@@ -93,6 +98,8 @@
                                     <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
+                                                <th>Customer</th>
+                                                <th>Brand</th>
                                                 <th>Item ID</th>
                                                 <th>Item Name</th>
                                                 <th>Stock Added</th>
@@ -103,6 +110,8 @@
                                         </thead>
                                         <tfoot>
                                             <tr>
+                                                <th>Customer</th>
+                                                <th>Brand</th>
                                                 <th>Item ID</th>
                                                 <th>Item Name</th>
                                                 <th>Stock Added</th>
@@ -112,17 +121,24 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            @foreach ($history as $history)
-                                                @if ($history->stock_added > 0)
-                                                    <tr>
-                                                        <td>Item ID</td>
-                                                        <td>{{ $history->item_name }}</td>
-                                                        <td>{{ $history->stock_added }}</td>
-                                                        <td>{{ $history->created_at }}</td>
-                                                        <td>Description</td>
-                                                        <td>Gambar</td>
-                                                    </tr>
-                                                @endif
+                                            @foreach ($incoming as $incoming)
+                                                <tr>
+                                                    <td>{{ $incoming->customer->customer_name }}</td>
+                                                    <td>{{ $incoming->brand->brand_name }}</td>
+                                                    <td>{{ $incoming->item_id }}</td>
+                                                    {{-- <td>{{ $incoming->customer_id }}</td>
+                                                    <td>{{ $incoming->brand_id }}</td>
+                                                    <td>{{ $incoming->item_id }}</td> --}}
+                                                    <td>{{ $incoming->item_name }}</td>
+                                                    <td>{{ $incoming->stock_added }}</td>
+                                                    <td>{{ $incoming->created_at }}</td>
+                                                    <td>{{ $incoming->description }}</td>
+                                                    <td><img class="rounded mx-auto d-block"
+                                                            style="width: 100px;
+                                                    height: auto;"
+                                                            src="{{ Storage::url($incoming->item_pictures) }}"
+                                                            alt="no picture"></td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>

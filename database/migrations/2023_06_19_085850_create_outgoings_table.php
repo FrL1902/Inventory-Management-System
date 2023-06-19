@@ -16,11 +16,11 @@ class CreateOutgoingsTable extends Migration
         Schema::create('outgoings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customer');
+            $table->foreign('customer_id')->references('id')->on('customer')->onDelete('cascade');
             $table->foreignId('brand_id');
-            $table->foreign('brand_id')->references('id')->on('brand');
+            $table->foreign('brand_id')->references('id')->on('brand')->onDelete('cascade');
             $table->foreignId('item_id');
-            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->string('item_name');
             $table->integer('stock_before');
             $table->integer('stock_taken'); //beda disini, antara incoming sama outgoing, tetep disuruh dipisah tabelnya

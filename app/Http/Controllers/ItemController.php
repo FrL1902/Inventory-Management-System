@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Customer;
+use App\Models\Incoming;
 use App\Models\Item;
+use App\Models\Outgoing;
 use App\Models\StockHistory;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -167,11 +169,16 @@ class ItemController extends Controller
         return redirect('manageItem');
     }
 
-    public function addItemStock(Request $request)
+    public function addItemStock(Request $request) //INCOMING, BARANG MASUK
     {
         // dd($request->userIdHidden);
         // dd(item_name)
         // dd($request->incomingiditem);
+
+        //   $request->customerIdHidden;
+        //     $request->brandIdHidden;
+        //    $request->itemIdHidden;
+        // dd($request->customerIdHidden);
 
         $userInfo = User::where('id', $request->userIdHidden)->first();
 
@@ -181,11 +188,35 @@ class ItemController extends Controller
         // dd($userInfo->name);
         // dd($itemInfo->item_name);
 
+        $request->validate([
+            'incomingItemImage' => 'required|mimes:jpeg,png,jpg',
+        ]);
+
+
+
         $newValue = $itemInfo->stocks + $request->itemAddStock;
 
-        Item::where('id', $request->incomingiditem)->update([
+        Item::where('id', $request->incomingiditem)->update([ //nambahin stock di tabel item
             'stocks' => $newValue,
         ]);
+
+        // masukin data ke tabel incoming
+        $incoming = new Incoming();
+        $incoming->customer_id = $request->customerIdHidden;
+        $incoming->brand_id = $request->brandIdHidden;
+        $incoming->item_id = $request->itemIdHidden;
+        $incoming->item_name = $itemInfo->item_name;
+        $incoming->stock_before = $itemInfo->stocks;
+        $incoming->stock_added = $request->itemAddStock;
+        $incoming->stock_now = $newValue;
+        $incoming->description = $request->incomingItemDesc;
+
+        $file = $request->file('incomingItemImage');
+        $imageName = time() . '.' . $file->getClientOriginalExtension();
+        Storage::putFileAs('public/incomingItemImage', $file, $imageName);
+        $imageName = 'incomingItemImage/' . $imageName;
+        $incoming->item_pictures = $imageName;
+        $incoming->save();
 
         $request->session()->flash('sukses_addStock', $itemInfo->item_name);
         //end process add item
@@ -205,7 +236,7 @@ class ItemController extends Controller
         return redirect('manageItem');
     }
 
-    public function reduceItemStock(Request $request)
+    public function reduceItemStock(Request $request) //OUTGOING, BARANG KELUAR
     {
 
         $userInfo = User::where('id', $request->userIdHidden)->first();
@@ -237,15 +268,36 @@ class ItemController extends Controller
 
     public function add_incoming_item_page()
     {
-        $item = Item::all();
-        $history = StockHistory::all();
-        return view('incomingItem', compact('history', 'item'));
+        $item = Item::all(); //buat update
+        // $history = StockHistory::all(); //old table,
+        // return view('incomingItem', compact('history', 'item'));
+        $incoming = Incoming::all();
+
+        if ($item->isempty()) {
+            // dd('kosong');
+            $message = "no item is present, please input an item before accessing the \"outgoing\" or \"incoming\" page";
+            session()->flash('no_item_incoming', $message);
+
+            $brand = Brand::all();
+            return view('newItem', compact('brand'));
+        } else {
+            return view('incomingItem', compact('incoming', 'item'));
+        }
     }
 
     public function add_outgoing_item_page()
     {
         $item = Item::all();
         $history = StockHistory::all();
-        return view('outgoingItem', compact('history', 'item'));
+
+        if ($item->isempty()) {
+            $message = "no item is present, please input an item before accessing the \"outgoing\" or \"incoming\" page";
+            session()->flash('no_item_outgoing', $message);
+
+            $brand = Brand::all();
+            return view('newItem', compact('brand'));
+        } else {
+            return view('outgoingItem', compact('history', 'item'));
+        }
     }
 }

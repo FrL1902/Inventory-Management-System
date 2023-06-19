@@ -18,6 +18,16 @@
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>Item "{{ session('sukses_addNewItem') }}" is successfully added</strong>
                 </div>
+            @elseif (session('no_item_incoming'))
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ session('no_item_incoming') }}</strong>
+                </div>
+            @elseif (session('no_item_outgoing'))
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ session('no_item_outgoing') }}</strong>
+                </div>
             @endif
 
             @if ($errors->any())

@@ -16,11 +16,11 @@ class CreateIncomingsTable extends Migration
         Schema::create('incomings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customer');
+            $table->foreign('customer_id')->references('id')->on('customer')->onDelete('cascade');
             $table->foreignId('brand_id');
-            $table->foreign('brand_id')->references('id')->on('brand');
+            $table->foreign('brand_id')->references('id')->on('brand')->onDelete('cascade');
             $table->foreignId('item_id');
-            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             // $table->integer('customer_id');
             // $table->integer('brand_id');
             // $table->integer('item_id');

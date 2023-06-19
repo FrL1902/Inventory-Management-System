@@ -85,8 +85,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    {{-- <h4 class="card-title">Manage Existing Items and its Stocks</h4> --}}
                                 </div>
                             </div>
                             <div class="card-body">
@@ -94,9 +92,11 @@
                                     <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
+                                                <th>Customer</th>
+                                                <th>Brand</th>
                                                 <th>Item ID</th>
                                                 <th>Item Name</th>
-                                                <th>Stock Taken</th>
+                                                <th>Stock Added</th>
                                                 <th>Time Added</th>
                                                 <th>Description</th>
                                                 <th>Gambar</th>
@@ -104,9 +104,11 @@
                                         </thead>
                                         <tfoot>
                                             <tr>
+                                                <th>Customer</th>
+                                                <th>Brand</th>
                                                 <th>Item ID</th>
                                                 <th>Item Name</th>
-                                                <th>Stock Taken</th>
+                                                <th>Stock Added</th>
                                                 <th>Time Added</th>
                                                 <th>Description</th>
                                                 <th>Gambar</th>
