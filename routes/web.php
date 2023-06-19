@@ -66,6 +66,7 @@ Route::get('/manageHistory', [ItemController::class, 'item_history_page']);
 //incoming
 Route::post('/addItemStock', [IncomingController::class, 'addItemStock']);
 Route::get('/newIncoming', [IncomingController::class, 'add_incoming_item_page']);
+Route::get('/exportIncoming', [IncomingController::class, 'exportIncoming'])->name('exportIncoming');
 
 //outgoing
 Route::post('/reduceItemStock', [OutgoingController::class, 'reduceItemStock']);

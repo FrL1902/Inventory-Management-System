@@ -20,8 +20,31 @@
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">Incoming Item</h4>
 
-                                    <button type="button" class="btn btn-primary ml-3" data-target="#addModalCenter"
+                                    <button type="button" class="btn btn-primary ml-3 mr-3" data-target="#addModalCenter"
                                         data-toggle="modal"><strong>ADD</strong></button>
+
+                                    <div class="ml-3 mr-2">
+                                        Export by
+                                    </div>
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary text-white">
+                                            <input class="text-white" type="radio" name="options" id="option1"
+                                                autocomplete="off"> Customer
+                                        </label>
+                                        <label class="btn btn-secondary text-white">
+                                            <input type="radio" name="options" id="option2" autocomplete="off"> Brand
+                                        </label>
+                                        <label class="btn btn-secondary text-white">
+                                            <input type="radio" name="options" id="option3" autocomplete="off"> Item
+                                        </label>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary ml-3">
+                                        <a href="/exportIncoming">
+                                            <strong>EXPORT EXCEL</strong>
+                                        </a>
+                                    </button>
+
 
                                     <div class="modal fade" id="addModalCenter" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -82,8 +105,8 @@
                                                                 name="customerIdHidden" value="{{ $item->customer->id }}">
                                                             <input type="hidden" class="form-control" name="brandIdHidden"
                                                                 value="{{ $item->brand->id }}">
-                                                            <input type="hidden" class="form-control" name="itemIdHidden"
-                                                                value="{{ $item->id }}">
+                                                            <input type="hidden" class="form-control"
+                                                                name="itemIdHidden" value="{{ $item->id }}">
 
                                                         </div>
                                                     </form>

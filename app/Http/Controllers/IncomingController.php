@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\IncomingExport;
 use App\Models\Brand;
 use App\Models\Incoming;
 use App\Models\Item;
@@ -9,6 +10,7 @@ use App\Models\StockHistory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class IncomingController extends Controller
 {
@@ -80,5 +82,9 @@ class IncomingController extends Controller
 
 
         return redirect('manageItem');
+    }
+
+    public function exportIncoming(){
+        return Excel::download(new IncomingExport, 'dataBarangDatang.xlsx');
     }
 }
