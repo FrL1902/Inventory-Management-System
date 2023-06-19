@@ -36,7 +36,8 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form method="post" action="/reduceItemStock">
+                                                    <form enctype="multipart/form-data" method="post"
+                                                        action="/reduceItemStock">
                                                         @csrf
 
                                                         <div class="card-body">
@@ -52,33 +53,38 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="outgoingidforitem">Images</label>
-                                                                <input class="form-control" type="text"
-                                                                    placeholder="Image, not implemented yet" readonly>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label for="outgoingidforitem">Description</label>
-                                                                <input class="form-control" type="text"
-                                                                    placeholder="Description, not implemented yet" readonly>
-                                                            </div>
-
-                                                            <div class="form-group">
-
                                                                 <label for="quantity">Stock</label>
                                                                 <input type="number" id="quantity" name="itemReduceStock"
                                                                     min="1" max="{{ $item->stocks }}"
                                                                     style="width: 100%" class="form-control"
                                                                     placeholder="minimum 1" required>
+                                                            </div>
 
+                                                            <div class="form-group">
+                                                                <label for="outgoingidforitem">Description</label>
+                                                                <textarea class="form-control" id="outgoingidforitem" rows="3" placeholder="deskripsi outgoing package"
+                                                                    name="outgoingItemDesc" required></textarea>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="largeInput">Outgoing Package Image</label>
+                                                                <input type="file" class="form-control form-control"
+                                                                    id="itemImage" name="outgoingItemImage" required>
                                                                 <div class="card mt-5 ">
-                                                                    <button id="" class="btn btn-primary">Update
+                                                                    <button id="" class="btn btn-primary">Insert
                                                                         Data</button>
                                                                 </div>
                                                             </div>
 
                                                             <input type="hidden" class="form-control" name="userIdHidden"
                                                                 value="{{ auth()->user()->id }}">
+
+                                                            <input type="hidden" class="form-control"
+                                                                name="customerIdHidden" value="{{ $item->customer->id }}">
+                                                            <input type="hidden" class="form-control" name="brandIdHidden"
+                                                                value="{{ $item->brand->id }}">
+                                                            <input type="hidden" class="form-control" name="itemIdHidden"
+                                                                value="{{ $item->id }}">
                                                         </div>
                                                     </form>
                                                 </div>
@@ -96,7 +102,7 @@
                                                 <th>Brand</th>
                                                 <th>Item ID</th>
                                                 <th>Item Name</th>
-                                                <th>Stock Added</th>
+                                                <th>Stock Taken</th>
                                                 <th>Time Added</th>
                                                 <th>Description</th>
                                                 <th>Gambar</th>
@@ -108,24 +114,28 @@
                                                 <th>Brand</th>
                                                 <th>Item ID</th>
                                                 <th>Item Name</th>
-                                                <th>Stock Added</th>
+                                                <th>Stock Taken</th>
                                                 <th>Time Added</th>
                                                 <th>Description</th>
                                                 <th>Gambar</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            @foreach ($history as $history)
-                                                @if ($history->stock_taken > 0)
-                                                    <tr>
-                                                        <td>Item ID</td>
-                                                        <td>{{ $history->item_name }}</td>
-                                                        <td>{{ $history->stock_taken }}</td>
-                                                        <td>{{ $history->created_at }}</td>
-                                                        <td>Description</td>
-                                                        <td>Gambar</td>
-                                                    </tr>
-                                                @endif
+                                            @foreach ($outgoing as $outgoing)
+                                                <tr>
+                                                    <td>{{ $outgoing->customer->customer_name }}</td>
+                                                    <td>{{ $outgoing->brand->brand_name }}</td>
+                                                    <td>{{ $outgoing->item_id }}</td>
+                                                    <td>{{ $outgoing->item_name }}</td>
+                                                    <td>{{ $outgoing->stock_taken }}</td>
+                                                    <td>{{ $outgoing->created_at }}</td>
+                                                    <td>{{ $outgoing->description }}</td>
+                                                    <td><img class="rounded mx-auto d-block"
+                                                            style="width: 100px;
+                                                    height: auto;"
+                                                            src="{{ Storage::url($outgoing->item_pictures) }}"
+                                                            alt="no picture"></td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
