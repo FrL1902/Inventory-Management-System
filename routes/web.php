@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncomingController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\OutgoingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,8 +68,8 @@ Route::post('/addItemStock', [IncomingController::class, 'addItemStock']);
 Route::get('/newIncoming', [IncomingController::class, 'add_incoming_item_page']);
 
 //outgoing
-Route::post('/reduceItemStock', [ItemController::class, 'reduceItemStock']);
-Route::get('/newOutgoing', [ItemController::class, 'add_outgoing_item_page']);
+Route::post('/reduceItemStock', [OutgoingController::class, 'reduceItemStock']);
+Route::get('/newOutgoing', [OutgoingController::class, 'add_outgoing_item_page']);
 
 
 // export
