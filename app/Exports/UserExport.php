@@ -5,6 +5,7 @@ namespace App\Exports;
 
 use App\Models\StockHistory;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 // use Maatwebsite\Excel\Concerns\FromCollection;
@@ -39,8 +40,6 @@ class UserExport implements FromQuery, ShouldAutoSize, WithHeadings
         $this->endDate = $endDate;
     }
 
-    // INI PAKE YEAR CUMA RANDOM VARIABEL DOANG BUAT TESTING, PLS DONT USE LIKE THIS
-
     public function query()
     {
         // return User::query();
@@ -48,32 +47,24 @@ class UserExport implements FromQuery, ShouldAutoSize, WithHeadings
         // dd($this->startDate, $this->endDate);
 
 
-        $from = date($this->startDate);
-        $to = date($this->endDate);
+        // $from = date($this->startDate);
+        // $to = date($this->endDate);
         // dd(132);
 
+        $date_from = Carbon::parse($this->startDate)->startOfDay();
+        $date_to = Carbon::parse($this->endDate)->endOfDay();
 
         if ($this->level == "all") {
             // return User::query(); //kalo dikosongin bakal milih semua
             // return User::query()->whereBetween('joined_at', [$from, $to]);
-            return User::query()->whereBetween('joined_at', [$this->startDate, $this->endDate]);
+            return User::query()->whereBetween('joined_at', [$date_from, $date_to]);
         } else {
             // $tes = User::query()->where('level', $this->year)->whereBetween('joined_at', [$this->startDate, $this->endDate]);
             // dd($tes);
             // return User::query()->where('level', $this->level)->whereBetween('joined_at', [$from, $to]);
-            return User::query()->where('level', $this->level)->whereBetween('joined_at', [$this->startDate, $this->endDate]);
+
+            return User::query()->where('level', $this->level)->whereBetween('joined_at', [$date_from, $date_to]);
         }
-
-        // $bookingDate = DateTime::createFromFormat('Y-m-d', $request->bookingDate);
-        // $bookingDate->setTime(0, 0, 0);
-        // $from = clone $bookingDate;
-        // $bookingDate->setTime(23, 59, 59);
-        // $to = clone $bookingDate;
-
-        // $booking = Booking::where('area_id', '=',  $request->areaId)
-        //         ->where('cancelled', '=',  '0')
-        //         ->whereBetween('start_date', [$from, $to])
-        //         ->get();
     }
 
     public function headings(): array

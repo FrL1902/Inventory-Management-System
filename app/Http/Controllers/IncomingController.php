@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Exports\IncomingExport;
 use App\Models\Brand;
+use App\Models\Customer;
 use App\Models\Incoming;
 use App\Models\Item;
 use App\Models\StockHistory;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
@@ -20,6 +22,8 @@ class IncomingController extends Controller
         // $history = StockHistory::all(); //old table,
         // return view('incomingItem', compact('history', 'item'));
         $incoming = Incoming::all();
+        $customer = Customer::all();
+
 
         if ($item->isempty()) {
             // dd('kosong');
@@ -29,7 +33,7 @@ class IncomingController extends Controller
             $brand = Brand::all();
             return view('newItem', compact('brand'));
         } else {
-            return view('incomingItem', compact('incoming', 'item'));
+            return view('incomingItem', compact('incoming', 'item', 'customer'));
         }
     }
 
@@ -64,6 +68,7 @@ class IncomingController extends Controller
         Storage::putFileAs('public/incomingItemImage', $file, $imageName);
         $imageName = 'incomingItemImage/' . $imageName;
         $incoming->item_pictures = $imageName;
+        $incoming->picture_link = 'http://127.0.0.1:8000/storage/' . $imageName;
         $incoming->save();
 
         $request->session()->flash('sukses_addStock', $itemInfo->item_name);
@@ -84,7 +89,45 @@ class IncomingController extends Controller
         return redirect('manageItem');
     }
 
-    public function exportIncoming(){
-        return Excel::download(new IncomingExport, 'dataBarangDatang.xlsx');
+    public function exportIncoming()
+    {
+
+        $sortCustomer = Incoming::all()->where('customer_id', '=', 3);
+
+        return Excel::download(new IncomingExport($sortCustomer), 'dataBarangDatang.xlsx');
+        // return (new IncomingExport($sortCustomer))->download('Productos.xlsx');
     }
+
+    public function exportIncomingCustomer(Request $request)
+    {
+        // dd($request->customerIncoming);
+        // dd("masu");
+        // dd($request->endRange);
+        // $sortCustomer = Incoming::all()->where('customer_id', $request->customerIncoming)->whereBetween('created_at', [$request->startRange, $request->endRange]);
+
+        // dd($request);
+
+        $date_from = Carbon::parse($request->startRange)->startOfDay();
+        $date_to = Carbon::parse($request->endRange)->endOfDay();
+
+        // dd($date_to);
+
+
+
+        $sortCustomer = Incoming::all()->where('customer_id', $request->customerIncoming)->whereBetween('created_at', [$date_from, $date_to]);;
+        // $sortCustomer = Incoming::all()->whereBetween('created_at', [$request->startRange, $request->endRange]);
+
+
+        return Excel::download(new IncomingExport($sortCustomer), 'dataBarangDatang.xlsx');
+    }
+
+
+    //     $customer = "customerIncoming"; // Replace with the actual customer input
+    // $startDate = "2023-05-01"; // Replace with the actual start date
+    // $endDate = "2023-05-31"; // Replace with the actual end date
+
+    // $filteredData = Incoming::where('customer', $customer)
+    //     ->whereBetween('startRange', [$startDate, $endDate])
+    //     ->get();
+
 }

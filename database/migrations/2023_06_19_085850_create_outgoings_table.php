@@ -27,6 +27,7 @@ class CreateOutgoingsTable extends Migration
             $table->integer('stock_now');
             $table->string('description');
             $table->string('item_pictures');
+            $table->string('picture_link');
             $table->timestamps();
         });
     }

@@ -67,6 +67,7 @@ Route::get('/manageHistory', [ItemController::class, 'item_history_page']);
 Route::post('/addItemStock', [IncomingController::class, 'addItemStock']);
 Route::get('/newIncoming', [IncomingController::class, 'add_incoming_item_page']);
 Route::get('/exportIncoming', [IncomingController::class, 'exportIncoming'])->name('exportIncoming');
+Route::post('/exportIncomingCustomer', [IncomingController::class, 'exportIncomingCustomer'])->name('exportIncomingCustomer');
 
 //outgoing
 Route::post('/reduceItemStock', [OutgoingController::class, 'reduceItemStock']);
@@ -74,4 +75,4 @@ Route::get('/newOutgoing', [OutgoingController::class, 'add_outgoing_item_page']
 
 
 // export
-Route::post('/exportExcel', [UserController::class, 'exportExcel'])->name('exportExcel');
+Route::post('/exportExcel', [UserController::class, 'exportExcel'])->name('exportExcel'); //export user

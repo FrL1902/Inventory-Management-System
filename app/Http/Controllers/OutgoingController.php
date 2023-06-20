@@ -60,6 +60,7 @@ class OutgoingController extends Controller
         Storage::putFileAs('public/outgoingItemImage', $file, $imageName);
         $imageName = 'outgoingItemImage/' . $imageName;
         $outgoing->item_pictures = $imageName;
+        $outgoing->picture_link = 'http://127.0.0.1:8000/storage/' . $imageName;
         $outgoing->save();
 
 
