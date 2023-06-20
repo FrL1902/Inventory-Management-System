@@ -97,7 +97,7 @@
                                                                 data-toggle="tooltip"
                                                                 data-original-title="Edit Customer"></i>
                                                         </a>
-                                                        <a class="ml-2 mb-2" style="cursor: pointer"
+                                                        <a class="ml-3 mb-2" style="cursor: pointer"
                                                             data-target="#deleteModal{{ $data->id }}"
                                                             data-toggle="modal">
                                                             <i class="fa fa-times mt-3 text-danger"
@@ -141,9 +141,10 @@
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLongTitle">
-                                                                        Update data for "{{ $data->customer_name }}"
-                                                                    </h5>
+                                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                                        <strong>Update data for
+                                                                            "{{ $data->customer_name }}"</strong>
+                                                                    </h3>
                                                                     <button type="button" class="close"
                                                                         data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
@@ -237,10 +238,12 @@
                                                                                     class="form-control form-control"
                                                                                     placeholder="ex. 08.178.554.2-123.321"
                                                                                     id="npwp" name="npwp">
+                                                                                <div class="card mt-5">
+                                                                                    <button id=""
+                                                                                        class="btn btn-primary">Update
+                                                                                        Data</button>
+                                                                                </div>
                                                                             </div>
-                                                                            <button id=""
-                                                                                class="btn btn-primary">Update
-                                                                                Data</button>
 
                                                                             <input type="hidden" class="form-control"
                                                                                 name="userIdHidden"

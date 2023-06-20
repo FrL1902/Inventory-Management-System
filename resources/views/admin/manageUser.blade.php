@@ -85,8 +85,9 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLongTitle">
-                                                    Print Website Users</h5>
+                                                <h3 class="modal-title" id="exampleModalLongTitle">
+                                                    <strong>Print Website's Users</strong>
+                                                </h3>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -105,15 +106,18 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                 <option value="gudang">gudang</option>
                                                                 <option value="all">SEMUA USER</option>
                                                             </select>
+                                                        </div>
+                                                        <div class="form-group">
 
                                                             <label for="startRange">Start Date Range</label>
                                                             <input type="date" class="form-control" id="startRange"
                                                                 required name="startRange">
+                                                        </div>
+                                                        <div class="form-group">
                                                             <label for="endRange">End Date Range</label>
                                                             <input type="date" class="form-control" id="endRange"
                                                                 required name="endRange">
                                                         </div>
-
                                                         <div class="form-group">
                                                             <div class="card mt-5 ">
                                                                 <button id="" class="btn btn-primary">Export
@@ -192,9 +196,9 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                     <div class="form-button-action">
 
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="editModalCenter{{ $data->id }}"
-                                                            tabindex="-1" role="dialog"
-                                                            aria-labelledby="exampleModalCenterTitle"
+                                                        <div class="modal fade"
+                                                            id="editModalCenter{{ $data->id }}" tabindex="-1"
+                                                            role="dialog" aria-labelledby="exampleModalCenterTitle"
                                                             aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered"
                                                                 role="document">

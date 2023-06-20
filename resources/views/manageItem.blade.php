@@ -111,7 +111,7 @@
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Reduce Stock"></i>
                                                             </a> --}}
-                                                            <a style="cursor: pointer" class="ml-3 mb-2"
+                                                            <a style="cursor: pointer" class="mb-2"
                                                                 data-target="#editModalCenter{{ $item->id }}"
                                                                 data-toggle="modal">
                                                                 <i class="fa fa-edit mt-3 text-primary"
@@ -230,7 +230,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="modal fade" id="addModalCenter{{ $item->id }}"
+                                                        {{-- <div class="modal fade" id="addModalCenter{{ $item->id }}"
                                                             tabindex="-1" role="dialog"
                                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered"
@@ -324,7 +324,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                     </td>
                                                 </tr>
                                             @endforeach
