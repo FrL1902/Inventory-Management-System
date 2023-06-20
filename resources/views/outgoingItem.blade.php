@@ -12,6 +12,12 @@
             <div class="page-inner">
 
                 {{-- error goes here --}}
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-block" id="alerts">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Update Failed, validation not met, error is: {{ $errors->first() }}</strong>
+                    </div>
+                @endif
 
                 <div class="row">
                     <div class="col-md-12">
