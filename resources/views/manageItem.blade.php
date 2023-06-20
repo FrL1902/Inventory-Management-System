@@ -168,7 +168,7 @@
                                                                                 <h3 class="modal-title"
                                                                                     id="exampleModalLongTitle">
                                                                                     <strong> Update data for
-                                                                                        "{{ $item->item_name }}"<br></strong>
+                                                                                        "{{ $item->item_name }}"</strong>
                                                                                 </h3>
                                                                             </div>
                                                                             <div class="p-2">

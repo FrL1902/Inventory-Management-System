@@ -141,18 +141,24 @@
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h3 class="modal-title" id="exampleModalLongTitle">
-                                                                        <strong>Update data for
-                                                                            "{{ $data->customer_name }}"</strong>
-                                                                    </h3>
+                                                                    <div class="d-flex flex-column">
+                                                                        <div class="p-2">
+                                                                            <h3 class="modal-title"
+                                                                                id="exampleModalLongTitle">
+                                                                                <strong>Update data for
+                                                                                    "{{ $data->customer_name }}"</strong>
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div class="p-2">
+                                                                            <h5> Isi data yang ingin diubah</h5>
+                                                                        </div>
+                                                                    </div>
                                                                     <button type="button" class="close"
                                                                         data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <p>isi data yang ingin di update</p>
-                                                                    <p>data tidak akan berubah jika tidak diisi</p>
                                                                     <form method="post" action="/updateCustomer">
                                                                         @csrf
                                                                         <div class="card-body">
@@ -242,6 +248,13 @@
                                                                                     <button id=""
                                                                                         class="btn btn-primary">Update
                                                                                         Data</button>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <h5 style="text-align: center;">
+                                                                                        kolom
+                                                                                        yang tidak diisi
+                                                                                        akan menggunakan data yang
+                                                                                        sebelumnya</h5>
                                                                                 </div>
                                                                             </div>
 
