@@ -74,8 +74,10 @@ Route::post('/exportIncomingItem', [IncomingController::class, 'exportIncomingIt
 //outgoing
 Route::post('/reduceItemStock', [OutgoingController::class, 'reduceItemStock']);
 Route::get('/newOutgoing', [OutgoingController::class, 'add_outgoing_item_page']);
-
+Route::post('/exportOutgoing', [OutgoingController::class, 'exportOutgoing'])->name('exportOutgoing');
 Route::post('/exportOutgoingCustomer', [OutgoingController::class, 'exportOutgoingCustomer'])->name('exportOutgoingCustomer');
+Route::post('/exportOutgoingBrand', [OutgoingController::class, 'exportOutgoingBrand'])->name('exportOutgoingBrand');
+Route::post('/exportOutgoingItem', [OutgoingController::class, 'exportOutgoingItem'])->name('exportOutgoingItem');
 
 // export
 Route::post('/exportExcel', [UserController::class, 'exportExcel'])->name('exportExcel'); //export user

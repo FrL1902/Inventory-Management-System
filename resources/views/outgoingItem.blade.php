@@ -76,7 +76,7 @@
                                                             <div class="form-group">
                                                                 <label for="customerLabelExport">Customer</label>
                                                                 <select class="form-control" id="customerLabelExport"
-                                                                    name="customerIncoming">
+                                                                    name="customerOutgoing">
                                                                     @foreach ($customer as $data)
                                                                         <option value="{{ $data->id }}">
                                                                             {{ $data->customer_name }}
@@ -89,6 +89,168 @@
                                                                 <label for="startRange">Start Date Range</label>
                                                                 <input type="date" class="form-control" id="startRange"
                                                                     required name="startRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="endRange">End Date Range</label>
+                                                                <input type="date" class="form-control" id="endRange"
+                                                                    required name="endRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="card mt-5 ">
+                                                                    <button id="" class="btn btn-primary">Export
+                                                                        Data</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- export by brand --}}
+                                    <div class="modal fade" id="exportOutgoingBrandModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print a Brand's Outgoing Sheet
+                                                        </strong>
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/exportOutgoingBrand">
+                                                        @csrf
+
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="brandLabelExport">Brand</label>
+                                                                <select class="form-control" id="brandLabelExport"
+                                                                    name="brandOutgoing">
+                                                                    @foreach ($brand as $data)
+                                                                        <option value="{{ $data->id }}">
+                                                                            {{ $data->brand_name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="startRange">Start Date Range</label>
+                                                                <input type="date" class="form-control"
+                                                                    id="startRange" required name="startRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="endRange">End Date Range</label>
+                                                                <input type="date" class="form-control" id="endRange"
+                                                                    required name="endRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="card mt-5 ">
+                                                                    <button id="" class="btn btn-primary">Export
+                                                                        Data</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- export by item --}}
+                                    <div class="modal fade" id="exportOutgoingItemModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print an Item's Outgoing Sheet
+                                                        </strong>
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/exportOutgoingItem">
+                                                        @csrf
+
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="itemLabelExport">Item</label>
+                                                                <select class="form-control" id="itemLabelExport"
+                                                                    name="itemOutgoing">
+                                                                    @foreach ($item as $data)
+                                                                        <option value="{{ $data->id }}">
+                                                                            {{ $data->item_name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="startRange">Start Date Range</label>
+                                                                <input type="date" class="form-control"
+                                                                    id="startRange" required name="startRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="endRange">End Date Range</label>
+                                                                <input type="date" class="form-control" id="endRange"
+                                                                    required name="endRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="card mt-5 ">
+                                                                    <button id="" class="btn btn-primary">Export
+                                                                        Data</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- export by ALL --}}
+                                    <div class="modal fade" id="exportOutgoingALLModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print ALL Outgoing Sheet
+                                                        </strong>
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/exportOutgoing">
+                                                        @csrf
+
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="startRange">Start Date Range</label>
+                                                                <input type="date" class="form-control"
+                                                                    id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
@@ -145,10 +307,10 @@
 
                                                             <div class="form-group">
                                                                 <label for="quantity">Stock</label>
-                                                                <input type="number" id="quantity" name="itemReduceStock"
-                                                                    min="1" max="{{ $item->stocks }}"
-                                                                    style="width: 100%" class="form-control"
-                                                                    placeholder="minimum 1" required>
+                                                                <input type="number" id="quantity"
+                                                                    name="itemReduceStock" min="1"
+                                                                    max="{{ $item->stocks }}" style="width: 100%"
+                                                                    class="form-control" placeholder="minimum 1" required>
                                                             </div>
 
                                                             <div class="form-group">
@@ -167,8 +329,8 @@
                                                                 </div>
                                                             </div>
 
-                                                            <input type="hidden" class="form-control" name="userIdHidden"
-                                                                value="{{ auth()->user()->id }}">
+                                                            <input type="hidden" class="form-control"
+                                                                name="userIdHidden" value="{{ auth()->user()->id }}">
 
                                                             {{-- <input type="hidden" class="form-control"
                                                                 name="customerIdHidden" value="{{ $item->customer->id }}">
