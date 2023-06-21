@@ -29,6 +29,88 @@
                                     <button type="button" class="btn btn-primary ml-3" data-target="#outModalCenter"
                                         data-toggle="modal"><strong>ADD</strong></button>
 
+                                    <div class="ml-3 mr-2">
+                                        Export by
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-target="#exportOutgoingCustomerModal"
+                                            data-toggle="modal"><strong>Customer</strong>
+                                        </button>
+
+                                        <button type="button" class="btn btn-secondary"
+                                            data-target="#exportOutgoingBrandModal"
+                                            data-toggle="modal"><strong>Brand</strong>
+                                        </button>
+
+                                        <button type="button" class="btn btn-secondary"
+                                            data-target="#exportOutgoingItemModal" data-toggle="modal"><strong>Item</strong>
+                                        </button>
+
+                                        <button type="button" class="btn btn-secondary"
+                                            data-target="#exportOutgoingALLModal" data-toggle="modal"><strong>ALL</strong>
+                                        </button>
+                                    </div>
+
+                                    {{-- export by customer --}}
+                                    <div class="modal fade" id="exportOutgoingCustomerModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print a Customer's Outgoing Sheet
+                                                        </strong>
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/exportOutgoingCustomer">
+                                                        @csrf
+
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="customerLabelExport">Customer</label>
+                                                                <select class="form-control" id="customerLabelExport"
+                                                                    name="customerIncoming">
+                                                                    @foreach ($customer as $data)
+                                                                        <option value="{{ $data->id }}">
+                                                                            {{ $data->customer_name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="startRange">Start Date Range</label>
+                                                                <input type="date" class="form-control" id="startRange"
+                                                                    required name="startRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="endRange">End Date Range</label>
+                                                                <input type="date" class="form-control" id="endRange"
+                                                                    required name="endRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="card mt-5 ">
+                                                                    <button id="" class="btn btn-primary">Export
+                                                                        Data</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- REDUCE STOCK MODAL --}}
                                     <div class="modal fade" id="outModalCenter" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -88,12 +170,12 @@
                                                             <input type="hidden" class="form-control" name="userIdHidden"
                                                                 value="{{ auth()->user()->id }}">
 
-                                                            <input type="hidden" class="form-control"
+                                                            {{-- <input type="hidden" class="form-control"
                                                                 name="customerIdHidden" value="{{ $item->customer->id }}">
                                                             <input type="hidden" class="form-control" name="brandIdHidden"
                                                                 value="{{ $item->brand->id }}">
                                                             <input type="hidden" class="form-control" name="itemIdHidden"
-                                                                value="{{ $item->id }}">
+                                                                value="{{ $item->id }}"> --}}
                                                         </div>
                                                     </form>
                                                 </div>
@@ -139,19 +221,49 @@
                                                     <td>{{ $outgoing->stock_taken }}</td>
                                                     <td>{{ $outgoing->created_at }}</td>
                                                     <td>{{ $outgoing->description }}</td>
-                                                    <td><img class="rounded mx-auto d-block"
-                                                            style="width: 100px;
-                                                    height: auto;"
-                                                            src="{{ Storage::url($outgoing->item_pictures) }}"
-                                                            alt="no picture"></td>
+                                                    <td>
+                                                        <a style="cursor: pointer"
+                                                            data-target="#imageModalCenter{{ $outgoing->id }}"
+                                                            data-toggle="modal">
+                                                            <img class="rounded mx-auto d-block"
+                                                                style="width: 100px; height: auto;"
+                                                                src="{{ Storage::url($outgoing->item_pictures) }}"
+                                                                alt="no picture" loading="lazy">
+                                                        </a>
+                                                    </td>
                                                 </tr>
+                                                <div class="modal fade" id="imageModalCenter{{ $outgoing->id }}"
+                                                    tabindex="-1" role="dialog"
+                                                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg"
+                                                        role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h3 class="modal-title" id="exampleModalLongTitle">
+                                                                    <strong>Outgoing data for
+                                                                        {{ $outgoing->item_name }} at
+                                                                        {{ $outgoing->created_at }}</strong>
+                                                                </h3>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <img class="rounded mx-auto d-block"
+                                                                    style="width: 750px; height: auto;"
+                                                                    src="{{ Storage::url($outgoing->item_pictures) }}"
+                                                                    alt="no picture" loading="lazy">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

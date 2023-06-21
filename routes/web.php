@@ -75,6 +75,7 @@ Route::post('/exportIncomingItem', [IncomingController::class, 'exportIncomingIt
 Route::post('/reduceItemStock', [OutgoingController::class, 'reduceItemStock']);
 Route::get('/newOutgoing', [OutgoingController::class, 'add_outgoing_item_page']);
 
+Route::post('/exportOutgoingCustomer', [OutgoingController::class, 'exportOutgoingCustomer'])->name('exportOutgoingCustomer');
 
 // export
 Route::post('/exportExcel', [UserController::class, 'exportExcel'])->name('exportExcel'); //export user

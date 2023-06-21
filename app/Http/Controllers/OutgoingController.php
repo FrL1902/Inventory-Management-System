@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OutgoingExport;
 use App\Models\Brand;
+use App\Models\Customer;
+use App\Models\Incoming;
 use App\Models\Item;
 use App\Models\Outgoing;
 use App\Models\StockHistory;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OutgoingController extends Controller
 {
@@ -16,6 +21,8 @@ class OutgoingController extends Controller
     {
         $item = Item::all();
         $outgoing = Outgoing::all();
+        $brand = Brand::all();
+        $customer = Customer::all();
 
         if ($item->isempty()) {
             $message = "no item is present, please input an item before accessing the \"outgoing\" or \"incoming\" page";
@@ -24,7 +31,7 @@ class OutgoingController extends Controller
             $brand = Brand::all();
             return view('newItem', compact('brand'));
         } else {
-            return view('outgoingItem', compact('outgoing', 'item'));
+            return view('outgoingItem', compact('outgoing', 'item', 'customer', 'brand'));
         }
     }
 
@@ -46,8 +53,8 @@ class OutgoingController extends Controller
 
         $outgoing = new Outgoing();
 
-        $outgoing->customer_id = $request->customerIdHidden;
-        $outgoing->brand_id = $request->brandIdHidden;
+        $outgoing->customer_id = $itemInfo->customer_id;
+        $outgoing->brand_id = $itemInfo->brand_id;
         $outgoing->item_id = $request->outgoingiditem;
         $outgoing->item_name = $itemInfo->item_name;
         $outgoing->stock_before = $itemInfo->stocks;
@@ -79,5 +86,17 @@ class OutgoingController extends Controller
 
 
         return redirect('manageItem');
+    }
+
+    public function exportOutgoingCustomer(Request $request)
+    {
+        $customer = Customer::find($request->customerIncoming);
+        $date_from = Carbon::parse($request->startRange)->startOfDay();
+        $date_to = Carbon::parse($request->endRange)->endOfDay();
+
+        $sortCustomer = Outgoing::all()->where('customer_id', $request->customerIncoming)->whereBetween('created_at', [$date_from, $date_to]);
+        $formatFileName = 'DataBarangKeluar Customer ' . $customer->customer_name . ' ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
+
+        return Excel::download(new OutgoingExport($sortCustomer), $formatFileName . '.xlsx');
     }
 }
