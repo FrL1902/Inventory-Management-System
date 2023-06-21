@@ -21,6 +21,7 @@ class IncomingController extends Controller
         $item = Item::all(); //buat update
         // $history = StockHistory::all(); //old table,
         // return view('incomingItem', compact('history', 'item'));
+        $brand = Brand::all();
         $incoming = Incoming::all();
         $customer = Customer::all();
 
@@ -33,7 +34,7 @@ class IncomingController extends Controller
             $brand = Brand::all();
             return view('newItem', compact('brand'));
         } else {
-            return view('incomingItem', compact('incoming', 'item', 'customer'));
+            return view('incomingItem', compact('incoming', 'item', 'customer', 'brand'));
         }
     }
 
@@ -54,9 +55,15 @@ class IncomingController extends Controller
 
         // masukin data ke tabel incoming
         $incoming = new Incoming();
-        $incoming->customer_id = $request->customerIdHidden;
-        $incoming->brand_id = $request->brandIdHidden;
-        $incoming->item_id = $request->itemIdHidden;
+
+        // $incoming->customer_id = $request->customerIdHidden; jgn pake kedua ini, ga jelas inputnya
+        // $incoming->brand_id = $request->brandIdHidden;
+
+        //reference customer_id sama brand_id mending tabel itemnya aja, jgn dari bladenya
+
+        $incoming->customer_id = $itemInfo->customer_id;
+        $incoming->brand_id = $itemInfo->brand_id;
+        $incoming->item_id = $request->incomingiditem;
         $incoming->item_name = $itemInfo->item_name;
         $incoming->stock_before = $itemInfo->stocks;
         $incoming->stock_added = $request->itemAddStock;
@@ -89,36 +96,62 @@ class IncomingController extends Controller
         return redirect('manageItem');
     }
 
-    public function exportIncoming()
+    public function exportIncoming(Request $request)
     {
+        // dd($request);
+        // $sortCustomer = Incoming::all()->where('customer_id', '=', 3);
+        $date_from = Carbon::parse($request->startRange)->startOfDay();
+        $date_to = Carbon::parse($request->endRange)->endOfDay();
 
-        $sortCustomer = Incoming::all()->where('customer_id', '=', 3);
 
-        return Excel::download(new IncomingExport($sortCustomer), 'dataBarangDatang.xlsx');
+        // return Excel::download(new IncomingExport($sortCustomer), 'dataBarangDatang.xlsx');
+        $sortAll = Incoming::all()->whereBetween('created_at', [$date_from, $date_to]);
+        $formatFileName = 'DataBarangDatang ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
+
+        return Excel::download(new IncomingExport($sortAll), $formatFileName . '.xlsx');
+
+
         // return (new IncomingExport($sortCustomer))->download('Productos.xlsx');
     }
 
     public function exportIncomingCustomer(Request $request)
     {
-        // dd($request->customerIncoming);
-        // dd("masu");
-        // dd($request->endRange);
-        // $sortCustomer = Incoming::all()->where('customer_id', $request->customerIncoming)->whereBetween('created_at', [$request->startRange, $request->endRange]);
-
-        // dd($request);
-
+        $customer = Customer::find($request->customerIncoming);
         $date_from = Carbon::parse($request->startRange)->startOfDay();
         $date_to = Carbon::parse($request->endRange)->endOfDay();
 
-        // dd($date_to);
+        $sortCustomer = Incoming::all()->where('customer_id', $request->customerIncoming)->whereBetween('created_at', [$date_from, $date_to]);
+        $formatFileName = 'DataBarangDatang Customer ' . $customer->customer_name . ' ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 
+        return Excel::download(new IncomingExport($sortCustomer), $formatFileName . '.xlsx');
+    }
 
+    public function exportIncomingBrand(Request $request)
+    {
+        $brand = Brand::find($request->brandIncoming);
+        $date_from = Carbon::parse($request->startRange)->startOfDay();
+        $date_to = Carbon::parse($request->endRange)->endOfDay();
 
-        $sortCustomer = Incoming::all()->where('customer_id', $request->customerIncoming)->whereBetween('created_at', [$date_from, $date_to]);;
-        // $sortCustomer = Incoming::all()->whereBetween('created_at', [$request->startRange, $request->endRange]);
+        $sortBrand = Incoming::all()->where('brand_id', $request->brandIncoming)->whereBetween('created_at', [$date_from, $date_to]);
+        $formatFileName = 'DataBarangDatang Brand ' . $brand->brand_name . ' ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 
+        return Excel::download(new IncomingExport($sortBrand),  $formatFileName . '.xlsx');
+    }
 
-        return Excel::download(new IncomingExport($sortCustomer), 'dataBarangDatang.xlsx');
+    public function exportIncomingItem(Request $request)
+    {
+
+        // dd($request->itemIncoming);
+        $item = Item::find($request->itemIncoming);
+        // dd($item->item_name);
+        $date_from = Carbon::parse($request->startRange)->startOfDay();
+        $date_to = Carbon::parse($request->endRange)->endOfDay();
+
+        $sortItem = Incoming::all()->where('item_id', $request->itemIncoming)->whereBetween('created_at', [$date_from, $date_to]);
+        $formatFileName = 'DataBarangDatang Item ' . $item->item_name . ' ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
+        // return Excel::download(new IncomingExport($sortItem), 'dataBarangDatang Item.xlsx');
+
+        return Excel::download(new IncomingExport($sortItem),  $formatFileName . '.xlsx');
     }
 
 

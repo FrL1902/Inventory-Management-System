@@ -30,6 +30,7 @@ class IncomingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
     public function __construct($data)
     {
         $this->incomingData = $data;
+        // $this->valueSortedBy = $value;
     }
 
     use Exportable;
@@ -95,6 +96,20 @@ class IncomingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
                         ],
                     ],
                 ];
+
+                // if ($this->valueSortedBy  != ) {
+                //     if ($this->valueSortedBy == 1) {
+                //         dd('customer');
+                //     } elseif (condition) {
+                //         dd('brand');
+                //     } elseif (condition) {
+                //         dd('item');
+                //     }
+                // }
+
+                // dd('all');
+
+
                 $styleArrayContent = [
                     'borders' => [
                         'allBorders' => [

@@ -48,7 +48,7 @@ class OutgoingController extends Controller
 
         $outgoing->customer_id = $request->customerIdHidden;
         $outgoing->brand_id = $request->brandIdHidden;
-        $outgoing->item_id = $request->itemIdHidden;
+        $outgoing->item_id = $request->outgoingiditem;
         $outgoing->item_name = $itemInfo->item_name;
         $outgoing->stock_before = $itemInfo->stocks;
         $outgoing->stock_taken = $request->itemReduceStock;
