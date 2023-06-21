@@ -58,8 +58,11 @@
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle">
-                                                        Print a Customer's Incoming Sheet</h5>
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print a Customer's Incoming Sheet
+                                                        </strong>
+                                                    </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -113,8 +116,11 @@
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle">
-                                                        Print a Brand's Incoming Sheet</h5>
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print a Brand's Incoming Sheet
+                                                        </strong>
+                                                    </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -168,8 +174,11 @@
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle">
-                                                        Print an Item's Incoming Sheet</h5>
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print an Item's Incoming Sheet
+                                                        </strong>
+                                                    </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -223,8 +232,11 @@
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle">
-                                                        Print ALL Incoming Sheet</h5>
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print ALL Incoming Sheet
+                                                        </strong>
+                                                    </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -266,8 +278,11 @@
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle">
-                                                        Add New Incoming Item</h5>
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Add New Incoming Item
+                                                        </strong>
+                                                    </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -284,8 +299,7 @@
                                                                 <select class="form-control" id="incomingidforitem"
                                                                     name="incomingiditem">
                                                                     @foreach ($item as $item)
-                                                                        <option value="{{ $item->id }}"
-                                                                            >
+                                                                        <option value="{{ $item->id }}">
                                                                             {{ $item->item_name }}</option>
                                                                     @endforeach
                                                                 </select>
