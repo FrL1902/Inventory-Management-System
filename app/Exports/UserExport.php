@@ -22,22 +22,26 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 // }
 
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
 
-class UserExport implements FromQuery, ShouldAutoSize, WithHeadings, WithMapping
+class UserExport implements ShouldAutoSize, WithHeadings, WithMapping, FromCollection
 {
     use Exportable;
 
-    public function __construct(string $role, string $startDate, string $endDate)
-    {
-        $this->level = $role;
-        $this->startDate = $startDate;
-        $this->endDate = $endDate;
-    }
+    // public function __construct(string $role, string $startDate, string $endDate)
+    // {
+    //     $this->level = $role;
+    //     $this->startDate = $startDate;
+    //     $this->endDate = $endDate;
+    // }
 
+    public function collection(){
+        return User::all();
+    }
 
     public function map($item): array
     {
@@ -53,17 +57,17 @@ class UserExport implements FromQuery, ShouldAutoSize, WithHeadings, WithMapping
         ];
     }
 
-    public function query()
-    {
-        $date_from = Carbon::parse($this->startDate)->startOfDay();
-        $date_to = Carbon::parse($this->endDate)->endOfDay();
+    // public function query()
+    // {
+    //     $date_from = Carbon::parse($this->startDate)->startOfDay();
+    //     $date_to = Carbon::parse($this->endDate)->endOfDay();
 
-        if ($this->level == "all") {;
-            return User::query()->whereBetween('joined_at', [$date_from, $date_to]);
-        } else {
-            return User::query()->where('level', $this->level)->whereBetween('joined_at', [$date_from, $date_to]);
-        }
-    }
+    //     if ($this->level == "all") {;
+    //         return User::query()->whereBetween('joined_at', [$date_from, $date_to]);
+    //     } else {
+    //         return User::query()->where('level', $this->level)->whereBetween('joined_at', [$date_from, $date_to]);
+    //     }
+    // }
 
     public function headings(): array
     {

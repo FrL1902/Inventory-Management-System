@@ -76,11 +76,11 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                         <div class="card-header">
                             <div class="d-flex align-items-center">
                                 <h4 class="card-title">Manage User Accounts</h4>
-                                {{-- <a href="\exportExcel" class="btn btn-primary ml-3">EXPORT EXCEL</a> --}}
-                                <button type="button" class="btn btn-primary ml-3" data-target="#exportuserModal"
-                                    data-toggle="modal"><strong>EXPORT EXCEL</strong></button>
+                                <a href="\exportExcel" class="btn btn-primary ml-3">EXPORT EXCEL</a>
+                                {{-- <button type="button" class="btn btn-primary ml-3" data-target="#exportuserModal"
+                                    data-toggle="modal"><strong>EXPORT EXCEL</strong></button> --}}
 
-                                <div class="modal fade" id="exportuserModal" tabindex="-1" role="dialog"
+                                {{-- <div class="modal fade" id="exportuserModal" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
@@ -129,7 +129,7 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="card-body">
@@ -196,9 +196,9 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                     <div class="form-button-action">
 
                                                         <!-- Modal -->
-                                                        <div class="modal fade"
-                                                            id="editModalCenter{{ $data->id }}" tabindex="-1"
-                                                            role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                        <div class="modal fade" id="editModalCenter{{ $data->id }}"
+                                                            tabindex="-1" role="dialog"
+                                                            aria-labelledby="exampleModalCenterTitle"
                                                             aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered"
                                                                 role="document">
@@ -313,8 +313,7 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title"
-                                                                            id="exampleModalLabel">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">
                                                                             <strong>PENGHAPUSAN USER</strong>
                                                                         </h5>
                                                                         <button type="button" class="close"

@@ -93,9 +93,9 @@ class UserController extends Controller
 
     public function exportExcel(Request $request)
     {
-        // dd($request);
         // dd($request->userLevel);
-        // return Excel::download(new UserExport, 'User Warehouse.xlsx');
-        return (new UserExport($request->userLevel, $request->startRange, $request->endRange))->download('User Warehouse.xlsx');
+        return Excel::download(new UserExport, 'User Warehouse.xlsx');
+        // return (new UserExport())->download('User Warehouse.xlsx');
+        // return (new UserExport($request->userLevel, $request->startRange, $request->endRange))->download('User Warehouse.xlsx');
     }
 }

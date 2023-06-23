@@ -80,4 +80,5 @@ Route::post('/exportOutgoingBrand', [OutgoingController::class, 'exportOutgoingB
 Route::post('/exportOutgoingItem', [OutgoingController::class, 'exportOutgoingItem'])->name('exportOutgoingItem');
 
 // export
-Route::post('/exportExcel', [UserController::class, 'exportExcel'])->name('exportExcel'); //export user
+Route::get('/exportExcel', [UserController::class, 'exportExcel'])->name('exportExcel'); //export user ALL
+// Route::post('/exportExcel', [UserController::class, 'exportExcel'])->name('exportExcel'); //export user kalo ada atribut
