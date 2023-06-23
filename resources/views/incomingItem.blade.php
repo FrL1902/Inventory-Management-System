@@ -48,7 +48,7 @@
                                         </button>
 
                                         <button type="button" class="btn btn-secondary"
-                                            data-target="#exportIncomingALLModal" data-toggle="modal"><strong>ALL</strong>
+                                            data-target="#exportIncomingALLModal" data-toggle="modal"><strong>DATE</strong>
                                         </button>
                                     </div>
 
@@ -309,7 +309,8 @@
                                                                 <label for="quantity">Stock</label>
                                                                 <input type="number" id="quantity" name="itemAddStock"
                                                                     min="1" max="999999999" style="width: 100%"
-                                                                    class="form-control" placeholder="min 1, max 999999999" required>
+                                                                    class="form-control"
+                                                                    placeholder="min 1, max 999999999" required>
                                                             </div>
 
                                                             <div class="form-group">

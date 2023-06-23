@@ -48,7 +48,7 @@
                                         </button>
 
                                         <button type="button" class="btn btn-secondary"
-                                            data-target="#exportOutgoingALLModal" data-toggle="modal"><strong>ALL</strong>
+                                            data-target="#exportOutgoingALLModal" data-toggle="modal"><strong>DATE</strong>
                                         </button>
                                     </div>
 
