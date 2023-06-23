@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\customerExport;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerController extends Controller
 {
@@ -21,11 +23,6 @@ class CustomerController extends Controller
 
     public function makeCustomer(Request $request)
     {
-
-        // if (is_null($request->customername)) {
-        //     dd("ini null cok");
-        // }
-
         // validate the required inputs first
         $request->validate([
             'customerid' => 'required|unique:App\Models\Customer,customer_id|min:4|max:10',
@@ -196,5 +193,10 @@ class CustomerController extends Controller
         session()->flash('sukses_delete_customer', $customerDeleted);
 
         return redirect('manageCustomer');
+    }
+
+    public function exportCustomerExcel()
+    {
+        return Excel::download(new customerExport, 'Customer Data.xlsx');
     }
 }

@@ -49,6 +49,7 @@ Route::get('/newCustomer', [CustomerController::class, 'new_customer_page'])->mi
 Route::post('/makeCustomer', [CustomerController::class, 'makeCustomer'])->middleware('login');
 Route::get('/deleteCustomer/{id}', [CustomerController::class, 'deleteCustomer'])->middleware('login');
 Route::post('/updateCustomer', [CustomerController::class, 'updateCustomer'])->middleware('login');
+Route::get('/exportCustomerExcel', [CustomerController::class, 'exportCustomerExcel'])->name('exportCustomerExcel');
 
 //brand
 Route::get('/newBrand', [BrandController::class, 'new_brand_page'])->middleware('login');

@@ -35,7 +35,10 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Manage Customer</h4>
+                            <div class="d-flex align-items-center">
+                                <h4 class="card-title">Manage Customer</h4>
+                                <a href="/exportCustomerExcel" class="btn btn-primary ml-3">EXPORT EXCEL</a>
+                            </div>
                         </div>
                         <div class="card-body">
                             {{-- <div class="table-responsive"> --}}
