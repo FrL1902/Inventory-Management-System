@@ -23,7 +23,7 @@
                 @elseif ($errors->any())
                     <div class="alert alert-danger alert-block" id="alerts">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Update Failed, validation not met</strong>
+                        <strong>Update Gagal, validation not met: {{$errors->any()}}</strong>
                     </div>
                 @endif
 

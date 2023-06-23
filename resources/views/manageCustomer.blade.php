@@ -25,10 +25,15 @@
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('sukses_update_customer') }}</strong>
                 </div>
+            @elseif (session('noInput'))
+                <div class="alert alert-danger alert-block" id="alerts">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ session('noInput') }}</strong>
+                </div>
             @elseif ($errors->any())
                 <div class="alert alert-danger alert-block" id="alerts">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Update Failed, validation not met</strong>
+                    <strong>Update Gagal: validasi tidak tercukupi, {{ $errors->first() }} </strong>
                 </div>
             @endif
             <div class="row">
@@ -192,12 +197,37 @@
                                                                               </div>
                                                                         </div> --}}
                                                                             <div class="form-group">
+                                                                                <label for="largeInput">Customer Name
+                                                                                </label>
+                                                                                <input type="text"
+                                                                                    class="form-control form-control"
+                                                                                    placeholder="Enter customer's full name"
+                                                                                    id="customername"
+                                                                                    name="customername">
+                                                                            </div>
+                                                                            <div class="form-group">
                                                                                 <label for="largeInput">Customer
                                                                                     Address</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
                                                                                     placeholder="Enter customer's address"
                                                                                     id="address" name="address">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="email">Customer
+                                                                                    Email</label>
+                                                                                <input type="email"
+                                                                                    class="form-control"
+                                                                                    placeholder="Enter Email"
+                                                                                    id="email" name="email">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="largeInput">Customer Work
+                                                                                    Phone Number</label>
+                                                                                <input type="text"
+                                                                                    class="form-control form-control"
+                                                                                    placeholder="(021)" id="phone1"
+                                                                                    name="phone1">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="largeInput">Customer

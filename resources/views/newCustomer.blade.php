@@ -20,10 +20,17 @@
                 </div>
             @endif
 
-            @if ($errors->any())
+            {{-- @if ($errors->any())
                 <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>Customer input failed, validation not met, check error in the bottom</strong>
+                </div>
+            @endif --}}
+
+            @if ($errors->any())
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Data Gagal dimasukkan: {{ $errors->first() }}</strong>
                 </div>
             @endif
 
@@ -37,19 +44,23 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="largeInput">Customer ID</label>
+                                    <label for="largeInput">Customer ID <span style="color: red"> (harus diisi)
+                                        </span></label>
                                     <input type="text" class="form-control form-control" placeholder="ex. CU001"
-                                        id="customerid" name="customerid">
+                                        id="customerid" name="customerid" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="largeInput">Customer Name</label>
+                                    <label for="largeInput">Customer Name <span style="color: red"> (harus diisi)
+                                        </span></label>
                                     <input type="text" class="form-control form-control"
-                                        placeholder="Enter customer's full name" id="customername" name="customername">
+                                        placeholder="Enter customer's full name" id="customername" name="customername"
+                                        required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="largeInput">Customer Address</label>
+                                    <label for="largeInput">Customer Address <span style="color: red"> (harus diisi)
+                                        </span></label>
                                     <input type="text" class="form-control form-control"
-                                        placeholder="Enter customer's address" id="address" name="address">
+                                        placeholder="Enter customer's address" id="address" name="address" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Customer Email</label>
@@ -95,11 +106,11 @@
                                     <button class="btn btn-success">Insert New User</button>
                                 </div>
 
-                                @if ($errors->any())
+                                {{-- @if ($errors->any())
                                     @foreach ($errors->all() as $err)
                                         <li class="text-danger">{{ $err }}</li>
                                     @endforeach
-                                @endif
+                                @endif --}}
                             </div>
 
                         </form>

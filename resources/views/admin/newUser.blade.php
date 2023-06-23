@@ -16,6 +16,11 @@
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('sukses_add') }}</strong>
                 </div>
+            @elseif ($errors->any())
+                <div class="alert alert-danger alert-block" id="alerts">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Pembuatan User Baru Gagal, validation not met: {{ $errors->first() }}</strong>
+                </div>
             @endif
 
             <div class="row">
@@ -65,11 +70,11 @@
                                     <span class="text-danger">{{ $errors->first() }}</span>
                                 @endif --}}
 
-                                @if ($errors->any())
+                                {{-- @if ($errors->any())
                                     @foreach ($errors->all() as $err)
                                         <li class="text-danger">{{ $err }}</li>
                                     @endforeach
-                                @endif
+                                @endif --}}
                                 {{-- @include('sweetalert::alert') --}}
                             </div>
                         </form>
