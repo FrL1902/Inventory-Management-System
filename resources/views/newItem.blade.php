@@ -66,8 +66,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="quantity">Stock</label>
-                                    <input type="number" id="quantity" name="itemStock" min="0" max="1000000"
-                                        style="width: 200px" class="form-control">
+                                    <input type="number" id="quantity" name="itemStock" min="0" max="999999999"
+                                        style="width: 200px" class="form-control" placeholder="0 - 999999999">
                                 </div>
                                 <div class="form-group">
                                     <label for="largeInput">Item Image</label>

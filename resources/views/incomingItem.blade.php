@@ -308,8 +308,8 @@
                                                             <div class="form-group">
                                                                 <label for="quantity">Stock</label>
                                                                 <input type="number" id="quantity" name="itemAddStock"
-                                                                    min="1" max="1000000" style="width: 100%"
-                                                                    class="form-control" placeholder="minimum 1" required>
+                                                                    min="1" max="999999999" style="width: 100%"
+                                                                    class="form-control" placeholder="min 1, max 999999999" required>
                                                             </div>
 
                                                             <div class="form-group">
