@@ -90,11 +90,21 @@
                                                     <td>{{ $item->stocks }}</td>
                                                     <td>{{ $item->created_at }}</td>
                                                     <td>{{ $item->updated_at }}</td>
-                                                    <td><img class="rounded mx-auto d-block"
+                                                    <td>
+                                                        {{-- <img class="rounded mx-auto d-block"
                                                             style="width: 100px;
                                                         height: auto;"
                                                             src="{{ Storage::url($item->item_pictures) }}"
-                                                            alt="no picture"></td>
+                                                            alt="no picture"> --}}
+                                                        <a style="cursor: pointer"
+                                                            data-target="#imageModalCenter{{ $item->id }}"
+                                                            data-toggle="modal">
+                                                            <img class="rounded mx-auto d-block"
+                                                                style="width: 100px; height: auto;"
+                                                                src="{{ Storage::url($item->item_pictures) }}"
+                                                                alt="no picture" loading="lazy">
+                                                        </a>
+                                                    </td>
                                                     <td>
                                                         <div class="d-flex justify-content-center">
                                                             {{-- <a style="cursor: pointer"
@@ -327,6 +337,31 @@
                                                         </div> --}}
                                                     </td>
                                                 </tr>
+                                                <div class="modal fade" id="imageModalCenter{{ $item->id }}"
+                                                    tabindex="-1" role="dialog"
+                                                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg"
+                                                        role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h3 class="modal-title" id="exampleModalLongTitle">
+                                                                    <strong>Gambar barang "
+                                                                        {{ $item->item_name }}"</strong>
+                                                                </h3>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <img class="rounded mx-auto d-block"
+                                                                    style="width: 750px; height: auto;"
+                                                                    src="{{ Storage::url($item->item_pictures) }}"
+                                                                    alt="no picture" loading="lazy">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             @endforeach
                                         </tbody>
                                     </table>
