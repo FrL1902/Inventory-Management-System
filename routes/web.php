@@ -25,6 +25,8 @@ Route::get('/', function () {
     return view('login');
 });
 
+Route::get('/creds/{id}', [AuthController::class, 'show_creds'])->middleware('login');
+Route::post('/updateUser', [AuthController::class, 'updateUser'])->middleware('login');
 
 Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('login');
 // Route::get('home', [HomeController::class, 'index'])->middleware('security');

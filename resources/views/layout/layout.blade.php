@@ -109,9 +109,11 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li>
+                                {{-- <li>auth()->user()->id --}}
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">My Profile</a>
+                                    {{-- <a class="dropdown-item" href="/creds/{{ auth()->user()->id }}">Change Password</a> --}}
+                                    {{-- <a class="dropdown-item" href="/creds/{{ Crypt::encryptString(auth()->user()->id) }}">Change Password</a> --}}
+                                    <a class="dropdown-item" href="/creds/{{ encrypt(auth()->user()->id) }}">Change Password</a>
                                     {{-- <div class="dropdown-divider"></div> --}}
                                     <a class="dropdown-item" href="/logout">Logout</a>
                                 </li>
