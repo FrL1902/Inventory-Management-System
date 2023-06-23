@@ -7,6 +7,7 @@
 <div class="main-panel">
     <div class="content">
         ini home page
+        <h3>ini home page tp css</h3>
 
         {{-- / nothin's here yet for now
         test home
