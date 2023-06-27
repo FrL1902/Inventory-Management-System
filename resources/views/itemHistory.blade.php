@@ -33,7 +33,31 @@
                             <div class="card-header">
                                 {{-- <div class="d-flex align-items-center"> --}}
                                 <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">History of stocks</h4>
+                                    <div class="d-flex flex-row">
+                                        <span>
+
+                                        </span>
+                                        <h4 class="card-title mt-1 mr-3">
+                                            <span class="align-middle">
+                                                History of stocks
+                                            </span>
+                                        </h4>
+                                        <div class="ml-3 mr-2 mt-2">
+                                            <span class="align-middle">
+                                                Export By
+                                            </span>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-target="#exportItemHistorymModal"
+                                                data-toggle="modal"><strong>Item</strong>
+                                            </button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-target="#exportHistoryByDateModal"
+                                                data-toggle="modal"><strong>Date</strong>
+                                            </button>
+                                        </div>
+                                    </div>
                                     <div>
                                         <button type="button" class="btn btn-secondary" data-target="#sortByDateModal"
                                             data-toggle="modal"><strong>Filter by Date</strong>
@@ -44,6 +68,106 @@
                                         @endif
 
                                     </div>
+
+                                    {{-- export by ALL --}}
+                                    <div class="modal fade" id="exportItemHistorymModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print an item's history
+                                                        </strong>
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+
+                                                {{-- export by item name --}}
+                                                <div class="modal-body">
+                                                    <form method="post" action="/exportItemHistory">
+                                                        @csrf
+
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                {{-- <label for="customerLabelExport">Item Name</label>
+                                                                <select class="form-control" id="customerLabelExport"
+                                                                    name="itemHistoryExport">
+                                                                    @foreach ($history as $data)
+                                                                        <option value="{{ $data->item_name }}">
+                                                                            {{ $data->item_name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select> --}}
+
+                                                                <label for="largeInput">Item Name (case sensitive)</label>
+                                                                <input type="text" class="form-control form-control"
+                                                                    placeholder="item name" name="itemHistoryExport">
+
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="card mt-5 ">
+                                                                    <button id="" class="btn btn-primary">Export
+                                                                        Data</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- export by ALL --}}
+                                    <div class="modal fade" id="exportHistoryByDateModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print History By Date
+                                                        </strong>
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/exportHistoryByDate">
+                                                        @csrf
+
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="startRange">Start Date Range</label>
+                                                                <input type="date" class="form-control" id="startRange"
+                                                                    required name="startRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="endRange">End Date Range</label>
+                                                                <input type="date" class="form-control" id="endRange"
+                                                                    required name="endRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="card mt-5 ">
+                                                                    <button id="" class="btn btn-primary">Export
+                                                                        Data</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     {{-- filter by date --}}
                                     <div class="modal fade" id="sortByDateModal" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -67,8 +191,8 @@
                                                         <div class="card-body">
                                                             <div class="form-group">
                                                                 <label for="startRange">Start Date Range</label>
-                                                                <input type="date" class="form-control" id="startRange"
-                                                                    required name="startRange">
+                                                                <input type="date" class="form-control"
+                                                                    id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">

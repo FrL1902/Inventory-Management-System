@@ -34,7 +34,6 @@ class UserController extends Controller
 
     public function makeUser(Request $request)
     {
-
         $request->validate([
             'usernameform' => 'required|unique:App\Models\User,name|min:4|max:16',
             'emailform' => 'required|unique:App\Models\User,email',

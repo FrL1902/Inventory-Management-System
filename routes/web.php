@@ -72,6 +72,8 @@ Route::get('/manageHistory', [ItemController::class, 'item_history_page']);
 Route::post('/exportCustomerItem', [ItemController::class, 'exportCustomerItem'])->name('exportCustomerItem');
 Route::post('/exportBrandItem', [ItemController::class, 'exportBrandItem'])->name('exportBrandItem');
 Route::post('/filterHistoryDate', [StockHistoryController::class, 'filterHistoryDate']);
+Route::post('/exportItemHistory', [StockHistoryController::class, 'exportItemHistory'])->name('exportItemHistory');
+Route::post('/exportHistoryByDate', [StockHistoryController::class, 'exportHistoryByDate'])->name('exportHistoryByDate');
 
 //incoming
 Route::post('/addItemStock', [IncomingController::class, 'addItemStock']);
