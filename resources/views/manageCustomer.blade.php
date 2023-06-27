@@ -92,7 +92,7 @@
                                                 <td>{{ $data->phone1 }}</td>
                                                 <td>{{ $data->phone2 }}</td>
                                                 <td>{{ $data->fax }}</td>
-                                                <td>{{ $data->website }}</td>
+                                                <td>{{ $data->website }} </td>
                                                 <td>{{ $data->pic }}</td>
                                                 <td>{{ $data->pic_phone }}</td>
                                                 <td>{{ $data->npwp_perusahaan }}</td>
@@ -105,13 +105,21 @@
                                                                 data-toggle="tooltip"
                                                                 data-original-title="Edit Customer"></i>
                                                         </a>
-                                                        <a class="ml-3 mb-2" style="cursor: pointer"
-                                                            data-target="#deleteModal{{ $data->id }}"
-                                                            data-toggle="modal">
-                                                            <i class="fa fa-times mt-3 text-danger"
-                                                                data-toggle="tooltip"
-                                                                data-original-title="Delete Customer"></i>
-                                                        </a>
+                                                        @if (App\Models\Brand::checkNullBrandCustomer($data->id) == 'kosong')
+                                                            <a class="ml-3 mb-2" style="cursor: pointer"
+                                                                data-target="#deleteModal{{ $data->id }}"
+                                                                data-toggle="modal">
+                                                                <i class="fa fa-times mt-3 text-danger"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Delete Customer"></i>
+                                                            </a>
+                                                        @else
+                                                            <a class="ml-3 mb-2" style="cursor: pointer">
+                                                                <i class="fa fa-ban mt-3 text-danger"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Cannot Delete Customer, has brand"></i>
+                                                            </a>
+                                                        @endif
                                                     </div>
                                                     <div class="modal fade" id="deleteModal{{ $data->id }}">
                                                         <div class="modal-dialog">
