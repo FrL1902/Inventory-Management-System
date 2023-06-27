@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\editItemExport;
 use App\Models\Brand;
 use App\Models\Customer;
 use App\Models\Incoming;
@@ -11,6 +12,7 @@ use App\Models\StockHistory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ItemController extends Controller
 {
@@ -75,7 +77,9 @@ class ItemController extends Controller
     public function manage_item_page()
     {
         $item = Item::all();
-        return view('manageItem', compact('item'));
+        $customer = Customer::all();
+        $brand = Brand::all();
+        return view('manageItem', compact('item', 'customer', 'brand'));
     }
 
     public function item_history_page()
@@ -168,4 +172,21 @@ class ItemController extends Controller
         return redirect('manageItem');
     }
 
+    public function exportCustomerItem(Request $request)
+    {
+        $customer = Customer::find($request->customerItemExport);
+
+        $sortItem = Item::all()->where('customer_id', $request->customerItemExport);
+
+        return Excel::download(new editItemExport($sortItem), 'Item milik Customer ' .  $customer->customer_name . '.xlsx');
+    }
+
+    public function exportBrandItem(Request $request)
+    {
+        $brand = Brand::find($request->brandItemExport);
+
+        $sortItem = Item::all()->where('brand_id', $request->brandItemExport);
+
+        return Excel::download(new editItemExport($sortItem), 'Item milik Brand ' .  $brand->brand_name . '.xlsx');
+    }
 }

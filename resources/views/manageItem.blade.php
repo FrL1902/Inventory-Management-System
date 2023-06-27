@@ -49,6 +49,110 @@
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">Manage Existing Items Data</h4>
                                     {{-- <h4 class="card-title">Manage Existing Items and its Stocks</h4> --}}
+
+                                    <div class="ml-3 mr-2">
+                                        Export by
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-target="#exportCustomerItemModal"
+                                            data-toggle="modal"><strong>Customer</strong>
+                                        </button>
+
+                                        <button type="button" class="btn btn-secondary" data-target="#exportBrandItemModal"
+                                            data-toggle="modal"><strong>Brand</strong>
+                                        </button>
+                                    </div>
+                                    {{-- export items by customer --}}
+                                    <div class="modal fade" id="exportCustomerItemModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print a Customer's Items
+                                                        </strong>
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/exportCustomerItem">
+                                                        @csrf
+
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="customerLabelExport">Customer</label>
+                                                                <select class="form-control" id="customerLabelExport"
+                                                                    name="customerItemExport">
+                                                                    @foreach ($customer as $data)
+                                                                        <option value="{{ $data->id }}">
+                                                                            {{ $data->customer_name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="card mt-5 ">
+                                                                    <button id="" class="btn btn-primary">Export
+                                                                        Data</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- export items by brand --}}
+                                    <div class="modal fade" id="exportBrandItemModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print a Brand's Items
+                                                        </strong>
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/exportBrandItem">
+                                                        @csrf
+
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="customerLabelExport">Brand</label>
+                                                                <select class="form-control" id="customerLabelExport"
+                                                                    name="brandItemExport">
+                                                                    @foreach ($brand as $data)
+                                                                        <option value="{{ $data->id }}">
+                                                                            {{ $data->brand_name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="card mt-5 ">
+                                                                    <button id="" class="btn btn-primary">Export
+                                                                        Data</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -170,7 +274,8 @@
                                                         <div class="modal fade" id="editModalCenter{{ $item->id }}"
                                                             tabindex="-1" role="dialog"
                                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <div class="d-flex flex-column">

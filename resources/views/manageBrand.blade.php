@@ -43,6 +43,7 @@
                                             data-toggle="modal"><strong>Customer</strong>
                                         </button>
                                     </div>
+                                    {{-- export brands by customer --}}
                                     <div class="modal fade" id="exportCustomerBrandModal" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">

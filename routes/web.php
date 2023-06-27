@@ -66,6 +66,8 @@ Route::get('/manageItem', [ItemController::class, 'manage_item_page']);
 Route::get('/deleteItem/{id}', [ItemController::class, 'deleteItem']);
 Route::post('/updateItem', [ItemController::class, 'updateItem']);
 Route::get('/manageHistory', [ItemController::class, 'item_history_page']);
+Route::post('/exportCustomerItem', [ItemController::class, 'exportCustomerItem'])->name('exportCustomerItem');
+Route::post('/exportBrandItem', [ItemController::class, 'exportBrandItem'])->name('exportBrandItem');
 
 //incoming
 Route::post('/addItemStock', [IncomingController::class, 'addItemStock']);
