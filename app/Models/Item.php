@@ -31,13 +31,25 @@ class Item extends Model
         return $this->hasMany(Outgoing::class, 'item_id');
     }
 
-    public static function checkNullItemBrand($id){
+    public static function checkNullItemBrand($id)
+    {
         $nullCheckItem = Item::where('brand_id', $id)->first();
-            if (is_null($nullCheckItem)) {
-                return "kosong";
-            } else {
-                return "ada";
-            }
+        if (is_null($nullCheckItem)) {
+            return "kosong";
+        } else {
+            return "ada";
+        }
     }
 
+    public static function checkItemDeletable($id)
+    {
+        $itemIncoming = Incoming::where('item_id', $id)->first();
+        $itemOutgoing = Outgoing::where('item_id', $id)->first();
+
+        if (is_null($itemIncoming) && is_null($itemOutgoing)) {
+            return "kosong";
+        } else {
+            return "ada";
+        }
+    }
 }

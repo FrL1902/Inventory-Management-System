@@ -42,25 +42,4 @@ class StockHistoryController extends Controller
 
         return Excel::download(new StockHistoryExport($sortHistoryDate), $formatFileName . '.xlsx');
     }
-
-    // public function exportIncoming(Request $request)
-    // {
-    //     $date_from = Carbon::parse($request->startRange)->startOfDay();
-    //     $date_to = Carbon::parse($request->endRange)->endOfDay();
-
-
-    //     // return Excel::download(new IncomingExport($sortCustomer), 'dataBarangDatang.xlsx');
-    //     $sortAll = Incoming::all()->whereBetween('created_at', [$date_from, $date_to]);
-    //     $formatFileName = 'DataBarangDatang ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
-
-    //     return Excel::download(new IncomingExport($sortAll), $formatFileName . '.xlsx');
-    //     // return (new IncomingExport($sortCustomer))->download('Productos.xlsx');
-    // }
-
-
-    // $customer = Customer::find($request->customerBrandExport);
-
-    // $sortBrand = Brand::all()->where('customer_id', $request->customerBrandExport);
-
-    // return Excel::download(new brandExport($sortBrand), 'Brand milik ' .  $customer->customer_name .'.xlsx');
 }

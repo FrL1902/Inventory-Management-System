@@ -232,13 +232,21 @@
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Edit Item Name"></i>
                                                             </a>
-                                                            <a class="ml-3 mb-2" style="cursor: pointer"
-                                                                data-target="#deleteModal{{ $item->id }}"
-                                                                data-toggle="modal">
-                                                                <i class="fa fa-times mt-3 text-danger"
+                                                            @if (App\Models\Item::checkItemDeletable($item->id) == 'kosong')
+                                                                <a class="ml-3 mb-2" style="cursor: pointer"
+                                                                    data-target="#deleteModal{{ $item->id }}"
+                                                                    data-toggle="modal">
+                                                                    <i class="fa fa-times mt-3 text-danger"
+                                                                        data-toggle="tooltip"
+                                                                        data-original-title="Delete Item"></i>
+                                                                </a>
+                                                            @else
+                                                            <a class="ml-3 mb-2" style="cursor: pointer">
+                                                                <i class="fa fa-ban mt-3 text-danger"
                                                                     data-toggle="tooltip"
-                                                                    data-original-title="Delete Item"></i>
+                                                                    data-original-title="Cannot Delete Item, has history"></i>
                                                             </a>
+                                                            @endif
                                                         </div>
 
                                                         <div class="modal fade" id="deleteModal{{ $item->id }}">
