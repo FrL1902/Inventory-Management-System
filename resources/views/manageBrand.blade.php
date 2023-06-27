@@ -23,7 +23,7 @@
                 @elseif ($errors->any())
                     <div class="alert alert-danger alert-block" id="alerts">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Update Gagal, validation not met: {{$errors->any()}}</strong>
+                        <strong>Update Gagal, validation not met: {{ $errors->any() }}</strong>
                     </div>
                 @endif
 
@@ -125,13 +125,21 @@
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Edit Brand"></i>
                                                             </a>
-                                                            <a class="ml-3 mb-2" style="cursor: pointer"
-                                                                data-target="#deleteModal{{ $brand->id }}"
-                                                                data-toggle="modal">
-                                                                <i class="fa fa-times mt-3 text-danger"
-                                                                    data-toggle="tooltip"
-                                                                    data-original-title="Delete Brand"></i>
-                                                            </a>
+                                                            @if (App\Models\Item::checkNullItemBrand($brand->id) == 'kosong')
+                                                                <a class="ml-3 mb-2" style="cursor: pointer"
+                                                                    data-target="#deleteModal{{ $brand->id }}"
+                                                                    data-toggle="modal">
+                                                                    <i class="fa fa-times mt-3 text-danger"
+                                                                        data-toggle="tooltip"
+                                                                        data-original-title="Delete Brand"></i>
+                                                                </a>
+                                                            @else
+                                                                <a class="ml-3 mb-2" style="cursor: pointer">
+                                                                    <i class="fa fa-ban mt-3 text-danger"
+                                                                        data-toggle="tooltip"
+                                                                        data-original-title="Cannot Delete Brand, has item"></i>
+                                                                </a>
+                                                            @endif
                                                         </div>
 
                                                         <div class="modal fade" id="deleteModal{{ $brand->id }}">
@@ -166,10 +174,12 @@
                                                         <div class="modal fade" id="editModalCenter{{ $brand->id }}"
                                                             tabindex="-1" role="dialog"
                                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h3 class="modal-title" id="exampleModalLongTitle">
+                                                                        <h3 class="modal-title"
+                                                                            id="exampleModalLongTitle">
                                                                             <strong>Update data for
                                                                                 "{{ $brand->brand_name }}"</strong>
                                                                         </h3>
@@ -189,7 +199,8 @@
                                                                                         placeholder="brand name"
                                                                                         aria-label=""
                                                                                         aria-describedby="basic-addon1"
-                                                                                        name="brandnameformupdate" required>
+                                                                                        name="brandnameformupdate"
+                                                                                        required>
                                                                                     <div class="card mt-5 ">
                                                                                         <button id=""
                                                                                             class="btn btn-primary">Update
