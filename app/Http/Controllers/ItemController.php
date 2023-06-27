@@ -84,6 +84,7 @@ class ItemController extends Controller
 
     public function item_history_page()
     {
+        session()->forget('deleteFilterButton');
         $history = StockHistory::all();
         return view('itemHistory', compact('history'));
     }

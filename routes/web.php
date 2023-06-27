@@ -7,7 +7,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncomingController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OutgoingController;
+use App\Http\Controllers\StockHistoryController;
 use App\Http\Controllers\UserController;
+use App\Models\StockHistory;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,7 +61,7 @@ Route::get('/deleteBrand/{id}', [BrandController::class, 'deleteBrand'])->middle
 Route::post('/updateBrand', [BrandController::class, 'updateBrand'])->middleware('login');
 Route::post('exportCustomerBrand', [BrandController::class, 'exportCustomerBrand'])->name('exportCustomerBrand');
 
-//item
+//item & stockhistory
 Route::get('/newItem', [ItemController::class, 'new_item_page']);
 Route::post('/makeItem', [ItemController::class, 'makeItem']);
 Route::get('/manageItem', [ItemController::class, 'manage_item_page']);
@@ -68,6 +70,7 @@ Route::post('/updateItem', [ItemController::class, 'updateItem']);
 Route::get('/manageHistory', [ItemController::class, 'item_history_page']);
 Route::post('/exportCustomerItem', [ItemController::class, 'exportCustomerItem'])->name('exportCustomerItem');
 Route::post('/exportBrandItem', [ItemController::class, 'exportBrandItem'])->name('exportBrandItem');
+Route::post('/filterHistoryDate', [StockHistoryController::class, 'filterHistoryDate']);
 
 //incoming
 Route::post('/addItemStock', [IncomingController::class, 'addItemStock']);

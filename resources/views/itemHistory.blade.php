@@ -31,8 +31,64 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <div class="d-flex align-items-center">
+                                {{-- <div class="d-flex align-items-center"> --}}
+                                <div class="d-flex justify-content-between">
                                     <h4 class="card-title">History of stocks</h4>
+                                    <div>
+                                        <button type="button" class="btn btn-secondary" data-target="#sortByDateModal"
+                                            data-toggle="modal"><strong>Filter by Date</strong>
+                                        </button>
+                                        @if (session('deleteFilterButton'))
+                                            <a type="button" class="btn btn-danger" style="cursor: pointer"
+                                                href="/manageHistory">Remove Filter</a>
+                                        @endif
+
+                                    </div>
+                                    {{-- filter by date --}}
+                                    <div class="modal fade" id="sortByDateModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Filter by date range
+                                                        </strong>
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/filterHistoryDate">
+                                                        @csrf
+
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="startRange">Start Date Range</label>
+                                                                <input type="date" class="form-control" id="startRange"
+                                                                    required name="startRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="endRange">End Date Range</label>
+                                                                <input type="date" class="form-control" id="endRange"
+                                                                    required name="endRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="card mt-5 ">
+                                                                    <button id=""
+                                                                        class="btn btn-primary">Sort</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-body">
