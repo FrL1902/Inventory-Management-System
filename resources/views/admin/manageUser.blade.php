@@ -42,7 +42,33 @@ https://www.w3schools.com/css/css3_animations.asp --}}
     <div class="content">
         <div class="page-inner">
 
-            @if (session('sukses_delete'))
+            {{-- buat ganti password --}}
+            @if (session('passwordInputDifferent'))
+                <div class="alert alert-danger alert-block" id="alerts">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ session('passwordInputDifferent') }}</strong>
+                </div>
+            @elseif (session('passwordSameOld'))
+                <div class="alert alert-danger alert-block" id="alerts">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ session('passwordSameOld') }}</strong>
+                </div>
+            @elseif (session('passwordUpdated'))
+                <div class="alert alert-success alert-block" id="alerts">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ session('passwordUpdated') }}</strong>
+                </div>
+
+                {{-- @if ($errors->any())
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Update Gagal: panjang password baru harus 6 - 20 karakter</strong>
+                </div>
+            @endif --}}
+
+
+                {{-- buat edit data user dan delete --}}
+            @elseif (session('sukses_delete'))
                 <div class="alert alert-warning alert-block" id="alerts">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('sukses_delete') }}</strong>
@@ -55,14 +81,20 @@ https://www.w3schools.com/css/css3_animations.asp --}}
             @elseif ($errors->any())
                 <div class="alert alert-danger alert-block" id="alerts">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Update Failed, validation not met, error is: </strong>
+                    {{-- <strong>Update Gagal, validasi tidak terpenuhi: </strong> --}}
+                    <strong>Update Gagal</strong>
 
                     @if ($errors->first() == 'The usernameformupdate must be at least 4 characters.')
-                        <span class="text-danger">The edited username must be at least 4 characters.</span>
+                        <span class="text-danger">, validasi tidak terpenuhi: The edited username must be at least 4
+                            characters.</span>
                     @elseif ($errors->first() == 'The usernameformupdate must not be greater than 16 characters.')
-                        <span class="text-danger">The edited username must not be greater than 16 characters.</span>
+                        <span class="text-danger">, validasi tidak terpenuhi: The edited username must not be greater
+                            than 16 characters.</span>
                     @elseif ($errors->first() == 'The usernameformupdate has already been taken.')
-                        <span class="text-danger">The edited username has already been taken</span>
+                        <span class="text-danger">, validasi tidak terpenuhi: The edited username has already been
+                            taken</span>
+                    @else
+                        <span class="text-danger">: panjang password baru harus 6 - 20 karakter</span>
                     @endif
 
                 </div>
@@ -161,6 +193,12 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a style="cursor: pointer"
+                                                            data-target="#editPasswordCenter{{ $data->id }}"
+                                                            data-toggle="modal"><i class="fa fa-key mt-3 text-warning"
+                                                                data-toggle="tooltip"
+                                                                data-original-title="Change Password">
+                                                            </i></a>
+                                                        <a class="ml-3" style="cursor: pointer"
                                                             data-target="#editModalCenter{{ $data->id }}"
                                                             data-toggle="modal"><i class="fa fa-edit mt-3 text-primary"
                                                                 data-toggle="tooltip" data-original-title="edit user">
@@ -260,6 +298,83 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                             </div>
                                                         </div>
 
+                                                        <!-- Change Password Modal -->
+                                                        <div class="modal fade"
+                                                            id="editPasswordCenter{{ $data->id }}" tabindex="-1"
+                                                            role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h3 class="modal-title"
+                                                                            id="exampleModalLongTitle">
+                                                                            <strong>Update password for
+                                                                                "{{ $data->name }}"</strong>
+                                                                        </h3>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form method="post"
+                                                                            action="/newPasswordFromAdmin">
+                                                                            @csrf
+                                                                            <div class="card-body">
+                                                                                <div class="form-group">
+                                                                                    <label for="password"
+                                                                                        class="placeholder"><b>New
+                                                                                            Password</b></label>
+                                                                                    <div class="position-relative">
+                                                                                        <input id="password"
+                                                                                            name="changePassword"
+                                                                                            type="password"
+                                                                                            class="form-control"
+                                                                                            required>
+                                                                                        <div class="show-password">
+                                                                                            <i
+                                                                                                class="flaticon-interface">
+                                                                                                show password</i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="password"
+                                                                                        class="placeholder"><b>Confirm
+                                                                                            Password</b></label>
+                                                                                    <div class="position-relative">
+                                                                                        <input id="password"
+                                                                                            name="changePassword2"
+                                                                                            type="password"
+                                                                                            class="form-control"
+                                                                                            required>
+                                                                                        <div class="show-password">
+                                                                                            <i
+                                                                                                class="flaticon-interface">
+                                                                                                show password</i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <div class="card mt-5 ">
+                                                                                        <button id=""
+                                                                                            class="btn btn-primary">Update
+                                                                                            Data</button>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <input type="hidden"
+                                                                                    class="form-control"
+                                                                                    name="userIdHidden"
+                                                                                    value="{{ $data->id }}">
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
 
                                                         <!-- Modal -->
                                                         {{-- <div class="modal fade" id="userUpdateModal" tabindex="-1"
@@ -313,7 +428,8 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                                        <h5 class="modal-title"
+                                                                            id="exampleModalLabel">
                                                                             <strong>PENGHAPUSAN USER</strong>
                                                                         </h5>
                                                                         <button type="button" class="close"

@@ -98,4 +98,39 @@ class UserController extends Controller
         // return (new UserExport())->download('User Warehouse.xlsx');
         // return (new UserExport($request->userLevel, $request->startRange, $request->endRange))->download('User Warehouse.xlsx');
     }
+
+    public function newPasswordFromAdmin(Request $request)
+    {
+        // $tes = User::where('id', 321)->first();
+        // dd('masok cok');
+        // dd(is_null($tes));
+        // dd($request->userIdHidden);
+
+        $getUser = User::where('id', $request->userIdHidden)->first();
+
+        // dd($getUser->name);
+
+        if ($request->changePassword === $request->changePassword2) {
+        } else {
+            $request->session()->flash('passwordInputDifferent', 'Update Gagal: password baru harus sesuai di kedua kolom');
+            return redirect()->back();
+        }
+
+        // validasi panjang karakter password
+        $request->validate([
+            'changePassword' => 'min:6|max:20',
+        ]);
+
+        // validasi password baru tidak boleh sama dari password lama
+        if (Hash::check($request->changePassword, $getUser->password)) { //mungkin ganti ke bcrypt kali yak
+            $request->session()->flash('passwordSameOld', 'Update Gagal: password baru harus berbeda dari password lama');
+            return redirect()->back();
+        } else {
+            User::where('id',  $getUser->id)->update([
+                'password' => Hash::make($request->changePassword),
+            ]);
+            $request->session()->flash('passwordUpdated', 'Update Berhasil: password berhasil diubah');
+            return redirect()->back();
+        }
+    }
 }

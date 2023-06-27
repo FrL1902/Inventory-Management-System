@@ -69,7 +69,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form method="post" action="/exportIncomingCustomer">
+                                                    <form method="post" action="/updateUser">
                                                         @csrf
 
                                                         <div class="card-body">

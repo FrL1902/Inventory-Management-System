@@ -42,6 +42,7 @@ Route::get('/manageUser', [UserController::class, 'manage_user_page'])->middlewa
 Route::post('/makeUser', [Usercontroller::class, 'makeUser'])->middleware('security');
 Route::get('/deleteUser/{id}', [UserController::class, 'destroy'])->middleware('security');
 Route::post('/tex',            [UserController::class, 'tex'])->middleware('security');
+Route::post('/newPasswordFromAdmin', [UserController::class, 'newPasswordFromAdmin'])->middleware('security');
 
 // buat tombol navbar samping
 
