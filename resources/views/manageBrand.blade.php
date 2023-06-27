@@ -33,6 +33,60 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">Manage Existing Brands</h4>
+
+                                    <div class="ml-3 mr-2">
+                                        Export by
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-target="#exportCustomerBrandModal"
+                                            data-toggle="modal"><strong>Customer</strong>
+                                        </button>
+                                    </div>
+                                    <div class="modal fade" id="exportCustomerBrandModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print a Customer's Brands
+                                                        </strong>
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/exportCustomerBrand">
+                                                        @csrf
+
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="customerLabelExport">Customer</label>
+                                                                <select class="form-control" id="customerLabelExport"
+                                                                    name="customerBrandExport">
+                                                                    @foreach ($customer as $data)
+                                                                        <option value="{{ $data->id }}">
+                                                                            {{ $data->customer_name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="card mt-5 ">
+                                                                    <button id="" class="btn btn-primary">Export
+                                                                        Data</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-body">

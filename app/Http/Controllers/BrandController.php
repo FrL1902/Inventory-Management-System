@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\brandExport;
 use App\Models\Brand;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BrandController extends Controller
 {
@@ -18,8 +20,9 @@ class BrandController extends Controller
 
     public function manage_brand_page()
     {
+        $customer = Customer::all();
         $brand = Brand::all();
-        return view('manageBrand', compact('brand'));
+        return view('manageBrand', compact('brand' , 'customer'));
     }
 
     public function makeBrand(Request $request)
@@ -78,5 +81,13 @@ class BrandController extends Controller
         $request->session()->flash('sukses_editBrand', $oldBrandName);
 
         return redirect('manageBrand');
+    }
+
+    public function exportCustomerBrand(Request $request){
+        $customer = Customer::find($request->customerBrandExport);
+
+        $sortBrand = Brand::all()->where('customer_id', $request->customerBrandExport);
+
+        return Excel::download(new brandExport($sortBrand), 'Brand milik ' .  $customer->customer_name .'.xlsx');
     }
 }

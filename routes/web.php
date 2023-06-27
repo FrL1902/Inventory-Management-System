@@ -57,6 +57,7 @@ Route::get('/manageBrand', [BrandController::class, 'manage_brand_page'])->middl
 Route::post('/makeBrand', [BrandController::class, 'makeBrand'])->middleware('login');
 Route::get('/deleteBrand/{id}', [BrandController::class, 'deleteBrand'])->middleware('login');
 Route::post('/updateBrand', [BrandController::class, 'updateBrand'])->middleware('login');
+Route::post('exportCustomerBrand', [BrandController::class, 'exportCustomerBrand'])->name('exportCustomerBrand');
 
 //item
 Route::get('/newItem', [ItemController::class, 'new_item_page']);
