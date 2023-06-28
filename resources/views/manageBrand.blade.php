@@ -20,6 +20,11 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Sukses mengupdate data "{{ session('sukses_editBrand') }}"</strong>
                     </div>
+                @elseif (session('gagal_delete_brand'))
+                    <div class="alert alert-danger alert-block" id="alerts">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ session('gagal_delete_brand') }}</strong>
+                    </div>
                 @elseif ($errors->any())
                     <div class="alert alert-danger alert-block" id="alerts">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -164,7 +169,7 @@
                                                                         <button type="button" class="btn btn-secondary"
                                                                             id="close-modal"
                                                                             data-dismiss="modal">Tidak</button>
-                                                                        <a href="/deleteBrand/{{ $brand->id }}"
+                                                                        <a href="/deleteBrand/{{ encrypt($brand->id) }}"
                                                                             class="btn btn-danger">YAKIN
                                                                         </a>
                                                                     </div>

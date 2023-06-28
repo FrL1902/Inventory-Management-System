@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Exports\brandExport;
 use App\Models\Brand;
 use App\Models\Customer;
+use App\Models\Item;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -22,7 +24,7 @@ class BrandController extends Controller
     {
         $customer = Customer::all();
         $brand = Brand::all();
-        return view('manageBrand', compact('brand' , 'customer'));
+        return view('manageBrand', compact('brand', 'customer'));
     }
 
     public function makeBrand(Request $request)
@@ -52,17 +54,31 @@ class BrandController extends Controller
 
     public function deleteBrand($id)
     {
-        $brand = Brand::find($id);
+        // dd($id);
 
+        try {
+            $decrypted = decrypt($id);
+        } catch (DecryptException $e) {
+            abort(403);
+        }
+
+        $nullCheckItem = Item::where('brand_id', $decrypted)->first();
+        $brand = Brand::find($decrypted);
         $deletedBrand = $brand->brand_name;
+        if (is_null($nullCheckItem)) {
+            // dd(1);
+            $brand->delete();
 
-        $brand->delete();
+            $brandDeleted = "Brand" . " \"" . $deletedBrand . "\" " . "berhasil di hapus";
 
-        $brandDeleted = "Brand" . " \"" . $deletedBrand . "\" " . "berhasil di hapus";
+            session()->flash('sukses_delete_brand', $brandDeleted);
 
-        session()->flash('sukses_delete_brand', $brandDeleted);
-
-        return redirect('manageBrand');
+            return redirect('manageBrand');
+        } else {
+            // dd(2);
+            session()->flash('gagal_delete_brand', 'Brand' . " \"" . $deletedBrand . "\" " . 'Gagal Dihapus karena sudah mempunyai Item');
+            return redirect('manageBrand');
+        }
     }
 
     public function updateBrand(Request $request)
@@ -83,11 +99,12 @@ class BrandController extends Controller
         return redirect('manageBrand');
     }
 
-    public function exportCustomerBrand(Request $request){
+    public function exportCustomerBrand(Request $request)
+    {
         $customer = Customer::find($request->customerBrandExport);
 
         $sortBrand = Brand::all()->where('customer_id', $request->customerBrandExport);
 
-        return Excel::download(new brandExport($sortBrand), 'Brand milik ' .  $customer->customer_name .'.xlsx');
+        return Excel::download(new brandExport($sortBrand), 'Brand milik ' .  $customer->customer_name . '.xlsx');
     }
 }

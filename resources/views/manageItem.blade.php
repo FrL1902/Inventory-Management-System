@@ -35,6 +35,11 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Update Failed: no inputted data</strong>
                     </div>
+                @elseif (session('gagal_delete_item'))
+                    <div class="alert alert-danger alert-block" id="alerts">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ session('gagal_delete_item') }}</strong>
+                    </div>
                 @elseif ($errors->any())
                     <div class="alert alert-danger alert-block" id="alerts">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -241,11 +246,11 @@
                                                                         data-original-title="Delete Item"></i>
                                                                 </a>
                                                             @else
-                                                            <a class="ml-3 mb-2" style="cursor: pointer">
-                                                                <i class="fa fa-ban mt-3 text-danger"
-                                                                    data-toggle="tooltip"
-                                                                    data-original-title="Cannot Delete Item, has history"></i>
-                                                            </a>
+                                                                <a class="ml-3 mb-2" style="cursor: pointer">
+                                                                    <i class="fa fa-ban mt-3 text-danger"
+                                                                        data-toggle="tooltip"
+                                                                        data-original-title="Cannot Delete Item, has history"></i>
+                                                                </a>
                                                             @endif
                                                         </div>
 
@@ -271,7 +276,7 @@
                                                                         <button type="button" class="btn btn-secondary"
                                                                             id="close-modal"
                                                                             data-dismiss="modal">Tidak</button>
-                                                                        <a href="/deleteItem/{{ $item->id }}"
+                                                                        <a href="/deleteItem/{{ encrypt($item->id) }}"
                                                                             class="btn btn-danger">YAKIN
                                                                         </a>
                                                                     </div>

@@ -10,6 +10,7 @@ use App\Models\Item;
 use App\Models\Outgoing;
 use App\Models\StockHistory;
 use App\Models\User;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
@@ -91,20 +92,28 @@ class ItemController extends Controller
 
     public function deleteItem($id)
     {
+        try {
+            $decrypted = decrypt($id);
+        } catch (DecryptException $e) {
+            abort(403);
+        }
 
-        $item = Item::find($id);
 
+        $itemIncoming = Incoming::where('item_id', $decrypted)->first();
+        $itemOutgoing = Outgoing::where('item_id', $decrypted)->first();
+        $item = Item::find($decrypted);
         $deletedItem = $item->item_name;
 
-        Storage::delete('public/' . $item->item_pictures);
-
-        $item->delete();
-
-        $itemDeleted = "Item" . " \"" . $deletedItem . "\" " . "berhasil di hapus";
-
-        session()->flash('sukses_delete_item', $itemDeleted);
-
-        return redirect('manageItem');
+        if (is_null($itemIncoming) && is_null($itemOutgoing)) {
+            Storage::delete('public/' . $item->item_pictures);
+            $item->delete();
+            $itemDeleted = "Item" . " \"" . $deletedItem . "\" " . "berhasil di hapus";
+            session()->flash('sukses_delete_item', $itemDeleted);
+            return redirect('manageItem');
+        } else {
+            session()->flash('gagal_delete_item', 'Item'. " \"" . $deletedItem . "\" " . 'Gagal Dihapus karena sudah mempunyai Sejarah Incoming/Outgoing');
+            return redirect('manageItem');
+        }
     }
 
     public function updateItem(Request $request)
