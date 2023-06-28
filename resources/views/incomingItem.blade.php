@@ -69,7 +69,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form method="post" action="/updateUser">
+                                                    <form method="post" action="/exportIncomingCustomer">
                                                         @csrf
 
                                                         <div class="card-body">
@@ -320,6 +320,12 @@
                                                             </div>
 
                                                             <div class="form-group">
+                                                                <label for="startRange">Package Arrived Date</label>
+                                                                <input type="date" class="form-control"
+                                                                    id="startRange" required name="itemArrive">
+                                                            </div>
+
+                                                            <div class="form-group">
                                                                 <label for="largeInput">Incoming Package Image</label>
                                                                 <input type="file" class="form-control form-control"
                                                                     id="itemImage" name="incomingItemImage" required>
@@ -358,7 +364,7 @@
                                                 <th>Item ID</th>
                                                 <th>Item Name</th>
                                                 <th>Stock Added</th>
-                                                <th>Time Added</th>
+                                                <th>Date Arrived</th>
                                                 <th>Description</th>
                                                 <th>Gambar</th>
                                             </tr>
@@ -370,7 +376,7 @@
                                                 <th>Item ID</th>
                                                 <th>Item Name</th>
                                                 <th>Stock Added</th>
-                                                <th>Time Added</th>
+                                                <th>Date Arrived</th>
                                                 <th>Description</th>
                                                 <th>Gambar</th>
                                             </tr>
@@ -385,7 +391,7 @@
                                                     <td>{{ $incoming->item_id }}</td>
                                                     <td>{{ $incoming->item_name }}</td>
                                                     <td>{{ $incoming->stock_added }}</td>
-                                                    <td>{{ $incoming->created_at }}</td>
+                                                    <td>{{ $incoming->arrive_date }}</td>
                                                     <td>{{ $incoming->description }}</td>
                                                     <td>
                                                         <a style="cursor: pointer"

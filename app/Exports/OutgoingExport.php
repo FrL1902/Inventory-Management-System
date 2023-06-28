@@ -27,7 +27,7 @@ class OutgoingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
     public function headings(): array
     {
         return [
-            'ID', 'Customer Name', 'Brand Name', 'Item Name', 'Stock Before', 'Stock Taken', 'Stock Now', 'description', 'picture link', 'time (WIB)'
+            'ID', 'Customer Name', 'Brand Name', 'Item Name', 'Date Departed', 'Stock Before', 'Stock Taken', 'Stock Now', 'description', 'picture link'
         ];
     }
 
@@ -43,12 +43,13 @@ class OutgoingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
             $item->customer->customer_name,
             $item->brand->brand_name,
             $item->item_name,
+            $item->depart_date,
             $item->stock_before,
             $item->stock_taken,
             $item->stock_now,
             $item->description,
             $item->picture_link,
-            date_format($item->created_at, "D/d/m/y H:i:s"),
+            // date_format($item->created_at, "D/d/m/y H:i:s"),
         ];
     }
 

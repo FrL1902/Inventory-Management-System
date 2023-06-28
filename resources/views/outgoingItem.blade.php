@@ -314,6 +314,12 @@
                                                             </div>
 
                                                             <div class="form-group">
+                                                                <label for="startRange">Package Departed Date</label>
+                                                                <input type="date" class="form-control"
+                                                                    id="startRange" required name="itemDepart">
+                                                            </div>
+
+                                                            <div class="form-group">
                                                                 <label for="outgoingidforitem">Description</label>
                                                                 <textarea class="form-control" id="outgoingidforitem" rows="3" placeholder="deskripsi outgoing package"
                                                                     name="outgoingItemDesc" required></textarea>
@@ -356,7 +362,7 @@
                                                 <th>Item ID</th>
                                                 <th>Item Name</th>
                                                 <th>Stock Taken</th>
-                                                <th>Time Added</th>
+                                                <th>Date Departed</th>
                                                 <th>Description</th>
                                                 <th>Gambar</th>
                                             </tr>
@@ -368,7 +374,7 @@
                                                 <th>Item ID</th>
                                                 <th>Item Name</th>
                                                 <th>Stock Taken</th>
-                                                <th>Time Added</th>
+                                                <th>Date Departed</th>
                                                 <th>Description</th>
                                                 <th>Gambar</th>
                                             </tr>
@@ -381,7 +387,7 @@
                                                     <td>{{ $outgoing->item_id }}</td>
                                                     <td>{{ $outgoing->item_name }}</td>
                                                     <td>{{ $outgoing->stock_taken }}</td>
-                                                    <td>{{ $outgoing->created_at }}</td>
+                                                    <td>{{ $outgoing->depart_date }}</td>
                                                     <td>{{ $outgoing->description }}</td>
                                                     <td>
                                                         <a style="cursor: pointer"

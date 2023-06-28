@@ -227,7 +227,7 @@
                                                 <th>Stock added</th>
                                                 <th>Stock taken</th>
                                                 <th>Stock now</th>
-                                                <th>Updated At</th>
+                                                <th>Updated At (system)</th>
                                                 <th>By User</th>
 
                                             </tr>
@@ -250,7 +250,7 @@
                                                 <th>Stock added</th>
                                                 <th>Stock taken</th>
                                                 <th>Stock now</th>
-                                                <th>Updated At</th>
+                                                <th>Updated At (system)</th>
                                                 <th>By User</th>
 
                                             </tr>

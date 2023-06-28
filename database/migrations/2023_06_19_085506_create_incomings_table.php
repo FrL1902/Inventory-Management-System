@@ -31,6 +31,7 @@ class CreateIncomingsTable extends Migration
             $table->string('description');
             $table->string('item_pictures');
             $table->string('picture_link');
+            $table->dateTime('arrive_date');
             $table->timestamps();
         });
     }

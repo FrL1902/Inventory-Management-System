@@ -28,6 +28,7 @@ class CreateOutgoingsTable extends Migration
             $table->string('description');
             $table->string('item_pictures');
             $table->string('picture_link');
+            $table->dateTime('depart_date');
             $table->timestamps();
         });
     }

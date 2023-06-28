@@ -68,6 +68,7 @@ class IncomingController extends Controller
         $incoming->stock_added = $request->itemAddStock;
         $incoming->stock_now = $newValue;
         $incoming->description = $request->incomingItemDesc;
+        $incoming->arrive_date = $request->itemArrive;
 
         $file = $request->file('incomingItemImage');
         $imageName = time() . '.' . $file->getClientOriginalExtension();
@@ -102,7 +103,8 @@ class IncomingController extends Controller
 
 
         // return Excel::download(new IncomingExport($sortCustomer), 'dataBarangDatang.xlsx');
-        $sortAll = Incoming::all()->whereBetween('created_at', [$date_from, $date_to]);
+        // $sortAll = Incoming::all()->whereBetween('created_at', [$date_from, $date_to]); // versi lama pake created at
+        $sortAll = Incoming::all()->whereBetween('arrive_date', [$date_from, $date_to]);
         $formatFileName = 'DataBarangDatang ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 
         return Excel::download(new IncomingExport($sortAll), $formatFileName . '.xlsx');
@@ -115,7 +117,8 @@ class IncomingController extends Controller
         $date_from = Carbon::parse($request->startRange)->startOfDay();
         $date_to = Carbon::parse($request->endRange)->endOfDay();
 
-        $sortCustomer = Incoming::all()->where('customer_id', $request->customerIncoming)->whereBetween('created_at', [$date_from, $date_to]);
+        // $sortCustomer = Incoming::all()->where('customer_id', $request->customerIncoming)->whereBetween('created_at', [$date_from, $date_to]); // versi lama pake created at
+        $sortCustomer = Incoming::all()->where('customer_id', $request->customerIncoming)->whereBetween('arrive_date', [$date_from, $date_to]);
         $formatFileName = 'DataBarangDatang Customer ' . $customer->customer_name . ' ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 
         return Excel::download(new IncomingExport($sortCustomer), $formatFileName . '.xlsx');
@@ -127,7 +130,8 @@ class IncomingController extends Controller
         $date_from = Carbon::parse($request->startRange)->startOfDay();
         $date_to = Carbon::parse($request->endRange)->endOfDay();
 
-        $sortBrand = Incoming::all()->where('brand_id', $request->brandIncoming)->whereBetween('created_at', [$date_from, $date_to]);
+        // $sortBrand = Incoming::all()->where('brand_id', $request->brandIncoming)->whereBetween('created_at', [$date_from, $date_to]); // versi lama pake created at
+        $sortBrand = Incoming::all()->where('brand_id', $request->brandIncoming)->whereBetween('arrive_date', [$date_from, $date_to]);
         $formatFileName = 'DataBarangDatang Brand ' . $brand->brand_name . ' ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 
         return Excel::download(new IncomingExport($sortBrand),  $formatFileName . '.xlsx');
@@ -139,7 +143,8 @@ class IncomingController extends Controller
         $date_from = Carbon::parse($request->startRange)->startOfDay();
         $date_to = Carbon::parse($request->endRange)->endOfDay();
 
-        $sortItem = Incoming::all()->where('item_id', $request->itemIncoming)->whereBetween('created_at', [$date_from, $date_to]);
+        // $sortItem = Incoming::all()->where('item_id', $request->itemIncoming)->whereBetween('created_at', [$date_from, $date_to]); // versi lama pake created at
+        $sortItem = Incoming::all()->where('item_id', $request->itemIncoming)->whereBetween('arrive_date', [$date_from, $date_to]);
         $formatFileName = 'DataBarangDatang Item ' . $item->item_name . ' ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 
         return Excel::download(new IncomingExport($sortItem),  $formatFileName . '.xlsx');
