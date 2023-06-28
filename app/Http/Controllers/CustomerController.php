@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exports\customerExport;
+use App\Models\Brand;
 use App\Models\Customer;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -240,19 +242,31 @@ class CustomerController extends Controller
 
     public function deleteCustomer($id)
     {
-        $cust = Customer::find($id);
+        // dd($id);
+        // decrypt Customer ID
+        try {
+            $decrypted = decrypt($id);
+        } catch (DecryptException $e) {
+            abort(403);
+        }
 
+        // brand checking if customer has any, (2nd measure if encrypted is bypassed)
+        $nullCheckBrand = Brand::where('customer_id', $decrypted)->first();
+        $cust = Customer::find($decrypted);
         $deletedCustomer = $cust->customer_name;
+        if (is_null($nullCheckBrand)) {
 
-        // dd($deletedCustomer);
+            $cust->delete();
 
-        $cust->delete();
+            $customerDeleted = "Customer" . " \"" . $deletedCustomer . "\" " . "berhasil di hapus";
 
-        $customerDeleted = "Customer" . " \"" . $deletedCustomer . "\" " . "berhasil di hapus";
+            session()->flash('sukses_delete_customer', $customerDeleted);
 
-        session()->flash('sukses_delete_customer', $customerDeleted);
-
-        return redirect('manageCustomer');
+            return redirect('manageCustomer');
+        } else {
+            session()->flash('gagal_delete_customer', 'Customer'. " \"" . $deletedCustomer . "\" " . 'Gagal Dihapus karena sudah mempunyai Brand');
+            return redirect('manageCustomer');
+        }
     }
 
     public function exportCustomerExcel()
