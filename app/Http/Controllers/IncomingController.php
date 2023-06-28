@@ -19,19 +19,18 @@ class IncomingController extends Controller
     public function add_incoming_item_page()
     {
         $item = Item::all(); //buat update
-        // $history = StockHistory::all(); //old table,
+        // // $history = StockHistory::all(); //old table,
         $brand = Brand::all();
         $incoming = Incoming::all();
         $customer = Customer::all();
 
-
         if ($item->isempty()) {
-            // dd('kosong');
             $message = "no item is present, please input an item before accessing the \"outgoing\" or \"incoming\" page";
             session()->flash('no_item_incoming', $message);
 
-            $brand = Brand::all();
-            return view('newItem', compact('brand'));
+            // $brand = Brand::all();
+            // return view('newItem', compact('brand'));
+            return redirect('/newItem');
         } else {
             return view('incomingItem', compact('incoming', 'item', 'customer', 'brand'));
         }

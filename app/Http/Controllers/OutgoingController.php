@@ -28,8 +28,9 @@ class OutgoingController extends Controller
             $message = "no item is present, please input an item before accessing the \"outgoing\" or \"incoming\" page";
             session()->flash('no_item_outgoing', $message);
 
-            $brand = Brand::all();
-            return view('newItem', compact('brand'));
+            // $brand = Brand::all();
+            // return view('newItem', compact('brand'));
+            return redirect('/newItem');
         } else {
             return view('outgoingItem', compact('outgoing', 'item', 'customer', 'brand'));
         }
