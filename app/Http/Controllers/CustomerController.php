@@ -26,20 +26,77 @@ class CustomerController extends Controller
     public function makeCustomer(Request $request)
     {
         // validate the required inputs first
+        // $pattern = '';
+
+        // DIY regex pattern for \/:*?"<>|   i know this is jank af, but normal regex is kinda bad for this case, or im just too dumb for it, but hey, it works
+        //just in case i found something, the regex is this, from da gpt ^[^/\\:*?"'<>\|]*$ , try it here https://regex101.com/r/sM6wQ7/28  https://laracasts.com/discuss/channels/laravel/how-to-write-regex-in-laravel
+        // $flag = 0;
+        // if (str_contains($request->customername, '\\')) {
+        //     $flag += 1;
+        // }
+        // if (str_contains($request->customername, '/')) {
+        //     $flag += 1;
+        // }
+        // if (str_contains($request->customername, ':')) {
+        //     $flag += 1;
+        // }
+        // if (str_contains($request->customername, '*')) {
+        //     $flag += 1;
+        // }
+        // if (str_contains($request->customername, '?')) {
+        //     $flag += 1;
+        // }
+        // if (str_contains($request->customername, '"')) {
+        //     $flag += 1;
+        // }
+        // if (str_contains($request->customername, '<')) {
+        //     $flag += 1;
+        // }
+        // if (str_contains($request->customername, '>')) {
+        //     $flag += 1;
+        // }
+        // if (str_contains($request->customername, '|')) {
+        //     $flag += 1;
+        // }
+
+        // if ($flag > 0) {
+        //     // dd('masok');
+        //     // $request->session()->flash('formatError', 'Nama Customer tidak boleh menggunakan simbol berikut:   \\ /  : * ? " < > |');
+        //     $request->session()->flash('formatError', 'Nama Customer tidak boleh menggunakan simbol berikut: ');
+        //     return redirect()->back();
+        // }
+
+        // dd($flag);
+
+        // dd(preg_match($pattern, $str));
 
         // first validation, "required"
         $request->validate([
             'customerid' => 'required',
             'customername' => 'required',
             'address' => 'required',
+        ], [
+            'customerid.required' => 'Kolom "ID Customer" Harus Diisi',
+            'customername.required' => 'Kolom "Nama Customer" Harus Diisi',
+            'address.required' => 'Kolom "Alamat Customer" Harus Diisi'
         ]);
 
         $request->validate([
-            'customerid' => 'required|unique:App\Models\Customer,customer_id|min:4|max:10',
-            'customername' => 'required|min:4|max:30',
-            'address' => 'required|max:100',
+            'customerid' => 'required|unique:App\Models\Customer,customer_id|min:4|max:10|alpha_dash',
+            'customername' => 'required|min:4|max:30|alpha_dash',  //kalo emg udh menyerah bgt ya pake alpha:ascii aje, https://laravel.com/docs/10.x/validation#rule-alpha, ga perlu, pake alpha:dash aja
+            'address' => 'required|min:5|max:100',
             // 'email' => 'required',
             // 'phone1' => 'required'
+        ], [
+            'customerid.unique' => 'ID Customer yang dimasukkan sudah terambil, masukkan ID yang lain',
+            'customerid.min' => 'ID Customer minimal 4 karakter',
+            'customerid.max' => 'ID Customer maksimal 10 karakter',
+            'customerid.alpha_dash' => 'ID Customer hanya membolehkan huruf, angka, -, _ (spasi dan simbol lainnya tidak diterima)',
+            'customername.min' => 'Nama Customer minimal 4 karakter',
+            'customername.max' => 'Nama Customer maksimal 30 karakter',
+            'customername.alpha_dash' => 'Nama Customer hanya membolehkan huruf, angka, -, _ (spasi dan simbol lainnya tidak diterima)',
+            'address.min' => 'Alamat Customer minimal 5 karakter',
+            'address.max' => 'Alamat Customer maksimal 100 karakter',
         ]);
 
         $customer = new Customer();
@@ -121,7 +178,7 @@ class CustomerController extends Controller
 
         $customer->save();
 
-        $customerAdded = "Customer " . "\"" . $request->customername . "\"" . " berhasil di tambahkan";
+        $customerAdded = "Customer " . "\"" . $request->customername . "\"" . " berhasil di tambahkan!";
 
         $request->session()->flash('sukses_addNewCustomer', $customerAdded);
 
@@ -264,7 +321,7 @@ class CustomerController extends Controller
 
             return redirect('manageCustomer');
         } else {
-            session()->flash('gagal_delete_customer', 'Customer'. " \"" . $deletedCustomer . "\" " . 'Gagal Dihapus karena sudah mempunyai Brand');
+            session()->flash('gagal_delete_customer', 'Customer' . " \"" . $deletedCustomer . "\" " . 'Gagal Dihapus karena sudah mempunyai Brand');
             return redirect('manageCustomer');
         }
     }
