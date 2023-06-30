@@ -6,6 +6,75 @@
 @section('managecustomer', 'active')
 @section('showmanagecustomer', 'show')
 
+<style>
+    /* Success Animation */
+    #alertSuccess {
+        position: relative;
+        animation-name: success;
+        animation-duration: 0.7s;
+        animation-iteration-count: 1;
+    }
+
+    @keyframes success {
+        0% {
+            left: 200px;
+            top: 0px;
+            background-color: rgb(0, 255, 76);
+        }
+
+        100% {
+            left: 0px;
+            top: 0px;
+            background-color: white;
+        }
+    }
+
+
+    /* Failed Animation */
+    #alertFailed {
+        position: relative;
+        animation-name: failedAnimation;
+        animation-duration: 0.7s;
+        animation-iteration-count: 1;
+    }
+
+    @keyframes failedAnimation {
+        0% {
+            left: 200px;
+            top: 0px;
+            background-color: red;
+        }
+
+        100% {
+            left: 0px;
+            top: 0px;
+            background-color: white;
+        }
+    }
+
+
+    /* Deleted Notification */
+    #alertDelete {
+        position: relative;
+        animation-name: deleteAnimation;
+        animation-duration: 0.7s;
+        animation-iteration-count: 1;
+    }
+
+    @keyframes deleteAnimation {
+        0% {
+            left: 200px;
+            top: 0px;
+            background-color: orange;
+        }
+
+        100% {
+            left: 0px;
+            top: 0px;
+            background-color: white;
+        }
+    }
+</style>
 
 <div class="main-panel">
     <div class="content">
@@ -16,29 +85,30 @@
         @endif --}}
         <div class="page-inner">
             @if (session('sukses_delete_customer'))
-                <div class="alert alert-warning alert-block" id="alerts">
+                <div class="alert alert-warning alert-block" id="alertDelete">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('sukses_delete_customer') }}</strong>
                 </div>
             @elseif (session('sukses_update_customer'))
-                <div class="alert alert-primary alert-block" id="alerts">
+                <div class="alert alert-success alert-block" id="alertSuccess">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('sukses_update_customer') }}</strong>
                 </div>
             @elseif (session('noInput'))
-                <div class="alert alert-danger alert-block" id="alerts">
+                <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('noInput') }}</strong>
                 </div>
             @elseif (session('gagal_delete_customer'))
-                <div class="alert alert-danger alert-block" id="alerts">
+                <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('gagal_delete_customer') }}</strong>
                 </div>
             @elseif ($errors->any())
-                <div class="alert alert-danger alert-block" id="alerts">
+                <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Update Gagal: validasi tidak tercukupi, {{ $errors->first() }} </strong>
+                    <strong>Update Gagal: {{ $errors->first() }} </strong>
+                    {{-- <strong>Update Gagal: validasi tidak tercukupi, {{ $errors->first() }} </strong> --}}
                 </div>
             @endif
             <div class="row">
@@ -46,7 +116,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Manage Customer</h4>
+                                <h4 class="card-title"><strong>Mengelola Customer</strong></h4>
                                 <a href="/exportCustomerExcel" class="btn btn-primary ml-3">EXPORT EXCEL</a>
                             </div>
                         </div>
@@ -56,32 +126,32 @@
                                 <table id="add-row" class="display table table-striped table-hover table-fixed">
                                     <thead>
                                         <tr>
-                                            <th>Customer ID</th>
-                                            <th>Customer Name</th>
-                                            <th>Address</th>
+                                            <th>ID Customer</th>
+                                            <th>Nama Customer</th>
+                                            <th>Alamat</th>
                                             <th>Email</th>
-                                            <th>Phone 1</th>
-                                            <th>Phone 2</th>
+                                            <th>Telpon 1</th>
+                                            <th>Telpon 2</th>
                                             <th>Fax</th>
                                             <th>Website</th>
-                                            <th>PIC</th>
-                                            <th>PIC Phone</th>
+                                            <th>Nama PIC</th>
+                                            <th>PIC Nomor Telpon</th>
                                             <th>NPWP</th>
                                             <th style="width: 10%">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Customer ID</th>
-                                            <th>Customer Name</th>
+                                            <th>ID Customer</th>
+                                            <th>Nama Customer</th>
                                             <th>Address</th>
                                             <th>Email</th>
-                                            <th>Phone 1</th>
-                                            <th>Phone 2</th>
+                                            <th>Telpon 1</th>
+                                            <th>Telpon 2</th>
                                             <th>Fax</th>
                                             <th>Website</th>
-                                            <th>PIC</th>
-                                            <th>PIC Phone</th>
+                                            <th>Nama PIC</th>
+                                            <th>PIC Nomor Telpon</th>
                                             <th>NPWP</th>
                                             <th>Action</th>
                                         </tr>
@@ -210,90 +280,81 @@
                                                                               </div>
                                                                         </div> --}}
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">Customer Name
+                                                                                <label for="largeInput">Nama Customer
                                                                                 </label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
-                                                                                    placeholder="Enter customer's full name"
+                                                                                    placeholder="masukkan nama lengkap customer"
                                                                                     id="customername"
                                                                                     name="customername">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">Customer
-                                                                                    Address</label>
+                                                                                <label for="largeInput">Alamat Customer</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
-                                                                                    placeholder="Enter customer's address"
+                                                                                    placeholder="masukkan alamat customer"
                                                                                     id="address" name="address">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="email">Customer
-                                                                                    Email</label>
+                                                                                <label for="email">Email Customer</label>
                                                                                 <input type="email"
                                                                                     class="form-control"
-                                                                                    placeholder="Enter Email"
+                                                                                    placeholder="masukkan email customer"
                                                                                     id="email" name="email">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">Customer Work
-                                                                                    Phone Number</label>
+                                                                                <label for="largeInput">Nomor Telpon 1 Customer</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
                                                                                     placeholder="(021)" id="phone1"
                                                                                     name="phone1">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">Customer
-                                                                                    Personal
-                                                                                    Phone Number</label>
+                                                                                <label for="largeInput">Nomor Telpon 2 Customer</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
                                                                                     placeholder="+62" id="phone2"
                                                                                     name="phone2">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">Customer
-                                                                                    Fax</label>
+                                                                                <label for="largeInput">Nomor Fax Customer</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
                                                                                     placeholder="(021)" id="fax"
                                                                                     name="fax">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">Customer's
-                                                                                    website</label>
+                                                                                <label for="largeInput">Website Customer</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
-                                                                                    placeholder="https://www.user.com"
+                                                                                    placeholder="Contoh: https://www.user.com"
                                                                                     id="website" name="website">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">PIC person in
-                                                                                    charge</label>
+                                                                                <label for="largeInput">Nama PIC (person in
+                                                                                    charge)</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
-                                                                                    placeholder="Enter PIC's full name"
+                                                                                    placeholder="masukkan nama lengkap PIC"
                                                                                     id="picname" name="picname">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">PIC phone
-                                                                                    number</label>
+                                                                                <label for="largeInput">Nomor Telpon PIC</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
-                                                                                    placeholder="Enter PIC's phone number"
+                                                                                    placeholder="(021) atau +62"
                                                                                     id="picnumber" name="picnumber">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">NPWP Perusahaan
-                                                                                    Nomor Pokok Wajib Pajak</label>
+                                                                                <label for="largeInput">NPWP Nomor Pokok Wajib Pajak</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
-                                                                                    placeholder="ex. 08.178.554.2-123.321"
+                                                                                    placeholder="contoh: 08.111.555.1-123.321"
                                                                                     id="npwp" name="npwp">
                                                                                 <div class="card mt-5">
                                                                                     <button id=""
                                                                                         class="btn btn-primary">Update
-                                                                                        Data</button>
+                                                                                        Data Customer</button>
                                                                                 </div>
                                                                                 <div>
                                                                                     <h5 style="text-align: center;">

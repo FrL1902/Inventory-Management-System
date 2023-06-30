@@ -55,7 +55,7 @@
 
 <div class="main-panel">
     <div class="content">
-        ini page buat add new customer
+        {{-- ini page buat add new customer --}}
 
         <div class="page-inner">
 
@@ -64,12 +64,12 @@
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('sukses_addNewCustomer') }}</strong>
                 </div>
-            @elseif (session('formatError'))
+                {{-- @elseif (session('formatError'))
                 <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>Data Gagal Dimasukkan, {{ session('formatError') }} <span style="color: red"> \ /  : * ? " < > |
                     </span></strong>
-                </div>
+                </div> --}}
             @elseif ($errors->any())
                 <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -97,7 +97,7 @@
                                 <div class="form-group">
                                     <label for="largeInput">ID Customer<span style="color: red"> (harus diisi)
                                         </span></label>
-                                    <input type="text" class="form-control form-control" placeholder="ex. CU001"
+                                    <input type="text" class="form-control form-control" placeholder="Contoh: CU001"
                                         id="customerid" name="customerid">
                                     {{--  --}}
                                 </div>
@@ -105,20 +105,21 @@
                                     <label for="largeInput">Nama Customer<span style="color: red"> (harus diisi)
                                         </span></label>
                                     <input type="text" class="form-control form-control"
-                                        placeholder="Enter customer's full name" id="customername" name="customername">
+                                        placeholder="masukkan nama lengkap customer" id="customername"
+                                        name="customername">
                                     {{--  --}}
                                 </div>
                                 <div class="form-group">
                                     <label for="largeInput">Alamat Customer<span style="color: red"> (harus diisi)
                                         </span></label>
                                     <input type="text" class="form-control form-control"
-                                        placeholder="Enter customer's address" id="address" name="address">
+                                        placeholder="masukkan alamat customer" id="address" name="address">
                                     {{--  --}}
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email Customer</label>
-                                    <input type="email" class="form-control" placeholder="Enter Email" id="email"
-                                        name="email">
+                                    <input type="email" class="form-control" placeholder="masukkan email customer"
+                                        id="email" name="email">
                                 </div>
                                 <div class="form-group">
                                     <label for="largeInput">Nomor Telpon 1 Customer</label>
@@ -138,22 +139,22 @@
                                 <div class="form-group">
                                     <label for="largeInput">Website Customer</label>
                                     <input type="text" class="form-control form-control"
-                                        placeholder="https://www.user.com" id="website" name="website">
+                                        placeholder="contoh: https://www.user.com" id="website" name="website">
                                 </div>
                                 <div class="form-group">
                                     <label for="largeInput">Nama PIC (person in charge)</label>
                                     <input type="text" class="form-control form-control"
-                                        placeholder="Enter PIC's full name" id="picname" name="picname">
+                                        placeholder="masukkan nama lengkap PIC" id="picname" name="picname">
                                 </div>
                                 <div class="form-group">
                                     <label for="largeInput">Nomor Telpon PIC</label>
-                                    <input type="text" class="form-control form-control"
-                                        placeholder="Enter PIC's phone number" id="picnumber" name="picnumber">
+                                    <input type="text" class="form-control form-control" placeholder="(021) atau +62"
+                                        id="picnumber" name="picnumber">
                                 </div>
                                 <div class="form-group">
                                     <label for="largeInput">NPWP (Nomor Pokok Wajib Pajak)</label>
                                     <input type="text" class="form-control form-control"
-                                        placeholder="ex. 08.178.554.2-123.321" id="npwp" name="npwp">
+                                        placeholder="Contoh: 08.111.555.1-123.321" id="npwp" name="npwp">
                                 </div>
                                 <div class="form-group">
                                     <div class="card mt-4">

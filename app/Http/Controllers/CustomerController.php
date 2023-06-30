@@ -83,7 +83,7 @@ class CustomerController extends Controller
 
         $request->validate([
             'customerid' => 'required|unique:App\Models\Customer,customer_id|min:4|max:10|alpha_dash',
-            'customername' => 'required|min:4|max:30|alpha_dash',  //kalo emg udh menyerah bgt ya pake alpha:ascii aje, https://laravel.com/docs/10.x/validation#rule-alpha, ga perlu, pake alpha:dash aja
+            'customername' => 'required|min:4|max:30|regex:/^[\pL\s\-]+$/u',  //kalo emg udh menyerah bgt ya pake alpha:ascii aje, https://laravel.com/docs/10.x/validation#rule-alpha, ga perlu, pake alpha:dash aja
             'address' => 'required|min:5|max:100',
             // 'email' => 'required',
             // 'phone1' => 'required'
@@ -94,7 +94,7 @@ class CustomerController extends Controller
             'customerid.alpha_dash' => 'ID Customer hanya membolehkan huruf, angka, -, _ (spasi dan simbol lainnya tidak diterima)',
             'customername.min' => 'Nama Customer minimal 4 karakter',
             'customername.max' => 'Nama Customer maksimal 30 karakter',
-            'customername.alpha_dash' => 'Nama Customer hanya membolehkan huruf, angka, -, _ (spasi dan simbol lainnya tidak diterima)',
+            'customername.regex' => 'Nama Customer hanya membolehkan huruf, spasi, dan tanda penghubung(-)',
             'address.min' => 'Alamat Customer minimal 5 karakter',
             'address.max' => 'Alamat Customer maksimal 100 karakter',
         ]);
@@ -124,48 +124,95 @@ class CustomerController extends Controller
         if (is_null($request->email)) {
             $customer->email = "";
         } else {
+            $request->validate([
+                'email' => 'max:50',
+            ],  [
+                'email.max' => 'Email Customer maksimal 50 karakter'
+            ]);
             $customer->email = $request->email;
         }
 
         if (is_null($request->phone1)) {
             $customer->phone1 = "";
         } else {
+            $request->validate([
+                'phone1' => 'min:4|max:30',
+            ],  [
+                'phone1.min' => 'Nomor Telpon 1 Customer minimal 4 karakter',
+                'phone1.max' => 'Nomor Telpon 1 Customer maksimal 30 karakter',
+            ]);
             $customer->phone1 = $request->phone1;
         }
 
         if (is_null($request->phone2)) {
             $customer->phone2 = "";
         } else {
+            $request->validate([
+                'phone2' => 'min:4|max:30',
+            ],  [
+                'phone2.min' => 'Nomor Telpon 2 Customer minimal 4 karakter',
+                'phone2.max' => 'Nomor Telpon 2 Customer maksimal 30 karakter',
+            ]);
             $customer->phone2 = $request->phone2;
         }
 
         if (is_null($request->fax)) {
             $customer->fax = "";
         } else {
+            $request->validate([
+                'fax' => 'min:4|max:30',
+            ],  [
+                'fax.min' => 'Nomor Fax Customer minimal 4 karakter',
+                'fax.max' => 'Nomor Fax Customer maksimal 30 karakter',
+            ]);
             $customer->fax = $request->fax;
         }
 
         if (is_null($request->website)) {
             $customer->website = "";
         } else {
+            $request->validate([
+                'website' => 'min:4|max:100',
+            ],  [
+                'website.min' => 'Website Customer minimal 4 karakter',
+                'website.max' => 'Website Customer maksimal 100 karakter',
+            ]);
             $customer->website = $request->website;
         }
 
         if (is_null($request->picname)) {
             $customer->pic = "";
         } else {
+            $request->validate([
+                'picname' => 'min:4|max:100',
+            ],  [
+                'picname.min' => 'Nama PIC minimal 4 karakter',
+                'picname.max' => 'Nama PIC maksimal 100 karakter',
+            ]);
             $customer->pic = $request->picname;
         }
 
         if (is_null($request->picnumber)) {
             $customer->pic_phone = "";
         } else {
+            $request->validate([
+                'picnumber' => 'min:4|max:30',
+            ],  [
+                'picnumber.min' => 'Nomor PIC minimal 4 karakter',
+                'picnumber.max' => 'Nomor PIC maksimal 30 karakter',
+            ]);
             $customer->pic_phone = $request->picnumber;
         }
 
         if (is_null($request->npwp)) {
             $customer->npwp_perusahaan = "";
         } else {
+            $request->validate([
+                'npwp' => 'min:4|max:100',
+            ],  [
+                'npwp.min' => 'Nomor NPWP minimal 4 karakter',
+                'npwp.max' => 'Nomor NPWP maksimal 30 karakter',
+            ]);
             $customer->npwp_perusahaan = $request->npwp;
         }
 
@@ -178,7 +225,7 @@ class CustomerController extends Controller
 
         $customer->save();
 
-        $customerAdded = "Customer " . "\"" . $request->customername . "\"" . " berhasil di tambahkan!";
+        $customerAdded = "Customer " . "\"" . $request->customername . "\"" . " berhasil di tambahkan";
 
         $request->session()->flash('sukses_addNewCustomer', $customerAdded);
 
@@ -197,7 +244,11 @@ class CustomerController extends Controller
             $flagNull += 1;
         } else {
             $request->validate([
-                'customername' => 'min:4|max:30',
+                'customername' => 'min:4|max:30|regex:/^[\pL\s\-]+$/u',
+            ], [
+                'customername.min' => 'Nama Customer minimal 4 karakter',
+                'customername.max' => 'Nama Customer maksimal 30 karakter',
+                'customername.regex' => 'Nama Customer hanya membolehkan huruf, spasi, dan tanda penghubung(-)',
             ]);
             $customer->customer_name = $request->customername;
         }
@@ -206,7 +257,10 @@ class CustomerController extends Controller
             $flagNull += 1;
         } else {
             $request->validate([
-                'address' => 'min:4|max:100',
+                'address' => 'min:5|max:100',
+            ], [
+                'address.min' => 'Alamat Customer minimal 5 karakter',
+                'address.max' => 'Alamat Customer maksimal 100 karakter',
             ]);
             $customer->address = $request->address;
         }
@@ -215,7 +269,9 @@ class CustomerController extends Controller
             $flagNull += 1;
         } else {
             $request->validate([
-                'email' => 'min:4|max:50',
+                'email' => 'max:50',
+            ],  [
+                'email.max' => 'Email Customer maksimal 50 karakter'
             ]);
             $customer->email = $request->email;
         }
@@ -225,6 +281,9 @@ class CustomerController extends Controller
         } else {
             $request->validate([
                 'phone1' => 'min:4|max:30',
+            ],  [
+                'phone1.min' => 'Nomor Telpon 1 Customer minimal 4 karakter',
+                'phone1.max' => 'Nomor Telpon 1 Customer maksimal 30 karakter',
             ]);
             $customer->phone1 = $request->phone1;
         }
@@ -234,6 +293,9 @@ class CustomerController extends Controller
         } else {
             $request->validate([
                 'phone2' => 'min:4|max:30',
+            ],  [
+                'phone2.min' => 'Nomor Telpon 2 Customer minimal 4 karakter',
+                'phone2.max' => 'Nomor Telpon 2 Customer maksimal 30 karakter',
             ]);
             $customer->phone2 = $request->phone2;
         }
@@ -243,6 +305,9 @@ class CustomerController extends Controller
         } else {
             $request->validate([
                 'fax' => 'min:4|max:30',
+            ],  [
+                'fax.min' => 'Nomor Fax Customer minimal 4 karakter',
+                'fax.max' => 'Nomor Fax Customer maksimal 30 karakter',
             ]);
             $customer->fax = $request->fax;
         }
@@ -252,6 +317,9 @@ class CustomerController extends Controller
         } else {
             $request->validate([
                 'website' => 'min:4|max:100',
+            ],  [
+                'website.min' => 'Website Customer minimal 4 karakter',
+                'website.max' => 'Website Customer maksimal 100 karakter',
             ]);
             $customer->website = $request->website;
         }
@@ -261,6 +329,9 @@ class CustomerController extends Controller
         } else {
             $request->validate([
                 'picname' => 'min:4|max:100',
+            ],  [
+                'picname.min' => 'Nama PIC minimal 4 karakter',
+                'picname.max' => 'Nama PIC maksimal 100 karakter',
             ]);
             $customer->pic = $request->picname;
         }
@@ -269,7 +340,10 @@ class CustomerController extends Controller
             $flagNull += 1;
         } else {
             $request->validate([
-                'picnumber' => 'min:4|max:50',
+                'picnumber' => 'min:4|max:30',
+            ],  [
+                'picnumber.min' => 'Nomor PIC minimal 4 karakter',
+                'picnumber.max' => 'Nomor PIC maksimal 30 karakter',
             ]);
             $customer->pic_phone = $request->picnumber;
         }
@@ -279,6 +353,9 @@ class CustomerController extends Controller
         } else {
             $request->validate([
                 'npwp' => 'min:4|max:100',
+            ],  [
+                'npwp.min' => 'Nomor NPWP minimal 4 karakter',
+                'npwp.max' => 'Nomor NPWP maksimal 30 karakter',
             ]);
             $customer->npwp_perusahaan = $request->npwp;
         }
