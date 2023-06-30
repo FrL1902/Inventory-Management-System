@@ -6,76 +6,6 @@
 @section('managecustomer', 'active')
 @section('showmanagecustomer', 'show')
 
-<style>
-    /* Success Animation */
-    #alertSuccess {
-        position: relative;
-        animation-name: success;
-        animation-duration: 0.7s;
-        animation-iteration-count: 1;
-    }
-
-    @keyframes success {
-        0% {
-            left: 200px;
-            top: 0px;
-            background-color: rgb(0, 255, 76);
-        }
-
-        100% {
-            left: 0px;
-            top: 0px;
-            background-color: white;
-        }
-    }
-
-
-    /* Failed Animation */
-    #alertFailed {
-        position: relative;
-        animation-name: failedAnimation;
-        animation-duration: 0.7s;
-        animation-iteration-count: 1;
-    }
-
-    @keyframes failedAnimation {
-        0% {
-            left: 200px;
-            top: 0px;
-            background-color: red;
-        }
-
-        100% {
-            left: 0px;
-            top: 0px;
-            background-color: white;
-        }
-    }
-
-
-    /* Deleted Notification */
-    #alertDelete {
-        position: relative;
-        animation-name: deleteAnimation;
-        animation-duration: 0.7s;
-        animation-iteration-count: 1;
-    }
-
-    @keyframes deleteAnimation {
-        0% {
-            left: 200px;
-            top: 0px;
-            background-color: orange;
-        }
-
-        100% {
-            left: 0px;
-            top: 0px;
-            background-color: white;
-        }
-    }
-</style>
-
 <div class="main-panel">
     <div class="content">
         {{-- @if ($errors->any())
@@ -117,7 +47,8 @@
                         <div class="card-header">
                             <div class="d-flex align-items-center">
                                 <h4 class="card-title"><strong>Mengelola Customer</strong></h4>
-                                <a href="/exportCustomerExcel" class="btn btn-primary ml-3">EXPORT EXCEL</a>
+                                <a href="/exportCustomerExcel" class="btn btn-secondary ml-3"><strong>EXPORT KE
+                                        EXCEL</strong></a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -137,7 +68,7 @@
                                             <th>Nama PIC</th>
                                             <th>PIC Nomor Telpon</th>
                                             <th>NPWP</th>
-                                            <th style="width: 10%">Action</th>
+                                            <th style="width: 10%">Edit</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -153,7 +84,7 @@
                                             <th>Nama PIC</th>
                                             <th>PIC Nomor Telpon</th>
                                             <th>NPWP</th>
-                                            <th>Action</th>
+                                            <th>Edit</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -192,7 +123,7 @@
                                                             <a class="ml-3 mb-2" style="cursor: pointer">
                                                                 <i class="fa fa-ban mt-3 text-danger"
                                                                     data-toggle="tooltip"
-                                                                    data-original-title="Cannot Delete Customer, has brand"></i>
+                                                                    data-original-title="Tidak bisa menghapus Customer karena sudah mempunyai Brand"></i>
                                                             </a>
                                                         @endif
                                                     </div>
@@ -236,7 +167,7 @@
                                                                         <div class="p-2">
                                                                             <h3 class="modal-title"
                                                                                 id="exampleModalLongTitle">
-                                                                                <strong>Update data for
+                                                                                <strong>Update data untuk
                                                                                     "{{ $data->customer_name }}"</strong>
                                                                             </h3>
                                                                         </div>
@@ -289,49 +220,56 @@
                                                                                     name="customername">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">Alamat Customer</label>
+                                                                                <label for="largeInput">Alamat
+                                                                                    Customer</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
                                                                                     placeholder="masukkan alamat customer"
                                                                                     id="address" name="address">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="email">Email Customer</label>
+                                                                                <label for="email">Email
+                                                                                    Customer</label>
                                                                                 <input type="email"
                                                                                     class="form-control"
                                                                                     placeholder="masukkan email customer"
                                                                                     id="email" name="email">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">Nomor Telpon 1 Customer</label>
+                                                                                <label for="largeInput">Nomor Telpon 1
+                                                                                    Customer</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
                                                                                     placeholder="(021)" id="phone1"
                                                                                     name="phone1">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">Nomor Telpon 2 Customer</label>
+                                                                                <label for="largeInput">Nomor Telpon 2
+                                                                                    Customer</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
                                                                                     placeholder="+62" id="phone2"
                                                                                     name="phone2">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">Nomor Fax Customer</label>
+                                                                                <label for="largeInput">Nomor Fax
+                                                                                    Customer</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
                                                                                     placeholder="(021)" id="fax"
                                                                                     name="fax">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">Website Customer</label>
+                                                                                <label for="largeInput">Website
+                                                                                    Customer</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
                                                                                     placeholder="Contoh: https://www.user.com"
                                                                                     id="website" name="website">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">Nama PIC (person in
+                                                                                <label for="largeInput">Nama PIC
+                                                                                    (person in
                                                                                     charge)</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
@@ -339,14 +277,16 @@
                                                                                     id="picname" name="picname">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">Nomor Telpon PIC</label>
+                                                                                <label for="largeInput">Nomor Telpon
+                                                                                    PIC</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
                                                                                     placeholder="(021) atau +62"
                                                                                     id="picnumber" name="picnumber">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="largeInput">NPWP Nomor Pokok Wajib Pajak</label>
+                                                                                <label for="largeInput">NPWP Nomor
+                                                                                    Pokok Wajib Pajak</label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
                                                                                     placeholder="contoh: 08.111.555.1-123.321"

@@ -30,7 +30,83 @@
     <link rel="stylesheet" href="/assets/css/azzara.min.css">
 </head>
 
+
+<style>
+    /* Success Animation */
+    #alertSuccess {
+        position: relative;
+        animation-name: success;
+        animation-duration: 0.7s;
+        animation-iteration-count: 1;
+    }
+
+    @keyframes success {
+        0% {
+            left: 200px;
+            top: 0px;
+            background-color: rgb(0, 255, 76);
+        }
+
+        100% {
+            left: 0px;
+            top: 0px;
+            background-color: white;
+        }
+    }
+
+
+    /* Failed Animation */
+    #alertFailed {
+        position: relative;
+        animation-name: failedAnimation;
+        animation-duration: 0.7s;
+        animation-iteration-count: 1;
+    }
+
+    @keyframes failedAnimation {
+        0% {
+            left: 200px;
+            top: 0px;
+            background-color: red;
+        }
+
+        100% {
+            left: 0px;
+            top: 0px;
+            background-color: white;
+        }
+    }
+
+
+    /* Deleted Notification */
+    #alertDelete {
+        position: relative;
+        animation-name: deleteAnimation;
+        animation-duration: 0.7s;
+        animation-iteration-count: 1;
+    }
+
+    @keyframes deleteAnimation {
+        0% {
+            left: 200px;
+            top: 0px;
+            background-color: orange;
+        }
+
+        100% {
+            left: 0px;
+            top: 0px;
+            background-color: white;
+        }
+    }
+</style>
+
 {{-- <body onload=display_ct();> --}}
+
+
+
+
+
 <body>
     <div class="wrapper">
         <!--
@@ -110,15 +186,16 @@
                                     </div>
                                 </li>
                                 {{-- <li>auth()->user()->id --}}
-                                    <div class="dropdown-divider"></div>
-                                    {{-- <a class="dropdown-item" href="/creds/{{ auth()->user()->id }}">Change Password</a> --}}
-                                    {{-- <a class="dropdown-item" href="/creds/{{ Crypt::encryptString(auth()->user()->id) }}">Change Password</a> --}}
-                                    <a class="dropdown-item" href="/creds/{{ encrypt(auth()->user()->id) }}">Change Password</a>
-                                    {{-- <div class="dropdown-divider"></div> --}}
-                                    <a class="dropdown-item" href="/logout">Logout</a>
-                                </li>
-                            </ul>
+                                <div class="dropdown-divider"></div>
+                                {{-- <a class="dropdown-item" href="/creds/{{ auth()->user()->id }}">Change Password</a> --}}
+                                {{-- <a class="dropdown-item" href="/creds/{{ Crypt::encryptString(auth()->user()->id) }}">Change Password</a> --}}
+                                <a class="dropdown-item" href="/creds/{{ encrypt(auth()->user()->id) }}">Change
+                                    Password</a>
+                                {{-- <div class="dropdown-divider"></div> --}}
+                                <a class="dropdown-item" href="/logout">Logout</a>
                         </li>
+                    </ul>
+                    </li>
 
                     </ul>
                 </div>
@@ -313,23 +390,23 @@
 
     <script type="text/javascript">
         function showTime() {
-          var date = new Date(),
-              utc = new Date(Date.UTC(
-                date.getFullYear(),
-                date.getMonth(),
-                date.getDate(),
-                date.getHours() - 7,
-                date.getMinutes(),
-                date.getSeconds()
-              ));
+            var date = new Date(),
+                utc = new Date(Date.UTC(
+                    date.getFullYear(),
+                    date.getMonth(),
+                    date.getDate(),
+                    date.getHours() - 7,
+                    date.getMinutes(),
+                    date.getSeconds()
+                ));
 
-          document.getElementById('time').innerHTML = utc.toLocaleTimeString();
+            document.getElementById('time').innerHTML = utc.toLocaleTimeString();
         }
 
         setInterval(showTime, 1000);
 
         // https://stackoverflow.com/questions/45944210/laravel-carbon-reloading-current-time
-      </script>
+    </script>
 </body>
 
 </html>
