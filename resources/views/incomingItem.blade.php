@@ -391,7 +391,9 @@
                                                     <td>{{ $incoming->item_id }}</td>
                                                     <td>{{ $incoming->item_name }}</td>
                                                     <td>{{ $incoming->stock_added }}</td>
-                                                    <td>{{ $incoming->arrive_date }}</td>
+                                                    <td>{{ date_format(date_create($incoming->arrive_date), 'D d-m-Y') }}
+                                                    </td>
+                                                    {{-- <td>{{ $incoming->arrive_date }}</td> --}}
                                                     <td>{{ $incoming->description }}</td>
                                                     <td>
                                                         <a style="cursor: pointer"

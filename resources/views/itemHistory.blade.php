@@ -265,7 +265,8 @@
                                                     <td>{{ $history->stock_added }}</td>
                                                     <td>{{ $history->stock_taken }}</td>
                                                     <td>{{ $history->stock_now }}</td>
-                                                    <td>{{ $history->created_at }}</td>
+                                                    {{-- <td>{{ $history->created_at }}</td> --}}
+                                                    <td>{{ date_format(date_create($history->created_at), 'D, H:i:s, d-m-Y') }}</td>
                                                     <td>{{ $history->user_who_did }}
                                                     </td>
                                                 </tr>

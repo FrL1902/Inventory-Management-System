@@ -387,7 +387,9 @@
                                                     <td>{{ $outgoing->item_id }}</td>
                                                     <td>{{ $outgoing->item_name }}</td>
                                                     <td>{{ $outgoing->stock_taken }}</td>
-                                                    <td>{{ $outgoing->depart_date }}</td>
+                                                    {{-- <td>{{ $outgoing->depart_date }}</td> --}}
+                                                    <td>{{ date_format(date_create($outgoing->depart_date), 'D d-m-Y') }}
+                                                    </td>
                                                     <td>{{ $outgoing->description }}</td>
                                                     <td>
                                                         <a style="cursor: pointer"

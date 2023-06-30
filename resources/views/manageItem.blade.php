@@ -197,8 +197,10 @@
                                                     <td>{{ $item->item_id }}</td>
                                                     <td>{{ $item->item_name }}</td>
                                                     <td>{{ $item->stocks }}</td>
-                                                    <td>{{ $item->created_at }}</td>
-                                                    <td>{{ $item->updated_at }}</td>
+                                                    {{-- <td>{{ $item->created_at }}</td> --}}
+                                                    <td>{{ date_format(date_create($item->created_at), 'D H:i:s d-m-Y') }}</td>
+                                                    {{-- <td>{{ $item->updated_at }}</td> --}}
+                                                    <td>{{ date_format(date_create($item->updated_at), 'D H:i:s d-m-Y') }}</td>
                                                     <td>
                                                         {{-- <img class="rounded mx-auto d-block"
                                                             style="width: 100px;
