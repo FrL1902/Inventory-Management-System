@@ -29,11 +29,19 @@ class BrandController extends Controller
 
     public function makeBrand(Request $request)
     {
-        // dd('masuk');
-
         $request->validate([
-            'brandid' => 'required|unique:App\Models\Brand,brand_id|min:3|max:20',
-            'brandname' => 'required|min:2|max:50',
+            'brandid' => 'required|unique:App\Models\Brand,brand_id|min:3|max:20|alpha_dash',
+            'brandname' => 'required|min:2|max:50|regex:/^[\pL\s\-]+$/u',
+        ], [
+            'brandid.required' => 'Kolom "ID Brand" Harus Diisi',
+            'brandid.unique' => 'ID Brand yang diisi sudah terambil, masukkan ID yang lain',
+            'brandid.min' => 'ID Brand minimal 3 karakter',
+            'brandid.max' => 'ID Brand maksimal 20 karakter',
+            'brandid.alpha_dash' => 'ID Brand hanya membolehkan huruf, angka, -, _ (spasi dan simbol lainnya tidak diterima)',
+            'brandname.required' => 'Kolom "Nama Brand" Harus Diisi',
+            'brandname.min' => 'Nama Brand minimal 3 karakter',
+            'brandname.max' => 'Nama Brand maksimal 50 karakter',
+            'brandname.regex' => 'Nama Brand hanya membolehkan huruf, spasi, dan tanda penghubung(-)',
         ]);
 
         $item = new Brand();
@@ -87,14 +95,20 @@ class BrandController extends Controller
         $oldBrandName = $brandInfo->brand_name;
 
         $request->validate([
-            'brandnameformupdate' => 'required|min:2|max:50',
+            'brandnameformupdate' => 'required|min:2|max:50|regex:/^[\pL\s\-]+$/u',
+        ], [
+            'brandnameformupdate.required' => 'Kolom "Nama Brand" Harus Diisi',
+            'brandnameformupdate.min' => 'Nama Brand minimal 3 karakter',
+            'brandnameformupdate.max' => 'Nama Brand maksimal 50 karakter',
+            'brandnameformupdate.regex' => 'Nama Brand hanya membolehkan huruf, spasi, dan tanda penghubung(-)',
         ]);
 
         Brand::where('id', $request->brandIdHidden)->update([
             'brand_name' => $request->brandnameformupdate,
         ]);
 
-        $request->session()->flash('sukses_editBrand', $oldBrandName);
+        $request->session()->flash('sukses_editBrand', $request->brandnameformupdate);
+        // $request->session()->flash('sukses_editBrand', $oldBrandName);
 
         return redirect('manageBrand');
     }

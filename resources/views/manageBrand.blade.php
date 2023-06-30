@@ -11,24 +11,24 @@
             <div class="page-inner">
 
                 @if (session('sukses_delete_brand'))
-                    <div class="alert alert-warning alert-block">
+                    <div class="alert alert-warning alert-block" id="alertDelete">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>{{ session('sukses_delete_brand') }}</strong>
                     </div>
                 @elseif (session('sukses_editBrand'))
-                    <div class="alert alert-primary alert-block" id="alerts">
+                    <div class="alert alert-success alert-block" id="alertSuccess">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Sukses mengupdate data "{{ session('sukses_editBrand') }}"</strong>
                     </div>
                 @elseif (session('gagal_delete_brand'))
-                    <div class="alert alert-danger alert-block" id="alerts">
+                    <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>{{ session('gagal_delete_brand') }}</strong>
                     </div>
                 @elseif ($errors->any())
-                    <div class="alert alert-danger alert-block" id="alerts">
+                    <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Update Gagal, validation not met: {{ $errors->any() }}</strong>
+                        <strong>Update Gagal: {{ $errors->first() }}</strong>
                     </div>
                 @endif
 
@@ -37,10 +37,10 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">Manage Existing Brands</h4>
+                                    <h4 class="card-title"><strong>Mengelola Brand</strong></h4>
 
                                     <div class="ml-3 mr-2">
-                                        Export by
+                                        Export ke Excel berdasarkan
                                     </div>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-secondary"
@@ -56,7 +56,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print a Customer's Brands
+                                                            Print semua brand milik customer:
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -100,18 +100,18 @@
                                     <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Owner</th>
-                                                <th>Brand ID</th>
-                                                <th>Brand Name</th>
-                                                <th style="width: 10%">Action</th>
+                                                <th>Pemilik (customer)</th>
+                                                <th>ID Brand</th>
+                                                <th>Nama Brand</th>
+                                                <th style="width: 10%">Edit</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>Owner</th>
-                                                <th>Brand ID</th>
-                                                <th>Brand Name</th>
-                                                <th>Action</th>
+                                                <th>Pemilik (customer)</th>
+                                                <th>ID Brand</th>
+                                                <th>Nama Brand</th>
+                                                <th>Edit</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -185,7 +185,7 @@
                                                                     <div class="modal-header">
                                                                         <h3 class="modal-title"
                                                                             id="exampleModalLongTitle">
-                                                                            <strong>Update data for
+                                                                            <strong>Update data untuk
                                                                                 "{{ $brand->brand_name }}"</strong>
                                                                         </h3>
                                                                         <button type="button" class="close"
@@ -198,14 +198,13 @@
                                                                             @csrf
                                                                             <div class="card-body">
                                                                                 <div class="form-group">
-                                                                                    <label>Brand Name</label>
+                                                                                    <label>Nama Brand</label>
                                                                                     <input type="text"
                                                                                         class="form-control"
-                                                                                        placeholder="brand name"
+                                                                                        placeholder="masukkan nama brand"
                                                                                         aria-label=""
                                                                                         aria-describedby="basic-addon1"
-                                                                                        name="brandnameformupdate"
-                                                                                        required>
+                                                                                        name="brandnameformupdate">
                                                                                     <div class="card mt-5 ">
                                                                                         <button id=""
                                                                                             class="btn btn-primary">Update

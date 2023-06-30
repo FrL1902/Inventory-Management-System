@@ -11,14 +11,14 @@
             <div class="page-inner">
 
                 @if (session('sukses_addNewBrand'))
-                    <div class="alert alert-success alert-block">
+                    <div class="alert alert-success alert-block" id="alertSuccess">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>{{ session('sukses_addNewBrand') }}</strong>
                     </div>
                 @elseif ($errors->any())
-                    <div class="alert alert-danger alert-block" id="alerts">
+                    <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Update Failed, validation not met, error is: {{ $errors->first() }}</strong>
+                        <strong>Data Gagal Dimasukkan: {{ $errors->first() }}</strong>
                     </div>
                 @endif
 
@@ -28,11 +28,11 @@
                             <form action="/makeBrand" method="post">
                                 @csrf
                                 <div class="card-header">
-                                    <div class="card-title">New Brand</div>
+                                    <div class="card-title"><strong>Masukkan Brand Baru</strong></div>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="customeridforbrand">The owner of the brand</label>
+                                        <label for="customeridforbrand">Pemilik Brand</label>
                                         <select class="form-control" id="customeridforbrand" name="customeridforbrand">
                                             @foreach ($customer as $cust)
                                                 {{-- <option value="{{ $cust->customer_id }}">{{ $cust->customer_name }}</option> --}}
@@ -43,19 +43,19 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="largeInput">Brand ID</label>
-                                        <input type="text" class="form-control form-control" placeholder="BD001"
+                                        <label for="largeInput">ID Brand</label>
+                                        <input type="text" class="form-control form-control" placeholder="contoh: BD001"
                                             id="brandid" name="brandid">
                                     </div>
                                     <div class="form-group">
-                                        <label for="largeInput">Brand Name</label>
-                                        <input type="text" class="form-control form-control" placeholder="Oreo"
+                                        <label for="largeInput">Nama Brand</label>
+                                        <input type="text" class="form-control form-control" placeholder="contoh: Nestle"
                                             id="brandname" name="brandname">
                                     </div>
-                                    {{-- <div class="form-group">
-                                    </div> --}}
-                                    <div class="card mt-4">
-                                        <button class="btn btn-success">Insert New Item</button>
+                                    <div class="form-group">
+                                        <div class="card mt-4">
+                                            <button class="btn btn-success"><strong>Buat Brand Baru</strong></button>
+                                        </div>
                                     </div>
                                 </div>
                                 {{-- <div class="card-action">
