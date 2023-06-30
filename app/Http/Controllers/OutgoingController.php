@@ -25,7 +25,8 @@ class OutgoingController extends Controller
         $customer = Customer::all();
 
         if ($item->isempty()) {
-            $message = "no item is present, please input an item before accessing the \"outgoing\" or \"incoming\" page";
+            // $message = "no item is present, please input an item before accessing the \"outgoing\" or \"incoming\" page";
+            $message = "Tidak ada barang,  Masukkan barang baru terlebih dahulu sebelum mengakses halaman \"outgoing\" atau \"incoming\"";
             session()->flash('no_item_outgoing', $message);
 
             // $brand = Brand::all();

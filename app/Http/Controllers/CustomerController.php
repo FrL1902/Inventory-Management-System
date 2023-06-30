@@ -88,7 +88,7 @@ class CustomerController extends Controller
             // 'email' => 'required',
             // 'phone1' => 'required'
         ], [
-            'customerid.unique' => 'ID Customer yang dimasukkan sudah terambil, masukkan ID yang lain',
+            'customerid.unique' => 'ID Customer yang diisi sudah terambil, masukkan ID yang lain',
             'customerid.min' => 'ID Customer minimal 4 karakter',
             'customerid.max' => 'ID Customer maksimal 10 karakter',
             'customerid.alpha_dash' => 'ID Customer hanya membolehkan huruf, angka, -, _ (spasi dan simbol lainnya tidak diterima)',

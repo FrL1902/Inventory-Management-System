@@ -29,6 +29,15 @@ class BrandController extends Controller
 
     public function makeBrand(Request $request)
     {
+
+        $request->validate([
+            'brandid' => 'required',
+            'brandname' => 'required',
+        ], [
+            'brandid.required' => 'Kolom "ID Brand" Harus Diisi',
+            'brandname.required' => 'Kolom "Nama Brand" Harus Diisi'
+        ]);
+
         $request->validate([
             'brandid' => 'required|unique:App\Models\Brand,brand_id|min:3|max:20|alpha_dash',
             'brandname' => 'required|min:2|max:50|regex:/^[\pL\s\-]+$/u',

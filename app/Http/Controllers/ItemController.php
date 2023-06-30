@@ -36,11 +36,33 @@ class ItemController extends Controller
 
         // dd($customer->customer_id);
 
+        $request->validate([
+            'itemid' => 'required',
+            'itemname' => 'required',
+            'itemImage' => 'required',
+        ], [
+            'itemid.required' => 'Kolom ID Barang harus diisi',
+            'itemname.required' => 'Kolom Nama Barang harus diisi',
+            'itemImage.required' => 'Harus ada foto barang',
+        ]);
 
         $request->validate([
-            'itemid' => 'required|unique:App\Models\Item,item_id|min:3|max:50',
-            'itemname' => 'required|unique:App\Models\Item,item_name|min:3|max:75',
+            'itemid' => 'required|unique:App\Models\Item,item_id|min:3|max:20|alpha_dash',
+            'itemname' => 'required|unique:App\Models\Item,item_name|min:3|max:75|regex:/^[\pL\s\-]+$/u', //ga perlu pake unique sih, soalnya udah ada item_id, tp gpp buat skrg deh
             'itemImage' => 'required|mimes:jpeg,png,jpg',
+        ], [
+            'itemid.required' => 'Kolom ID Barang harus diisi',
+            'itemid.unique' => 'ID Barang yang diisi sudah terambil, masukkan ID yang lain',
+            'itemid.min' => 'ID Barang minimal 3 karakter',
+            'itemid.max' => 'ID Barang maksimal 20 karakter',
+            'itemid.alpha_dash' => 'ID Barang hanya membolehkan huruf, angka, -, _ (spasi dan simbol lainnya tidak diterima)',
+            'itemname.required' => 'Kolom Nama Barang harus diisi',
+            'itemname.unique' => 'Nama Barang yang diisi sudah terambil, masukkan nama yang lain',
+            'itemname.min' => 'Nama Barang minimal 3 karakter',
+            'itemname.max' => 'Nama Barang maksimal 75 karakter',
+            'itemname.regex' => 'Nama Barang hanya membolehkan huruf, spasi, dan tanda penghubung(-)',
+            'itemImage.required' => 'Harus ada foto barang',
+            'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
         ]);
 
         $file = $request->file('itemImage');
@@ -111,7 +133,7 @@ class ItemController extends Controller
             session()->flash('sukses_delete_item', $itemDeleted);
             return redirect('manageItem');
         } else {
-            session()->flash('gagal_delete_item', 'Item'. " \"" . $deletedItem . "\" " . 'Gagal Dihapus karena sudah mempunyai Sejarah Incoming/Outgoing');
+            session()->flash('gagal_delete_item', 'Item' . " \"" . $deletedItem . "\" " . 'Gagal Dihapus karena sudah mempunyai Sejarah Incoming/Outgoing');
             return redirect('manageItem');
         }
     }

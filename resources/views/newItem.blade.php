@@ -14,26 +14,24 @@
         <div class="page-inner">
 
             @if (session('sukses_addNewItem'))
-                <div class="alert alert-success alert-block">
+                <div class="alert alert-success alert-block" id="alertSuccess">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Item "{{ session('sukses_addNewItem') }}" is successfully added</strong>
+                    <strong>Barang "{{ session('sukses_addNewItem') }}" berhasil dimasukkan</strong>
                 </div>
             @elseif (session('no_item_incoming'))
-                <div class="alert alert-danger alert-block">
+                <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('no_item_incoming') }}</strong>
                 </div>
             @elseif (session('no_item_outgoing'))
-                <div class="alert alert-danger alert-block">
+                <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('no_item_outgoing') }}</strong>
                 </div>
-            @endif
-
-            @if ($errors->any())
-                <div class="alert alert-danger alert-block">
+            @elseif ($errors->any())
+                <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Item input failed, validation not met: {{ $errors->first() }}</strong>
+                    <strong>Data gagal dimasukkan: {{ $errors->first() }}</strong>
                 </div>
             @endif
 
@@ -43,11 +41,11 @@
                         <form enctype="multipart/form-data" method="post" action="/makeItem">
                             @csrf
                             <div class="card-header">
-                                <div class="card-title">Add New Item</div>
+                                <div class="card-title"><Strong>Masukkan Barang Baru</Strong></div>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="brandidforitem">The brand of the item</label>
+                                    <label for="brandidforitem">Brand Pemilik Barang</label>
                                     <select class="form-control" id="brandidforitem" name="brandidforitem">
                                         @foreach ($brand as $brand)
                                             <option value="{{ $brand->id }}">{{ $brand->brand_name }}</option>
@@ -55,27 +53,35 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="largeInput">Item ID</label>
-                                    <input type="text" class="form-control form-control" placeholder="AA001"
+                                    <label for="largeInput">ID Barang<span style="color: red"> (harus diisi)
+                                        </span></label>
+                                    <input type="text" class="form-control form-control" placeholder="Contoh: AA001"
                                         id="itemid" name="itemid">
                                 </div>
                                 <div class="form-group">
-                                    <label for="largeInput">Item Name</label>
-                                    <input type="text" class="form-control form-control" placeholder="pancake"
-                                        id="itemname" name="itemname">
+                                    <label for="largeInput">Nama Barang<span style="color: red"> (harus diisi)
+                                        </span></label>
+                                    <input type="text" class="form-control form-control"
+                                        placeholder="Contoh: Motor Vario" id="itemname" name="itemname">
                                 </div>
                                 <div class="form-group">
-                                    <label for="quantity">Stock</label>
+                                    <label for="quantity">Stok Utama Barang </label><a class="ml-3 mb-2"
+                                        style="cursor: pointer">
+                                        <i class="fa fa-question-circle text-primary" data-toggle="tooltip"
+                                            data-original-title="Stok barang yang sudah ada sekarang. Jika tidak diisi akan menjadi 0"></i>
+                                    </a>
                                     <input type="number" id="quantity" name="itemStock" min="0" max="999999999"
                                         style="width: 200px" class="form-control" placeholder="0 - 999999999">
                                 </div>
                                 <div class="form-group">
-                                    <label for="largeInput">Item Image</label>
+                                    <label for="largeInput">Foto Barang</label>
                                     <input type="file" class="form-control form-control" id="itemImage"
                                         name="itemImage">
                                 </div>
-                                <div class="card mt-4">
-                                    <button class="btn btn-success">Insert New Item</button>
+                                <div class="form-group">
+                                    <div class="card mt-4">
+                                        <button class="btn btn-success"><strong>Masukkan Barang Baru</strong></button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
