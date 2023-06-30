@@ -6,53 +6,6 @@
 @section('newcustomer', 'active')
 @section('showmanagecustomer', 'show')
 
-<style>
-    /* Success Animation */
-    #alertSuccess {
-        position: relative;
-        animation-name: success;
-        animation-duration: 0.7s;
-        animation-iteration-count: 1;
-    }
-
-    @keyframes success {
-        0% {
-            left: 200px;
-            top: 0px;
-            background-color: rgb(0, 255, 76);
-        }
-
-        100% {
-            left: 0px;
-            top: 0px;
-            background-color: white;
-        }
-    }
-
-
-    /* Failed Animation */
-    #alertFailed {
-        position: relative;
-        animation-name: failedAnimation;
-        animation-duration: 0.7s;
-        animation-iteration-count: 1;
-    }
-
-    @keyframes failedAnimation {
-        0% {
-            left: 200px;
-            top: 0px;
-            background-color: red;
-        }
-
-        100% {
-            left: 0px;
-            top: 0px;
-            background-color: white;
-        }
-    }
-</style>
-
 <div class="main-panel">
     <div class="content">
         {{-- ini page buat add new customer --}}
@@ -158,7 +111,8 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="card mt-4">
-                                        <button class="btn btn-success">Tambahkan Customer Baru</button>
+                                        <button class="btn btn-success"><strong>Tambahkan Customer
+                                                Baru</strong></button>
                                     </div>
                                 </div>
 
