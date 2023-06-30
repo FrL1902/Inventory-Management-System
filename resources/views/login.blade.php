@@ -33,7 +33,7 @@
 <body class="login">
     <div class="wrapper wrapper-login">
         <div class="container container-login animated fadeIn">
-            <h3 class="text-center">Sign In To Inventory System</h3>
+            <h3 class="text-center">Warehouse Management System</h3>
 
             <form action="/login" method="post">
                 @csrf
