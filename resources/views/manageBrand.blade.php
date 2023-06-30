@@ -136,13 +136,13 @@
                                                                     data-toggle="modal">
                                                                     <i class="fa fa-times mt-3 text-danger"
                                                                         data-toggle="tooltip"
-                                                                        data-original-title="Delete Brand"></i>
+                                                                        data-original-title="Hapus Brand"></i>
                                                                 </a>
                                                             @else
                                                                 <a class="ml-3 mb-2" style="cursor: pointer">
                                                                     <i class="fa fa-ban mt-3 text-danger"
                                                                         data-toggle="tooltip"
-                                                                        data-original-title="Cannot Delete Brand, has item"></i>
+                                                                        data-original-title="Tidak bisa menghapus Brand karena sudah mempunyai Barang"></i>
                                                                 </a>
                                                             @endif
                                                         </div>

@@ -117,7 +117,7 @@
                                                                 data-toggle="modal">
                                                                 <i class="fa fa-times mt-3 text-danger"
                                                                     data-toggle="tooltip"
-                                                                    data-original-title="Delete Customer"></i>
+                                                                    data-original-title="Hapus Customer"></i>
                                                             </a>
                                                         @else
                                                             <a class="ml-3 mb-2" style="cursor: pointer">
