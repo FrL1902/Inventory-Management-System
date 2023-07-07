@@ -7,7 +7,7 @@ should be like this
     DB_PORT=52221
     DB_DATABASE=inventory
     DB_USERNAME=postgres
-    DB_PASSWORD=farrelrasyad1902
+    DB_PASSWORD=
 4.php artisan migrate:fresh --seed
 5.php artisan storage:link
 6.bikin folder baru di storage\app\public (yg bawah), incomingItemImage, itemImages, OutgoingItemImage
