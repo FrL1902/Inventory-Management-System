@@ -7,7 +7,7 @@
 @section('content')
     <div class="main-panel">
         <div class="content">
-            ini page buat manage brands
+            {{-- ini page buat manage brands --}}
             <div class="page-inner">
 
                 @if (session('sukses_delete_brand'))

@@ -9,7 +9,7 @@
 
 <div class="main-panel">
     <div class="content">
-        ini page buat add new item
+        {{-- ini page buat add new item --}}
 
         <div class="page-inner">
 

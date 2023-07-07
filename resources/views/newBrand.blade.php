@@ -7,7 +7,7 @@
 @section('content')
     <div class="main-panel">
         <div class="content">
-            ini page buat add new brands
+            {{-- ini page buat add new brands --}}
             <div class="page-inner">
 
                 @if (session('sukses_addNewBrand'))

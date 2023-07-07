@@ -7,7 +7,7 @@
 @section('content')
     <div class="main-panel">
         <div class="content">
-            ini page buat manage item
+            {{-- ini page buat manage item --}}
             <div class="page-inner">
 
                 @if (session('sukses_delete_item'))

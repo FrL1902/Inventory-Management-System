@@ -7,7 +7,7 @@
 @section('content')
     <div class="main-panel">
         <div class="content">
-            ini page buat liat history keluar masuk stock tiap produk / item
+            {{-- ini page buat liat history keluar masuk stock tiap produk / item --}}
             <div class="page-inner">
 
                 {{-- @if (session('sukses_delete_brand'))

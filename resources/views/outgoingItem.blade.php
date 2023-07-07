@@ -8,7 +8,7 @@
 @section('content')
     <div class="main-panel">
         <div class="content">
-            tes template, outgoing
+            {{-- tes template, outgoing --}}
             <div class="page-inner">
 
                 {{-- error goes here --}}
