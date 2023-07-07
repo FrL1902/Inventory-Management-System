@@ -13,9 +13,9 @@
 
                 {{-- error goes here --}}
                 @if ($errors->any())
-                    <div class="alert alert-danger alert-block" id="alerts">
+                    <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Update Failed, validation not met, error is: {{ $errors->first() }}</strong>
+                        <strong>Data Gagal Dimasukkan: {{ $errors->first() }}</strong>
                     </div>
                 @endif
 
@@ -24,13 +24,13 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">Incoming Item</h4>
+                                    <h4 class="card-title"><strong>Barang Datang</strong></h4>
 
                                     <button type="button" class="btn btn-primary ml-3 mr-3" data-target="#addModalCenter"
                                         data-toggle="modal"><strong>ADD</strong></button>
 
                                     <div class="ml-3 mr-2">
-                                        Export by
+                                        Export ke Excel Berdasarkan
                                     </div>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-secondary"
@@ -44,11 +44,13 @@
                                         </button>
 
                                         <button type="button" class="btn btn-secondary"
-                                            data-target="#exportIncomingItemModal" data-toggle="modal"><strong>Item</strong>
+                                            data-target="#exportIncomingItemModal"
+                                            data-toggle="modal"><strong>Barang</strong>
                                         </button>
 
                                         <button type="button" class="btn btn-secondary"
-                                            data-target="#exportIncomingALLModal" data-toggle="modal"><strong>DATE</strong>
+                                            data-target="#exportIncomingALLModal"
+                                            data-toggle="modal"><strong>Tanggal</strong>
                                         </button>
                                     </div>
 
@@ -60,7 +62,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print a Customer's Incoming Sheet
+                                                            Export barang datang berdasarkan Customer
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -86,13 +88,13 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="startRange">Start Date Range</label>
+                                                                <label for="startRange">Dari Tanggal</label>
                                                                 <input type="date" class="form-control" id="startRange"
                                                                     required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">End Date Range</label>
+                                                                <label for="endRange">Hingga Tanggal</label>
                                                                 <input type="date" class="form-control" id="endRange"
                                                                     required name="endRange">
                                                             </div>
@@ -118,7 +120,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print a Brand's Incoming Sheet
+                                                            Export barang datang berdasarkan Brand
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -144,13 +146,13 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="startRange">Start Date Range</label>
+                                                                <label for="startRange">Dari Tanggal</label>
                                                                 <input type="date" class="form-control"
                                                                     id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">End Date Range</label>
+                                                                <label for="endRange">Hingga Tanggal</label>
                                                                 <input type="date" class="form-control" id="endRange"
                                                                     required name="endRange">
                                                             </div>
@@ -176,7 +178,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print an Item's Incoming Sheet
+                                                            Export barang datang berdasarkan nama barang
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -190,7 +192,7 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="itemLabelExport">Item</label>
+                                                                <label for="itemLabelExport">Nama Barang</label>
                                                                 <select class="form-control" id="itemLabelExport"
                                                                     name="itemIncoming">
                                                                     @foreach ($item as $data)
@@ -202,13 +204,13 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="startRange">Start Date Range</label>
+                                                                <label for="startRange">Dari Tanggal</label>
                                                                 <input type="date" class="form-control"
                                                                     id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">End Date Range</label>
+                                                                <label for="endRange">Hingga Tanggal</label>
                                                                 <input type="date" class="form-control" id="endRange"
                                                                     required name="endRange">
                                                             </div>
@@ -234,7 +236,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print ALL Incoming Sheet
+                                                            Print semua data barang datang
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -248,13 +250,13 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="startRange">Start Date Range</label>
+                                                                <label for="startRange">Dari Tanggal</label>
                                                                 <input type="date" class="form-control"
                                                                     id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">End Date Range</label>
+                                                                <label for="endRange">Hingga Tanggal</label>
                                                                 <input type="date" class="form-control" id="endRange"
                                                                     required name="endRange">
                                                             </div>
@@ -280,7 +282,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Add New Incoming Item
+                                                            Tambahkan Barang Datang Baru
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -295,7 +297,7 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="incomingidforitem">Item Name</label>
+                                                                <label for="incomingidforitem">Nama Barang</label>
                                                                 <select class="form-control" id="incomingidforitem"
                                                                     name="incomingiditem">
                                                                     @foreach ($item as $item)
@@ -306,7 +308,7 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="quantity">Stock</label>
+                                                                <label for="quantity">Stok</label>
                                                                 <input type="number" id="quantity" name="itemAddStock"
                                                                     min="1" max="999999999" style="width: 100%"
                                                                     class="form-control"
@@ -314,19 +316,19 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="incomingidforitem">Description</label>
-                                                                <textarea class="form-control" id="incomingidforitem" rows="3" placeholder="deskripsi incoming package"
+                                                                <label for="incomingidforitem">Deskripsi</label>
+                                                                <textarea class="form-control" id="incomingidforitem" rows="3" placeholder="deskripsi barang masuk"
                                                                     name="incomingItemDesc" required></textarea>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="startRange">Package Arrived Date</label>
+                                                                <label for="startRange">Tanggal Barang Datang</label>
                                                                 <input type="date" class="form-control"
                                                                     id="startRange" required name="itemArrive">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="largeInput">Incoming Package Image</label>
+                                                                <label for="largeInput">Gambar Barang Datang</label>
                                                                 <input type="file" class="form-control form-control"
                                                                     id="itemImage" name="incomingItemImage" required>
                                                                 <div class="card mt-5 ">
@@ -361,11 +363,11 @@
                                             <tr>
                                                 <th>Customer</th>
                                                 <th>Brand</th>
-                                                <th>Item ID</th>
-                                                <th>Item Name</th>
-                                                <th>Stock Added</th>
-                                                <th>Date Arrived</th>
-                                                <th>Description</th>
+                                                <th>ID Barang</th>
+                                                <th>Nama Barang</th>
+                                                <th>Jumlah Penambahan Stok</th>
+                                                <th>Tanggal Sampai</th>
+                                                <th>Deskripsi</th>
                                                 <th>Gambar</th>
                                             </tr>
                                         </thead>
@@ -373,11 +375,11 @@
                                             <tr>
                                                 <th>Customer</th>
                                                 <th>Brand</th>
-                                                <th>Item ID</th>
-                                                <th>Item Name</th>
-                                                <th>Stock Added</th>
-                                                <th>Date Arrived</th>
-                                                <th>Description</th>
+                                                <th>ID Barang</th>
+                                                <th>Nama Barang</th>
+                                                <th>Jumlah Penambahan Stok</th>
+                                                <th>Tanggal Sampai</th>
+                                                <th>Deskripsi</th>
                                                 <th>Gambar</th>
                                             </tr>
                                         </tfoot>
@@ -414,8 +416,8 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h3 class="modal-title" id="exampleModalLongTitle">
-                                                                    <strong>Incoming data for
-                                                                        {{ $incoming->item_name }} at
+                                                                    <strong>Barang Datang
+                                                                        "{{ $incoming->item_name }}" pada
                                                                         {{ $incoming->created_at }}</strong>
                                                                 </h3>
                                                                 <button type="button" class="close"

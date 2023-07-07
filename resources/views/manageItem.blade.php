@@ -16,17 +16,17 @@
                         <strong>{{ session('sukses_delete_item') }}</strong>
                     </div>
                 @elseif (session('sukses_editItem'))
-                    <div class="alert alert-primary alert-block" id="alertSuccess">
+                    <div class="alert alert-success alert-block" id="alertSuccess">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Sukses mengupdate data "{{ session('sukses_editItem') }}"</strong>
                     </div>
                 @elseif (session('sukses_addStock'))
-                    <div class="alert alert-primary alert-block" id="alertSuccess">
+                    <div class="alert alert-success alert-block" id="alertSuccess">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Sukses menambah stok"{{ session('sukses_addStock') }}"</strong>
                     </div>
                 @elseif (session('sukses_reduceStock'))
-                    <div class="alert alert-primary alert-block" id="alertSuccess">
+                    <div class="alert alert-success alert-block" id="alertSuccess">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Sukses mengurangi stok "{{ session('sukses_reduceStock') }}"</strong>
                     </div>
@@ -76,7 +76,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print a Customer's Items
+                                                            Print barang milik customer
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -121,7 +121,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print a Brand's Items
+                                                            Print barang milik Brand
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"

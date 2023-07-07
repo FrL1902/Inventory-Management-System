@@ -45,6 +45,8 @@ class OutgoingController extends Controller
 
         $request->validate([
             'outgoingItemImage' => 'required|mimes:jpeg,png,jpg',
+        ], [
+            'outgoingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
         ]);
 
         $newValue = $itemInfo->stocks - $request->itemReduceStock;

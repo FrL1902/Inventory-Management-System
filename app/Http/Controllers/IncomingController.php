@@ -44,6 +44,8 @@ class IncomingController extends Controller
 
         $request->validate([ //harus tambahin error disini
             'incomingItemImage' => 'required|mimes:jpeg,png,jpg',
+        ], [
+            'incomingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
         ]);
 
         $newValue = $itemInfo->stocks + $request->itemAddStock;
