@@ -208,7 +208,7 @@
                                                                                     <div class="card mt-5 ">
                                                                                         <button id=""
                                                                                             class="btn btn-primary">Update
-                                                                                            Data</button>
+                                                                                            Data Brand</button>
                                                                                     </div>
                                                                                 </div>
                                                                                 <input type="hidden" class="form-control"

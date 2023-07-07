@@ -129,7 +129,7 @@ class ItemController extends Controller
         if (is_null($itemIncoming) && is_null($itemOutgoing)) {
             Storage::delete('public/' . $item->item_pictures);
             $item->delete();
-            $itemDeleted = "Item" . " \"" . $deletedItem . "\" " . "berhasil di hapus";
+            $itemDeleted = "Barang" . " \"" . $deletedItem . "\" " . "berhasil di hapus";
             session()->flash('sukses_delete_item', $itemDeleted);
             return redirect('manageItem');
         } else {
@@ -152,11 +152,18 @@ class ItemController extends Controller
             if ($file != null) {
                 $request->validate([
                     'itemImage' => 'mimes:jpeg,png,jpg',
+                ], [
+                    'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
                 ]);
             }
             if ($request->itemnameformupdate != null) {
                 $request->validate([
-                    'itemnameformupdate' => 'required|unique:App\Models\Item,item_name|min:3|max:75',
+                    'itemnameformupdate' => 'unique:App\Models\Item,item_name|min:3|max:75|regex:/^[\pL\s\-]+$/u',
+                ], [
+                    'itemnameformupdate.unique' => 'Nama Barang yang diisi sudah terambil, masukkan nama yang lain',
+                    'itemnameformupdate.min' => 'Nama Barang minimal 3 karakter',
+                    'itemnameformupdate.max' => 'Nama Barang maksimal 75 karakter',
+                    'itemnameformupdate.regex' => 'Nama Barang hanya membolehkan huruf, spasi, dan tanda penghubung(-)',
                 ]);
             }
 
@@ -166,6 +173,8 @@ class ItemController extends Controller
                 // dd("ms");
                 $request->validate([
                     'itemImage' => 'mimes:jpeg,png,jpg',
+                ], [
+                    'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
                 ]);
 
                 $imageName = time() . '.' . $file->getClientOriginalExtension();

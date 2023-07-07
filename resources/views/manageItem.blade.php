@@ -11,39 +11,39 @@
             <div class="page-inner">
 
                 @if (session('sukses_delete_item'))
-                    <div class="alert alert-warning alert-block">
+                    <div class="alert alert-warning alert-block" id="alertDelete">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>{{ session('sukses_delete_item') }}</strong>
                     </div>
                 @elseif (session('sukses_editItem'))
-                    <div class="alert alert-primary alert-block" id="alerts">
+                    <div class="alert alert-primary alert-block" id="alertSuccess">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Sukses mengupdate data "{{ session('sukses_editItem') }}"</strong>
                     </div>
                 @elseif (session('sukses_addStock'))
-                    <div class="alert alert-primary alert-block" id="alerts">
+                    <div class="alert alert-primary alert-block" id="alertSuccess">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Sukses menambah stock"{{ session('sukses_addStock') }}"</strong>
+                        <strong>Sukses menambah stok"{{ session('sukses_addStock') }}"</strong>
                     </div>
                 @elseif (session('sukses_reduceStock'))
-                    <div class="alert alert-primary alert-block" id="alerts">
+                    <div class="alert alert-primary alert-block" id="alertSuccess">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Sukses mengurangi stock "{{ session('sukses_reduceStock') }}"</strong>
+                        <strong>Sukses mengurangi stok "{{ session('sukses_reduceStock') }}"</strong>
                     </div>
                 @elseif (session('noData_editItem'))
-                    <div class="alert alert-danger alert-block" id="alerts">
+                    <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Update Failed: no inputted data</strong>
+                        <strong>Update Gagal: Tidak ada kolom yang terisi</strong>
                     </div>
                 @elseif (session('gagal_delete_item'))
-                    <div class="alert alert-danger alert-block" id="alerts">
+                    <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>{{ session('gagal_delete_item') }}</strong>
                     </div>
                 @elseif ($errors->any())
-                    <div class="alert alert-danger alert-block" id="alerts">
+                    <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Update Failed, validation not met, error is: {{ $errors->first() }}</strong>
+                        <strong>Update Gagal: {{ $errors->first() }}</strong>
                     </div>
                 @endif
 
@@ -52,11 +52,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">Manage Existing Items Data</h4>
+                                    <h4 class="card-title"><strong>Mengelola Barang</strong></h4>
                                     {{-- <h4 class="card-title">Manage Existing Items and its Stocks</h4> --}}
 
                                     <div class="ml-3 mr-2">
-                                        Export by
+                                        Export ke Excel berdasarkan
                                     </div>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-secondary"
@@ -167,26 +167,26 @@
                                             <tr>
                                                 <th>Customer</th>
                                                 <th>Brand</th>
-                                                <th>Item ID</th>
-                                                <th>Item Name</th>
-                                                <th>Stocks</th>
-                                                <th>First Added at</th>
-                                                <th>Last Updated at</th>
-                                                <th>Item Image</th>
-                                                <th style="width: 10%">Action</th>
+                                                <th>ID Barang</th>
+                                                <th>Nama Barang</th>
+                                                <th>Stok</th>
+                                                <th>Tanggal Data Dimasukkan</th>
+                                                <th>Tanggal Terakhir Diupdate</th>
+                                                <th>Gambar Barang</th>
+                                                <th style="width: 10%">Edit</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
                                                 <th>Customer</th>
                                                 <th>Brand</th>
-                                                <th>Item ID</th>
-                                                <th>Item Name</th>
-                                                <th>Stocks</th>
-                                                <th>First Added at</th>
-                                                <th>Last Updated at</th>
-                                                <th>Item Image</th>
-                                                <th>Action</th>
+                                                <th>ID Barang</th>
+                                                <th>Nama Barang</th>
+                                                <th>Stok</th>
+                                                <th>Tanggal Data Dimasukkan</th>
+                                                <th>Tanggal Terakhir Diupdate</th>
+                                                <th>Gambar Barang</th>
+                                                <th>Edit</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -198,9 +198,11 @@
                                                     <td>{{ $item->item_name }}</td>
                                                     <td>{{ $item->stocks }}</td>
                                                     {{-- <td>{{ $item->created_at }}</td> --}}
-                                                    <td>{{ date_format(date_create($item->created_at), 'D H:i:s d-m-Y') }}</td>
+                                                    <td>{{ date_format(date_create($item->created_at), 'D H:i:s d-m-Y') }}
+                                                    </td>
                                                     {{-- <td>{{ $item->updated_at }}</td> --}}
-                                                    <td>{{ date_format(date_create($item->updated_at), 'D H:i:s d-m-Y') }}</td>
+                                                    <td>{{ date_format(date_create($item->updated_at), 'D H:i:s d-m-Y') }}
+                                                    </td>
                                                     <td>
                                                         {{-- <img class="rounded mx-auto d-block"
                                                             style="width: 100px;
@@ -237,7 +239,7 @@
                                                                 data-toggle="modal">
                                                                 <i class="fa fa-edit mt-3 text-primary"
                                                                     data-toggle="tooltip"
-                                                                    data-original-title="Edit Item Name"></i>
+                                                                    data-original-title="Edit Data Barang"></i>
                                                             </a>
                                                             @if (App\Models\Item::checkItemDeletable($item->id) == 'kosong')
                                                                 <a class="ml-3 mb-2" style="cursor: pointer"
@@ -245,7 +247,7 @@
                                                                     data-toggle="modal">
                                                                     <i class="fa fa-times mt-3 text-danger"
                                                                         data-toggle="tooltip"
-                                                                        data-original-title="Delete Item"></i>
+                                                                        data-original-title="Hapus Barang"></i>
                                                                 </a>
                                                             @else
                                                                 <a class="ml-3 mb-2" style="cursor: pointer">
@@ -318,17 +320,17 @@
                                                                             <div class="card-body">
                                                                                 <div class="form-group">
                                                                                     <div class="form-group">
-                                                                                        <label>Item Name</label>
+                                                                                        <label>Nama Barang</label>
                                                                                         <input type="text"
                                                                                             class="form-control"
-                                                                                            placeholder="item name"
+                                                                                            placeholder="masukkan nama barang"
                                                                                             aria-label=""
                                                                                             aria-describedby="basic-addon1"
                                                                                             name="itemnameformupdate">
                                                                                     </div>
                                                                                     <div class="form-group">
-                                                                                        <label for="largeInput">Item
-                                                                                            Image</label>
+                                                                                        <label for="largeInput">Gambar
+                                                                                            Barang</label>
                                                                                         <input type="file"
                                                                                             class="form-control form-control"
                                                                                             id="itemImage"
@@ -338,7 +340,7 @@
                                                                                         <div class="card mt-5 ">
                                                                                             <button id=""
                                                                                                 class="btn btn-primary">Update
-                                                                                                Data</button>
+                                                                                                Data Barang</button>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div>
