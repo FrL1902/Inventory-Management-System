@@ -43,6 +43,11 @@ class OutgoingController extends Controller
         $userInfo = User::where('id', $request->userIdHidden)->first();
         $itemInfo = Item::where('id', $request->outgoingiditem)->first();
 
+        if ($request->itemReduceStock > $itemInfo->stocks) {
+            $request->session()->flash('gagalReduceValue', $itemInfo->item_name);
+            return redirect('manageItem');
+        }
+
         $request->validate([
             'outgoingItemImage' => 'required|mimes:jpeg,png,jpg',
         ], [

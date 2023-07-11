@@ -311,8 +311,10 @@
                                                                 <label for="quantity">Stok</label>
                                                                 <input type="number" id="quantity"
                                                                     name="itemReduceStock" min="1"
-                                                                    max="{{ $item->stocks }}" style="width: 100%"
-                                                                    class="form-control" placeholder="minimum 1" required>
+                                                                    max="999999999999999" style="width: 100%"  
+                                                                    class="form-control"
+                                                                    placeholder="minimum 1"
+                                                                    required>
                                                             </div>
 
                                                             <div class="form-group">
