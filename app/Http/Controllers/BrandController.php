@@ -40,7 +40,7 @@ class BrandController extends Controller
 
         $request->validate([
             'brandid' => 'required|unique:App\Models\Brand,brand_id|min:3|max:20|alpha_dash',
-            'brandname' => 'required|min:2|max:50|regex:/^[\pL\s\-]+$/u',
+            'brandname' => 'required|min:2|max:50|regex:/^[\pL\s\-\0-9]+$/u', //regex lama tanpa angka /^[\pL\s\-]+$/u
         ], [
             'brandid.required' => 'Kolom "ID Brand" Harus Diisi',
             'brandid.unique' => 'ID Brand yang diisi sudah terambil, masukkan ID yang lain',
@@ -50,7 +50,7 @@ class BrandController extends Controller
             'brandname.required' => 'Kolom "Nama Brand" Harus Diisi',
             'brandname.min' => 'Nama Brand minimal 3 karakter',
             'brandname.max' => 'Nama Brand maksimal 50 karakter',
-            'brandname.regex' => 'Nama Brand hanya membolehkan huruf, spasi, dan tanda penghubung(-)',
+            'brandname.regex' => 'Nama Brand hanya membolehkan huruf, angka, spasi, dan tanda penghubung(-)',
         ]);
 
         $item = new Brand();
@@ -104,12 +104,12 @@ class BrandController extends Controller
         $oldBrandName = $brandInfo->brand_name;
 
         $request->validate([
-            'brandnameformupdate' => 'required|min:2|max:50|regex:/^[\pL\s\-]+$/u',
+            'brandnameformupdate' => 'required|min:2|max:50|regex:/^[\pL\s\-\0-9]+$/u', //updated to include numbers
         ], [
             'brandnameformupdate.required' => 'Kolom "Nama Brand" Harus Diisi',
             'brandnameformupdate.min' => 'Nama Brand minimal 3 karakter',
             'brandnameformupdate.max' => 'Nama Brand maksimal 50 karakter',
-            'brandnameformupdate.regex' => 'Nama Brand hanya membolehkan huruf, spasi, dan tanda penghubung(-)',
+            'brandnameformupdate.regex' => 'Nama Brand hanya membolehkan huruf, angka, spasi, dan tanda penghubung(-)',
         ]);
 
         Brand::where('id', $request->brandIdHidden)->update([

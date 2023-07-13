@@ -48,7 +48,7 @@ class ItemController extends Controller
 
         $request->validate([
             'itemid' => 'required|unique:App\Models\Item,item_id|min:3|max:20|alpha_dash',
-            'itemname' => 'required|unique:App\Models\Item,item_name|min:3|max:75|regex:/^[\pL\s\-]+$/u', //ga perlu pake unique sih, soalnya udah ada item_id, tp gpp buat skrg deh
+            'itemname' => 'required|unique:App\Models\Item,item_name|min:3|max:75|regex:/^[\pL\s\-\0-9]+$/u', //ga perlu pake unique sih, soalnya udah ada item_id, tp gpp buat skrg deh, //ini regex lama tanpa pake number /^[\pL\s\-]+$/u  , ini yg baru  /^[\pL\s\-\0-9]+$/u
             'itemImage' => 'required|mimes:jpeg,png,jpg',
         ], [
             'itemid.required' => 'Kolom ID Barang harus diisi',
@@ -60,7 +60,7 @@ class ItemController extends Controller
             'itemname.unique' => 'Nama Barang yang diisi sudah terambil, masukkan nama yang lain',
             'itemname.min' => 'Nama Barang minimal 3 karakter',
             'itemname.max' => 'Nama Barang maksimal 75 karakter',
-            'itemname.regex' => 'Nama Barang hanya membolehkan huruf, spasi, dan tanda penghubung(-)',
+            'itemname.regex' => 'Nama Barang hanya membolehkan huruf, angka, spasi, dan tanda penghubung(-)',
             'itemImage.required' => 'Harus ada foto barang',
             'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
         ]);
@@ -158,12 +158,12 @@ class ItemController extends Controller
             }
             if ($request->itemnameformupdate != null) {
                 $request->validate([
-                    'itemnameformupdate' => 'unique:App\Models\Item,item_name|min:3|max:75|regex:/^[\pL\s\-]+$/u',
+                    'itemnameformupdate' => 'unique:App\Models\Item,item_name|min:3|max:75|regex:/^[\pL\s\-\0-9]+$/u', //updated to include numbers
                 ], [
                     'itemnameformupdate.unique' => 'Nama Barang yang diisi sudah terambil, masukkan nama yang lain',
                     'itemnameformupdate.min' => 'Nama Barang minimal 3 karakter',
                     'itemnameformupdate.max' => 'Nama Barang maksimal 75 karakter',
-                    'itemnameformupdate.regex' => 'Nama Barang hanya membolehkan huruf, spasi, dan tanda penghubung(-)',
+                    'itemnameformupdate.regex' => 'Nama Barang hanya membolehkan huruf, angka, spasi, dan tanda penghubung(-)',
                 ]);
             }
 
