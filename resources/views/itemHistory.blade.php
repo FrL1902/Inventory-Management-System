@@ -39,22 +39,22 @@
                                         </span>
                                         <h4 class="card-title mt-1 mr-3">
                                             <span class="align-middle">
-                                                History of stocks
+                                                Sejarah Stok
                                             </span>
                                         </h4>
                                         <div class="ml-3 mr-2 mt-2">
                                             <span class="align-middle">
-                                                Export By
+                                                Export Berdasarkan
                                             </span>
                                         </div>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-secondary"
                                                 data-target="#exportItemHistorymModal"
-                                                data-toggle="modal"><strong>Item</strong>
+                                                data-toggle="modal"><strong>Barang</strong>
                                             </button>
                                             <button type="button" class="btn btn-secondary"
                                                 data-target="#exportHistoryByDateModal"
-                                                data-toggle="modal"><strong>Date</strong>
+                                                data-toggle="modal"><strong>Tanggal</strong>
                                             </button>
                                         </div>
                                     </div>
@@ -220,16 +220,14 @@
                                     <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
-
                                                 <th>History ID</th>
                                                 <th>Item Name</th>
                                                 <th>Stock before</th>
                                                 <th>Stock added</th>
                                                 <th>Stock taken</th>
-                                                <th>Stock now</th>
+                                                <th>Stock after</th>
                                                 <th>Updated At (system)</th>
                                                 <th>By User</th>
-
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -249,7 +247,7 @@
                                                 <th>Stock before</th>
                                                 <th>Stock added</th>
                                                 <th>Stock taken</th>
-                                                <th>Stock now</th>
+                                                <th>Stock after</th>
                                                 <th>Updated At (system)</th>
                                                 <th>By User</th>
 
@@ -266,7 +264,8 @@
                                                     <td>{{ $history->stock_taken }}</td>
                                                     <td>{{ $history->stock_now }}</td>
                                                     {{-- <td>{{ $history->created_at }}</td> --}}
-                                                    <td>{{ date_format(date_create($history->created_at), 'D, H:i:s, d-m-Y') }}</td>
+                                                    <td>{{ date_format(date_create($history->created_at), 'D, H:i:s, d-m-Y') }}
+                                                    </td>
                                                     <td>{{ $history->user_who_did }}
                                                     </td>
                                                 </tr>
