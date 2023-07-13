@@ -65,6 +65,20 @@ class ItemController extends Controller
             'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
         ]);
 
+        //ini kalo input angkanya null, di set ke 0
+        if (is_null($request->itemStock)) {
+            $item->stocks = 0;
+        } else {
+            $request->validate([
+                'itemStock' => 'max:2147483647|min:0|numeric'
+            ],[
+                'itemStock.max' => 'Stok melebihi 32 bit integer',
+                'itemStock.min' => 'Stok harus melebihi 0',
+                'itemStock.numeric' => 'input stok harus angka'
+            ]);
+            $item->stocks = $request->itemStock;
+        }
+
         $file = $request->file('itemImage');
         $imageName = time() . '.' . $file->getClientOriginalExtension();
         Storage::putFileAs('public/itemImages', $file, $imageName);
@@ -77,12 +91,6 @@ class ItemController extends Controller
         $item->item_pictures = $imageName;
         $item->customer_id = $customer->customer_id;
 
-        //ini kalo input angkanya null, di set ke 0
-        if (is_null($request->itemStock)) {
-            $item->stocks = 0;
-        } else {
-            $item->stocks = $request->itemStock;
-        }
 
 
         $item->save();
