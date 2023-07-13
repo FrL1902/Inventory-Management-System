@@ -29,10 +29,27 @@
                                     <button type="button" class="btn btn-primary ml-3 mr-3" data-target="#addModalCenter"
                                         data-toggle="modal"><strong>ADD</strong></button>
 
-                                    <div class="ml-3 mr-2">
-                                        Export ke Excel Berdasarkan
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false"> <i class="fa fa-file-excel" aria-hidden="true"></i>
+                                            Export Berdasarkan
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" data-target="#exportIncomingCustomerModal"
+                                            data-toggle="modal">Customer</a>
+                                            <a class="dropdown-item" data-target="#exportIncomingBrandModal"
+                                            data-toggle="modal">Brand</a>
+                                            <a class="dropdown-item" data-target="#exportIncomingItemModal"
+                                            data-toggle="modal">Barang</a>
+                                            <a class="dropdown-item" data-target="#exportIncomingALLModal"
+                                            data-toggle="modal">Tanggal</a>
+                                        </div>
                                     </div>
-                                    <div class="btn-group">
+                                    {{-- <div class="ml-3 mr-2">
+                                        Export ke Excel Berdasarkan
+                                    </div> --}}
+                                    {{-- <div class="btn-group">
                                         <button type="button" class="btn btn-secondary"
                                             data-target="#exportIncomingCustomerModal"
                                             data-toggle="modal"><strong>Customer</strong>
@@ -52,7 +69,7 @@
                                             data-target="#exportIncomingALLModal"
                                             data-toggle="modal"><strong>Tanggal</strong>
                                         </button>
-                                    </div>
+                                    </div> --}}
 
                                     {{-- export by customer --}}
                                     <div class="modal fade" id="exportIncomingCustomerModal" tabindex="-1" role="dialog"

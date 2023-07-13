@@ -24,12 +24,29 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">Barang Keluar</h4>
+                                    <h4 class="card-title"><strong>Barang Keluar</strong></h4>
 
-                                    <button type="button" class="btn btn-primary ml-3" data-target="#outModalCenter"
+                                    <button type="button" class="btn btn-primary ml-3 mr-3" data-target="#outModalCenter"
                                         data-toggle="modal"><strong>ADD</strong></button>
 
-                                    <div class="ml-3 mr-2">
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false"> <i class="fa fa-file-excel" aria-hidden="true"></i>
+                                            Export Berdasarkan
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" data-target="#exportOutgoingCustomerModal"
+                                                data-toggle="modal">Customer</a>
+                                            <a class="dropdown-item" data-target="#exportOutgoingBrandModal"
+                                                data-toggle="modal">Brand</a>
+                                            <a class="dropdown-item" data-target="#exportOutgoingItemModal"
+                                                data-toggle="modal">Barang</a>
+                                            <a class="dropdown-item" data-target="#exportOutgoingALLModal"
+                                                data-toggle="modal">Tanggal</a>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="ml-3 mr-2">
                                         Export ke Excel Berdasarkan
                                     </div>
                                     <div class="btn-group">
@@ -52,7 +69,7 @@
                                             data-target="#exportOutgoingALLModal"
                                             data-toggle="modal"><strong>Tanggal</strong>
                                         </button>
-                                    </div>
+                                    </div> --}}
 
                                     {{-- export by customer --}}
                                     <div class="modal fade" id="exportOutgoingCustomerModal" tabindex="-1" role="dialog"
@@ -311,10 +328,8 @@
                                                                 <label for="quantity">Stok</label>
                                                                 <input type="number" id="quantity"
                                                                     name="itemReduceStock" min="1"
-                                                                    max="999999999999999" style="width: 100%"  
-                                                                    class="form-control"
-                                                                    placeholder="minimum 1"
-                                                                    required>
+                                                                    max="999999999999999" style="width: 100%"
+                                                                    class="form-control" placeholder="minimum 1" required>
                                                             </div>
 
                                                             <div class="form-group">
