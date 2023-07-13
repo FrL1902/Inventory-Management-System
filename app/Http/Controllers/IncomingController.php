@@ -42,6 +42,23 @@ class IncomingController extends Controller
         $userInfo = User::where('id', $request->userIdHidden)->first();
         $itemInfo = Item::where('id', $request->incomingiditem)->first();
 
+        $maxValueAvailable = 2147483647 - $itemInfo->stocks;
+
+        // dd($maxValueAvailable);
+        if($request->itemAddStock > $maxValueAvailable){
+            // dd('ga bisa');
+            $request->validate([
+                'itemAddStock' => 'required|max:2147483647|min:1|numeric'
+            ],[
+                'itemAddStock.required' => 'Kolom stok harus diisi',
+                'itemAddStock.max' => 'Stok melebihi 32 bit integer',
+                'itemAddStock.min' => 'Stok harus melebihi 1',
+                'itemAddStock.numeric' => 'input stok harus angka'
+            ]);
+            $request->session()->flash('intOverflow', 'Melebihi 32 bit integer (2147483647)');
+            return redirect()->back();
+        }
+
         $request->validate([ //harus tambahin error disini
             'incomingItemImage' => 'required|mimes:jpeg,png,jpg',
         ], [

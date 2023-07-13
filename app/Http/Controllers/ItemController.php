@@ -72,8 +72,8 @@ class ItemController extends Controller
             $request->validate([
                 'itemStock' => 'max:2147483647|min:0|numeric'
             ],[
-                'itemStock.max' => 'Stok melebihi 32 bit integer',
-                'itemStock.min' => 'Stok harus melebihi 0',
+                'itemStock.max' => 'Stok melebihi 32 bit integer (2147483647)',
+                'itemStock.min' => 'Stok tidak boleh angka negatif',
                 'itemStock.numeric' => 'input stok harus angka'
             ]);
             $item->stocks = $request->itemStock;

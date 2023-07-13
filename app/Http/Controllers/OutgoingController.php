@@ -50,8 +50,13 @@ class OutgoingController extends Controller
 
         $request->validate([
             'outgoingItemImage' => 'required|mimes:jpeg,png,jpg',
+            'itemReduceStock' => 'required|max:2147483647|min:1|numeric'
         ], [
-            'outgoingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+            'outgoingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
+            'itemReduceStock.required' => 'Kolom stok harus diisi',
+            'itemReduceStock.max' => 'Stok melebihi 32 bit integer',
+            'itemReduceStock.min' => 'Stok harus melebihi 1',
+            'itemReduceStock.numeric' => 'input stok harus angka'
         ]);
 
         $newValue = $itemInfo->stocks - $request->itemReduceStock;

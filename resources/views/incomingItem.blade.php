@@ -12,7 +12,12 @@
             <div class="page-inner">
 
                 {{-- error goes here --}}
-                @if ($errors->any())
+                @if (session('intOverflow'))
+                    <div class="alert alert-danger alert-block" id="alertFailed">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Data Gagal Dimasukkan: {{ session('intOverflow') }}</strong>
+                    </div>
+                @elseif($errors->any())
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Data Gagal Dimasukkan: {{ $errors->first() }}</strong>
