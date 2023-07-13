@@ -14,8 +14,8 @@ use Maatwebsite\Excel\Events\AfterSheet;
 class OutgoingExport implements FromCollection, WithHeadings, ShouldAutoSize, WithMapping, WithEvents
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
 
     public function __construct($data)
     {
@@ -27,7 +27,7 @@ class OutgoingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
     public function headings(): array
     {
         return [
-            'ID', 'Customer Name', 'Brand Name', 'Item Name', 'Date Departed', 'Stock Before', 'Stock Taken', 'Stock Now', 'description', 'picture link'
+            'ID', 'Customer Name', 'Brand Name', 'Item Name', 'Date Departed', 'Stock Before', 'Stock Taken', 'Stock After', 'description', 'picture link'
         ];
     }
 
@@ -43,7 +43,8 @@ class OutgoingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
             $item->customer->customer_name,
             $item->brand->brand_name,
             $item->item_name,
-            $item->depart_date,
+            // $item->depart_date,
+            date_format(date_create($item->depart_date), 'd-m-Y'),
             $item->stock_before,
             $item->stock_taken,
             $item->stock_now,
