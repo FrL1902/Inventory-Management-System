@@ -117,7 +117,8 @@ class ItemController extends Controller
     {
         session()->forget('deleteFilterButton');
         $history = StockHistory::all();
-        return view('itemHistory', compact('history'));
+        $item = Item::all();
+        return view('itemHistory', compact('history', 'item'));
     }
 
     public function deleteItem($id)
