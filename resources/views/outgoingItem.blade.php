@@ -403,7 +403,7 @@
                                                 <tr>
                                                     <td>{{ $outgoing->customer->customer_name }}</td>
                                                     <td>{{ $outgoing->brand->brand_name }}</td>
-                                                    <td>{{ $outgoing->item_id }}</td>
+                                                    <td>{{ $outgoing->item->item_id }}</td>
                                                     <td>{{ $outgoing->item_name }}</td>
                                                     <td>{{ $outgoing->stock_taken }}</td>
                                                     {{-- <td>{{ $outgoing->depart_date }}</td> --}}

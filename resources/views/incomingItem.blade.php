@@ -412,7 +412,7 @@
                                                 <tr>
                                                     <td>{{ $incoming->customer->customer_name }}</td>
                                                     <td>{{ $incoming->brand->brand_name }}</td>
-                                                    <td>{{ $incoming->item_id }}</td>
+                                                    <td>{{ $incoming->item->item_id }}</td>
                                                     <td>{{ $incoming->item_name }}</td>
                                                     <td>{{ $incoming->stock_added }}</td>
                                                     <td>{{ date_format(date_create($incoming->arrive_date), 'D d-m-Y') }}
