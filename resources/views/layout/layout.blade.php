@@ -7,8 +7,10 @@
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     {{-- <link rel="icon" href="/assets/img/icon.ico" type="image/x-icon" /> --}}
     {{-- bawah ini buat ganti icon di bar atas web --}}
+
     <link rel="icon" href="/assets/img/warehouse logo.png" type="image/x-icon" />
     <!-- Fonts and icons -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
         WebFont.load({
@@ -28,6 +30,7 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/azzara.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 
@@ -364,6 +367,8 @@
     <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
     <!-- Azzara JS -->
     <script src="/assets/js/ready.min.js"></script>
+    {{-- select 2 --}}
+
     <script>
         $(document).ready(function() {
             $('#add-row').DataTable({
@@ -375,6 +380,20 @@
             });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    {{-- <script>
+        $(document).ready(function() {
+            $('#incomingidforitem').select2();
+        });
+    </script> --}}
+
+    <script>
+         $('#incomingidforitem').select2({
+            dropdownParent: $('#addModalCenter')
+         });
+    </script>
+
     {{-- <script type="text/javascript">
         function display_c() {
             var refresh = 1000; // Refresh rate in milli seconds

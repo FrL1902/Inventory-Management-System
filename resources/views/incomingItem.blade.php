@@ -34,21 +34,21 @@
                                     <button type="button" class="btn btn-primary ml-3 mr-3" data-target="#addModalCenter"
                                         data-toggle="modal"><strong>ADD</strong></button>
 
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button"
                                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false"> <i class="fa fa-file-excel" aria-hidden="true"></i>
                                             Export Berdasarkan
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a class="dropdown-item" data-target="#exportIncomingCustomerModal"
-                                            data-toggle="modal">Customer</a>
+                                                data-toggle="modal">Customer</a>
                                             <a class="dropdown-item" data-target="#exportIncomingBrandModal"
-                                            data-toggle="modal">Brand</a>
+                                                data-toggle="modal">Brand</a>
                                             <a class="dropdown-item" data-target="#exportIncomingItemModal"
-                                            data-toggle="modal">Barang</a>
+                                                data-toggle="modal">Barang</a>
                                             <a class="dropdown-item" data-target="#exportIncomingALLModal"
-                                            data-toggle="modal">Tanggal</a>
+                                                data-toggle="modal">Tanggal</a>
                                         </div>
                                     </div>
                                     {{-- <div class="ml-3 mr-2">
@@ -320,8 +320,8 @@
                                                         <div class="card-body">
                                                             <div class="form-group">
                                                                 <label for="incomingidforitem">Nama Barang</label>
-                                                                <select class="form-control" id="incomingidforitem"
-                                                                    name="incomingiditem">
+                                                                <select class="form-control" data-width="100%"
+                                                                    id="incomingidforitem" name="incomingiditem">
                                                                     @foreach ($item as $item)
                                                                         <option value="{{ $item->id }}">
                                                                             {{ $item->item_name }}</option>
