@@ -10,6 +10,7 @@ use App\Models\Item;
 use App\Models\StockHistory;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
@@ -45,11 +46,11 @@ class IncomingController extends Controller
         $maxValueAvailable = 2147483647 - $itemInfo->stocks;
 
         // dd($maxValueAvailable);
-        if($request->itemAddStock > $maxValueAvailable){
+        if ($request->itemAddStock > $maxValueAvailable) {
             // dd('ga bisa');
             $request->validate([
                 'itemAddStock' => 'required|max:2147483647|min:1|numeric'
-            ],[
+            ], [
                 'itemAddStock.required' => 'Kolom stok harus diisi',
                 'itemAddStock.max' => 'Stok melebihi 32 bit integer',
                 'itemAddStock.min' => 'Stok harus melebihi 1',
@@ -167,5 +168,33 @@ class IncomingController extends Controller
         $formatFileName = 'DataBarangDatang Item ' . $item->item_name . ' ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 
         return Excel::download(new IncomingExport($sortItem),  $formatFileName . '.xlsx');
+    }
+
+    public function deleteItemIncoming($id)
+    {
+        try {
+            $decrypted = decrypt($id);
+        } catch (DecryptException $e) {
+            abort(403);
+        }
+
+        $incomingInfo = Incoming::where('id', $decrypted)->first();
+        $itemInfo = Item::where('id', $incomingInfo->item_id)->first();
+
+        $newValue = $itemInfo->stocks - $incomingInfo->stock_added;
+
+        if ($newValue < 0) {
+            session()->flash('newValueMinus', 'Gagal Dihapus karena stock akan kurang dari 0 (minus)');
+            return redirect()->back();
+        }
+
+        Item::where('id', $incomingInfo->item_id)->update([ //kurangin stock sesuai jumlah stock dalam incoming ini
+            'stocks' => $newValue
+        ]);
+
+        $incomingInfo->delete();
+        // session()->flash('suksesDeleteIncoming', 'Sukses hapus data kedatangan barang ' . $itemInfo->item_name . ' (' + intval($itemInfo->stocks) . ') stock');
+        session()->flash('suksesDeleteIncoming', 'Sukses hapus data kedatangan barang ' . $itemInfo->item_name);
+        return redirect()->back();
     }
 }

@@ -17,6 +17,16 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Data Gagal Dimasukkan: {{ session('intOverflow') }}</strong>
                     </div>
+                @elseif (session('newValueMinus'))
+                    <div class="alert alert-danger alert-block" id="alertFailed">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Data Gagal Dihapus: {{ session('newValueMinus') }}</strong>
+                    </div>
+                @elseif (session('suksesDeleteIncoming'))
+                    <div class="alert alert-warning alert-block" id="alertDelete">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ session('suksesDeleteIncoming') }}</strong>
+                    </div>
                 @elseif($errors->any())
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -391,6 +401,11 @@
                                                 <th>Tanggal Sampai</th>
                                                 <th>Deskripsi</th>
                                                 <th>Gambar</th>
+                                                @auth
+                                                    @if (Auth::user()->level == 'admin')
+                                                        <th>Edit (admin)</th>
+                                                    @endif
+                                                @endauth
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -403,11 +418,14 @@
                                                 <th>Tanggal Sampai</th>
                                                 <th>Deskripsi</th>
                                                 <th>Gambar</th>
+                                                @auth
+                                                    @if (Auth::user()->level == 'admin')
+                                                        <th>Edit (admin)</th>
+                                                    @endif
+                                                @endauth
                                             </tr>
                                         </tfoot>
                                         <tbody>
-
-
                                             @foreach ($incoming as $incoming)
                                                 <tr>
                                                     <td>{{ $incoming->customer->customer_name }}</td>
@@ -429,7 +447,30 @@
                                                                 alt="no picture" loading="lazy">
                                                         </a>
                                                     </td>
+                                                    @auth
+                                                        @if (Auth::user()->level == 'admin')
+                                                            <td>
+                                                                <div class="d-flex justify-content-center">
+                                                                    <a style="cursor: pointer" class="mb-2"
+                                                                        data-target="#editModalCenter{{ $incoming->id }}"
+                                                                        data-toggle="modal">
+                                                                        <i class="fa fa-edit mt-3 text-primary"
+                                                                            data-toggle="tooltip"
+                                                                            data-original-title="Edit Data Barang Masuk"></i>
+                                                                    </a>
+                                                                    <a class="ml-3 mb-2" style="cursor: pointer"
+                                                                        data-target="#deleteModal{{ $incoming->id }}"
+                                                                        data-toggle="modal">
+                                                                        <i class="fa fa-times mt-3 text-danger"
+                                                                            data-toggle="tooltip"
+                                                                            data-original-title="Hapus Data Barang Masuk"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        @endif
+                                                    @endauth
                                                 </tr>
+                                                {{-- FullSize Gambar --}}
                                                 <div class="modal fade" id="imageModalCenter{{ $incoming->id }}"
                                                     tabindex="-1" role="dialog"
                                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -452,6 +493,107 @@
                                                                     style="width: 750px; height: auto;"
                                                                     src="{{ Storage::url($incoming->item_pictures) }}"
                                                                     alt="no picture" loading="lazy">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{-- update dan delete incoming data MODALS --}}
+                                                <div class="modal fade" id="deleteModal{{ $incoming->id }}">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    <strong>PENGHAPUSAN DATA BARANG MASUK</strong>
+                                                                </h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Apakah anda yakin untuk menghapus data barang masuk
+                                                                    "{{ $incoming->item_name }}" ?</p>
+                                                                <p>Jika dihapus, stock yang dimiliki akan berkurang sebanyak
+                                                                    <strong>{{ $incoming->stock_added }} barang</strong>
+                                                                </p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    id="close-modal" data-dismiss="modal">Tidak</button>
+                                                                <a href="/deleteItemIncoming/{{ encrypt($incoming->id) }}"
+                                                                    class="btn btn-danger">YAKIN
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade" id="editModalCenter{{ $incoming->id }}"
+                                                    tabindex="-1" role="dialog"
+                                                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <div class="d-flex flex-column">
+                                                                    <div class="p-2">
+                                                                        <h3 class="modal-title"
+                                                                            id="exampleModalLongTitle">
+                                                                            <strong> Update data for
+                                                                                "{{ $item->item_name }}"</strong>
+                                                                        </h3>
+                                                                    </div>
+                                                                    <div class="p-2">
+                                                                        <h5> Isi
+                                                                            data yang ingin diubah</h5>
+                                                                    </div>
+                                                                </div>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form enctype="multipart/form-data" method="post"
+                                                                    action="/updateItem">
+                                                                    @csrf
+                                                                    <div class="card-body">
+                                                                        <div class="form-group">
+                                                                            <div class="form-group">
+                                                                                <label>Nama Barang</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="masukkan nama barang"
+                                                                                    aria-label=""
+                                                                                    aria-describedby="basic-addon1"
+                                                                                    name="itemnameformupdate">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="largeInput">Gambar
+                                                                                    Barang</label>
+                                                                                <input type="file"
+                                                                                    class="form-control form-control"
+                                                                                    id="itemImage" name="itemImage">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <div class="card mt-5 ">
+                                                                                    <button id=""
+                                                                                        class="btn btn-primary">Update
+                                                                                        Data Barang</button>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <h5 style="text-align: center;">
+                                                                                    kolom
+                                                                                    yang tidak diisi
+                                                                                    akan menggunakan data yang
+                                                                                    sebelumnya</h5>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <input type="hidden" class="form-control"
+                                                                            name="itemIdHidden"
+                                                                            value="{{ $item->id }}">
+                                                                    </div>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
