@@ -79,6 +79,7 @@ Route::post('/exportHistoryByDate', [StockHistoryController::class, 'exportHisto
 Route::post('/addItemStock', [IncomingController::class, 'addItemStock'])->middleware('login');
 Route::get('/newIncoming', [IncomingController::class, 'add_incoming_item_page'])->middleware('login');
 Route::get('/deleteItemIncoming/{id}', [IncomingController::class, 'deleteItemIncoming'])->middleware('security');
+Route::post('/updateIncomingData', [IncomingController::class, 'updateIncomingData'])->middleware('security');
 Route::post('/exportIncoming', [IncomingController::class, 'exportIncoming'])->name('exportIncoming')->middleware('login');
 Route::post('/exportIncomingCustomer', [IncomingController::class, 'exportIncomingCustomer'])->name('exportIncomingCustomer')->middleware('login');
 Route::post('/exportIncomingBrand', [IncomingController::class, 'exportIncomingBrand'])->name('exportIncomingBrand')->middleware('login');

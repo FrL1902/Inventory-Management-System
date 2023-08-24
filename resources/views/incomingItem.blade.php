@@ -27,6 +27,11 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>{{ session('suksesDeleteIncoming') }}</strong>
                     </div>
+                @elseif (session('suksesUpdateIncoming'))
+                    <div class="alert alert-success alert-block" id="alertSuccess">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ session('suksesUpdateIncoming') }}</strong>
+                    </div>
                 @elseif($errors->any())
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -431,7 +436,7 @@
                                                     <td>{{ $incoming->customer->customer_name }}</td>
                                                     <td>{{ $incoming->brand->brand_name }}</td>
                                                     <td>{{ $incoming->item->item_id }}</td>
-                                                    <td>{{ $incoming->item_name }}</td>
+                                                    <td>{{ $incoming->item->item_name }}</td>
                                                     <td>{{ $incoming->stock_added }}</td>
                                                     <td>{{ date_format(date_create($incoming->arrive_date), 'D d-m-Y') }}
                                                     </td>
@@ -480,7 +485,7 @@
                                                             <div class="modal-header">
                                                                 <h3 class="modal-title" id="exampleModalLongTitle">
                                                                     <strong>Barang Datang
-                                                                        "{{ $incoming->item_name }}" pada
+                                                                        "{{ $incoming->item->item_name }}" pada
                                                                         {{ $incoming->created_at }}</strong>
                                                                 </h3>
                                                                 <button type="button" class="close"
@@ -497,7 +502,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {{-- update dan delete incoming data MODALS --}}
+                                                {{-- delete incoming data MODALS --}}
                                                 <div class="modal fade" id="deleteModal{{ $incoming->id }}">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -512,7 +517,7 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>Apakah anda yakin untuk menghapus data barang masuk
-                                                                    "{{ $incoming->item_name }}" ?</p>
+                                                                    "{{ $incoming->item->item_name }}" ?</p>
                                                                 <p>Jika dihapus, stock yang dimiliki akan berkurang sebanyak
                                                                     <strong>{{ $incoming->stock_added }} barang</strong>
                                                                 </p>
@@ -527,7 +532,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                {{-- delete incoming data MODALS --}}
                                                 <div class="modal fade" id="editModalCenter{{ $incoming->id }}"
                                                     tabindex="-1" role="dialog"
                                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -539,7 +544,7 @@
                                                                         <h3 class="modal-title"
                                                                             id="exampleModalLongTitle">
                                                                             <strong> Update data for
-                                                                                "{{ $item->item_name }}"</strong>
+                                                                                "{{ $incoming->id }}"</strong>
                                                                         </h3>
                                                                     </div>
                                                                     <div class="p-2">
@@ -554,17 +559,18 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <form enctype="multipart/form-data" method="post"
-                                                                    action="/updateItem">
+                                                                    action="/updateIncomingData">
                                                                     @csrf
                                                                     <div class="card-body">
                                                                         <div class="form-group">
                                                                             <div class="form-group">
-                                                                                <label>Nama Barang</label>
-                                                                                <input type="text" class="form-control"
-                                                                                    placeholder="masukkan nama barang"
-                                                                                    aria-label=""
-                                                                                    aria-describedby="basic-addon1"
-                                                                                    name="itemnameformupdate">
+                                                                                <label for="quantity">Stok</label>
+                                                                                <input type="number" id="quantity"
+                                                                                    name="incomingEdit" min="0"
+                                                                                    max="999999999999999"
+                                                                                    style="width: 100%"
+                                                                                    class="form-control"
+                                                                                    placeholder="sebelumnya {{ $incoming->stock_added }}">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="largeInput">Gambar
@@ -591,7 +597,7 @@
 
                                                                         <input type="hidden" class="form-control"
                                                                             name="itemIdHidden"
-                                                                            value="{{ $item->id }}">
+                                                                            value="{{ $incoming->id }}">
                                                                     </div>
                                                                 </form>
                                                             </div>
