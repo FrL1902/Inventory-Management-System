@@ -65,14 +65,15 @@ class IncomingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
             $item->id,
             $item->customer->customer_name,
             $item->brand->brand_name,
-            $item->item_name,
+            $item->item->item_name,
             // $item->arrive_date,
             date_format(date_create($item->arrive_date), 'd-m-Y'),
             $item->stock_before,
             $item->stock_added,
             $item->stock_now,
             $item->description,
-            $item->picture_link,
+            // $item->picture_link,
+            "http://127.0.0.1:8000/storage/" . $item->item_pictures,
             // date_format(date_create($history->created_at), 'D, H:i:s, d-m-Y')
             // $$item->created_at
             // date_format($item->arrive_date, "D/d/m/y H:i:s"),

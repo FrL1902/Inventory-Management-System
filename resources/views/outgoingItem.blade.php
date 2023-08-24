@@ -404,7 +404,7 @@
                                                     <td>{{ $outgoing->customer->customer_name }}</td>
                                                     <td>{{ $outgoing->brand->brand_name }}</td>
                                                     <td>{{ $outgoing->item->item_id }}</td>
-                                                    <td>{{ $outgoing->item_name }}</td>
+                                                    <td>{{ $outgoing->item->item_name }}</td>
                                                     <td>{{ $outgoing->stock_taken }}</td>
                                                     {{-- <td>{{ $outgoing->depart_date }}</td> --}}
                                                     <td>{{ date_format(date_create($outgoing->depart_date), 'D d-m-Y') }}
@@ -430,7 +430,7 @@
                                                             <div class="modal-header">
                                                                 <h3 class="modal-title" id="exampleModalLongTitle">
                                                                     <strong>Barang Keluar
-                                                                        "{{ $outgoing->item_name }}" pada
+                                                                        "{{ $outgoing->item->item_name }}" pada
                                                                         {{ $outgoing->created_at }}</strong>
                                                                 </h3>
                                                                 <button type="button" class="close"

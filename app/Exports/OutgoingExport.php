@@ -42,14 +42,15 @@ class OutgoingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
             $item->id,
             $item->customer->customer_name,
             $item->brand->brand_name,
-            $item->item_name,
+            $item->item->item_name,
             // $item->depart_date,
             date_format(date_create($item->depart_date), 'd-m-Y'),
             $item->stock_before,
             $item->stock_taken,
             $item->stock_now,
             $item->description,
-            $item->picture_link,
+            // $item->picture_link,
+            "http://127.0.0.1:8000/storage/" . $item->item_pictures,
             // date_format($item->created_at, "D/d/m/y H:i:s"),
         ];
     }

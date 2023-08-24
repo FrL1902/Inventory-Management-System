@@ -24,13 +24,12 @@ class CreateIncomingsTable extends Migration
             // $table->integer('customer_id');
             // $table->integer('brand_id');
             // $table->integer('item_id');
-            $table->string('item_name');
+            // $table->string('item_name');
             $table->integer('stock_before');
             $table->integer('stock_added');
             $table->integer('stock_now');
             $table->string('description');
             $table->string('item_pictures');
-            $table->string('picture_link');
             $table->dateTime('arrive_date');
             $table->timestamps();
         });

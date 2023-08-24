@@ -83,7 +83,7 @@ class IncomingController extends Controller
         $incoming->customer_id = $itemInfo->customer_id;
         $incoming->brand_id = $itemInfo->brand_id;
         $incoming->item_id = $request->incomingiditem;
-        $incoming->item_name = $itemInfo->item_name;
+        // $incoming->item_name = $itemInfo->item_name;
         $incoming->stock_before = $itemInfo->stocks;
         $incoming->stock_added = $request->itemAddStock;
         $incoming->stock_now = $newValue;
@@ -95,7 +95,7 @@ class IncomingController extends Controller
         Storage::putFileAs('public/incomingItemImage', $file, $imageName);
         $imageName = 'incomingItemImage/' . $imageName;
         $incoming->item_pictures = $imageName;
-        $incoming->picture_link = 'http://127.0.0.1:8000/storage/' . $imageName;
+        // $incoming->picture_link = 'http://127.0.0.1:8000/storage/' . $imageName;
         $incoming->save();
 
         $request->session()->flash('sukses_addStock', $itemInfo->item_name);
@@ -184,7 +184,7 @@ class IncomingController extends Controller
         $newValue = $itemInfo->stocks - $incomingInfo->stock_added;
 
         if ($newValue < 0) {
-            session()->flash('newValueMinus', 'Gagal Dihapus karena stock akan kurang dari 0 (minus)');
+            session()->flash('newValueMinus', 'Gagal karena stock akan kurang dari 0 (minus)');
             return redirect()->back();
         }
 
@@ -196,5 +196,118 @@ class IncomingController extends Controller
         // session()->flash('suksesDeleteIncoming', 'Sukses hapus data kedatangan barang ' . $itemInfo->item_name . ' (' + intval($itemInfo->stocks) . ') stock');
         session()->flash('suksesDeleteIncoming', 'Sukses hapus data kedatangan barang ' . $itemInfo->item_name);
         return redirect()->back();
+    }
+
+    public function updateIncomingData(Request $request){
+
+        // if ($request->file('itemImage') || $request->incomingEdit) {
+        //     $incomingInfo = Incoming::where('id', $request->itemIdHidden)->first();
+        //     $file = $request->file('itemImage');
+
+        //     // validasi data buat mastiin nggak null
+        //     if ($file != null) {
+        //         $request->validate([
+        //             'itemImage' => 'mimes:jpeg,png,jpg',
+        //         ], [
+        //             'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+        //         ]);
+        //     }
+
+        //     // buat update image
+        //     if ($file != null) {
+        //         $request->validate([
+        //             'itemImage' => 'mimes:jpeg,png,jpg',
+        //         ], [
+        //             'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+        //         ]);
+
+        //         $imageName = time() . '.' . $file->getClientOriginalExtension();
+        //         Storage::putFileAs('public/itemImages', $file, $imageName);
+        //         $imageName = 'itemImages/' . $imageName;
+
+        //         Storage::delete('public/' . $incomingInfo->item_pictures);
+
+        //         Item::where('id', $request->itemIdHidden)->update([
+        //             'item_pictures' => $imageName,
+        //         ]);
+        //     } else {
+        //         // dd("lha");
+        //         Item::where('id', $request->itemIdHidden)->update([
+        //             'item_pictures' => $incomingInfo->item_pictures,
+        //         ]);
+        //     }
+
+
+
+
+
+
+        //     // buat update nama
+        //     if ($request->itemnameformupdate != null) {
+
+        //         $oldItemName = $itemInfo->item_name;
+
+        //         Item::where('id', $request->itemIdHidden)->update([
+        //             'item_name' => $request->itemnameformupdate,
+        //         ]);
+
+        //         $request->session()->flash('sukses_editItem', $oldItemName);
+        //     } else {
+        //         $request->session()->flash('sukses_editItem', $request->item_name);
+        //     }
+        // } else {
+        //     $request->session()->flash('noData_editItem', 'tidak ada');
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $incomingInfo = Incoming::where('id', $request->itemIdHidden)->first();
+        $itemInfo = Item::where('id', $incomingInfo->item_id)->first();
+
+        // dd($request->incomingEdit);
+        // ini buat update data stocks yang di itemnya
+        $newValue = $itemInfo->stocks - $incomingInfo->stock_added + $request->incomingEdit;
+        // ini buat update data stock_now yang di incomingnya
+        $newStockNow =$incomingInfo->stock_now - $incomingInfo->stock_added + $request->incomingEdit;
+
+        if ($newValue < 0) {
+            session()->flash('newValueMinus', 'Gagal karena stock akan kurang dari 0 (minus)');
+            return redirect()->back();
+        }
+
+        Item::where('id', $incomingInfo->item_id)->update([ //kurangin stock sesuai jumlah stock dalam incoming ini
+            'stocks' => $newValue
+        ]);
+
+        Incoming::where('id', $request->itemIdHidden)->update([
+            'stock_added' => $request->incomingEdit,
+            'stock_now' => $newStockNow
+        ]);
+
+        session()->flash('suksesUpdateIncoming', 'Sukses update data kedatangan barang ' . $itemInfo->item_name);
+        return redirect()->back();
+
+        // dd($newValue);
+
     }
 }

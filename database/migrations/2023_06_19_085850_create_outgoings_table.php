@@ -21,13 +21,12 @@ class CreateOutgoingsTable extends Migration
             $table->foreign('brand_id')->references('id')->on('brand')->onDelete('cascade');
             $table->foreignId('item_id');
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
-            $table->string('item_name');
+            // $table->string('item_name');
             $table->integer('stock_before');
             $table->integer('stock_taken'); //beda disini, antara incoming sama outgoing, tetep disuruh dipisah tabelnya
             $table->integer('stock_now');
             $table->string('description');
             $table->string('item_pictures');
-            $table->string('picture_link');
             $table->dateTime('depart_date');
             $table->timestamps();
         });
