@@ -34,6 +34,11 @@
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('gagal_delete_customer') }}</strong>
                 </div>
+            @elseif (session('gagalEmail_addNewCustomer'))
+                <div class="alert alert-danger alert-block" id="alertFailed">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Update Gagal: Invalid Email</strong>
+                </div>
             @elseif ($errors->any())
                 <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -230,7 +235,7 @@
                                                                             <div class="form-group">
                                                                                 <label for="email">Email
                                                                                     Customer</label>
-                                                                                <input type="email"
+                                                                                <input type="text"
                                                                                     class="form-control"
                                                                                     placeholder="masukkan email customer"
                                                                                     id="email" name="email">
@@ -270,7 +275,8 @@
                                                                             <div class="form-group">
                                                                                 <label for="largeInput">Nama PIC
                                                                                     (person in
-                                                                                    charge)</label>
+                                                                                    charge)
+                                                                                </label>
                                                                                 <input type="text"
                                                                                     class="form-control form-control"
                                                                                     placeholder="masukkan nama lengkap PIC"

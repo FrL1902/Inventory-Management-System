@@ -23,10 +23,16 @@
                     <strong>Data Gagal Dimasukkan, {{ session('formatError') }} <span style="color: red"> \ /  : * ? " < > |
                     </span></strong>
                 </div> --}}
+                gagalEmail_addNewCustomer
             @elseif ($errors->any())
                 <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>Data Gagal Dimasukkan: {{ $errors->first() }}</strong>
+                </div>
+            @elseif (session('gagalEmail_addNewCustomer'))
+                <div class="alert alert-danger alert-block" id="alertFailed">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Data Gagal Dimasukkan: Invalid Email</strong>
                 </div>
             @endif
             {{-- @if ($errors->any())
@@ -44,7 +50,11 @@
                         <form method="post" action="/makeCustomer">
                             @csrf
                             <div class="card-header">
-                                <div class="card-title"><strong>Masukkan Customer Baru</strong></div>
+                                <div class="card-title"><strong>Masukkan Customer Baru</strong><a class="ml-3 mb-2"
+                                        style="cursor: pointer">
+                                        <i class="fa fa-question-circle text-primary" data-toggle="tooltip"
+                                            data-original-title="Jika suatu informasi belum diketahui, tidak perlu diisi (kecuali diharuskan di form). Jika memang tidak ada atau tidak punya informasinya (misal customer tidak punya website), isi dengan strip (-)"></i>
+                                    </a></div>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
@@ -71,7 +81,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email Customer</label>
-                                    <input type="email" class="form-control" placeholder="masukkan email customer"
+                                    <input type="text" class="form-control" placeholder="masukkan email customer"
                                         id="email" name="email">
                                 </div>
                                 <div class="form-group">
@@ -101,8 +111,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="largeInput">Nomor Telpon PIC</label>
-                                    <input type="text" class="form-control form-control" placeholder="(021) atau +62"
-                                        id="picnumber" name="picnumber">
+                                    <input type="text" class="form-control form-control"
+                                        placeholder="(021) atau +62" id="picnumber" name="picnumber">
                                 </div>
                                 <div class="form-group">
                                     <label for="largeInput">NPWP (Nomor Pokok Wajib Pajak)</label>
