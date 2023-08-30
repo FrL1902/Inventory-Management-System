@@ -457,21 +457,25 @@
 
     {{-- OUTGOING PAGE --}}
     <script>
+        // export by customer di outgoing
         $('#customerLabelExportoutgoing').select2({
             dropdownParent: $('#exportOutgoingCustomerModal')
         });
     </script>
     <script>
+        // export by brand di outgoing
         $('#brandLabelExportoutgoing').select2({
             dropdownParent: $('#exportOutgoingBrandModal')
         });
     </script>
     <script>
+        // export by item di outgoing
         $('#itemLabelExportoutgoing').select2({
             dropdownParent: $('#exportOutgoingItemModal')
         });
     </script>
     <script>
+        // add new outgoing package di outgoing
         $('#outgoingidforitem').select2({
             dropdownParent: $('#outModalCenter')
         });
