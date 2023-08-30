@@ -88,6 +88,8 @@ Route::post('/exportIncomingItem', [IncomingController::class, 'exportIncomingIt
 //outgoing
 Route::post('/reduceItemStock', [OutgoingController::class, 'reduceItemStock'])->middleware('login'); //cek
 Route::get('/newOutgoing', [OutgoingController::class, 'add_outgoing_item_page'])->middleware('login');
+Route::get('/deleteItemOutgoing/{id}', [OutgoingController::class, 'deleteItemOutgoing'])->middleware('security');
+Route::post('/updateOutgoingData', [OutgoingController::class, 'updateOutgoingData'])->middleware('security');
 Route::post('/exportOutgoing', [OutgoingController::class, 'exportOutgoing'])->name('exportOutgoing')->middleware('login');
 Route::post('/exportOutgoingCustomer', [OutgoingController::class, 'exportOutgoingCustomer'])->name('exportOutgoingCustomer')->middleware('login');
 Route::post('/exportOutgoingBrand', [OutgoingController::class, 'exportOutgoingBrand'])->name('exportOutgoingBrand')->middleware('login');

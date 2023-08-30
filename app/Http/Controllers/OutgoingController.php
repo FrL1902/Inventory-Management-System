@@ -11,6 +11,7 @@ use App\Models\Outgoing;
 use App\Models\StockHistory;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
@@ -150,5 +151,111 @@ class OutgoingController extends Controller
         $sortItem = Outgoing::all()->where('item_id', $request->itemOutgoing)->whereBetween('depart_date', [$date_from, $date_to]);
         $formatFileName = 'DataBarangKeluar Item ' . $item->item_name . ' ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
         return Excel::download(new OutgoingExport($sortItem),  $formatFileName . '.xlsx');
+    }
+
+    public function deleteItemOutgoing($id)
+    {
+        try {
+            $decrypted = decrypt($id);
+        } catch (DecryptException $e) {
+            abort(403);
+        }
+
+        $outgoingInfo = Outgoing::where('id', $decrypted)->first();
+        $itemInfo = Item::where('id', $outgoingInfo->item_id)->first();
+
+        $newValue = $itemInfo->stocks + $outgoingInfo->stock_taken;
+
+        Item::where('id', $outgoingInfo->item_id)->update([ //kurangin stock sesuai jumlah stock dalam incoming ini
+            'stocks' => $newValue
+        ]);
+
+        $outgoingInfo->delete();
+        // session()->flash('suksesDeleteIncoming', 'Sukses hapus data kedatangan barang ' . $itemInfo->item_name . ' (' + intval($itemInfo->stocks) . ') stock');
+        session()->flash('suksesDeleteOutgoing', 'Sukses hapus data keluar barang ' . $itemInfo->item_name);
+        return redirect()->back();
+    }
+
+    public function updateOutgoingData(Request $request)
+    {
+
+        if ($request->file('itemImage') || $request->outgoingEdit) {
+            $outgoingInfo = Outgoing::where('id', $request->itemIdHidden)->first();
+
+            // ini buat update valuenya
+            $itemInfo = Item::where('id', $outgoingInfo->item_id)->first();
+
+
+            $file = $request->file('itemImage');
+
+            // validasi data buat mastiin gambar nggak null
+            if ($file != null) {
+                $request->validate([
+                    'itemImage' => 'mimes:jpeg,png,jpg',
+                ], [
+                    'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+                ]);
+            }
+
+            // buat update image
+            if ($file != null) {
+                // dd('msk');
+                $request->validate([
+                    'itemImage' => 'mimes:jpeg,png,jpg',
+                ], [
+                    'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+                ]);
+
+                $imageName = time() . '.' . $file->getClientOriginalExtension();
+                Storage::putFileAs('public/outgoingItemImage', $file, $imageName);
+                $imageName = 'outgoingItemImage/' . $imageName;
+
+                Storage::delete('public/' . $outgoingInfo->item_pictures);
+
+                Outgoing::where('id', $request->itemIdHidden)->update([
+                    'item_pictures' => $imageName,
+                ]);
+
+
+                $file = $request->file('outgoingItemImage');
+
+            } else {
+                // dd("lha");
+                Outgoing::where('id', $request->itemIdHidden)->update([
+                    'item_pictures' => $outgoingInfo->item_pictures,
+                ]);
+            }
+
+            // buat VALUE
+            if ($request->outgoingEdit != null) {
+
+                // ini buat update data stocks yang di itemnya
+                $newValue = $itemInfo->stocks + $outgoingInfo->stock_taken - $request->outgoingEdit;
+                // ini buat update data stock_now yang di outgoingnya
+                $newStockNow = $outgoingInfo->stock_now + $outgoingInfo->stock_taken - $request->outgoingEdit;
+
+                if ($newValue < 0) {
+                    session()->flash('newValueMinus', 'Gagal karena stock akan kurang dari 0 (minus)');
+                    return redirect()->back();
+                }
+
+                Item::where('id', $outgoingInfo->item_id)->update([ //kurangin stock sesuai jumlah stock dalam incoming ini
+                    'stocks' => $newValue
+                ]);
+
+                Outgoing::where('id', $request->itemIdHidden)->update([
+                    'stock_taken' => $request->outgoingEdit,
+                    'stock_now' => $newStockNow
+                ]);
+
+                session()->flash('suksesUpdateOutgoing', 'Sukses update data keluar barang ' . $itemInfo->item_name);
+
+            } else {
+                $request->session()->flash('suksesUpdateOutgoing', 'Sukses update data keluar barang ' . $itemInfo->item_name);
+            }
+        } else {
+            $request->session()->flash('noData_editItem', 'tidak ada');
+        }
+        return redirect()->back();
     }
 }

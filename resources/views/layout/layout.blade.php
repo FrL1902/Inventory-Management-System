@@ -236,19 +236,19 @@
                         <li class="nav-item @yield('managecustomerbutton')">
                             <a data-toggle="collapse" href="#customer">
                                 <i class="fa fa-users"></i>
-                                <p>Manage Customer</p>
+                                <p>Kelola Customer</p>
                                 <span class="caret"></span>
                             </a>
                             <div class="collapse @yield('showmanagecustomer')" id="customer">
                                 <ul class="nav nav-collapse">
                                     <li class="@yield('newcustomer')">
                                         <a href="/newCustomer">
-                                            <span class="sub-item">Add New Customer</span>
+                                            <span class="sub-item">Tambah Customer Baru</span>
                                         </a>
                                     </li>
                                     <li class="@yield('managecustomer')">
                                         <a href="/manageCustomer">
-                                            <span class="sub-item">Edit Customers</span>
+                                            <span class="sub-item">Ubah Data Customer</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -257,19 +257,19 @@
                         <li class="nav-item @yield('managebrandbutton')">
                             <a data-toggle="collapse" href="#brand">
                                 <i class="fa fa-th-large"></i>
-                                <p>Manage Brands</p>
+                                <p>Kelola Brand</p>
                                 <span class="caret"></span>
                             </a>
                             <div class="collapse @yield('showmanagebrand')" id="brand">
                                 <ul class="nav nav-collapse">
                                     <li class="@yield('newbrand')">
                                         <a href="/newBrand">
-                                            <span class="sub-item">Add New Brand</span>
+                                            <span class="sub-item">Tambah Brand Baru</span>
                                         </a>
                                     </li>
                                     <li class="@yield('managebrand')">
                                         <a href="/manageBrand">
-                                            <span class="sub-item">Edit Brands</span>
+                                            <span class="sub-item">Ubah Data Brands</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -278,7 +278,7 @@
                         <li class="nav-item @yield('manageitembutton')">
                             <a data-toggle="collapse" href="#item">
                                 <i class="fa fa-truck"></i>
-                                <p>Manage Items</p>
+                                <p>Kelola Barang</p>
                                 <span class="caret"></span>
                             </a>
                             {{-- color of the pressed button is style="background-color: #f7f7f7" --}}
@@ -286,27 +286,27 @@
                                 <ul class="nav nav-collapse">
                                     <li class="@yield('newitem')">
                                         <a href="/newItem">
-                                            <span class="sub-item">Add New Item</span>
+                                            <span class="sub-item">Tambah Barang Baru</span>
                                         </a>
                                     </li>
                                     <li class="@yield('manageitem')">
                                         <a href="/manageItem">
-                                            <span class="sub-item">Edit Items</span>
+                                            <span class="sub-item">Ubah Data Barang</span>
                                         </a>
                                     </li>
                                     <li class="@yield('newincoming')">
                                         <a href="/newIncoming">
-                                            <span class="sub-item">Incoming Package</span>
+                                            <span class="sub-item">Barang Datang</span>
                                         </a>
                                     </li>
                                     <li class="@yield('newoutgoing')">
                                         <a href="/newOutgoing">
-                                            <span class="sub-item">Outgoing Package</span>
+                                            <span class="sub-item">Barang Keluar</span>
                                         </a>
                                     </li>
                                     <li class="@yield('managehistory')">
                                         <a href="/manageHistory">
-                                            <span class="sub-item">History</span>
+                                            <span class="sub-item">Sejarah Semua Barang</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -318,12 +318,12 @@
                                     <span class="sidebar-mini-icon">
                                         <i class="fa fa-ellipsis-h"></i>
                                     </span>
-                                    <h4 class="text-section">Admin Only</h4>
+                                    <h4 class="text-section">KHUSUS ADMIN</h4>
                                 </li>
                                 <li class="nav-item @yield('manageuserbutton')">
                                     <a data-toggle="collapse" href="#user">
                                         <i class="fas fa-user"></i>
-                                        <p>Manage Users</p>
+                                        <p>Kelola User</p>
                                         <span class="caret"></span>
                                     </a>
                                     {{-- ni jangan lupa buat ganti idnya --}}
@@ -331,13 +331,13 @@
                                         <ul class="nav nav-collapse">
                                             <li class="@yield('newuser')">
                                                 <a href="/newUser">
-                                                    <span class="sub-item">Create New User</span>
+                                                    <span class="sub-item">Tambah User Baru</span>
                                                 </a>
                                             </li>
                                             {{-- <li class="active"> itu pake class active buat nge darken kyk button gt --}}
                                             <li class="@yield('manageuser')">
                                                 <a href="/manageUser">
-                                                    <span class="sub-item">Edit Users</span>
+                                                    <span class="sub-item">Ubah Data User</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -454,6 +454,34 @@
             dropdownParent: $('#exportIncomingItemModal')
         });
     </script>
+
+    {{-- OUTGOING PAGE --}}
+    <script>
+        $('#customerLabelExportoutgoing').select2({
+            dropdownParent: $('#exportOutgoingCustomerModal')
+        });
+    </script>
+    <script>
+        $('#brandLabelExportoutgoing').select2({
+            dropdownParent: $('#exportOutgoingBrandModal')
+        });
+    </script>
+    <script>
+        $('#itemLabelExportoutgoing').select2({
+            dropdownParent: $('#exportOutgoingItemModal')
+        });
+    </script>
+    <script>
+        $('#outgoingidforitem').select2({
+            dropdownParent: $('#outModalCenter')
+        });
+    </script>
+
+
+
+
+
+
 
     {{-- <script type="text/javascript">
         function display_c() {

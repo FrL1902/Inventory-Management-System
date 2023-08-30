@@ -198,97 +198,86 @@ class IncomingController extends Controller
         return redirect()->back();
     }
 
-    public function updateIncomingData(Request $request){
+    public function updateIncomingData(Request $request)
+    {
 
-        // if ($request->file('itemImage') || $request->incomingEdit) {
-        //     $incomingInfo = Incoming::where('id', $request->itemIdHidden)->first();
-        //     $file = $request->file('itemImage');
+        if ($request->file('itemImage') || $request->incomingEdit) {
+            $incomingInfo = Incoming::where('id', $request->itemIdHidden)->first();
 
-        //     // validasi data buat mastiin nggak null
-        //     if ($file != null) {
-        //         $request->validate([
-        //             'itemImage' => 'mimes:jpeg,png,jpg',
-        //         ], [
-        //             'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
-        //         ]);
-        //     }
-
-        //     // buat update image
-        //     if ($file != null) {
-        //         $request->validate([
-        //             'itemImage' => 'mimes:jpeg,png,jpg',
-        //         ], [
-        //             'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
-        //         ]);
-
-        //         $imageName = time() . '.' . $file->getClientOriginalExtension();
-        //         Storage::putFileAs('public/incomingItemImage', $file, $imageName);
-        //         $imageName = 'itemImages/' . $imageName;
-
-        //         Storage::delete('public/' . $incomingInfo->item_pictures);
-
-        //         Item::where('id', $request->itemIdHidden)->update([
-        //             'item_pictures' => $imageName,
-        //         ]);
-        //     } else {
-        //         // dd("lha");
-        //         Item::where('id', $request->itemIdHidden)->update([
-        //             'item_pictures' => $incomingInfo->item_pictures,
-        //         ]);
-        //     }
+            // ini buat update valuenya
+            $itemInfo = Item::where('id', $incomingInfo->item_id)->first();
 
 
+            $file = $request->file('itemImage');
+
+            // validasi data buat mastiin gambar nggak null
+            if ($file != null) {
+                $request->validate([
+                    'itemImage' => 'mimes:jpeg,png,jpg',
+                ], [
+                    'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+                ]);
+            }
+
+            // buat update image
+            if ($file != null) {
+                // dd('msk');
+                $request->validate([
+                    'itemImage' => 'mimes:jpeg,png,jpg',
+                ], [
+                    'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+                ]);
+
+                $imageName = time() . '.' . $file->getClientOriginalExtension();
+                Storage::putFileAs('public/incomingItemImage', $file, $imageName);
+                $imageName = 'incomingItemImage/' . $imageName;
+
+                Storage::delete('public/' . $incomingInfo->item_pictures);
+
+                Incoming::where('id', $request->itemIdHidden)->update([
+                    'item_pictures' => $imageName,
+                ]);
 
 
+                $file = $request->file('incomingItemImage');
 
+            } else {
+                // dd("lha");
+                Incoming::where('id', $request->itemIdHidden)->update([
+                    'item_pictures' => $incomingInfo->item_pictures,
+                ]);
+            }
 
-        //     // buat update nama
-        //     if ($request->itemnameformupdate != null) {
+            // buat VALUE
+            if ($request->incomingEdit != null) {
 
-        //         $oldItemName = $itemInfo->item_name;
+                // ini buat update data stocks yang di itemnya
+                $newValue = $itemInfo->stocks - $incomingInfo->stock_added + $request->incomingEdit;
+                // ini buat update data stock_now yang di incomingnya
+                $newStockNow = $incomingInfo->stock_now - $incomingInfo->stock_added + $request->incomingEdit;
 
-        //         Item::where('id', $request->itemIdHidden)->update([
-        //             'item_name' => $request->itemnameformupdate,
-        //         ]);
+                if ($newValue < 0) {
+                    session()->flash('newValueMinus', 'Gagal karena stock akan kurang dari 0 (minus)');
+                    return redirect()->back();
+                }
 
-        //         $request->session()->flash('sukses_editItem', $oldItemName);
-        //     } else {
-        //         $request->session()->flash('sukses_editItem', $request->item_name);
-        //     }
-        // } else {
-        //     $request->session()->flash('noData_editItem', 'tidak ada');
-        // }
+                Item::where('id', $incomingInfo->item_id)->update([ //kurangin stock sesuai jumlah stock dalam incoming ini
+                    'stocks' => $newValue
+                ]);
 
+                Incoming::where('id', $request->itemIdHidden)->update([
+                    'stock_added' => $request->incomingEdit,
+                    'stock_now' => $newStockNow
+                ]);
 
+                session()->flash('suksesUpdateIncoming', 'Sukses update data kedatangan barang ' . $itemInfo->item_name);
 
-
-        $incomingInfo = Incoming::where('id', $request->itemIdHidden)->first();
-        $itemInfo = Item::where('id', $incomingInfo->item_id)->first();
-
-        // dd($request->incomingEdit);
-        // ini buat update data stocks yang di itemnya
-        $newValue = $itemInfo->stocks - $incomingInfo->stock_added + $request->incomingEdit;
-        // ini buat update data stock_now yang di incomingnya
-        $newStockNow =$incomingInfo->stock_now - $incomingInfo->stock_added + $request->incomingEdit;
-
-        if ($newValue < 0) {
-            session()->flash('newValueMinus', 'Gagal karena stock akan kurang dari 0 (minus)');
-            return redirect()->back();
+            } else {
+                $request->session()->flash('suksesUpdateIncoming', 'Sukses update data kedatangan barang ' . $itemInfo->item_name);
+            }
+        } else {
+            $request->session()->flash('noData_editItem', 'tidak ada');
         }
-
-        Item::where('id', $incomingInfo->item_id)->update([ //kurangin stock sesuai jumlah stock dalam incoming ini
-            'stocks' => $newValue
-        ]);
-
-        Incoming::where('id', $request->itemIdHidden)->update([
-            'stock_added' => $request->incomingEdit,
-            'stock_now' => $newStockNow
-        ]);
-
-        session()->flash('suksesUpdateIncoming', 'Sukses update data kedatangan barang ' . $itemInfo->item_name);
         return redirect()->back();
-
-        // dd($newValue);
-
     }
 }

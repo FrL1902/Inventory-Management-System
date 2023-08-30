@@ -20,7 +20,7 @@
                 @elseif (session('newValueMinus'))
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Data Gagal Dihapus: {{ session('newValueMinus') }}</strong>
+                        <strong>Data Gagal Diupdate: {{ session('newValueMinus') }}</strong>
                     </div>
                 @elseif (session('suksesDeleteIncoming'))
                     <div class="alert alert-warning alert-block" id="alertDelete">
@@ -32,10 +32,15 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>{{ session('suksesUpdateIncoming') }}</strong>
                     </div>
+                @elseif (session('noData_editItem'))
+                    <div class="alert alert-danger alert-block" id="alertFailed">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Data Gagal Diupdate: Tidak ada data yang dimasukkan</strong>
+                    </div>
                 @elseif($errors->any())
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Data Gagal Dimasukkan: {{ $errors->first() }}</strong>
+                        <strong>Data Gagal Diupdate: {{ $errors->first() }}</strong>
                     </div>
                 @endif
 
@@ -230,9 +235,10 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="itemLabelExportincoming">Nama Barang</label>
-                                                                <select class="form-control" id="itemLabelExportincoming" data-width="100%"
-                                                                    name="itemIncoming">
+                                                                <label for="itemLabelExportincoming">Nama
+                                                                    Barang</label>
+                                                                <select class="form-control" id="itemLabelExportincoming"
+                                                                    data-width="100%" name="itemIncoming">
                                                                     @foreach ($item as $data)
                                                                         <option value="{{ $data->id }}">
                                                                             {{ $data->item_name }}
@@ -335,7 +341,8 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="incomingidforitem">Nama Barang</label>
+                                                                <label for="incomingidforitem">Nama Barang<span style="color: red"> (harus diisi)
+                                                                </span></label>
                                                                 <select class="form-control" data-width="100%"
                                                                     id="incomingidforitem" name="incomingiditem">
                                                                     @foreach ($item as $item)
@@ -346,7 +353,8 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="quantity">Stok</label>
+                                                                <label for="quantity">Stok<span style="color: red"> (harus diisi)
+                                                                </span></label>
                                                                 <input type="number" id="quantity" name="itemAddStock"
                                                                     min="1" max="999999999" style="width: 100%"
                                                                     class="form-control"
@@ -354,19 +362,22 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="incomingidforitem">Deskripsi</label>
+                                                                <label for="incomingidforitem">Deskripsi<span style="color: red"> (harus diisi)
+                                                                </span></label>
                                                                 <textarea class="form-control" id="incomingidforitem" rows="3" placeholder="deskripsi barang masuk"
                                                                     name="incomingItemDesc" required></textarea>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="startRange">Tanggal Barang Datang</label>
+                                                                <label for="startRange">Tanggal Barang Datang<span style="color: red"> (harus diisi)
+                                                                </span></label>
                                                                 <input type="date" class="form-control"
                                                                     id="startRange" required name="itemArrive">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="largeInput">Gambar Barang Datang</label>
+                                                                <label for="largeInput">Gambar Barang Datang<span style="color: red"> (harus diisi)
+                                                                </span></label>
                                                                 <input type="file" class="form-control form-control"
                                                                     id="itemImage" name="incomingItemImage" required>
                                                                 <div class="card mt-5 ">
@@ -394,6 +405,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                            {{-- TABEL --}}
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="add-row" class="display table table-striped table-hover">
@@ -403,7 +416,7 @@
                                                 <th>Brand</th>
                                                 <th>ID Barang</th>
                                                 <th>Nama Barang</th>
-                                                <th>Jumlah Penambahan Stok</th>
+                                                <th>Penambahan Stok</th>
                                                 <th>Tanggal Sampai</th>
                                                 <th>Deskripsi</th>
                                                 <th>Gambar</th>
@@ -420,7 +433,7 @@
                                                 <th>Brand</th>
                                                 <th>ID Barang</th>
                                                 <th>Nama Barang</th>
-                                                <th>Jumlah Penambahan Stok</th>
+                                                <th>Penambahan Stok</th>
                                                 <th>Tanggal Sampai</th>
                                                 <th>Deskripsi</th>
                                                 <th>Gambar</th>
@@ -519,8 +532,10 @@
                                                             <div class="modal-body">
                                                                 <p>Apakah anda yakin untuk menghapus data barang masuk
                                                                     "{{ $incoming->item->item_name }}" ?</p>
-                                                                <p>Jika dihapus, stock yang dimiliki akan berkurang sebanyak
-                                                                    <strong>{{ $incoming->stock_added }} barang</strong>
+                                                                <p>Jika dihapus, stok yang dimiliki akan berkurang
+                                                                    sebanyak
+                                                                    <strong>{{ $incoming->stock_added }}
+                                                                        barang</strong>
                                                                 </p>
                                                             </div>
                                                             <div class="modal-footer">
@@ -533,7 +548,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {{-- delete incoming data MODALS --}}
+                                                {{-- UPDATE incoming data MODALS --}}
                                                 <div class="modal fade" id="editModalCenter{{ $incoming->id }}"
                                                     tabindex="-1" role="dialog"
                                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

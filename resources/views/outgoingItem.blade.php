@@ -12,10 +12,31 @@
             <div class="page-inner">
 
                 {{-- error goes here --}}
+                @if (session('suksesDeleteOutgoing'))
+                    <div class="alert alert-warning alert-block" id="alertDelete">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ session('suksesDeleteOutgoing') }}</strong>
+                    </div>
+                @elseif (session('suksesUpdateOutgoing'))
+                    <div class="alert alert-success alert-block" id="alertSuccess">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ session('suksesUpdateOutgoing') }}</strong>
+                    </div>
+                @elseif (session('newValueMinus'))
+                    <div class="alert alert-danger alert-block" id="alertFailed">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Data Gagal Diupdate: {{ session('newValueMinus') }}</strong>
+                    </div>
+                @elseif (session('noData_editItem'))
+                    <div class="alert alert-warning alert-block" id="alertDelete">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Data Gagal Diupdate: Tidak ada data yang dimasukkan</strong>
+                    </div>
+                @endif
                 @if ($errors->any())
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Data Gagal Dimasukkan: {{ $errors->first() }}</strong>
+                        <strong>Data Gagal Diupdate: {{ $errors->first() }}</strong>
                     </div>
                 @endif
 
@@ -94,7 +115,7 @@
                                                         <div class="card-body">
                                                             <div class="form-group">
                                                                 <label for="customerLabelExport">Customer</label>
-                                                                <select class="form-control" id="customerLabelExport"
+                                                                <select class="form-control" id="customerLabelExportoutgoing" data-width="100%"
                                                                     name="customerOutgoing">
                                                                     @foreach ($customer as $data)
                                                                         <option value="{{ $data->id }}">
@@ -152,7 +173,7 @@
                                                         <div class="card-body">
                                                             <div class="form-group">
                                                                 <label for="brandLabelExport">Brand</label>
-                                                                <select class="form-control" id="brandLabelExport"
+                                                                <select class="form-control" id="brandLabelExportoutgoing" data-width="100%"
                                                                     name="brandOutgoing">
                                                                     @foreach ($brand as $data)
                                                                         <option value="{{ $data->id }}">
@@ -210,7 +231,7 @@
                                                         <div class="card-body">
                                                             <div class="form-group">
                                                                 <label for="itemLabelExport">Nama Barang</label>
-                                                                <select class="form-control" id="itemLabelExport"
+                                                                <select class="form-control" id="itemLabelExportoutgoing" data-width="100%"
                                                                     name="itemOutgoing">
                                                                     @foreach ($item as $data)
                                                                         <option value="{{ $data->id }}">
@@ -314,8 +335,10 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="outgoingidforitem">Nama Barang</label>
-                                                                <select class="form-control" id="outgoingidforitem"
+                                                                <label for="outgoingidforitem">Nama Barang<span
+                                                                        style="color: red"> (harus diisi)
+                                                                    </span></label>
+                                                                <select class="form-control" id="outgoingidforitem" data-width="100%"
                                                                     name="outgoingiditem">
                                                                     @foreach ($item as $item)
                                                                         <option value="{{ $item->id }}">
@@ -325,7 +348,9 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="quantity">Stok</label>
+                                                                <label for="quantity">Stok<span style="color: red"> (harus
+                                                                        diisi)
+                                                                    </span></label>
                                                                 <input type="number" id="quantity"
                                                                     name="itemReduceStock" min="1"
                                                                     max="999999999999999" style="width: 100%"
@@ -333,19 +358,25 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="outgoingidforitem">Deskripsi</label>
+                                                                <label for="outgoingidforitem">Deskripsi<span
+                                                                        style="color: red"> (harus diisi)
+                                                                    </span></label>
                                                                 <textarea class="form-control" id="outgoingidforitem" rows="3" placeholder="deskripsi barang keluar"
                                                                     name="outgoingItemDesc" required></textarea>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="startRange">Tanggal Barang Keluar</label>
+                                                                <label for="startRange">Tanggal Barang Keluar<span
+                                                                        style="color: red"> (harus diisi)
+                                                                    </span></label>
                                                                 <input type="date" class="form-control"
                                                                     id="startRange" required name="itemDepart">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="largeInput">Gambar Barang Keluar</label>
+                                                                <label for="largeInput">Gambar Barang Keluar<span
+                                                                        style="color: red"> (harus diisi)
+                                                                    </span></label>
                                                                 <input type="file" class="form-control form-control"
                                                                     id="itemImage" name="outgoingItemImage" required>
                                                                 <div class="card mt-5 ">
@@ -380,10 +411,11 @@
                                                 <th>Brand</th>
                                                 <th>ID Barang</th>
                                                 <th>Nama Barang</th>
-                                                <th>Jumlah Pengurangan Stok</th>
+                                                <th>Pengurangan Stok</th>
                                                 <th>Tanggal Keluar</th>
                                                 <th>Deskripsi</th>
                                                 <th>Gambar</th>
+                                                <th>Edit</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -392,10 +424,11 @@
                                                 <th>Brand</th>
                                                 <th>ID Barang</th>
                                                 <th>Nama Barang</th>
-                                                <th>Jumlah Pengurangan Stok</th>
+                                                <th>Pengurangan Stok</th>
                                                 <th>Tanggal Keluar</th>
                                                 <th>Deskripsi</th>
                                                 <th>Gambar</th>
+                                                <th>Edit</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -420,7 +453,129 @@
                                                                 alt="no picture" loading="lazy">
                                                         </a>
                                                     </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center">
+                                                            <a style="cursor: pointer" class="mb-2"
+                                                                data-target="#editModalCenter{{ $outgoing->id }}"
+                                                                data-toggle="modal">
+                                                                <i class="fa fa-edit mt-3 text-primary"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Edit Data Barang Keluar"></i>
+                                                            </a>
+                                                            <a class="ml-3 mb-2" style="cursor: pointer"
+                                                                data-target="#deleteModal{{ $outgoing->id }}"
+                                                                data-toggle="modal">
+                                                                <i class="fa fa-times mt-3 text-danger"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Hapus Data Barang Keluar"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
                                                 </tr>
+                                                {{-- delete outgoing data MODALS --}}
+                                                <div class="modal fade" id="deleteModal{{ $outgoing->id }}">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    <strong>PENGHAPUSAN DATA BARANG MASUK</strong>
+                                                                </h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Apakah anda yakin untuk menghapus data barang masuk
+                                                                    "{{ $outgoing->item->item_name }}" ?</p>
+                                                                <p>Jika dihapus, stok yang dimiliki akan bertambah sebanyak
+                                                                    <strong>{{ $outgoing->stock_taken }} barang</strong>
+                                                                </p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    id="close-modal" data-dismiss="modal">Tidak</button>
+                                                                <a href="/deleteItemOutgoing/{{ encrypt($outgoing->id) }}"
+                                                                    class="btn btn-danger">YAKIN
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {{-- UPDATE outgoing data MODALS --}}
+                                                <div class="modal fade" id="editModalCenter{{ $outgoing->id }}"
+                                                    tabindex="-1" role="dialog"
+                                                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <div class="d-flex flex-column">
+                                                                    <div class="p-2">
+                                                                        <h3 class="modal-title"
+                                                                            id="exampleModalLongTitle">
+                                                                            <strong> Update data untuk
+                                                                                "{{ $outgoing->item->item_name }}"</strong>
+                                                                        </h3>
+                                                                    </div>
+                                                                    <div class="p-2">
+                                                                        <h5> Isi
+                                                                            data yang ingin diubah</h5>
+                                                                    </div>
+                                                                </div>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form enctype="multipart/form-data" method="post"
+                                                                    action="/updateOutgoingData">
+                                                                    @csrf
+                                                                    <div class="card-body">
+                                                                        <div class="form-group">
+                                                                            <div class="form-group">
+                                                                                <label for="quantity">Stok</label>
+                                                                                <input type="number" id="quantity"
+                                                                                    name="outgoingEdit" min="0"
+                                                                                    max="999999999999999"
+                                                                                    style="width: 100%"
+                                                                                    class="form-control"
+                                                                                    placeholder="sebelumnya {{ $outgoing->stock_taken }}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="largeInput">Gambar
+                                                                                    Barang</label>
+                                                                                <input type="file"
+                                                                                    class="form-control form-control"
+                                                                                    id="itemImage" name="itemImage">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <div class="card mt-5 ">
+                                                                                    <button id=""
+                                                                                        class="btn btn-primary">Update
+                                                                                        Data Barang</button>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <h5 style="text-align: center;">
+                                                                                    kolom
+                                                                                    yang tidak diisi
+                                                                                    akan menggunakan data yang
+                                                                                    sebelumnya</h5>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <input type="hidden" class="form-control"
+                                                                            name="itemIdHidden"
+                                                                            value="{{ $outgoing->id }}">
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <div class="modal fade" id="imageModalCenter{{ $outgoing->id }}"
                                                     tabindex="-1" role="dialog"
                                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
