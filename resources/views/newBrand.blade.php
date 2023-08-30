@@ -43,12 +43,14 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="largeInput">ID Brand</label>
+                                        <label for="largeInput">ID Brand<span style="color: red"> (harus diisi)
+                                        </span></label>
                                         <input type="text" class="form-control form-control" placeholder="contoh: BD001"
                                             id="brandid" name="brandid">
                                     </div>
                                     <div class="form-group">
-                                        <label for="largeInput">Nama Brand</label>
+                                        <label for="largeInput">Nama Brand<span style="color: red"> (harus diisi)
+                                        </span></label>
                                         <input type="text" class="form-control form-control" placeholder="contoh: Nestle"
                                             id="brandname" name="brandname">
                                     </div>

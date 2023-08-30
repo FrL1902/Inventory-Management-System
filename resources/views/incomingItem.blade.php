@@ -113,8 +113,9 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="customerLabelExport">Customer</label>
-                                                                <select class="form-control" id="customerLabelExport"
+                                                                <label for="customerLabelExportIncoming">Customer</label>
+                                                                <select class="form-control"
+                                                                    id="customerLabelExportIncoming" data-width="100%"
                                                                     name="customerIncoming">
                                                                     @foreach ($customer as $data)
                                                                         <option value="{{ $data->id }}">
@@ -171,9 +172,9 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="brandLabelExport">Brand</label>
-                                                                <select class="form-control" id="brandLabelExport"
-                                                                    name="brandIncoming">
+                                                                <label for="brandLabelExportincoming">Brand</label>
+                                                                <select class="form-control" id="brandLabelExportincoming"
+                                                                    data-width="100%" name="brandIncoming">
                                                                     @foreach ($brand as $data)
                                                                         <option value="{{ $data->id }}">
                                                                             {{ $data->brand_name }}
@@ -229,8 +230,8 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="itemLabelExport">Nama Barang</label>
-                                                                <select class="form-control" id="itemLabelExport"
+                                                                <label for="itemLabelExportincoming">Nama Barang</label>
+                                                                <select class="form-control" id="itemLabelExportincoming" data-width="100%"
                                                                     name="itemIncoming">
                                                                     @foreach ($item as $data)
                                                                         <option value="{{ $data->id }}">
@@ -543,8 +544,8 @@
                                                                     <div class="p-2">
                                                                         <h3 class="modal-title"
                                                                             id="exampleModalLongTitle">
-                                                                            <strong> Update data for
-                                                                                "{{ $incoming->id }}"</strong>
+                                                                            <strong> Update data untuk
+                                                                                "{{ $incoming->item->item_name }}"</strong>
                                                                         </h3>
                                                                     </div>
                                                                     <div class="p-2">

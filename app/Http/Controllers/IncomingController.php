@@ -222,7 +222,7 @@ class IncomingController extends Controller
         //         ]);
 
         //         $imageName = time() . '.' . $file->getClientOriginalExtension();
-        //         Storage::putFileAs('public/itemImages', $file, $imageName);
+        //         Storage::putFileAs('public/incomingItemImage', $file, $imageName);
         //         $imageName = 'itemImages/' . $imageName;
 
         //         Storage::delete('public/' . $incomingInfo->item_pictures);
@@ -258,25 +258,6 @@ class IncomingController extends Controller
         // } else {
         //     $request->session()->flash('noData_editItem', 'tidak ada');
         // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

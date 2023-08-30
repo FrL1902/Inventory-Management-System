@@ -97,8 +97,8 @@
                                                         <div class="card-body">
                                                             <div class="form-group">
                                                                 <label for="customerLabelExport">Customer</label>
-                                                                <select class="form-control" id="customerLabelExport"
-                                                                    name="customerItemExport">
+                                                                <select class="form-control" data-width="100%"
+                                                                    id="customerLabelExport" name="customerItemExport">
                                                                     @foreach ($customer as $data)
                                                                         <option value="{{ $data->id }}">
                                                                             {{ $data->customer_name }}
@@ -141,9 +141,9 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="customerLabelExport">Brand</label>
-                                                                <select class="form-control" id="customerLabelExport"
-                                                                    name="brandItemExport">
+                                                                <label for="brandLabelExport">Brand</label>
+                                                                <select class="form-control" id="brandLabelExport"
+                                                                    data-width="100%" name="brandItemExport">
                                                                     @foreach ($brand as $data)
                                                                         <option value="{{ $data->id }}">
                                                                             {{ $data->brand_name }}
@@ -305,7 +305,7 @@
                                                                             <div class="p-2">
                                                                                 <h3 class="modal-title"
                                                                                     id="exampleModalLongTitle">
-                                                                                    <strong> Update data for
+                                                                                    <strong> Update data untuk
                                                                                         "{{ $item->item_name }}"</strong>
                                                                                 </h3>
                                                                             </div>

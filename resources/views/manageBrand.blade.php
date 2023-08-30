@@ -70,9 +70,9 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="customerLabelExport">Customer</label>
-                                                                <select class="form-control" id="customerLabelExport"
-                                                                    name="customerBrandExport">
+                                                                <label for="customerLabelExportBrand">Customer</label>
+                                                                <select class="form-control" id="customerLabelExportBrand"
+                                                                    data-width="100%" name="customerBrandExport">
                                                                     @foreach ($customer as $data)
                                                                         <option value="{{ $data->id }}">
                                                                             {{ $data->customer_name }}

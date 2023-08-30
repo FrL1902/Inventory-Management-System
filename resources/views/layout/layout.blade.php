@@ -389,9 +389,70 @@
     </script> --}}
 
     <script>
-         $('#incomingidforitem').select2({
+        $('#incomingidforitem').select2({
             dropdownParent: $('#addModalCenter')
-         });
+        });
+    </script>
+
+    {{-- Add New Brand --}}
+    <script>
+        // kolom: Pemilik Brand
+        $('#customeridforbrand').select2({
+            placeholder: 'Select an option'
+        });
+    </script>
+
+    {{-- Edit Brands --}}
+    <script>
+        // modal + kolom customer
+        $('#customerLabelExportBrand').select2({
+            dropdownParent: $('#exportCustomerBrandModal')
+        });
+    </script>
+
+
+    {{-- Add New Item --}}
+    <script>
+        // page: add new item, kolom: Brand Pemilik Barang
+        $('#brandidforitem').select2({
+            placeholder: 'Select an option'
+        });
+    </script>
+
+
+    {{-- EDIT ITEM --}}
+    <script>
+        // page: Edit Item, kolom: Modal + Kolom Customer
+        $('#customerLabelExport').select2({
+            dropdownParent: $('#exportCustomerItemModal')
+        });
+    </script>
+    <script>
+        // page: Edit Item, kolom: Modal + kolom brand
+        $('#brandLabelExport').select2({
+            dropdownParent: $('#exportBrandItemModal')
+        });
+    </script>
+
+
+    {{-- INCOMING PAGE --}}
+    <script>
+        // export by customer
+        $('#customerLabelExportIncoming').select2({
+            dropdownParent: $('#exportIncomingCustomerModal')
+        });
+    </script>
+    <script>
+        // export by brand
+        $('#brandLabelExportincoming').select2({
+            dropdownParent: $('#exportIncomingBrandModal')
+        });
+    </script>
+    <script>
+        // export by product
+        $('#itemLabelExportincoming').select2({
+            dropdownParent: $('#exportIncomingItemModal')
+        });
     </script>
 
     {{-- <script type="text/javascript">

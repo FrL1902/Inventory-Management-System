@@ -74,7 +74,8 @@
                                         style="width: 200px" class="form-control" placeholder="0 - 999999999">
                                 </div>
                                 <div class="form-group">
-                                    <label for="largeInput">Foto Barang</label>
+                                    <label for="largeInput">Foto Barang<span style="color: red"> (harus diisi)
+                                        </span></label>
                                     <input type="file" class="form-control form-control" id="itemImage"
                                         name="itemImage">
                                 </div>
