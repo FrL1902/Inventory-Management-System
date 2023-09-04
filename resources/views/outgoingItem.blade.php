@@ -28,7 +28,7 @@
                         <strong>Data Gagal Diupdate: {{ session('newValueMinus') }}</strong>
                     </div>
                 @elseif (session('noData_editItem'))
-                    <div class="alert alert-warning alert-block" id="alertDelete">
+                    <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Data Gagal Diupdate: Tidak ada data yang dimasukkan</strong>
                     </div>
