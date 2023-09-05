@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncomingController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OutgoingController;
+use App\Http\Controllers\PalletController;
 use App\Http\Controllers\StockHistoryController;
 use App\Http\Controllers\UserController;
 use App\Models\StockHistory;
@@ -94,6 +95,10 @@ Route::post('/exportOutgoing', [OutgoingController::class, 'exportOutgoing'])->n
 Route::post('/exportOutgoingCustomer', [OutgoingController::class, 'exportOutgoingCustomer'])->name('exportOutgoingCustomer')->middleware('login');
 Route::post('/exportOutgoingBrand', [OutgoingController::class, 'exportOutgoingBrand'])->name('exportOutgoingBrand')->middleware('login');
 Route::post('/exportOutgoingItem', [OutgoingController::class, 'exportOutgoingItem'])->name('exportOutgoingItem')->middleware('login');
+
+// Pallet
+Route::get('/managePallet', [PalletController::class, 'manage_pallet_page'])->middleware('login');
+Route::get('/managePalletHistory', [PalletController::class, 'manage_pallet_history_page'])->middleware('login');
 
 // export
 Route::get('/exportExcel', [UserController::class, 'exportExcel'])->name('exportExcel')->middleware('login'); //export user ALL

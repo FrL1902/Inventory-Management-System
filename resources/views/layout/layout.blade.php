@@ -312,6 +312,28 @@
                                 </ul>
                             </div>
                         </li>
+                        <li class="nav-item @yield('managepalletbutton')">
+                            <a data-toggle="collapse" href="#pallet">
+                                <i class="fa fa-archive"></i>
+                                <p>Kelola Palet</p>
+                                <span class="caret"></span>
+                            </a>
+                            {{-- color of the pressed button is style="background-color: #f7f7f7" --}}
+                            <div class="collapse @yield('showmanagepallet')" id="pallet">
+                                <ul class="nav nav-collapse">
+                                    <li class="@yield('managepallet')">
+                                        <a href="/managePallet">
+                                            <span class="sub-item">Kelola Palet</span>
+                                        </a>
+                                    </li>
+                                    <li class="@yield('managepallethistory')">
+                                        <a href="/managePalletHistory">
+                                            <span class="sub-item">Sejarah Palet</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                         @auth
                             @if (Auth::user()->level == 'admin')
                                 <li class="nav-section">
