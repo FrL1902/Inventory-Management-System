@@ -323,7 +323,7 @@
                                 <ul class="nav nav-collapse">
                                     <li class="@yield('managepallet')">
                                         <a href="/managePallet">
-                                            <span class="sub-item">Kelola Palet</span>
+                                            <span class="sub-item">Kelola Data Palet</span>
                                         </a>
                                     </li>
                                     <li class="@yield('managepallethistory')">
