@@ -503,6 +503,14 @@
         });
     </script>
 
+    {{-- MANAGE PALLET PAGE --}}
+    <script>
+        // add new outgoing package di outgoing
+        $('#itemidforpallet').select2({
+            dropdownParent: $('#addPalletModal')
+        });
+    </script>
+
 
 
 

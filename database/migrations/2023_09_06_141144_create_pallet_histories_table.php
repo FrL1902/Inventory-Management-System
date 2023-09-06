@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePalletsTable extends Migration
+class CreatePalletHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreatePalletsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pallets', function (Blueprint $table) {
+        Schema::create('pallet_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('item_id');
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->integer('item_id');
             $table->integer('stock');
             $table->string('bin');
-            $table->string('description');
+            $table->string('status');
+            $table->integer('user');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreatePalletsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pallets');
+        Schema::dropIfExists('pallet_histories');
     }
 }
