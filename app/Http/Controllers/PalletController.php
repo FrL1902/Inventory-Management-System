@@ -29,9 +29,18 @@ class PalletController extends Controller
 
         // dd($availableStock);
         if ($availableStock < $request->palletStock) {
-            session()->flash('gagalMasukPaletVALUE', 'stok ke palet melebih stok barang');
+            session()->flash('gagalMasukPaletVALUE', 'stok ke palet melebihi stok barang');
             return redirect()->back();
         }
+
+        $request->validate([
+            'palletDesc' => 'min:1|max:50',
+            'bin' => 'max:10'
+        ], [
+            'palletDesc.min' => 'Deskripsi minimal 1 karakter',
+            'palletDesc.max' => 'Deskripsi maksimal 50 karakter',
+            'bin.max' => 'BIN maksimal 10 karakter',
+        ]);
 
         // memasukkan data ke tabel palet
         $pallet = new Pallet();
@@ -52,6 +61,8 @@ class PalletController extends Controller
         $history->user = $request->userIdHidden;
 
         $history->save();
+
+        session()->flash('suksesMasukPaletVALUE', 'Stok barang dimasukkan ke palet');
 
         return redirect()->back();
     }
@@ -77,25 +88,26 @@ class PalletController extends Controller
 
             $history->save();
 
-            session()->flash('suksesPaletKeluar', 'Palet Berhasil Dikeluarkan');
+            session()->flash('suksesPaletKeluar', 'Barang Berhasil Dikeluarkan dari Palet');
             return redirect()->back();
         } else if ($palletInfo->stock > $request->palletStockOut) { //ini kalau keluar sebagian stoknya
             $newValue = $palletInfo->stock - $request->palletStockOut;
-            Pallet::where('id', $request->palletIdHidden)->update([
-                'stock' => $newValue
-            ]);
 
             // memasukkan data ke tabel sejarah palet
             $history = new PalletHistory();
             $history->item_id = $palletInfo->item_id;
             $history->stock = $newValue;
             $history->bin = $palletInfo->bin;
-            $history->status = 'KELUAR SEBAGIAN';
+            $history->status = 'KELUAR SEBAGIAN ' . '(' . (string)$request->palletStockOut . ')';
             $history->user = $id;
+
+            Pallet::where('id', $request->palletIdHidden)->update([
+                'stock' => $newValue
+            ]);
 
             $history->save();
 
-            session()->flash('suksesPaletKeluar2', 'Palet Berhasil Dikeluarkan Sebanyak ' . $request->palletStockOut);
+            session()->flash('suksesPaletKeluar2', 'Barang Berhasil Dikeluarkan Sebanyak ' . $request->palletStockOut);
             return redirect()->back();
         }
     }
@@ -127,7 +139,7 @@ class PalletController extends Controller
 
         $history->save();
 
-        session()->flash('suksesPaletKeluar', 'Palet Berhasil Dikeluarkan');
+        session()->flash('suksesPaletKeluar', 'Barang Berhasil Dikeluarkan dari Palet');
         return redirect()->back();
     }
 

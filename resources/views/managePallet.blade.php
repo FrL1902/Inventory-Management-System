@@ -22,22 +22,33 @@
                 @if (session('gagalMasukPaletVALUE'))
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Gagal Memasukkan Palet: {{ session('gagalMasukPaletVALUE') }}</strong>
+                        <strong>Gagal Memasukkan Data: {{ session('gagalMasukPaletVALUE') }}</strong>
+                    </div>
+                @elseif (session('suksesMasukPaletVALUE'))
+                    <div class="alert alert-success alert-block" id="alertSuccess">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Sukses Memasukkan Data: {{ session('suksesMasukPaletVALUE') }}</strong>
                     </div>
                 @elseif (session('gagalStokPalletKeluar'))
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Gagal Mengeluarkan Palet: {{ session('gagalStokPalletKeluar') }}</strong>
+                        <strong>Gagal Mengeluarkan Stok Palet: {{ session('gagalStokPalletKeluar') }}</strong>
                     </div>
                 @elseif (session('suksesPaletKeluar'))
                     <div class="alert alert-success alert-block" id="alertSuccess">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>{{ session('suksesPaletKeluar') }}: stok di palet sudah habis</strong>
+                        <strong>{{ session('suksesPaletKeluar') }}: barang dikeluarkan, stok barang di palet ini sudah
+                            habis</strong>
                     </div>
                 @elseif (session('suksesPaletKeluar2'))
                     <div class="alert alert-success alert-block" id="alertSuccess">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Sukses mengeluarkan stok palet: {{ session('suksesPaletKeluar2') }}</strong>
+                    </div>
+                @elseif ($errors->any())
+                    <div class="alert alert-danger alert-block" id="alertFailed">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Gagal Memasukkan Data: {{ $errors->first() }}</strong>
                     </div>
                 @endif
 
@@ -116,8 +127,8 @@
                                                                         Data</button>
                                                                 </div>
                                                             </div>
-                                                            <input type="hidden" class="form-control" name="userIdHidden"
-                                                                value="{{ auth()->user()->id }}">
+                                                            <input type="hidden" class="form-control"
+                                                                name="userIdHidden" value="{{ auth()->user()->id }}">
                                                         </div>
                                                     </form>
                                                 </div>
@@ -169,7 +180,7 @@
                                                                 data-toggle="modal">
                                                                 <i class="fa fa-arrow-right mt-3 text-danger"
                                                                     data-toggle="tooltip"
-                                                                    data-original-title="Keluarkan Palet"></i>
+                                                                    data-original-title="Keluarkan Stok Palet"></i>
                                                             </a>
                                                         </div>
                                                     </td>
@@ -207,14 +218,13 @@
                                                                                     max="999999999999999"
                                                                                     style="width: 100%"
                                                                                     class="form-control"
-                                                                                    placeholder="Stok di palet habis, palet akan terhitung keluar"
-                                                                                    required>
+                                                                                    placeholder="min 1" required>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <div class="card mt-5 ">
                                                                                     <button id=""
-                                                                                        class="btn btn-primary">Update
-                                                                                        Data Barang</button>
+                                                                                        class="btn btn-primary">Keluarkan
+                                                                                        Stok Palet</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>

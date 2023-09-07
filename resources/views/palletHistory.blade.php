@@ -58,7 +58,7 @@
                                                                     {{ $pallet->status }}</p>
                                                             </strong>
                                                         </td>
-                                                    @elseif ($pallet->status == 'KELUAR SEBAGIAN')
+                                                    @elseif (str_contains($pallet->status, 'SEBAGIAN'))
                                                         <td style="text-align: center"><strong>
                                                                 <p
                                                                     style="margin: auto; color: white; background-color:rgb(189, 173, 55);border-radius: 25px">
