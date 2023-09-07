@@ -30,13 +30,24 @@
                 @elseif (session('noData_editItem'))
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Data Gagal Diupdate: Tidak ada data yang dimasukkan</strong>
+                        <strong>Gagal: Tidak ada data yang dimasukkan</strong>
+                    </div>
+                @elseif (session('gagalReduceValue'))
+                    <div class="alert alert-danger alert-block" id="alertFailed">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Gagal melakukan pengeluaran barang "{{ session('gagalReduceValue') }}": Jumlah barang
+                            keluar lebih besar dari jumlah stok yang ada</strong>
+                    </div>
+                @elseif (session('sukses_reduceStock'))
+                    <div class="alert alert-success alert-block" id="alertSuccess">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Sukses mengeluarkan stok "{{ session('sukses_reduceStock') }}"</strong>
                     </div>
                 @endif
                 @if ($errors->any())
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Data Gagal Diupdate: {{ $errors->first() }}</strong>
+                        <strong>Gagal: {{ $errors->first() }}</strong>
                     </div>
                 @endif
 
@@ -115,7 +126,8 @@
                                                         <div class="card-body">
                                                             <div class="form-group">
                                                                 <label for="customerLabelExport">Customer</label>
-                                                                <select class="form-control" id="customerLabelExportoutgoing" data-width="100%"
+                                                                <select class="form-control"
+                                                                    id="customerLabelExportoutgoing" data-width="100%"
                                                                     name="customerOutgoing">
                                                                     @foreach ($customer as $data)
                                                                         <option value="{{ $data->id }}">
@@ -127,8 +139,8 @@
 
                                                             <div class="form-group">
                                                                 <label for="startRange">Dari Tanggal</label>
-                                                                <input type="date" class="form-control" id="startRange"
-                                                                    required name="startRange">
+                                                                <input type="date" class="form-control"
+                                                                    id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
@@ -173,8 +185,8 @@
                                                         <div class="card-body">
                                                             <div class="form-group">
                                                                 <label for="brandLabelExport">Brand</label>
-                                                                <select class="form-control" id="brandLabelExportoutgoing" data-width="100%"
-                                                                    name="brandOutgoing">
+                                                                <select class="form-control" id="brandLabelExportoutgoing"
+                                                                    data-width="100%" name="brandOutgoing">
                                                                     @foreach ($brand as $data)
                                                                         <option value="{{ $data->id }}">
                                                                             {{ $data->brand_name }}
@@ -231,8 +243,8 @@
                                                         <div class="card-body">
                                                             <div class="form-group">
                                                                 <label for="itemLabelExport">Nama Barang</label>
-                                                                <select class="form-control" id="itemLabelExportoutgoing" data-width="100%"
-                                                                    name="itemOutgoing">
+                                                                <select class="form-control" id="itemLabelExportoutgoing"
+                                                                    data-width="100%" name="itemOutgoing">
                                                                     @foreach ($item as $data)
                                                                         <option value="{{ $data->id }}">
                                                                             {{ $data->item_name }}
@@ -338,8 +350,8 @@
                                                                 <label for="outgoingidforitem">Nama Barang<span
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
-                                                                <select class="form-control" id="outgoingidforitem" data-width="100%"
-                                                                    name="outgoingiditem">
+                                                                <select class="form-control" id="outgoingidforitem"
+                                                                    data-width="100%" name="outgoingiditem">
                                                                     @foreach ($item as $item)
                                                                         <option value="{{ $item->id }}">
                                                                             {{ $item->item_name }}</option>

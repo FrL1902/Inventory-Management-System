@@ -20,22 +20,6 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Sukses mengupdate data "{{ session('sukses_editItem') }}"</strong>
                     </div>
-                @elseif (session('sukses_addStock'))
-                    <div class="alert alert-success alert-block" id="alertSuccess">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Sukses menambah stok"{{ session('sukses_addStock') }}"</strong>
-                    </div>
-                @elseif (session('sukses_reduceStock'))
-                    <div class="alert alert-success alert-block" id="alertSuccess">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Sukses mengurangi stok "{{ session('sukses_reduceStock') }}"</strong>
-                    </div>
-                @elseif (session('gagalReduceValue'))
-                    <div class="alert alert-danger alert-block" id="alertFailed">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Gagal melakukan pengeluaran barang "{{ session('gagalReduceValue') }}": Jumlah barang
-                            keluar lebih besar dari jumlah stok yang ada</strong>
-                    </div>
                 @elseif (session('noData_editItem'))
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>

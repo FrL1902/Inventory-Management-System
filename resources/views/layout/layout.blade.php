@@ -233,48 +233,52 @@
                                 {{-- <span class="badge badge-count">5</span> --}}
                             </a>
                         </li>
-                        <li class="nav-item @yield('managecustomerbutton')">
-                            <a data-toggle="collapse" href="#customer">
-                                <i class="fa fa-users"></i>
-                                <p>Kelola Customer</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse @yield('showmanagecustomer')" id="customer">
-                                <ul class="nav nav-collapse">
-                                    <li class="@yield('newcustomer')">
-                                        <a href="/newCustomer">
-                                            <span class="sub-item">Tambah Customer Baru</span>
-                                        </a>
-                                    </li>
-                                    <li class="@yield('managecustomer')">
-                                        <a href="/manageCustomer">
-                                            <span class="sub-item">Ubah Data Customer</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item @yield('managebrandbutton')">
-                            <a data-toggle="collapse" href="#brand">
-                                <i class="fa fa-th-large"></i>
-                                <p>Kelola Brand</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse @yield('showmanagebrand')" id="brand">
-                                <ul class="nav nav-collapse">
-                                    <li class="@yield('newbrand')">
-                                        <a href="/newBrand">
-                                            <span class="sub-item">Tambah Brand Baru</span>
-                                        </a>
-                                    </li>
-                                    <li class="@yield('managebrand')">
-                                        <a href="/manageBrand">
-                                            <span class="sub-item">Ubah Data Brands</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                        @auth
+                            @if (Auth::user()->level == 'admin')
+                                <li class="nav-item @yield('managecustomerbutton')">
+                                    <a data-toggle="collapse" href="#customer">
+                                        <i class="fa fa-users"></i>
+                                        <p>Kelola Customer</p>
+                                        <span class="caret"></span>
+                                    </a>
+                                    <div class="collapse @yield('showmanagecustomer')" id="customer">
+                                        <ul class="nav nav-collapse">
+                                            <li class="@yield('newcustomer')">
+                                                <a href="/newCustomer">
+                                                    <span class="sub-item">Tambah Customer Baru</span>
+                                                </a>
+                                            </li>
+                                            <li class="@yield('managecustomer')">
+                                                <a href="/manageCustomer">
+                                                    <span class="sub-item">Ubah Data Customer</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item @yield('managebrandbutton')">
+                                    <a data-toggle="collapse" href="#brand">
+                                        <i class="fa fa-th-large"></i>
+                                        <p>Kelola Brand</p>
+                                        <span class="caret"></span>
+                                    </a>
+                                    <div class="collapse @yield('showmanagebrand')" id="brand">
+                                        <ul class="nav nav-collapse">
+                                            <li class="@yield('newbrand')">
+                                                <a href="/newBrand">
+                                                    <span class="sub-item">Tambah Brand Baru</span>
+                                                </a>
+                                            </li>
+                                            <li class="@yield('managebrand')">
+                                                <a href="/manageBrand">
+                                                    <span class="sub-item">Ubah Data Brands</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endif
+                        @endauth
                         <li class="nav-item @yield('manageitembutton')">
                             <a data-toggle="collapse" href="#item">
                                 <i class="fa fa-truck"></i>
@@ -284,16 +288,20 @@
                             {{-- color of the pressed button is style="background-color: #f7f7f7" --}}
                             <div class="collapse @yield('showmanageitem')" id="item">
                                 <ul class="nav nav-collapse">
-                                    <li class="@yield('newitem')">
-                                        <a href="/newItem">
-                                            <span class="sub-item">Tambah Barang Baru</span>
-                                        </a>
-                                    </li>
-                                    <li class="@yield('manageitem')">
-                                        <a href="/manageItem">
-                                            <span class="sub-item">Ubah Data Barang</span>
-                                        </a>
-                                    </li>
+                                    @auth
+                                        @if (Auth::user()->level == 'admin')
+                                            <li class="@yield('newitem')">
+                                                <a href="/newItem">
+                                                    <span class="sub-item">Tambah Barang Baru</span>
+                                                </a>
+                                            </li>
+                                            <li class="@yield('manageitem')">
+                                                <a href="/manageItem">
+                                                    <span class="sub-item">Ubah Data Barang</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endauth
                                     <li class="@yield('newincoming')">
                                         <a href="/newIncoming">
                                             <span class="sub-item">Barang Datang</span>

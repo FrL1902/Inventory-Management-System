@@ -25,17 +25,19 @@ class OutgoingController extends Controller
         $brand = Brand::all();
         $customer = Customer::all();
 
-        if ($item->isempty()) {
-            // $message = "no item is present, please input an item before accessing the \"outgoing\" or \"incoming\" page";
-            $message = "Tidak ada barang,  Masukkan barang baru terlebih dahulu sebelum mengakses halaman \"outgoing\" atau \"incoming\"";
-            session()->flash('no_item_outgoing', $message);
+        return view('outgoingItem', compact('outgoing', 'item', 'customer', 'brand'));
 
-            // $brand = Brand::all();
-            // return view('newItem', compact('brand'));
-            return redirect('/newItem');
-        } else {
-            return view('outgoingItem', compact('outgoing', 'item', 'customer', 'brand'));
-        }
+        // if ($item->isempty()) {
+        //     // $message = "no item is present, please input an item before accessing the \"outgoing\" or \"incoming\" page";
+        //     $message = "Tidak ada barang,  Masukkan barang baru terlebih dahulu sebelum mengakses halaman \"outgoing\" atau \"incoming\"";
+        //     session()->flash('no_item_outgoing', $message);
+
+        //     // $brand = Brand::all();
+        //     // return view('newItem', compact('brand'));
+        //     return redirect('/newItem');
+        // } else {
+        //     return view('outgoingItem', compact('outgoing', 'item', 'customer', 'brand'));
+        // }
     }
 
     public function reduceItemStock(Request $request) //OUTGOING, BARANG KELUAR
@@ -46,7 +48,8 @@ class OutgoingController extends Controller
 
         if ($request->itemReduceStock > $itemInfo->stocks) {
             $request->session()->flash('gagalReduceValue', $itemInfo->item_name);
-            return redirect('manageItem');
+            // return redirect('manageItem');
+            return redirect()->back();
         }
 
         $request->validate([
@@ -101,7 +104,8 @@ class OutgoingController extends Controller
         $history->save();
 
 
-        return redirect('manageItem');
+        // return redirect('manageItem');
+        return redirect()->back();
     }
 
     public function exportOutgoing(Request $request)

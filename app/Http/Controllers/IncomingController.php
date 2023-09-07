@@ -12,6 +12,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -25,21 +26,24 @@ class IncomingController extends Controller
         $incoming = Incoming::all();
         $customer = Customer::all();
 
-        if ($item->isempty()) {
-            // $message = "no item is present, please input an item before accessing the \"outgoing\" or \"incoming\" page";
-            $message = "Tidak ada barang. Masukkan barang baru terlebih dahulu sebelum mengakses halaman \"outgoing\" atau \"incoming\"";
-            session()->flash('no_item_incoming', $message);
+        return view('incomingItem', compact('incoming', 'item', 'customer', 'brand'));
 
-            // $brand = Brand::all();
-            // return view('newItem', compact('brand'));
-            return redirect('/newItem');
-        } else {
-            return view('incomingItem', compact('incoming', 'item', 'customer', 'brand'));
-        }
+        // if ($item->isempty()) {
+        //     // $message = "no item is present, please input an item before accessing the \"outgoing\" or \"incoming\" page";
+        //     $message = "Tidak ada barang. Masukkan barang baru terlebih dahulu sebelum mengakses halaman \"outgoing\" atau \"incoming\"";
+        //     session()->flash('no_item_incoming', $message);
+
+        //     // $brand = Brand::all();
+        //     // return view('newItem', compact('brand'));
+        //     return redirect('/newItem');
+        // } else {
+        //     return view('incomingItem', compact('incoming', 'item', 'customer', 'brand'));
+        // }
     }
 
     public function addItemStock(Request $request) //INCOMING, BARANG MASUK
     {
+        // dd($request->userIdHidden);
         $userInfo = User::where('id', $request->userIdHidden)->first();
         $itemInfo = Item::where('id', $request->incomingiditem)->first();
 
@@ -113,7 +117,8 @@ class IncomingController extends Controller
         $history->save();
 
 
-        return redirect('manageItem');
+        // return redirect('manageItem');
+        return redirect()->back();
     }
 
     public function exportIncoming(Request $request)

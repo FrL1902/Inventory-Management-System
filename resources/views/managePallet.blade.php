@@ -68,7 +68,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Tambahkan Data Palet Baru
+                                                            Tambahkan Data Barang di Palet
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"

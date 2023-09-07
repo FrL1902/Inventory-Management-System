@@ -48,30 +48,30 @@ Route::post('/newPasswordFromAdmin', [UserController::class, 'newPasswordFromAdm
 // buat tombol navbar samping
 
 //customer
-Route::get('/manageCustomer', [CustomerController::class, 'manage_customer_page'])->middleware('login');
-Route::get('/newCustomer', [CustomerController::class, 'new_customer_page'])->middleware('login');
-Route::post('/makeCustomer', [CustomerController::class, 'makeCustomer'])->middleware('login');
-Route::get('/deleteCustomer/{id}', [CustomerController::class, 'deleteCustomer'])->middleware('login');
-Route::post('/updateCustomer', [CustomerController::class, 'updateCustomer'])->middleware('login');
-Route::get('/exportCustomerExcel', [CustomerController::class, 'exportCustomerExcel'])->name('exportCustomerExcel')->middleware('login');
+Route::get('/manageCustomer', [CustomerController::class, 'manage_customer_page'])->middleware('security');
+Route::get('/newCustomer', [CustomerController::class, 'new_customer_page'])->middleware('security');
+Route::post('/makeCustomer', [CustomerController::class, 'makeCustomer'])->middleware('security');
+Route::get('/deleteCustomer/{id}', [CustomerController::class, 'deleteCustomer'])->middleware('security');
+Route::post('/updateCustomer', [CustomerController::class, 'updateCustomer'])->middleware('security');
+Route::get('/exportCustomerExcel', [CustomerController::class, 'exportCustomerExcel'])->name('exportCustomerExcel')->middleware('security');
 
 //brand
-Route::get('/newBrand', [BrandController::class, 'new_brand_page'])->middleware('login');
-Route::get('/manageBrand', [BrandController::class, 'manage_brand_page'])->middleware('login');
-Route::post('/makeBrand', [BrandController::class, 'makeBrand'])->middleware('login');
-Route::get('/deleteBrand/{id}', [BrandController::class, 'deleteBrand'])->middleware('login');
-Route::post('/updateBrand', [BrandController::class, 'updateBrand'])->middleware('login');
-Route::post('exportCustomerBrand', [BrandController::class, 'exportCustomerBrand'])->name('exportCustomerBrand')->middleware('login');
+Route::get('/newBrand', [BrandController::class, 'new_brand_page'])->middleware('security');
+Route::get('/manageBrand', [BrandController::class, 'manage_brand_page'])->middleware('security');
+Route::post('/makeBrand', [BrandController::class, 'makeBrand'])->middleware('security');
+Route::get('/deleteBrand/{id}', [BrandController::class, 'deleteBrand'])->middleware('security');
+Route::post('/updateBrand', [BrandController::class, 'updateBrand'])->middleware('security');
+Route::post('exportCustomerBrand', [BrandController::class, 'exportCustomerBrand'])->name('exportCustomerBrand')->middleware('security');
 
 //item & stockhistory
-Route::get('/newItem', [ItemController::class, 'new_item_page'])->middleware('login');
-Route::post('/makeItem', [ItemController::class, 'makeItem'])->middleware('login');
-Route::get('/manageItem', [ItemController::class, 'manage_item_page'])->middleware('login');
-Route::get('/deleteItem/{id}', [ItemController::class, 'deleteItem'])->middleware('login');
-Route::post('/updateItem', [ItemController::class, 'updateItem'])->middleware('login');
+Route::get('/newItem', [ItemController::class, 'new_item_page'])->middleware('security');
+Route::post('/makeItem', [ItemController::class, 'makeItem'])->middleware('security');
+Route::get('/manageItem', [ItemController::class, 'manage_item_page'])->middleware('security');
+Route::get('/deleteItem/{id}', [ItemController::class, 'deleteItem'])->middleware('security');
+Route::post('/updateItem', [ItemController::class, 'updateItem'])->middleware('security');
 Route::get('/manageHistory', [ItemController::class, 'item_history_page'])->middleware('login');
-Route::post('/exportCustomerItem', [ItemController::class, 'exportCustomerItem'])->name('exportCustomerItem')->middleware('login');
-Route::post('/exportBrandItem', [ItemController::class, 'exportBrandItem'])->name('exportBrandItem')->middleware('login');
+Route::post('/exportCustomerItem', [ItemController::class, 'exportCustomerItem'])->name('exportCustomerItem')->middleware('security');
+Route::post('/exportBrandItem', [ItemController::class, 'exportBrandItem'])->name('exportBrandItem')->middleware('security');
 Route::post('/filterHistoryDate', [StockHistoryController::class, 'filterHistoryDate'])->middleware('login');
 Route::post('/exportItemHistory', [StockHistoryController::class, 'exportItemHistory'])->name('exportItemHistory')->middleware('login');
 Route::post('/exportHistoryByDate', [StockHistoryController::class, 'exportHistoryByDate'])->name('exportHistoryByDate')->middleware('login');
@@ -89,8 +89,8 @@ Route::post('/exportIncomingItem', [IncomingController::class, 'exportIncomingIt
 //outgoing
 Route::post('/reduceItemStock', [OutgoingController::class, 'reduceItemStock'])->middleware('login'); //cek
 Route::get('/newOutgoing', [OutgoingController::class, 'add_outgoing_item_page'])->middleware('login');
-Route::get('/deleteItemOutgoing/{id}', [OutgoingController::class, 'deleteItemOutgoing'])->middleware('security');
-Route::post('/updateOutgoingData', [OutgoingController::class, 'updateOutgoingData'])->middleware('security');
+Route::get('/deleteItemOutgoing/{id}', [OutgoingController::class, 'deleteItemOutgoing'])->middleware('login');
+Route::post('/updateOutgoingData', [OutgoingController::class, 'updateOutgoingData'])->middleware('login');
 Route::post('/exportOutgoing', [OutgoingController::class, 'exportOutgoing'])->name('exportOutgoing')->middleware('login');
 Route::post('/exportOutgoingCustomer', [OutgoingController::class, 'exportOutgoingCustomer'])->name('exportOutgoingCustomer')->middleware('login');
 Route::post('/exportOutgoingBrand', [OutgoingController::class, 'exportOutgoingBrand'])->name('exportOutgoingBrand')->middleware('login');

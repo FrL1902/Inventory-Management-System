@@ -15,12 +15,17 @@
                 @if (session('intOverflow'))
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Data Gagal Dimasukkan: {{ session('intOverflow') }}</strong>
+                        <strong>Gagal: {{ session('intOverflow') }}</strong>
+                    </div>
+                @elseif (session('sukses_addStock'))
+                    <div class="alert alert-success alert-block" id="alertSuccess">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Sukses menambah stok" {{ session('sukses_addStock') }}"</strong>
                     </div>
                 @elseif (session('newValueMinus'))
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Data Gagal Diupdate: {{ session('newValueMinus') }}</strong>
+                        <strong>Gagal: {{ session('newValueMinus') }}</strong>
                     </div>
                 @elseif (session('suksesDeleteIncoming'))
                     <div class="alert alert-warning alert-block" id="alertDelete">
@@ -35,12 +40,12 @@
                 @elseif (session('noData_editItem'))
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Data Gagal Diupdate: Tidak ada data yang dimasukkan</strong>
+                        <strong>Gagal: Tidak ada data yang dimasukkan</strong>
                     </div>
                 @elseif($errors->any())
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Data Gagal Diupdate: {{ $errors->first() }}</strong>
+                        <strong>Gagal: {{ $errors->first() }}</strong>
                     </div>
                 @endif
 
@@ -132,8 +137,8 @@
 
                                                             <div class="form-group">
                                                                 <label for="startRange">Dari Tanggal</label>
-                                                                <input type="date" class="form-control" id="startRange"
-                                                                    required name="startRange">
+                                                                <input type="date" class="form-control"
+                                                                    id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
@@ -341,8 +346,9 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="incomingidforitem">Nama Barang<span style="color: red"> (harus diisi)
-                                                                </span></label>
+                                                                <label for="incomingidforitem">Nama Barang<span
+                                                                        style="color: red"> (harus diisi)
+                                                                    </span></label>
                                                                 <select class="form-control" data-width="100%"
                                                                     id="incomingidforitem" name="incomingiditem">
                                                                     @foreach ($item as $item)
@@ -353,8 +359,9 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="quantity">Stok<span style="color: red"> (harus diisi)
-                                                                </span></label>
+                                                                <label for="quantity">Stok<span style="color: red"> (harus
+                                                                        diisi)
+                                                                    </span></label>
                                                                 <input type="number" id="quantity" name="itemAddStock"
                                                                     min="1" max="999999999" style="width: 100%"
                                                                     class="form-control"
@@ -362,22 +369,25 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="incomingidforitem">Deskripsi<span style="color: red"> (harus diisi)
-                                                                </span></label>
+                                                                <label for="incomingidforitem">Deskripsi<span
+                                                                        style="color: red"> (harus diisi)
+                                                                    </span></label>
                                                                 <textarea class="form-control" id="incomingidforitem" rows="3" placeholder="deskripsi barang masuk"
                                                                     name="incomingItemDesc" required></textarea>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="startRange">Tanggal Barang Datang<span style="color: red"> (harus diisi)
-                                                                </span></label>
+                                                                <label for="startRange">Tanggal Barang Datang<span
+                                                                        style="color: red"> (harus diisi)
+                                                                    </span></label>
                                                                 <input type="date" class="form-control"
                                                                     id="startRange" required name="itemArrive">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="largeInput">Gambar Barang Datang<span style="color: red"> (harus diisi)
-                                                                </span></label>
+                                                                <label for="largeInput">Gambar Barang Datang<span
+                                                                        style="color: red"> (harus diisi)
+                                                                    </span></label>
                                                                 <input type="file" class="form-control form-control"
                                                                     id="itemImage" name="incomingItemImage" required>
                                                                 <div class="card mt-5 ">
