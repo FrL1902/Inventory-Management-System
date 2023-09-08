@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -20,11 +21,56 @@ class IncomingController extends Controller
 {
     public function add_incoming_item_page()
     {
-        $item = Item::all(); //buat update
+        $user = Auth::user();
         // // $history = StockHistory::all(); //old table,
-        $brand = Brand::all();
-        $incoming = Incoming::all();
-        $customer = Customer::all();
+        // $customer = Customer::all();
+
+        $item = Item::all(); //buat update
+        if ($user->level == 'admin') {
+            // $incoming = Incoming::all();
+            $incoming = DB::table('incomings')
+            ->join('customer', 'incomings.customer_id', '=', 'customer.id')
+            ->join('brand', 'incomings.brand_id', '=', 'brand.id')
+            ->join('items', 'incomings.item_id', '=', 'items.id')
+            ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name')->get();
+            
+            $brand = Brand::all();
+            $customer = Customer::all();
+            // dd($customer);
+        } else {
+            $item = DB::table('user_accesses')
+                ->join('items', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->join('customer', 'user_accesses.customer_id', '=', 'customer.id')
+                ->where('user_id', $user->id)->get();
+
+            $customer = DB::table('user_accesses')
+                ->join('customer', 'user_accesses.customer_id', '=', 'customer.id')
+                ->select('user_accesses.*', 'customer.customer_name', 'customer.customer_id', 'customer.id as realCustomerId')
+                ->where('user_id', $user->id)->get();
+
+            $incoming = DB::table('user_accesses')
+                ->join('customer', 'user_accesses.customer_id', '=', 'customer.id')
+                ->join('brand', 'user_accesses.customer_id', '=', 'brand.customer_id')
+                ->join('items', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->join('incomings', 'user_accesses.customer_id', '=', 'incomings.customer_id')
+                ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name')
+                ->where('user_id', $user->id)->get();
+            // dd($incoming);
+
+            $brand =  DB::table('user_accesses')
+                ->join('brand', 'user_accesses.customer_id', '=', 'brand.customer_id')
+                ->join('customer', 'user_accesses.customer_id', '=', 'customer.id')
+                ->select('customer.*', 'brand.*')->where('user_id', $user->id)->get();
+            // dd($brand);
+            // $incoming = DB::table('user_accesses')->join('incomings', 'user_accesses.customer_id', '=', 'incomings.customer_id')->select('user_accesses.customer_id as realCustomerId', 'incomings.*')->where('user_id', $user->id)->get();
+            // dd($incoming);
+            // dd($customer);
+        }
+
+
+
+
+        // dd($customer);
 
         return view('incomingItem', compact('incoming', 'item', 'customer', 'brand'));
 
@@ -155,6 +201,8 @@ class IncomingController extends Controller
         $date_from = Carbon::parse($request->startRange)->startOfDay();
         $date_to = Carbon::parse($request->endRange)->endOfDay();
 
+        // dd($request->brandIncoming);
+
         // $sortBrand = Incoming::all()->where('brand_id', $request->brandIncoming)->whereBetween('created_at', [$date_from, $date_to]); // versi lama pake created at
         $sortBrand = Incoming::all()->where('brand_id', $request->brandIncoming)->whereBetween('arrive_date', [$date_from, $date_to]);
         $formatFileName = 'DataBarangDatang Brand ' . $brand->brand_name . ' ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
@@ -245,7 +293,6 @@ class IncomingController extends Controller
 
 
                 $file = $request->file('incomingItemImage');
-
             } else {
                 // dd("lha");
                 Incoming::where('id', $request->itemIdHidden)->update([
@@ -276,7 +323,6 @@ class IncomingController extends Controller
                 ]);
 
                 session()->flash('suksesUpdateIncoming', 'Sukses update data kedatangan barang ' . $itemInfo->item_name);
-
             } else {
                 $request->session()->flash('suksesUpdateIncoming', 'Sukses update data kedatangan barang ' . $itemInfo->item_name);
             }

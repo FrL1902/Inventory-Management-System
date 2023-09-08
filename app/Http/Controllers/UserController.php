@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Exports\UserExport;
+use App\Models\Customer;
 use App\Models\User;
+use App\Models\UserAccess;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -88,6 +91,45 @@ class UserController extends Controller
         $request->session()->flash('sukses_editUser', $oldUsername);
 
         return redirect('manageUser');
+    }
+
+    public function user_access_page($id)
+    {
+        // dd($id);
+        $user = User::find($id);
+        $customer = Customer::all();
+        // $access = UserAccess::where('user_id', $id)->get();
+        $access = DB::table('user_accesses')->join('customer', 'user_accesses.customer_id', '=', 'customer.id')->select('user_accesses.*', 'customer.customer_name', 'customer.customer_id')->where('user_id', $id)->get();;
+
+        // palletHistory = DB::table('pallet_histories')
+        //     ->join('items', 'pallet_histories.item_id', '=', 'items.id') //join('tabel yang mau di tambahin', 'tabel utama.value yang mau dicocokin', '=', 'tabel yang ditambahin.value yang mau dicocokin')
+        //     ->join('users', 'pallet_histories.user', '=', 'users.id') //bagian join bisa dilakuin berkali kali
+        //     ->select('pallet_histories.*', 'items.item_name', 'users.name')->get(); //jgn lupa manggil semua tabel utamanya terus ditambah lagi kolom yang diinginkan
+
+        // dd($access);
+
+
+        return view('admin.userAccess', compact('user', 'customer', 'access'));
+    }
+
+    public function add_new_user_access(Request $request)
+    {
+        // dd($request->userIdHidden);
+        $exist = UserAccess::where('user_id', 'LIKE', $request->userIdHidden)->where('customer_id', 'LIKE', $request->customerforaccess)->first();
+        // dd($exist->customer_id);
+        if (is_null($exist)) {
+            // dd('y');
+            $access = new UserAccess();
+            $access->user_id = $request->userIdHidden;
+            $access->customer_id = $request->customerforaccess;
+            $access->save();
+            // dd('y');
+            return redirect()->back();
+        } else {
+            dd('user sudah punya akses ke customer ini');
+            $request->session()->flash('akses_already_there', 'user sudah punya akses ke customer ini');
+            return redirect()->back();
+        }
     }
 
     public function exportExcel(Request $request)

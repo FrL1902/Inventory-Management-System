@@ -193,6 +193,10 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a style="cursor: pointer"
+                                                            href="/userAccess/{{ $data->id }}"><i class="fa fa-users mt-3 text-primary"
+                                                                data-toggle="tooltip" data-original-title="edit access">
+                                                            </i></a>
+                                                        <a style="cursor: pointer" class="ml-3"
                                                             data-target="#editPasswordCenter{{ $data->id }}"
                                                             data-toggle="modal"><i class="fa fa-key mt-3 text-warning"
                                                                 data-toggle="tooltip"

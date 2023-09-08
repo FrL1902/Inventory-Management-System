@@ -128,7 +128,7 @@
                                                                     id="customerLabelExportIncoming" data-width="100%"
                                                                     name="customerIncoming">
                                                                     @foreach ($customer as $data)
-                                                                        <option value="{{ $data->id }}">
+                                                                        <option value="{{ $data->realCustomerId }}">
                                                                             {{ $data->customer_name }}
                                                                         </option>
                                                                     @endforeach
@@ -246,7 +246,7 @@
                                                                     data-width="100%" name="itemIncoming">
                                                                     @foreach ($item as $data)
                                                                         <option value="{{ $data->id }}">
-                                                                            {{ $data->item_name }}
+                                                                            {{ $data->item_name }} {{ $data->id }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -457,10 +457,10 @@
                                         <tbody>
                                             @foreach ($incoming as $incoming)
                                                 <tr>
-                                                    <td>{{ $incoming->customer->customer_name }}</td>
-                                                    <td>{{ $incoming->brand->brand_name }}</td>
-                                                    <td>{{ $incoming->item->item_id }}</td>
-                                                    <td>{{ $incoming->item->item_name }}</td>
+                                                    <td>{{ $incoming->customer_name }}</td>
+                                                    <td>{{ $incoming->brand_name }}</td>
+                                                    <td>{{ $incoming->item_id }}</td>
+                                                    <td>{{ $incoming->item_name }}</td>
                                                     <td>{{ $incoming->stock_added }}</td>
                                                     <td>{{ date_format(date_create($incoming->arrive_date), 'D d-m-Y') }}
                                                     </td>
@@ -509,7 +509,7 @@
                                                             <div class="modal-header">
                                                                 <h3 class="modal-title" id="exampleModalLongTitle">
                                                                     <strong>Barang Datang
-                                                                        "{{ $incoming->item->item_name }}" pada
+                                                                        "{{ $incoming->item_name }}" pada
                                                                         {{ $incoming->created_at }}</strong>
                                                                 </h3>
                                                                 <button type="button" class="close"
@@ -541,7 +541,7 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>Apakah anda yakin untuk menghapus data barang masuk
-                                                                    "{{ $incoming->item->item_name }}" ?</p>
+                                                                    "{{ $incoming->item_name }}" ?</p>
                                                                 <p>Jika dihapus, stok yang dimiliki akan berkurang
                                                                     sebanyak
                                                                     <strong>{{ $incoming->stock_added }}
@@ -570,7 +570,7 @@
                                                                         <h3 class="modal-title"
                                                                             id="exampleModalLongTitle">
                                                                             <strong> Update data untuk
-                                                                                "{{ $incoming->item->item_name }}"</strong>
+                                                                                "{{ $incoming->item_name }}"</strong>
                                                                         </h3>
                                                                     </div>
                                                                     <div class="p-2">

@@ -31,7 +31,6 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                {{-- <div class="d-flex align-items-center"> --}}
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex flex-row">
                                         <span>
