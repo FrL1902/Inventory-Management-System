@@ -146,7 +146,7 @@
                                                 <th>Stok</th>
                                                 <th>BIN</th>
                                                 <th style="width: 35%">Keterangan</th>
-                                                <th style="width: 7%">Edit</th>
+                                                <th style="width: 5%">Edit</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -168,14 +168,15 @@
                                                     <td>{{ $pallet->description }}</td>
                                                     <td>
                                                         <div class="d-flex justify-content-center">
-                                                            <a style="cursor: pointer"
+                                                            {{-- <a style="cursor: pointer"
                                                                 data-target="#editModalCenter{{ $pallet->id }}"
                                                                 data-toggle="modal">
                                                                 <i class="fa fa-edit mt-3 text-primary"
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Edit barang di palet ini"></i>
-                                                            </a>
-                                                            <a class="ml-3 mb-2" style="cursor: pointer"
+                                                            </a> --}}
+                                                            {{-- pake ml-3 di tombol keluar --}}
+                                                            <a class="mb-2" style="cursor: pointer"
                                                                 data-target="#reducePalletStockModal{{ $pallet->id }}"
                                                                 data-toggle="modal">
                                                                 <i class="fa fa-arrow-right mt-3 text-danger"

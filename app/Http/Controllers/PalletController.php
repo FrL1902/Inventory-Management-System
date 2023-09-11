@@ -27,13 +27,14 @@ class PalletController extends Controller
             $item = DB::table('items')
                 ->join('customer', 'items.customer_id', '=', 'customer.id')
                 ->select('items.item_name', 'items.item_id', 'items.id')->get();
-
         } else {
             $pallet = DB::table('pallets')
                 ->join('items', 'pallets.item_id', '=', 'items.id')
                 ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->select('pallets.*', 'items.item_name', 'customer.id as customer_id')->get();
-            dd($pallet);
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('pallets.*', 'items.item_name', 'customer.id as customer_id', 'customer.customer_name', 'user_accesses.user_id')
+                ->where('user_id', $user->id)->get();
+            // dd($pallet);
 
             $item = DB::table('items')
                 ->join('customer', 'items.customer_id', '=', 'customer.id')
@@ -41,8 +42,6 @@ class PalletController extends Controller
                 ->select('items.item_name', 'items.item_id', 'items.id')
                 ->where('user_id', $user->id)->get();
         }
-
-
 
         return view('managePallet', compact('pallet', 'item'));
     }
@@ -173,19 +172,37 @@ class PalletController extends Controller
 
     public function manage_pallet_history_page()
     {
-        // $palletHistory = PalletHistory::all();
-        $palletHistory = DB::table('pallet_histories')
-            ->join('items', 'pallet_histories.item_id', '=', 'items.id') //join('tabel yang mau di tambahin', 'tabel utama.value yang mau dicocokin', '=', 'tabel yang ditambahin.value yang mau dicocokin')
-            ->join('users', 'pallet_histories.user', '=', 'users.id') //bagian join bisa dilakuin berkali kali
-            ->select('pallet_histories.*', 'items.item_name', 'users.name')->get(); //jgn lupa manggil semua tabel utamanya terus ditambah lagi kolom yang diinginkan
-        // dd($palletHistory);
+        $user = Auth::user();
+
+        // $pallet = Pallet::all();
+        // $item = Item::all();
+        if ($user->level == 'admin') {
+            // $palletHistory = PalletHistory::all();
+            $palletHistory = DB::table('pallet_histories')
+                ->join('items', 'pallet_histories.item_id', '=', 'items.id') //join('tabel yang mau di tambahin', 'tabel utama.value yang mau dicocokin', '=', 'tabel yang ditambahin.value yang mau dicocokin')
+                ->join('users', 'pallet_histories.user', '=', 'users.id') //bagian join bisa dilakuin berkali kali
+                ->select('pallet_histories.*', 'items.item_name', 'users.name')->get(); //jgn lupa manggil semua tabel utamanya terus ditambah lagi kolom yang diinginkan
+            // dd($palletHistory);
+        } else {
+            $palletHistory = DB::table('pallet_histories')
+                ->join('items', 'pallet_histories.item_id', '=', 'items.id')
+                ->join('customer', 'items.customer_id', '=', 'customer.id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->join('users', 'pallet_histories.user', '=', 'users.id')
+                ->select('pallet_histories.*', 'items.item_name', 'users.name')
+                ->where('user_id', $user->id)->get();
+        }
+
+
+
+        // $pallet = DB::table('pallets')
+        //         ->join('items', 'pallets.item_id', '=', 'items.id')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+        //         ->select('pallets.*', 'items.item_name', 'customer.id as customer_id', 'customer.customer_name', 'user_accesses.user_id')
+        //         ->where('user_id', $user->id)->get();
+
+
         return view('palletHistory', compact('palletHistory'));
-
-
-        // $users = DB::table('users')
-        //     ->join('contacts', 'users.id', '=', 'contacts.user_id')
-        //     ->join('orders', 'users.id', '=', 'orders.user_id')
-        //     ->select('users.*', 'contacts.phone', 'orders.price')
-        //     ->get();
     }
 }
