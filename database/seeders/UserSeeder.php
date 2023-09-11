@@ -29,5 +29,12 @@ class UserSeeder extends Seeder
             'password' => Hash::make('gudang'),
             'level' => 'gudang',
         ]);
+
+        DB::table('users')->insert([
+            'name' => 'customer',
+            'email' => 'customer@gmail.com',
+            'password' => Hash::make('customer'),
+            'level' => 'customer',
+        ]);
     }
 }
