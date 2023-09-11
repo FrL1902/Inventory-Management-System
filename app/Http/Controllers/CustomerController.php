@@ -87,9 +87,9 @@ class CustomerController extends Controller
 
         $request->validate([
             'customerid' => 'required|unique:App\Models\Customer,customer_id|min:4|max:10|alpha_dash',
-            'customername' => 'required|min:4|max:30|regex:/^[a-zA-Z0-9,\.\-\s\'()]+$/u',  //kalo emg udh menyerah bgt ya pake alpha:ascii aje, https://laravel.com/docs/10.x/validation#rule-alpha, ga perlu, pake alpha:dash aja   /^[a-zA-Z0-9,\.\-\s\'()]+$/
+            'customername' => 'required|min:4|max:150|regex:/^[a-zA-Z0-9,\.\-\s\'()]+$/u',  //kalo emg udh menyerah bgt ya pake alpha:ascii aje, https://laravel.com/docs/10.x/validation#rule-alpha, ga perlu, pake alpha:dash aja   /^[a-zA-Z0-9,\.\-\s\'()]+$/
             // /^[\pL\s\-\']+$/u ini yang lama
-            'address' => 'required|min:5|max:100',
+            'address' => 'required|min:5|max:300',
             // 'email' => 'required',
             // 'phone1' => 'required'
         ], [
@@ -98,10 +98,10 @@ class CustomerController extends Controller
             'customerid.max' => 'ID Customer maksimal 10 karakter',
             'customerid.alpha_dash' => 'ID Customer hanya membolehkan huruf, angka, -, _ (spasi dan simbol lainnya tidak diterima)',
             'customername.min' => 'Nama Customer minimal 4 karakter',
-            'customername.max' => 'Nama Customer maksimal 30 karakter',
+            'customername.max' => 'Nama Customer maksimal 150 karakter',
             'customername.regex' => 'Nama Customer hanya membolehkan huruf, spasi, angka, koma, titik, strip, petik satu, buka dan tutup kurung',
             'address.min' => 'Alamat Customer minimal 5 karakter',
-            'address.max' => 'Alamat Customer maksimal 100 karakter',
+            'address.max' => 'Alamat Customer maksimal 300 karakter',
         ]);
 
         $customer = new Customer();
@@ -280,13 +280,13 @@ class CustomerController extends Controller
             $flagNull += 1;
         } else {
             $request->validate([
-                'customername' => 'min:4|max:30|regex:/^[a-zA-Z0-9,\.\-\s\'()]+$/u',
+                'customername' => 'min:4|max:150|regex:/^[a-zA-Z0-9,\.\-\s\'()]+$/u',
                 // old regex /^[\pL\s\-]+$/u'
                 // mar i, binti - nur ai'man
                 // /^[a-zA-Z0-9,\.\-\s\'()]+$/u
             ], [
                 'customername.min' => 'Nama Customer minimal 4 karakter',
-                'customername.max' => 'Nama Customer maksimal 30 karakter',
+                'customername.max' => 'Nama Customer maksimal 150 karakter',
                 'customername.regex' => 'Nama Customer hanya membolehkan huruf, spasi, angka, koma, titik, strip, petik satu, buka dan tutup kurung',
             ]);
             $customer->customer_name = $request->customername;
@@ -296,10 +296,10 @@ class CustomerController extends Controller
             $flagNull += 1;
         } else {
             $request->validate([
-                'address' => 'min:5|max:100',
+                'address' => 'min:5|max:300',
             ], [
                 'address.min' => 'Alamat Customer minimal 5 karakter',
-                'address.max' => 'Alamat Customer maksimal 100 karakter',
+                'address.max' => 'Alamat Customer maksimal 300 karakter',
             ]);
             $customer->address = $request->address;
         }
