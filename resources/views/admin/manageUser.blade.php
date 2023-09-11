@@ -192,10 +192,20 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                 <td>{{ $data->level }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a style="cursor: pointer"
-                                                            href="/userAccess/{{ $data->id }}"><i class="fa fa-users mt-3 text-primary"
-                                                                data-toggle="tooltip" data-original-title="edit access">
-                                                            </i></a>
+                                                        @if ($data->level == 'admin')
+                                                            <a style="cursor: pointer"><i
+                                                                    class="fa fa-users mt-3 text-success"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="admin has all access">
+                                                                </i></a>
+                                                        @else
+                                                            <a style="cursor: pointer"
+                                                                href="/userAccess/{{ $data->id }}"><i
+                                                                    class="fa fa-users mt-3 text-primary"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="edit customer access">
+                                                                </i></a>
+                                                        @endif
                                                         <a style="cursor: pointer" class="ml-3"
                                                             data-target="#editPasswordCenter{{ $data->id }}"
                                                             data-toggle="modal"><i class="fa fa-key mt-3 text-warning"
