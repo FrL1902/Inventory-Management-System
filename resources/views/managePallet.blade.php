@@ -162,7 +162,7 @@
 
                                             @foreach ($pallet as $pallet)
                                                 <tr>
-                                                    <td>{{ $pallet->item->item_name }}</td>
+                                                    <td>{{ $pallet->item_name }}</td>
                                                     <td>{{ $pallet->stock }}</td>
                                                     <td>{{ $pallet->bin }}</td>
                                                     <td>{{ $pallet->description }}</td>
@@ -197,7 +197,7 @@
                                                                         <h3 class="modal-title"
                                                                             id="exampleModalLongTitle">
                                                                             <strong> Keluarkan Stok barang
-                                                                                "{{ $pallet->item->item_name }}"</strong>
+                                                                                "{{ $pallet->item_name }}"</strong>
                                                                         </h3>
                                                                     </div>
                                                                 </div>
