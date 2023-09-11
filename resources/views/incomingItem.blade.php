@@ -128,7 +128,7 @@
                                                                     id="customerLabelExportIncoming" data-width="100%"
                                                                     name="customerIncoming">
                                                                     @foreach ($customer as $data)
-                                                                        <option value="{{ $data->realCustomerId }}">
+                                                                        <option value="{{ $data->id }}">
                                                                             {{ $data->customer_name }}
                                                                         </option>
                                                                     @endforeach
@@ -246,7 +246,7 @@
                                                                     data-width="100%" name="itemIncoming">
                                                                     @foreach ($item as $data)
                                                                         <option value="{{ $data->id }}">
-                                                                            {{ $data->item_name }} {{ $data->id }}
+                                                                            {{ $data->item_name }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -317,6 +317,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <input type="hidden" class="form-control"
+                                                                name="userIdHidden" value="{{ auth()->user()->id }}">
                                                     </form>
                                                 </div>
                                             </div>

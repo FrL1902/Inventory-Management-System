@@ -318,6 +318,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <input type="hidden" class="form-control" name="userIdHidden"
+                                                            value="{{ auth()->user()->id }}">
                                                     </form>
                                                 </div>
                                             </div>
@@ -446,10 +448,10 @@
                                         <tbody>
                                             @foreach ($outgoing as $outgoing)
                                                 <tr>
-                                                    <td>{{ $outgoing->customer->customer_name }}</td>
-                                                    <td>{{ $outgoing->brand->brand_name }}</td>
-                                                    <td>{{ $outgoing->item->item_id }}</td>
-                                                    <td>{{ $outgoing->item->item_name }}</td>
+                                                    <td>{{ $outgoing->customer_name }}</td>
+                                                    <td>{{ $outgoing->brand_name }}</td>
+                                                    <td>{{ $outgoing->item_id }}</td>
+                                                    <td>{{ $outgoing->item_name }}</td>
                                                     <td>{{ $outgoing->stock_taken }}</td>
                                                     {{-- <td>{{ $outgoing->depart_date }}</td> --}}
                                                     <td>{{ date_format(date_create($outgoing->depart_date), 'D d-m-Y') }}
@@ -499,7 +501,7 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>Apakah anda yakin untuk menghapus data barang masuk
-                                                                    "{{ $outgoing->item->item_name }}" ?</p>
+                                                                    "{{ $outgoing->item_name }}" ?</p>
                                                                 <p>Jika dihapus, stok yang dimiliki akan bertambah sebanyak
                                                                     <strong>{{ $outgoing->stock_taken }} barang</strong>
                                                                 </p>
@@ -527,7 +529,7 @@
                                                                         <h3 class="modal-title"
                                                                             id="exampleModalLongTitle">
                                                                             <strong> Update data untuk
-                                                                                "{{ $outgoing->item->item_name }}"</strong>
+                                                                                "{{ $outgoing->item_name }}"</strong>
                                                                         </h3>
                                                                     </div>
                                                                     <div class="p-2">
@@ -597,7 +599,7 @@
                                                             <div class="modal-header">
                                                                 <h3 class="modal-title" id="exampleModalLongTitle">
                                                                     <strong>Barang Keluar
-                                                                        "{{ $outgoing->item->item_name }}" pada
+                                                                        "{{ $outgoing->item_name }}" pada
                                                                         {{ $outgoing->created_at }}</strong>
                                                                 </h3>
                                                                 <button type="button" class="close"

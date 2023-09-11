@@ -13,6 +13,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -20,10 +22,49 @@ class OutgoingController extends Controller
 {
     public function add_outgoing_item_page()
     {
-        $item = Item::all();
-        $outgoing = Outgoing::all();
-        $brand = Brand::all();
-        $customer = Customer::all();
+        $user = Auth::user();
+
+        if ($user->level == 'admin') {
+
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.id')
+                ->select('items.item_name', 'items.item_id', 'items.id')->get();
+
+            $customer = DB::table('customer')
+                ->select('customer.customer_name', 'customer.customer_id', 'customer.id')->get();
+
+            $outgoing = DB::table('outgoings')
+                ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
+                ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
+                ->join('items', 'outgoings.item_id', '=', 'items.id')
+                ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')->get();
+
+            $brand =  DB::table('brand')
+                ->select('brand.id', 'brand.brand_name')->get();
+        } else {
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('items.item_name', 'items.item_id', 'items.id')
+                ->where('user_id', $user->id)->get();
+
+            $customer = DB::table('customer')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.id')
+                ->select('customer.customer_name', 'customer.customer_id', 'customer.id')
+                ->where('user_id', $user->id)->get();
+
+            $outgoing = DB::table('outgoings')
+                ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
+                ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
+                ->join('items', 'outgoings.item_id', '=', 'items.id')
+                ->join('user_accesses', 'outgoings.customer_id', '=', 'user_accesses.customer_id')
+                ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+                ->where('user_id', $user->id)->get();
+
+            $brand =  DB::table('brand')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
+                ->select('brand.id', 'brand.brand_name')->where('user_id', $user->id)->get();
+        }
 
         return view('outgoingItem', compact('outgoing', 'item', 'customer', 'brand'));
 
@@ -112,8 +153,29 @@ class OutgoingController extends Controller
     {
         $date_from = Carbon::parse($request->startRange)->startOfDay();
         $date_to = Carbon::parse($request->endRange)->endOfDay();
+
+        $user = User::find($request->userIdHidden);
+
         // $sortAll = Outgoing::all()->whereBetween('created_at', [$date_from, $date_to]); // versi lama pake created at
-        $sortAll = Outgoing::all()->whereBetween('depart_date', [$date_from, $date_to]);
+        // $sortAll = Outgoing::all()->whereBetween('depart_date', [$date_from, $date_to]);
+
+        if ($user->level == 'gudang') {
+            $sortAll = DB::table('outgoings')
+                ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
+                ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
+                ->join('items', 'outgoings.item_id', '=', 'items.id')
+                ->join('user_accesses', 'outgoings.customer_id', '=', 'user_accesses.customer_id')
+                ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+                ->where('user_id', $request->userIdHidden)->whereBetween('depart_date', [$date_from, $date_to])->get();
+        } else {
+            $sortAll = DB::table('outgoings')
+                ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
+                ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
+                ->join('items', 'outgoings.item_id', '=', 'items.id')
+                ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+                ->whereBetween('depart_date', [$date_from, $date_to])->get();
+        }
+
         $formatFileName = 'DataBarangKeluar ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 
         return Excel::download(new OutgoingExport($sortAll), $formatFileName . '.xlsx');
@@ -174,6 +236,7 @@ class OutgoingController extends Controller
             'stocks' => $newValue
         ]);
 
+        Storage::delete('public/' . $outgoingInfo->item_pictures);
         $outgoingInfo->delete();
         // session()->flash('suksesDeleteIncoming', 'Sukses hapus data kedatangan barang ' . $itemInfo->item_name . ' (' + intval($itemInfo->stocks) . ') stock');
         session()->flash('suksesDeleteOutgoing', 'Sukses hapus data keluar barang ' . $itemInfo->item_name);
@@ -222,7 +285,6 @@ class OutgoingController extends Controller
 
 
                 $file = $request->file('outgoingItemImage');
-
             } else {
                 // dd("lha");
                 Outgoing::where('id', $request->itemIdHidden)->update([
@@ -253,7 +315,6 @@ class OutgoingController extends Controller
                 ]);
 
                 session()->flash('suksesUpdateOutgoing', 'Sukses update data keluar barang ' . $itemInfo->item_name);
-
             } else {
                 $request->session()->flash('suksesUpdateOutgoing', 'Sukses update data keluar barang ' . $itemInfo->item_name);
             }
