@@ -276,6 +276,36 @@ class ItemController extends Controller
 
     public function customer_report_page()
     {
-        return view('customerReport');
+
+        session()->forget('deleteFilterButton');
+
+        $user = Auth::user();
+
+        if ($user->level == 'admin') {
+            $pallet = DB::table('pallets')
+                ->join('items', 'pallets.item_id', '=', 'items.id')
+                ->select('pallets.*', 'items.item_name')->get();
+            // dd($pallet);
+
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.id')
+                ->select('items.item_name', 'items.item_id', 'items.id')->get();
+        } else {
+            $pallet = DB::table('pallets')
+                ->join('items', 'pallets.item_id', '=', 'items.id')
+                ->join('customer', 'items.customer_id', '=', 'customer.id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('pallets.*', 'items.item_name', 'items.item_id', 'customer.id as customer_id', 'customer.customer_name', 'user_accesses.user_id')
+                ->where('user_id', $user->id)->get();
+            // dd($pallet);
+
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('items.item_name', 'items.item_id', 'items.id')
+                ->where('user_id', $user->id)->get();
+        }
+
+        return view('customerReport', compact('item', 'pallet'));
     }
 }
