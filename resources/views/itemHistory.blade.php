@@ -226,13 +226,13 @@
                                     <table id="add-row" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th>History ID</th>
-                                                <th>Item ID</th>
-                                                <th>Item Name</th>
+                                                {{-- <th>History ID</th> --}}
+                                                <th>ID barang</th>
+                                                <th>Nama Barang</th>
                                                 <th>Status</th>
-                                                <th>Value</th>
-                                                <th>By User</th>
-                                                <th>Updated At (system)</th>
+                                                <th>Stok</th>
+                                                <th>Oleh User</th>
+                                                <th>Waktu (system)</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -247,20 +247,20 @@
                                                 Updated At : ini tunjukin created at
                                                 By User : ini pake auth --}}
 
-                                                <th>History ID</th>
-                                                <th>Item ID</th>
-                                                <th>Item Name</th>
+                                                {{-- <th>History ID</th> --}}
+                                                <th>ID barang</th>
+                                                <th>Nama Barang</th>
                                                 <th>Status</th>
-                                                <th>Value</th>
-                                                <th>By User</th>
-                                                <th>Updated At (system)</th>
+                                                <th>Stok</th>
+                                                <th>Oleh User</th>
+                                                <th>Waktu (system)</th>
 
                                             </tr>
                                         </tfoot>
                                         <tbody>
                                             @foreach ($history as $history)
                                                 <tr>
-                                                    <td>{{ $history->id }}</td>
+                                                    {{-- <td>{{ $history->id }}</td> --}}
                                                     <td>{{ $history->item_id }}</td>
                                                     <td>{{ $history->item_name }}</td>
                                                     @if ($history->status == 'BARANG KELUAR')

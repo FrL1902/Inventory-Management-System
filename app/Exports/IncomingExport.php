@@ -38,7 +38,8 @@ class IncomingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
     public function headings(): array
     {
         return [
-            'ID', 'Customer Name', 'Brand Name', 'Item Name', 'Date Arrived', 'Stock Before', 'Stock Added', 'Stock After', 'description', 'picture link'
+            // 'ID', 'Customer Name', 'Brand Name', 'Item Name', 'Date Arrived', 'Stock Before', 'Stock Added', 'Stock After', 'description', 'picture link'
+            'ID', 'Nama Customer', 'Nama Brand', 'Nama Barang', 'Tanggal Datang', 'Stok Datang', 'deskripsi', 'link gambar'
         ];
     }
 
@@ -68,9 +69,9 @@ class IncomingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
             (is_null($item->item_name)) ? $item->item->item_name : $item->item_name,
             // $item->arrive_date,
             date_format(date_create($item->arrive_date), 'd-m-Y'),
-            ($item->stock_before == 0) ? "0" : $item->stock_before,
+            // ($item->stock_before == 0) ? "0" : $item->stock_before,
             $item->stock_added,
-            ($item->stock_now == 0) ? "0" : $item->stock_now,
+            // ($item->stock_now == 0) ? "0" : $item->stock_now,
             $item->description,
             // $item->picture_link,
             "http://127.0.0.1:8000/storage/" . $item->item_pictures,

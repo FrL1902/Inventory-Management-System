@@ -45,6 +45,6 @@ class brandExport implements FromCollection, ShouldAutoSize, WithHeadings, WithM
 
     public function headings(): array
     {
-        return ["ID", "Customer ID", "Customer Name", "Brand ID", "Brand Name", "Created At", "Last Updated At"];
+        return ["ID", "ID Customer", "Nama Customer", "ID Brand", "Nama Brand", "Created At", "Last Updated At"];
     }
 }

@@ -48,6 +48,6 @@ class editItemExport implements FromCollection, ShouldAutoSize, WithHeadings, Wi
 
     public function headings(): array
     {
-        return ["ID", "Item ID", "Item Name", "Brand ID", "Brand Name", "Customer ID", "Customer Name", "Stock", "picture link", "Created At", "Last Updated At"];
+        return ["ID", "ID Barang", "Nama Barang", "ID Brand", "Nama Brand", "ID Customer", "Nama Customer", "Stok", "link gambar", "Created At", "Last Updated At"];
     }
 }

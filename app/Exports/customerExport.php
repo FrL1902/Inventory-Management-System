@@ -47,6 +47,6 @@ class customerExport implements FromCollection, ShouldAutoSize, WithHeadings, Wi
 
     public function headings(): array
     {
-        return ["ID", "Customer ID", "Customer Name", "Address", "Email", "Phone 1", "Phone 2", "Fax", "Website", "PIC name", "PIC phone", "NPWP Perusahaan", "Created At", "Last Updated At"];
+        return ["ID", "ID Customer", "Nama Customer", "Alamat", "Email", "Phone 1", "Phone 2", "Fax", "Website", "Nama Person In Charge (PIC)", "PIC phone", "NPWP Perusahaan", "Created At", "Last Updated At"];
     }
 }

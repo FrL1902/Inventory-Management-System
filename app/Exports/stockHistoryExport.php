@@ -45,6 +45,9 @@ class stockHistoryExport implements FromCollection, ShouldAutoSize, WithHeadings
 
     public function headings(): array
     {
-        return ["ID", "Item ID", "Item Name", "Status", "Value", "By User", "Created At", "Last Updated At"];
+        return [
+            // "ID", "Item ID", "Item Name", "Status", "Value", "By User", "Created At", "Last Updated At"
+            "ID", "ID Barang", "Nama Barang", "Status", "Stok", "Oleh User", "Created At", "Last Updated At"
+    ];
     }
 }
