@@ -284,7 +284,7 @@ class ItemController extends Controller
         if ($user->level == 'admin') {
             $pallet = DB::table('pallets')
                 ->join('items', 'pallets.item_id', '=', 'items.id')
-                ->select('pallets.*', 'items.item_name')->get();
+                ->select('pallets.*', 'items.item_name', 'items.item_id')->get();
             // dd($pallet);
 
             $item = DB::table('items')

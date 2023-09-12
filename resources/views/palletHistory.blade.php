@@ -33,7 +33,7 @@
                                                 <th>Stok</th>
                                                 <th>BIN</th>
                                                 <th>Status</th>
-                                                <th>Waktu</th>
+                                                <th>Waktu (system)</th>
                                                 <th>User</th>
                                             </tr>
                                         </thead>
@@ -43,7 +43,7 @@
                                                 <th>Stok</th>
                                                 <th>BIN</th>
                                                 <th>Status</th>
-                                                <th>Waktu</th>
+                                                <th>Waktu (system)</th>
                                                 <th>User</th>
                                             </tr>
                                         </tfoot>

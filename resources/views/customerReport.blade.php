@@ -9,7 +9,7 @@
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
-            Disini customer bisa melihat posisi palet untuk setiap barang secara langsung
+            {{-- Disini customer bisa melihat posisi palet untuk setiap barang secara langsung --}}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -208,10 +208,10 @@
                                     <tbody>
                                         @foreach ($pallet as $data)
                                             <tr>
-                                                <td>{{ $pallet->item_id }}</td>
-                                                <td>{{ $pallet->item_name }}</td>
-                                                <td>{{ $pallet->stock }}</td>
-                                                <td>{{ $pallet->bin }}</td>
+                                                <td>{{ $data->item_id }}</td>
+                                                <td>{{ $data->item_name }}</td>
+                                                <td>{{ $data->stock }}</td>
+                                                <td>{{ $data->bin }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
