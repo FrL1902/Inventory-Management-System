@@ -46,6 +46,7 @@ Route::post('/tex',            [UserController::class, 'tex'])->middleware('secu
 Route::post('/newPasswordFromAdmin', [UserController::class, 'newPasswordFromAdmin'])->middleware('security');
 Route::get('/userAccess/{id}', [UserController::class, 'user_access_page'])->middleware('security');
 Route::post('/addNewUserAccess', [UserController::class, 'add_new_user_access'])->middleware('security');
+Route::get('/deleteAccess/{id}', [UserController::class, 'delete_user_access'])->middleware('security');
 
 // buat tombol navbar samping
 

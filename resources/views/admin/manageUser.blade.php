@@ -453,7 +453,8 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <p>Apakah anda yakin untuk menghapus user
-                                                                            {{ $data->name }}?</p>
+                                                                            "{{ $data->name }}"?</p>
+                                                                        <p>Data yang berhubungan dengan user ini akan tidak bisa diakses / akan terhapus</p>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button"

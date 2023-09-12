@@ -6,6 +6,7 @@ use App\Exports\UserExport;
 use App\Models\Customer;
 use App\Models\User;
 use App\Models\UserAccess;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -124,9 +125,10 @@ class UserController extends Controller
             $access->customer_id = $request->customerforaccess;
             $access->save();
             // dd('y');
+            $request->session()->flash('userAccessSuccess', 'Sukses memberikan akses ke user');
             return redirect()->back();
         } else {
-            dd('user sudah punya akses ke customer ini');
+            // dd('user sudah punya akses ke customer ini');
             $request->session()->flash('akses_already_there', 'user sudah punya akses ke customer ini');
             return redirect()->back();
         }
@@ -173,5 +175,23 @@ class UserController extends Controller
             $request->session()->flash('passwordUpdated', 'Update Berhasil: password berhasil diubah');
             return redirect()->back();
         }
+    }
+
+    public function delete_user_access($id)
+    {
+        try {
+            $decrypted = decrypt($id);
+        } catch (DecryptException $e) {
+            abort(403);
+        }
+        // dd($decrypted);
+
+        $access = UserAccess::find($decrypted);
+
+        $access->delete();
+
+        session()->flash('deletedAccess', 'Akses user berhasil di hapus');
+
+        return redirect()->back();
     }
 }

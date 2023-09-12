@@ -5,6 +5,22 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
+                @if (session('deletedAccess'))
+                    <div class="alert alert-warning alert-block" id="alertDelete">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ session('deletedAccess') }}</strong>
+                    </div>
+                @elseif (session('akses_already_there'))
+                    <div class="alert alert-danger alert-block" id="alertFailed">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ session('akses_already_there') }}</strong>
+                    </div>
+                @elseif (session('userAccessSuccess'))
+                    <div class="alert alert-success alert-block" id="alertSuccess">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ session('userAccessSuccess') }}</strong>
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
@@ -88,7 +104,48 @@
                                                 <tr>
                                                     <td>{{ $data->customer_name }}</td>
                                                     <td>{{ $data->customer_id }}</td>
-                                                    <td>edit</td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center">
+                                                            <a class="ml-3" style="cursor: pointer"
+                                                                data-target="#deleteAccessModal{{ $data->id }}"
+                                                                data-toggle="modal">
+                                                                <i class="fa fa-times mt-3 text-danger"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Hapus Akses ke customer ini">
+                                                                </i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="modal fade" id="deleteAccessModal{{ $data->id }}">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                                            <strong>PENGHAPUSAN AKSES</strong>
+                                                                        </h5>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>Apakah anda yakin untuk menghapus akses user ke
+                                                                            customer
+                                                                            "{{ $data->customer_name }}" ?</p>
+                                                                        <p>Jika dihapus, user tidak akan punya akses untuk
+                                                                            melihat dan mengubah data dari customer ini</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            id="close-modal"
+                                                                            data-dismiss="modal">Tidak</button>
+                                                                        <a href="/deleteAccess/{{ encrypt($data->id) }}"
+                                                                            class="btn btn-danger">YAKIN
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
