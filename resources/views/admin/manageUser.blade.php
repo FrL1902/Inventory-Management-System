@@ -101,6 +101,19 @@ https://www.w3schools.com/css/css3_animations.asp --}}
             @endif
 
 
+            @if (session('akses_already_there'))
+                <div class="alert alert-danger alert-block" id="alertFailed">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ session('akses_already_there') }}</strong>
+                </div>
+            @elseif (session('userAccessSuccess'))
+                <div class="alert alert-success alert-block" id="alertSuccess">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ session('userAccessSuccess') }}</strong>
+                </div>
+            @endif
+
+
 
             <div class="row">
                 <div class="col-md-12">
@@ -198,9 +211,17 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                     data-toggle="tooltip"
                                                                     data-original-title="admin has all access">
                                                                 </i></a>
+                                                        @elseif ($data->level == 'customer')
+                                                            <a style="cursor: pointer"
+                                                                data-target="#editCustomerAccess{{ $data->id }}"
+                                                                data-toggle="modal"><i
+                                                                    class="fa fa-users mt-3 text-primary"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Assign Customer">
+                                                                </i></a>
                                                         @else
                                                             <a style="cursor: pointer"
-                                                                href="/userAccess/{{ $data->id }}"><i
+                                                                href="/userAccess/{{ encrypt($data->id) }}"><i
                                                                     class="fa fa-users mt-3 text-primary"
                                                                     data-toggle="tooltip"
                                                                     data-original-title="edit customer access">
@@ -247,10 +268,65 @@ https://www.w3schools.com/css/css3_animations.asp --}}
 
                                                     <div class="form-button-action">
 
+                                                        {{-- customer assign --}}
+                                                        <div class="modal fade"
+                                                            id="editCustomerAccess{{ $data->id }}" tabindex="-1"
+                                                            role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h3 class="modal-title"
+                                                                            id="exampleModalLongTitle">
+                                                                            <strong>Assign Customer
+                                                                                "{{ $data->name }}"</strong>
+                                                                        </h3>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form method="post" action="/customerAssign">
+                                                                            @csrf
+                                                                            <div class="card-body">
+                                                                                <div class="form-group">
+                                                                                    {{-- <p>Saat ini "{{ $data->name }}" mempunyai akses ke customer </p> --}}
+                                                                                    <label>Customer</label>
+                                                                                    <select class="form-control"
+                                                                                        id="customeridforassign"
+                                                                                        name="customeridforassign">
+                                                                                        @foreach ($customer as $cust)
+                                                                                            <option
+                                                                                                value="{{ $cust->id }}">
+                                                                                                {{ $cust->customer_name }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                    <div class="card mt-5 ">
+                                                                                        <button id=""
+                                                                                            class="btn btn-primary">Assign</button>
+                                                                                    </div>
+                                                                                </div>
+
+
+
+                                                                                <input type="hidden"
+                                                                                    class="form-control"
+                                                                                    name="userIdHidden"
+                                                                                    value="{{ $data->id }}">
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="editModalCenter{{ $data->id }}"
-                                                            tabindex="-1" role="dialog"
-                                                            aria-labelledby="exampleModalCenterTitle"
+                                                        <div class="modal fade"
+                                                            id="editModalCenter{{ $data->id }}" tabindex="-1"
+                                                            role="dialog" aria-labelledby="exampleModalCenterTitle"
                                                             aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered"
                                                                 role="document">
@@ -454,7 +530,8 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                     <div class="modal-body">
                                                                         <p>Apakah anda yakin untuk menghapus user
                                                                             "{{ $data->name }}"?</p>
-                                                                        <p>Data yang berhubungan dengan user ini akan tidak bisa diakses / akan terhapus</p>
+                                                                        <p>Data yang berhubungan dengan user ini akan
+                                                                            tidak bisa diakses / akan terhapus</p>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button"
@@ -465,7 +542,7 @@ https://www.w3schools.com/css/css3_animations.asp --}}
 
                                                                         {{-- jadi kalo mau delete pake ini aja deh, jadi tombol href didalem modalnya, nah skrg yg aku mau itu gmn caranya tombol icon yang dari manage usernya bisa ngaktifin modal, tombol icon, bukan tombol kotaknya, terus yg href delete di modalnya baru tombol kotak  3 --}}
 
-                                                                        <a href="/deleteUser/{{ $data->id }}"
+                                                                        <a href="/deleteUser/{{ encrypt($data->id) }}"
                                                                             class="btn btn-danger">
                                                                             {{-- <i class="btn btn-danger"
                                                                                 data-original-title="Delete User"> SETUJU

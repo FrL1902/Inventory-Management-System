@@ -195,11 +195,13 @@ class IncomingController extends Controller
 
         //proses history
         $history = new StockHistory();
+        $history->item_id = $itemInfo->item_id;
         $history->item_name = $itemInfo->item_name;
-        $history->stock_before = $itemInfo->stocks;
-        $history->stock_added = $request->itemAddStock;
-        $history->stock_taken = 0;
-        $history->stock_now = $newValue;
+        // $history->stock_before = $itemInfo->stocks;
+        $history->status = "BARANG DATANG";
+        $history->value = $request->itemAddStock;
+        // $history->stock_taken = 0;
+        // $history->stock_now = $newValue;
         $history->user_who_did = $userInfo->name;
 
         $history->save();

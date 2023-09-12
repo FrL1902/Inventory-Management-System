@@ -289,6 +289,15 @@
                             <div class="collapse @yield('showmanageitem')" id="item">
                                 <ul class="nav nav-collapse">
                                     @auth
+                                        @if (Auth::user()->level != 'gudang')
+                                            <li class="@yield('report')">
+                                                <a href="/customerReport">
+                                                    <span class="sub-item">Laporan Customer</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endauth
+                                    @auth
                                         @if (Auth::user()->level == 'admin')
                                             <li class="@yield('newitem')">
                                                 <a href="/newItem">
@@ -302,16 +311,20 @@
                                             </li>
                                         @endif
                                     @endauth
-                                    <li class="@yield('newincoming')">
-                                        <a href="/newIncoming">
-                                            <span class="sub-item">Barang Datang</span>
-                                        </a>
-                                    </li>
-                                    <li class="@yield('newoutgoing')">
-                                        <a href="/newOutgoing">
-                                            <span class="sub-item">Barang Keluar</span>
-                                        </a>
-                                    </li>
+                                    @auth
+                                        @if (Auth::user()->level != 'customer')
+                                            <li class="@yield('newincoming')">
+                                                <a href="/newIncoming">
+                                                    <span class="sub-item">Barang Datang</span>
+                                                </a>
+                                            </li>
+                                            <li class="@yield('newoutgoing')">
+                                                <a href="/newOutgoing">
+                                                    <span class="sub-item">Barang Keluar</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endauth
                                     <li class="@yield('managehistory')">
                                         <a href="/manageHistory">
                                             <span class="sub-item">Sejarah Semua Barang</span>
@@ -329,11 +342,15 @@
                             {{-- color of the pressed button is style="background-color: #f7f7f7" --}}
                             <div class="collapse @yield('showmanagepallet')" id="pallet">
                                 <ul class="nav nav-collapse">
-                                    <li class="@yield('managepallet')">
-                                        <a href="/managePallet">
-                                            <span class="sub-item">Kelola Data Palet</span>
-                                        </a>
-                                    </li>
+                                    @auth
+                                        @if (Auth::user()->level != 'customer')
+                                            <li class="@yield('managepallet')">
+                                                <a href="/managePallet">
+                                                    <span class="sub-item">Kelola Data Palet</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endauth
                                     <li class="@yield('managepallethistory')">
                                         <a href="/managePalletHistory">
                                             <span class="sub-item">Sejarah Palet</span>
@@ -516,6 +533,21 @@
         // add new outgoing package di outgoing
         $('#itemidforpallet').select2({
             dropdownParent: $('#addPalletModal')
+        });
+    </script>
+
+    {{-- MANAGE USER PAGE --}}
+    {{-- <script>
+        // add new outgoing package di outgoing
+        $('#customeridforassign').select2({
+            dropdownParent: $('#editCustomerAccess')
+        });
+    </script> --}}
+
+    {{-- ITEM HISTORY PAGE --}}
+    <script>
+        $('#itemHistoryExport').select2({
+            dropdownParent: $('#exportItemHistorymModal')
         });
     </script>
 

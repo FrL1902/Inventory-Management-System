@@ -31,11 +31,10 @@ class stockHistoryExport implements FromCollection, ShouldAutoSize, WithHeadings
     {
         return [
             $item->id,
+            $item->item_id,
             $item->item_name,
-            $item->stock_before,
-            $item->stock_added,
-            $item->stock_taken,
-            $item->stock_now,
+            $item->status,
+            $item->value,
             $item->user_who_did,
             $item->created_at,
             // date_format($item->joined_at, "D/d/m/y H:i:s"),
@@ -46,6 +45,6 @@ class stockHistoryExport implements FromCollection, ShouldAutoSize, WithHeadings
 
     public function headings(): array
     {
-        return ["ID", "Item Name", "Stock Before", "Stock Added", "Stock Taken", "Stock Now", "By User", "Created At", "Last Updated At"];
+        return ["ID", "Item ID", "Item Name", "Status", "Value", "By User", "Created At", "Last Updated At"];
     }
 }

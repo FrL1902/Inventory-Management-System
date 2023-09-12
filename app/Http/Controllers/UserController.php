@@ -26,8 +26,9 @@ class UserController extends Controller
     public function manage_user_page()
     {
         $user = User::all();
+        $customer = Customer::all();
 
-        return view('admin.manageUser', compact('user'));
+        return view('admin.manageUser', compact('user', 'customer'));
     }
 
     // public function update(Request $request)
@@ -39,7 +40,7 @@ class UserController extends Controller
     public function makeUser(Request $request)
     {
         $request->validate([
-            'usernameform' => 'required|unique:App\Models\User,name|min:4|max:16',
+            'usernameform' => 'required|unique:App\Models\User,name|min:4|max:50',
             'emailform' => 'required|unique:App\Models\User,email',
             'passwordform' => 'required|min:6|max:20'
         ]);
@@ -62,7 +63,13 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $user = User::find($id);
+        try {
+            $decrypted = decrypt($id);
+        } catch (DecryptException $e) {
+            abort(403);
+        }
+
+        $user = User::find($decrypted);
 
         $deletedUser = $user->name;
 
@@ -97,10 +104,16 @@ class UserController extends Controller
     public function user_access_page($id)
     {
         // dd($id);
-        $user = User::find($id);
+        try {
+            $decrypted = decrypt($id);
+        } catch (DecryptException $e) {
+            abort(403);
+        }
+
+        $user = User::find($decrypted);
         $customer = Customer::all();
         // $access = UserAccess::where('user_id', $id)->get();
-        $access = DB::table('user_accesses')->join('customer', 'user_accesses.customer_id', '=', 'customer.id')->select('user_accesses.*', 'customer.customer_name', 'customer.customer_id')->where('user_id', $id)->get();;
+        $access = DB::table('user_accesses')->join('customer', 'user_accesses.customer_id', '=', 'customer.id')->select('user_accesses.*', 'customer.customer_name', 'customer.customer_id')->where('user_id', $decrypted)->get();
 
         // palletHistory = DB::table('pallet_histories')
         //     ->join('items', 'pallet_histories.item_id', '=', 'items.id') //join('tabel yang mau di tambahin', 'tabel utama.value yang mau dicocokin', '=', 'tabel yang ditambahin.value yang mau dicocokin')
@@ -193,5 +206,37 @@ class UserController extends Controller
         session()->flash('deletedAccess', 'Akses user berhasil di hapus');
 
         return redirect()->back();
+    }
+
+    public function customer_assign(Request $request)
+    {
+        // dd($request->userIdHidden);
+
+        // dd($request->userIdHidden);
+        $exist = UserAccess::where('user_id', 'LIKE', $request->userIdHidden)->where('customer_id', 'LIKE', $request->customeridforassign)->first();
+        // dd($exist->customer_id);
+        if (is_null($exist)) {
+            // dd('y');
+
+            $delete = UserAccess::where('user_id', 'LIKE', $request->userIdHidden)->first();
+            if (!is_null($delete)) {
+                // dd('s');
+                $delete->delete();
+            }
+            $access = new UserAccess();
+            $access->user_id = $request->userIdHidden;
+            $access->customer_id = $request->customeridforassign;
+            $access->save();
+
+
+            // dd('y');
+
+            $request->session()->flash('userAccessSuccess', 'Sukses assign customer');
+            return redirect()->back();
+        } else {
+            // dd('user sudah punya akses ke customer ini');
+            $request->session()->flash('akses_already_there', 'sudah punya akses ke customer ini');
+            return redirect()->back();
+        }
     }
 }

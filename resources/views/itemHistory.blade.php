@@ -102,9 +102,16 @@
                                                                     @endforeach
                                                                 </select> --}}
 
-                                                                <label for="largeInput">Item Name (case sensitive)</label>
+                                                                {{-- <label for="largeInput">Item Name (case sensitive)</label>
                                                                 <input type="text" class="form-control form-control"
-                                                                    placeholder="item name" name="itemHistoryExport">
+                                                                    placeholder="item name" name="itemHistoryExport"> --}}
+                                                                    <select class="form-control" data-width="100%"
+                                                                    id="itemHistoryExport" name="itemHistoryExport">
+                                                                    @foreach ($item as $item)
+                                                                        <option value="{{ $item->item_id }}">
+                                                                            {{ $item->item_name }}</option>
+                                                                    @endforeach
+                                                                </select>
 
                                                             </div>
 
@@ -220,13 +227,12 @@
                                         <thead>
                                             <tr>
                                                 <th>History ID</th>
+                                                <th>Item ID</th>
                                                 <th>Item Name</th>
-                                                <th>Stock before</th>
-                                                <th>Stock added</th>
-                                                <th>Stock taken</th>
-                                                <th>Stock after</th>
-                                                <th>Updated At (system)</th>
+                                                <th>Status</th>
+                                                <th>Value</th>
                                                 <th>By User</th>
+                                                <th>Updated At (system)</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -242,30 +248,41 @@
                                                 By User : ini pake auth --}}
 
                                                 <th>History ID</th>
+                                                <th>Item ID</th>
                                                 <th>Item Name</th>
-                                                <th>Stock before</th>
-                                                <th>Stock added</th>
-                                                <th>Stock taken</th>
-                                                <th>Stock after</th>
-                                                <th>Updated At (system)</th>
+                                                <th>Status</th>
+                                                <th>Value</th>
                                                 <th>By User</th>
+                                                <th>Updated At (system)</th>
 
                                             </tr>
                                         </tfoot>
                                         <tbody>
-
                                             @foreach ($history as $history)
                                                 <tr>
                                                     <td>{{ $history->id }}</td>
+                                                    <td>{{ $history->item_id }}</td>
                                                     <td>{{ $history->item_name }}</td>
-                                                    <td>{{ $history->stock_before }}</td>
-                                                    <td>{{ $history->stock_added }}</td>
-                                                    <td>{{ $history->stock_taken }}</td>
-                                                    <td>{{ $history->stock_now }}</td>
-                                                    {{-- <td>{{ $history->created_at }}</td> --}}
+                                                    @if ($history->status == 'BARANG KELUAR')
+                                                        <td style="display: block; min-width:200px; text-align: center;">
+                                                            <strong>
+                                                                <p
+                                                                    style="margin: auto; color: white; background-color: rgb(189, 66, 55);border-radius: 25px">
+                                                                    {{ $history->status }}</p>
+                                                            </strong>
+                                                        </td>
+                                                    @elseif ($history->status == 'BARANG DATANG')
+                                                        <td style="display: block; text-align: center; min-width:200px;">
+                                                            <strong>
+                                                                <p
+                                                                    style="margin: auto; color: white; background-color: rgb(55, 111, 189);border-radius: 25px">
+                                                                    {{ $history->status }}</p>
+                                                            </strong>
+                                                        </td>
+                                                    @endif
+                                                    <td>{{ $history->value }}</td>
+                                                    <td>{{ $history->user_who_did }}</td>
                                                     <td>{{ date_format(date_create($history->created_at), 'D, H:i:s, d-m-Y') }}
-                                                    </td>
-                                                    <td>{{ $history->user_who_did }}
                                                     </td>
                                                 </tr>
                                             @endforeach

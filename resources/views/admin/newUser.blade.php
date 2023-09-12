@@ -62,6 +62,11 @@
                                             value="gudang">
                                         <span class="form-radio-sign">Gudang</span>
                                     </label>
+                                    <label class="form-radio-label ml-3">
+                                        <input class="form-radio-input" type="radio" name="optionsRadios"
+                                            value="customer">
+                                        <span class="form-radio-sign">Customer</span>
+                                    </label>
                                 </div>
                                 <div class="card mt-4">
                                     <button id="" class="btn btn-success">Make New Account</button>

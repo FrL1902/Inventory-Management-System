@@ -12,6 +12,8 @@ use App\Models\StockHistory;
 use App\Models\User;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -71,7 +73,7 @@ class ItemController extends Controller
         } else {
             $request->validate([
                 'itemStock' => 'max:2147483647|min:0|numeric'
-            ],[
+            ], [
                 'itemStock.max' => 'Stok melebihi 32 bit integer (2147483647)',
                 'itemStock.min' => 'Stok tidak boleh angka negatif',
                 'itemStock.numeric' => 'input stok harus angka'
@@ -116,8 +118,40 @@ class ItemController extends Controller
     public function item_history_page()
     {
         session()->forget('deleteFilterButton');
-        $history = StockHistory::all();
-        $item = Item::all();
+
+        $user = Auth::user();
+
+        if ($user->level == 'admin') {
+            $history = StockHistory::all();
+            $item = Item::all();
+            // dd($item);
+        } else {
+            $history = DB::table('stock_histories')
+                ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
+                ->join('customer', 'items.customer_id', '=', 'customer.id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('stock_histories.*')
+                ->where('user_id', $user->id)->get();
+
+
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('items.item_name', 'items.item_id', 'items.id')
+                ->where('user_id', $user->id)->get();
+            // dd($pallet);
+
+            // $item = DB::table('items')
+            //     ->join('customer', 'items.customer_id', '=', 'customer.id')
+            //     ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+            //     ->select('items.item_name', 'items.item_id', 'items.id')
+            //     ->where('user_id', $user->id)->get();
+        }
+
+
+
+
+
         return view('itemHistory', compact('history', 'item'));
     }
 
@@ -238,5 +272,10 @@ class ItemController extends Controller
         $sortItem = Item::all()->where('brand_id', $request->brandItemExport);
 
         return Excel::download(new editItemExport($sortItem), 'Item milik Brand ' .  $brand->brand_name . '.xlsx');
+    }
+
+    public function customer_report_page()
+    {
+        return view('customerReport');
     }
 }

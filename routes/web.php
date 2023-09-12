@@ -31,12 +31,12 @@ Route::get('/', function () {
 Route::get('/creds/{id}', [AuthController::class, 'show_creds'])->middleware('login');
 Route::post('/updateUser', [AuthController::class, 'updateUser'])->middleware('login');
 
-Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('login');
+Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('all');
 // Route::get('home', [HomeController::class, 'index'])->middleware('security');
 
 Route::post('/login', [AuthController::class, 'cek_login']);
 
-Route::get('/logout', [AuthController::class, 'logout'])->middleware('login');
+Route::get('/logout', [AuthController::class, 'logout'])->middleware('all');
 // admin
 Route::get('/newUser', [UserController::class, 'new_user_page'])->middleware('security');
 Route::get('/manageUser', [UserController::class, 'manage_user_page'])->middleware('security');
@@ -47,6 +47,7 @@ Route::post('/newPasswordFromAdmin', [UserController::class, 'newPasswordFromAdm
 Route::get('/userAccess/{id}', [UserController::class, 'user_access_page'])->middleware('security');
 Route::post('/addNewUserAccess', [UserController::class, 'add_new_user_access'])->middleware('security');
 Route::get('/deleteAccess/{id}', [UserController::class, 'delete_user_access'])->middleware('security');
+Route::post('/customerAssign', [UserController::class, 'customer_assign'])->middleware('security');
 
 // buat tombol navbar samping
 
@@ -72,12 +73,14 @@ Route::post('/makeItem', [ItemController::class, 'makeItem'])->middleware('secur
 Route::get('/manageItem', [ItemController::class, 'manage_item_page'])->middleware('security');
 Route::get('/deleteItem/{id}', [ItemController::class, 'deleteItem'])->middleware('security');
 Route::post('/updateItem', [ItemController::class, 'updateItem'])->middleware('security');
-Route::get('/manageHistory', [ItemController::class, 'item_history_page'])->middleware('login');
+Route::get('/manageHistory', [ItemController::class, 'item_history_page'])->middleware('all');
 Route::post('/exportCustomerItem', [ItemController::class, 'exportCustomerItem'])->name('exportCustomerItem')->middleware('security');
 Route::post('/exportBrandItem', [ItemController::class, 'exportBrandItem'])->name('exportBrandItem')->middleware('security');
-Route::post('/filterHistoryDate', [StockHistoryController::class, 'filterHistoryDate'])->middleware('login');
-Route::post('/exportItemHistory', [StockHistoryController::class, 'exportItemHistory'])->name('exportItemHistory')->middleware('login');
-Route::post('/exportHistoryByDate', [StockHistoryController::class, 'exportHistoryByDate'])->name('exportHistoryByDate')->middleware('login');
+Route::post('/filterHistoryDate', [StockHistoryController::class, 'filterHistoryDate'])->middleware('all');
+Route::post('/exportItemHistory', [StockHistoryController::class, 'exportItemHistory'])->name('exportItemHistory')->middleware('all');
+Route::post('/exportHistoryByDate', [StockHistoryController::class, 'exportHistoryByDate'])->name('exportHistoryByDate')->middleware('all');
+
+Route::get('/customerReport', [ItemController::class, 'customer_report_page'])->middleware('multirole');
 
 //incoming
 Route::post('/addItemStock', [IncomingController::class, 'addItemStock'])->middleware('login');
@@ -101,7 +104,7 @@ Route::post('/exportOutgoingItem', [OutgoingController::class, 'exportOutgoingIt
 
 // Pallet
 Route::get('/managePallet', [PalletController::class, 'manage_pallet_page'])->middleware('login');
-Route::get('/managePalletHistory', [PalletController::class, 'manage_pallet_history_page'])->middleware('login');
+Route::get('/managePalletHistory', [PalletController::class, 'manage_pallet_history_page'])->middleware('all');
 Route::post('/addNewPallet', [PalletController::class, 'add_pallet'])->middleware('login');
 Route::get('/removePallet/{id}', [PalletController::class, 'remove_pallet'])->middleware('login');
 Route::post('/reducePalletStock', [PalletController::class, 'reduce_pallet_stock'])->middleware('login');

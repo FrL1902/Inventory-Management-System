@@ -89,14 +89,14 @@
                                             <tr>
                                                 <th>Customer Name</th>
                                                 <th style="width: 20%">Customer ID</th>
-                                                <th style="width: 10%">Edit</th>
+                                                <th style="width: 5%">Edit</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
                                                 <th>Customer Name</th>
                                                 <th style="width: 20%">Customer ID</th>
-                                                <th style="width: 10%">Edit</th>
+                                                <th style="width: 5%">Edit</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -106,7 +106,7 @@
                                                     <td>{{ $data->customer_id }}</td>
                                                     <td>
                                                         <div class="d-flex justify-content-center">
-                                                            <a class="ml-3" style="cursor: pointer"
+                                                            <a class="" style="cursor: pointer"
                                                                 data-target="#deleteAccessModal{{ $data->id }}"
                                                                 data-toggle="modal">
                                                                 <i class="fa fa-times mt-3 text-danger"

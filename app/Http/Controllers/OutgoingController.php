@@ -135,11 +135,13 @@ class OutgoingController extends Controller
         $request->session()->flash('sukses_reduceStock', $itemInfo->item_name);
 
         $history = new StockHistory();
+        $history->item_id = $itemInfo->item_id;
         $history->item_name = $itemInfo->item_name;
-        $history->stock_before = $itemInfo->stocks;
-        $history->stock_added = 0;
-        $history->stock_taken = $request->itemReduceStock;
-        $history->stock_now = $newValue;
+        // $history->stock_before = $itemInfo->stocks;
+        // $history->stock_added = 0;
+        $history->status = "BARANG KELUAR";
+        $history->value = $request->itemReduceStock;
+        // $history->stock_now = $newValue;
         $history->user_who_did = $userInfo->name;
 
         $history->save();

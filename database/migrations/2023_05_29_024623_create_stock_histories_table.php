@@ -15,11 +15,14 @@ class CreateStockHistoriesTable extends Migration
     {
         Schema::create('stock_histories', function (Blueprint $table) {
             $table->id();
+            $table->string('item_id');
             $table->string('item_name');
-            $table->integer('stock_before');
-            $table->integer('stock_added');
-            $table->integer('stock_taken');
-            $table->integer('stock_now');
+            // $table->integer('stock_before');
+            // $table->integer('stock_added');
+            // $table->integer('stock_taken');
+            // $table->integer('stock_now');
+            $table->string('status');
+            $table->integer('value');
             $table->string('user_who_did');
             $table->timestamps();
         });
