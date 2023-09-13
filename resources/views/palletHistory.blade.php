@@ -38,8 +38,18 @@
                                             </button>
                                         </div>
                                     </div>
+                                    <div>
+                                        <button type="button" class="btn btn-secondary" data-target="#sortByDatePalletModal"
+                                            data-toggle="modal"><strong>Filter by Date</strong>
+                                        </button>
+                                        @if (session('deleteFilterButton'))
+                                            <a type="button" class="btn btn-danger" style="cursor: pointer"
+                                                href="/managePalletHistory">Remove Filter</a>
+                                        @endif
 
-                                    {{-- export by ALL --}}
+                                    </div>
+
+                                    {{-- export by ITEM --}}
                                     <div class="modal fade" id="exportPalletItemHistorymModal" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -47,7 +57,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print an item's history
+                                                            Print an item's pallet history
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -75,6 +85,98 @@
                                                                 <div class="card mt-5 ">
                                                                     <button id="" class="btn btn-primary">Export
                                                                         Data</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- export by ALL --}}
+                                    <div class="modal fade" id="exportPalletHistoryByDateModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print ALL Pallet History By Date
+                                                        </strong>
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/exportPalletHistoryByDate">
+                                                        @csrf
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="startRange">Start Date Range</label>
+                                                                <input type="date" class="form-control" id="startRange"
+                                                                    required name="startRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="endRange">End Date Range</label>
+                                                                <input type="date" class="form-control" id="endRange"
+                                                                    required name="endRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="card mt-5 ">
+                                                                    <button id="" class="btn btn-primary">Export
+                                                                        Data</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    {{-- filter by date --}}
+                                    <div class="modal fade" id="sortByDatePalletModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Filter by date range
+                                                        </strong>
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/filterPalletHistoryDate">
+                                                        @csrf
+
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="startRange">Start Date Range</label>
+                                                                <input type="date" class="form-control"
+                                                                    id="startRange" required name="startRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="endRange">End Date Range</label>
+                                                                <input type="date" class="form-control" id="endRange"
+                                                                    required name="endRange">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="card mt-5 ">
+                                                                    <button id=""
+                                                                        class="btn btn-primary">Sort</button>
                                                                 </div>
                                                             </div>
                                                         </div>

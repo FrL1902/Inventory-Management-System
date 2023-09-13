@@ -65,10 +65,9 @@
                                             <a type="button" class="btn btn-danger" style="cursor: pointer"
                                                 href="/manageHistory">Remove Filter</a>
                                         @endif
-
                                     </div>
 
-                                    {{-- export by ALL --}}
+                                    {{-- export by ITEM --}}
                                     <div class="modal fade" id="exportItemHistorymModal" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -136,7 +135,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print History By Date
+                                                            Print ALL History By Date
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -145,7 +144,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form method="post" action="/exportHistoryByDate">
+                                                    <form method="post" action="/exportPalletHistoryByDate">
                                                         @csrf
 
                                                         <div class="card-body">
