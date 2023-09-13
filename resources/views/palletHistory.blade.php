@@ -15,12 +15,73 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
+
                                     <div class="d-flex flex-row">
                                         <h4 class="card-title mt-1 mr-3">
                                             <span class="align-middle">
                                                 <strong>Sejarah Palet</strong>
                                             </span>
                                         </h4>
+                                        <div class="ml-3 mr-2 mt-2">
+                                            <span class="align-middle">
+                                                Export Berdasarkan
+                                            </span>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-target="#exportPalletItemHistorymModal"
+                                                data-toggle="modal"><strong>Barang</strong>
+                                            </button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-target="#exportPalletHistoryByDateModal"
+                                                data-toggle="modal"><strong>Tanggal</strong>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {{-- export by ALL --}}
+                                    <div class="modal fade" id="exportPalletItemHistorymModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                        <strong>
+                                                            Print an item's history
+                                                        </strong>
+                                                    </h3>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+
+                                                {{-- export by item name --}}
+                                                <div class="modal-body">
+                                                    <form method="post" action="/exportPalletItemHistory">
+                                                        @csrf
+
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                    <select class="form-control" data-width="100%"
+                                                                    id="itemPalletHistoryExport" name="itemPalletHistoryExport">
+                                                                    @foreach ($item as $item)
+                                                                        <option value="{{ $item->item_id }}">
+                                                                            {{ $item->item_name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="card mt-5 ">
+                                                                    <button id="" class="btn btn-primary">Export
+                                                                        Data</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

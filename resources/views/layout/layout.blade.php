@@ -551,6 +551,13 @@
         });
     </script>
 
+    {{-- PALLET HISTORY PAGE --}}
+    <script>
+        $('#itemPalletHistoryExport').select2({
+            dropdownParent: $('#exportPalletItemHistorymModal')
+        });
+    </script>
+
 
 
 

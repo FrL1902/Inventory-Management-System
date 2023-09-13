@@ -38,7 +38,7 @@
                                         </span>
                                         <h4 class="card-title mt-1 mr-3">
                                             <span class="align-middle">
-                                                Sejarah Stok
+                                            <strong>Sejarah Stok</strong>
                                             </span>
                                         </h4>
                                         <div class="ml-3 mr-2 mt-2">

@@ -15,7 +15,7 @@ class CreatePalletHistoriesTable extends Migration
     {
         Schema::create('pallet_histories', function (Blueprint $table) {
             $table->id();
-            $table->integer('item_id');
+            $table->string('item_id');
             $table->integer('stock');
             $table->string('bin');
             $table->string('status');

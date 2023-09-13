@@ -108,6 +108,7 @@ Route::get('/managePalletHistory', [PalletController::class, 'manage_pallet_hist
 Route::post('/addNewPallet', [PalletController::class, 'add_pallet'])->middleware('login');
 Route::get('/removePallet/{id}', [PalletController::class, 'remove_pallet'])->middleware('login');
 Route::post('/reducePalletStock', [PalletController::class, 'reduce_pallet_stock'])->middleware('login');
+Route::post('/exportPalletItemHistory', [PalletController::class, 'exportPalletItemHistory'])->name('exportPalletItemHistory')->middleware('all');
 
 // export
 Route::get('/exportExcel', [UserController::class, 'exportExcel'])->name('exportExcel')->middleware('login'); //export user ALL
