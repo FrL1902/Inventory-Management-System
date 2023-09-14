@@ -54,7 +54,8 @@ class OutgoingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
             // ($item->stock_now == 0) ? "0" : $item->stock_now,
             $item->description,
             // $item->picture_link,
-            "http://127.0.0.1:8000/storage/" . $item->item_pictures,
+            // "http://127.0.0.1:8000/storage/" . $item->item_pictures,
+            "http://wms.intanutama.co.id/storage/" . $item->item_pictures,
             // date_format($item->created_at, "D/d/m/y H:i:s"),
         ];
     }
