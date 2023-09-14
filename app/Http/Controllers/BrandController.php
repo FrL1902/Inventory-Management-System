@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\Item;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class BrandController extends Controller
@@ -53,7 +54,18 @@ class BrandController extends Controller
             'brandname.regex' => 'Nama Brand hanya membolehkan huruf, angka, spasi, dan tanda penghubung(-)',
         ]);
 
+        //ni buat id kalo emg campur aduk dari import
+        // TOLONG KALO BISA JANGAN PAKE KODE INI
+        // masih belum tau efek sampingnya apa
+        // $customID = DB::table('brand')
+        //     ->orderBy('id', 'desc')
+        //     ->first();
+            // dd($customID->id);
+
+
         $item = new Brand();
+        // harusnya ini auto increment tp ya mau gmn lg
+        // $item->id = $customID->id+1;
         $item->customer_id = $request->customeridforbrand;
         $item->brand_id = $request->brandid;
         $item->brand_name = $request->brandname;

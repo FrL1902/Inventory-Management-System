@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Customer;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerController extends Controller
@@ -104,7 +105,18 @@ class CustomerController extends Controller
             'address.max' => 'Alamat Customer maksimal 300 karakter',
         ]);
 
+        //ni buat id kalo emg campur aduk dari import
+        // TOLONG KALO BISA JANGAN PAKE KODE INI
+        // masih belum tau efek sampingnya apa
+        // $customID = DB::table('customer')
+        //     ->orderBy('id', 'desc')
+        //     ->first();
+            // dd($customID->id);
+
         $customer = new Customer();
+
+        // harusnya ini auto increment tp ya mau gmn lg
+        // $customer->id = $customID->id+1;
 
         // $customer->customer_id = $request->customerid;       yang dibutuhin ini
         // $customer->customer_name = $request->customername;   yang dibutuhin ini

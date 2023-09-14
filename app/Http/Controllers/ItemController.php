@@ -277,7 +277,7 @@ class ItemController extends Controller
     public function customer_report_page()
     {
 
-        session()->forget('deleteFilterButton');
+        // session()->forget('deleteFilterButton'); //ini buat tombol filter yang ga jadi digunain
 
         $user = Auth::user();
 
@@ -307,5 +307,10 @@ class ItemController extends Controller
         }
 
         return view('customerReport', compact('item', 'pallet'));
+    }
+
+    public function exportItemReport(Request $request)
+    {
+        dd($request->itemIdReportCustomer);
     }
 }
