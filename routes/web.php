@@ -81,6 +81,7 @@ Route::post('/exportItemHistory', [StockHistoryController::class, 'exportItemHis
 Route::post('/exportHistoryByDate', [StockHistoryController::class, 'exportHistoryByDate'])->name('exportHistoryByDate')->middleware('all');
 
 Route::get('/customerReport', [ItemController::class, 'customer_report_page'])->middleware('multirole');
+Route::post('/exportItemReport', [ItemController::class, 'exportItemReport'])->middleware('multirole');
 
 //incoming
 Route::post('/addItemStock', [IncomingController::class, 'addItemStock'])->middleware('login');

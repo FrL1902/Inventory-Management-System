@@ -558,7 +558,12 @@
         });
     </script>
 
-
+    {{-- CUSTOMER REPORT --}}
+    <script>
+        $('#itemIdReportCustomer').select2({
+            dropdownParent: $('#exportItemReportModal')
+        });
+    </script>
 
 
 

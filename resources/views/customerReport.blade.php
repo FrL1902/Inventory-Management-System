@@ -29,15 +29,15 @@
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-secondary"
                                             data-target="#exportItemReportModal"
-                                            data-toggle="modal"><strong>Barang</strong>
+                                            data-toggle="modal"><strong>Brand</strong>
                                         </button>
-                                        <button type="button" class="btn btn-secondary"
+                                        {{-- <button type="button" class="btn btn-secondary"
                                             data-target="#exportHistoryByDateModal"
                                             data-toggle="modal"><strong>Tanggal</strong>
-                                        </button>
+                                        </button> --}}
                                     </div>
                                 </div>
-                                <div>
+                                {{-- <div>
                                     <button type="button" class="btn btn-secondary" data-target="#sortByDateModal"
                                         data-toggle="modal"><strong>Filter by Date</strong>
                                     </button>
@@ -46,7 +46,7 @@
                                             href="/manageHistory">Remove Filter</a>
                                     @endif
 
-                                </div>
+                                </div> --}}
 
                                 {{-- export by ALL --}}
                                 <div class="modal fade" id="exportItemReportModal" tabindex="-1" role="dialog"
@@ -56,7 +56,7 @@
                                             <div class="modal-header">
                                                 <h3 class="modal-title" id="exampleModalLongTitle">
                                                     <strong>
-                                                        Print an item's history
+                                                        Print a brand's report
                                                     </strong>
                                                 </h3>
                                                 <button type="button" class="close" data-dismiss="modal"
@@ -67,16 +67,15 @@
 
                                             {{-- export by item name --}}
                                             <div class="modal-body">
-                                                <form method="post" action="/exportItemHistory">
+                                                <form method="post" action="/exportItemReport">
                                                     @csrf
-
                                                     <div class="card-body">
                                                         <div class="form-group">
                                                                 <select class="form-control" data-width="100%"
-                                                                id="itemHistoryExport" name="itemHistoryExport">
-                                                                @foreach ($item as $item)
-                                                                    <option value="{{ $item->item_id }}">
-                                                                        {{ $item->item_name }}</option>
+                                                                id="itemIdReportCustomer" name="itemIdReportCustomer">
+                                                                @foreach ($brand as $data)
+                                                                    <option value="{{ $data->brand_id }}">
+                                                                        {{ $data->brand_name }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -191,28 +190,71 @@
                                 <table id="add-row" class="display table table-striped table-hover">
                                     <thead>
                                         <tr>
+                                            <th>Customer</th>
+                                            <th>Brand</th>
                                             <th>ID Barang</th>
                                             <th>Nama Barang</th>
-                                            <th>Stok</th>
-                                            <th>Palet</th>
+                                            <th style="width: 8%">Stok</th>
+                                            <th style="width: 8%">Palet</th>
+                                            <th style="width: 13%">Gambar Barang</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>Customer</th>
+                                            <th>Brand</th>
                                             <th>ID Barang</th>
                                             <th>Nama Barang</th>
                                             <th>Stok</th>
                                             <th>Palet</th>
+                                            <th>Gambar Barang</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         @foreach ($pallet as $data)
                                             <tr>
+                                                <td>{{ $data->customer_name }}</td>
+                                                <td>{{ $data->brand_name }}</td>
                                                 <td>{{ $data->item_id }}</td>
                                                 <td>{{ $data->item_name }}</td>
                                                 <td>{{ $data->stock }}</td>
                                                 <td>{{ $data->bin }}</td>
+                                                <td>
+                                                    <a style="cursor: pointer"
+                                                        data-target="#imageModalCenter{{ $data->id }}"
+                                                        data-toggle="modal">
+                                                        <img class="rounded mx-auto d-block"
+                                                            style="width: 100px; height: auto;"
+                                                            src="{{ Storage::url($data->item_pictures) }}"
+                                                            alt="no picture" loading="lazy">
+                                                    </a>
+                                                </td>
                                             </tr>
+                                            <div class="modal fade" id="imageModalCenter{{ $data->id }}"
+                                                tabindex="-1" role="dialog"
+                                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg"
+                                                    role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h3 class="modal-title" id="exampleModalLongTitle">
+                                                                <strong>Gambar barang "
+                                                                    {{ $data->item_name }}"</strong>
+                                                            </h3>
+                                                            <button type="button" class="close"
+                                                                data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <img class="rounded mx-auto d-block"
+                                                                style="width: 750px; height: auto;"
+                                                                src="{{ Storage::url($data->item_pictures) }}"
+                                                                alt="no picture" loading="lazy">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endforeach
                                     </tbody>
                                 </table>
