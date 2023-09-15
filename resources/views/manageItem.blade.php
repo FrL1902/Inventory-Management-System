@@ -84,7 +84,7 @@
                                                                 <select class="form-control" data-width="100%"
                                                                     id="customerLabelExport" name="customerItemExport">
                                                                     @foreach ($customer as $data)
-                                                                        <option value="{{ $data->id }}">
+                                                                        <option value="{{ $data->customer_id }}">
                                                                             {{ $data->customer_name }}
                                                                         </option>
                                                                     @endforeach
@@ -129,7 +129,7 @@
                                                                 <select class="form-control" id="brandLabelExport"
                                                                     data-width="100%" name="brandItemExport">
                                                                     @foreach ($brand as $data)
-                                                                        <option value="{{ $data->id }}">
+                                                                        <option value="{{ $data->brand_id }}">
                                                                             {{ $data->brand_name }}
                                                                         </option>
                                                                     @endforeach
@@ -200,7 +200,7 @@
                                                             src="{{ Storage::url($item->item_pictures) }}"
                                                             alt="no picture"> --}}
                                                         <a style="cursor: pointer"
-                                                            data-target="#imageModalCenter{{ $item->id }}"
+                                                            data-target="#imageModalCenter{{ $item->item_id }}"
                                                             data-toggle="modal">
                                                             <img class="rounded mx-auto d-block"
                                                                 style="width: 100px; height: auto;"
@@ -225,15 +225,15 @@
                                                                     data-original-title="Reduce Stock"></i>
                                                             </a> --}}
                                                             <a style="cursor: pointer" class="mb-2"
-                                                                data-target="#editModalCenter{{ $item->id }}"
+                                                                data-target="#editModalCenter{{ $item->item_id }}"
                                                                 data-toggle="modal">
                                                                 <i class="fa fa-edit mt-3 text-primary"
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Edit Data Barang"></i>
                                                             </a>
-                                                            @if (App\Models\Item::checkItemDeletable($item->id) == 'kosong')
+                                                            @if (App\Models\Item::checkItemDeletable($item->item_id) == 'kosong')
                                                                 <a class="ml-3 mb-2" style="cursor: pointer"
-                                                                    data-target="#deleteModal{{ $item->id }}"
+                                                                    data-target="#deleteModal{{ $item->item_id }}"
                                                                     data-toggle="modal">
                                                                     <i class="fa fa-times mt-3 text-danger"
                                                                         data-toggle="tooltip"
@@ -248,7 +248,7 @@
                                                             @endif
                                                         </div>
 
-                                                        <div class="modal fade" id="deleteModal{{ $item->id }}">
+                                                        <div class="modal fade" id="deleteModal{{ $item->item_id }}">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -270,7 +270,7 @@
                                                                         <button type="button" class="btn btn-secondary"
                                                                             id="close-modal"
                                                                             data-dismiss="modal">Tidak</button>
-                                                                        <a href="/deleteItem/{{ encrypt($item->id) }}"
+                                                                        <a href="/deleteItem/{{ encrypt($item->item_id) }}"
                                                                             class="btn btn-danger">YAKIN
                                                                         </a>
                                                                     </div>
@@ -278,7 +278,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="modal fade" id="editModalCenter{{ $item->id }}"
+                                                        <div class="modal fade" id="editModalCenter{{ $item->item_id }}"
                                                             tabindex="-1" role="dialog"
                                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered"
@@ -344,7 +344,7 @@
 
                                                                                 <input type="hidden" class="form-control"
                                                                                     name="itemIdHidden"
-                                                                                    value="{{ $item->id }}">
+                                                                                    value="{{ $item->item_id }}">
                                                                             </div>
                                                                         </form>
                                                                     </div>
@@ -449,7 +449,7 @@
                                                         </div> --}}
                                                     </td>
                                                 </tr>
-                                                <div class="modal fade" id="imageModalCenter{{ $item->id }}"
+                                                <div class="modal fade" id="imageModalCenter{{ $item->item_id }}"
                                                     tabindex="-1" role="dialog"
                                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered modal-lg"

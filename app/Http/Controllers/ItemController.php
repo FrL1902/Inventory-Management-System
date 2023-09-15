@@ -88,14 +88,7 @@ class ItemController extends Controller
         $item->item_pictures = $imageName;
         $item->customer_id = $customer->customer_id;
 
-
-
         $item->save();
-
-        // $item->save();
-
-        // $itemAdded = "Brand " . "\"" . $request->brandname . "\"" . " berhasil di tambahkan";
-
         $request->session()->flash('sukses_addNewItem', $request->itemname);
         return redirect()->back();
     }
@@ -114,36 +107,29 @@ class ItemController extends Controller
 
         $user = Auth::user();
 
-        if ($user->level == 'admin') {
-            $history = StockHistory::all();
-            $item = Item::all();
-            // dd($item);
-        } else {
-            $history = DB::table('stock_histories')
-                ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->select('stock_histories.*')
-                ->where('user_id', $user->id)->get();
+        // sementara
+        $history = StockHistory::all();
+        $item = Item::all();
+
+        // if ($user->level == 'admin') {
+        //     $history = StockHistory::all();
+        //     $item = Item::all();
+        //     // dd($item);
+        // } else {
+        //     $history = DB::table('stock_histories')
+        //         ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+        //         ->select('stock_histories.*')
+        //         ->where('user_id', $user->id)->get();
 
 
-            $item = DB::table('items')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->select('items.item_name', 'items.item_id', 'items.id')
-                ->where('user_id', $user->id)->get();
-            // dd($pallet);
-
-            // $item = DB::table('items')
-            //     ->join('customer', 'items.customer_id', '=', 'customer.id')
-            //     ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-            //     ->select('items.item_name', 'items.item_id', 'items.id')
-            //     ->where('user_id', $user->id)->get();
-        }
-
-
-
-
+        //     $item = DB::table('items')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+        //         ->select('items.item_name', 'items.item_id', 'items.id')
+        //         ->where('user_id', $user->id)->get();
+        // }
 
         return view('itemHistory', compact('history', 'item'));
     }
