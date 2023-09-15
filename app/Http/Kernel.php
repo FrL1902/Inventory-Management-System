@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'login' => \App\Http\Middleware\Login::class,
         'multirole' => \App\Http\Middleware\Multirole::class,
         'all' => \App\Http\Middleware\Role::class,
+        'role' => \App\Http\Middleware\RoleAuth::class,
     ];
 }
