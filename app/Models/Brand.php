@@ -11,6 +11,10 @@ class Brand extends Model
 
     protected $table = "brand";
 
+    protected $primaryKey = 'brand_id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id');

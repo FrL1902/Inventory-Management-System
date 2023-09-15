@@ -14,11 +14,13 @@ class CreateBrandsTable extends Migration
     public function up()
     {
         Schema::create('brand', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customer')->onDelete('cascade');
-            $table->string('brand_id');
+            // $table->id();
+            $table->string('brand_id')->primary()->unique();
             $table->string('brand_name');
+            // $table->foreignId('customer_id');
+            $table->string('customer_id');
+            // $table->foreign('customer_id')->references('id')->on('customer')->onDelete('cascade');
+            $table->foreign('customer_id')->references('customer_id')->on('customer')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -24,6 +24,10 @@ class Customer extends Model
         'npwp_perusahaan',
     ];
 
+    protected $primaryKey = 'customer_id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     public function brand()
     {
         return $this->hasMany(Brand::class, 'customer_id');

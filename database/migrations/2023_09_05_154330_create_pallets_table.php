@@ -15,8 +15,8 @@ class CreatePalletsTable extends Migration
     {
         Schema::create('pallets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('item_id');
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->string('item_id');
+            $table->foreign('item_id')->references('item_id')->on('items')->onDelete('cascade');
             $table->integer('stock');
             $table->string('bin');
             $table->string('description');
