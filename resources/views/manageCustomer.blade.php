@@ -43,7 +43,6 @@
                 <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>Update Gagal: {{ $errors->first() }} </strong>
-                    {{-- <strong>Update Gagal: validasi tidak tercukupi, {{ $errors->first() }} </strong> --}}
                 </div>
             @endif
             <div class="row">
@@ -110,15 +109,15 @@
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a style="cursor: pointer"
-                                                            data-target="#editModalCenter{{ $data->id }}"
+                                                            data-target="#editModalCenter{{ $data->customer_id }}"
                                                             data-toggle="modal">
                                                             <i class="fa fa-edit mt-3 text-primary"
                                                                 data-toggle="tooltip"
                                                                 data-original-title="Edit Customer"></i>
                                                         </a>
-                                                        @if (App\Models\Brand::checkNullBrandCustomer($data->id) == 'kosong')
+                                                        @if (App\Models\Brand::checkNullBrandCustomer($data->customer_id) == 'kosong')
                                                             <a class="ml-3 mb-2" style="cursor: pointer"
-                                                                data-target="#deleteModal{{ $data->id }}"
+                                                                data-target="#deleteModal{{ $data->customer_id }}"
                                                                 data-toggle="modal">
                                                                 <i class="fa fa-times mt-3 text-danger"
                                                                     data-toggle="tooltip"
@@ -132,7 +131,9 @@
                                                             </a>
                                                         @endif
                                                     </div>
-                                                    <div class="modal fade" id="deleteModal{{ $data->id }}">
+
+                                                    {{-- DELETE CUSTOMER MODAL --}}
+                                                    <div class="modal fade" id="deleteModal{{ $data->customer_id }}">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -155,14 +156,16 @@
                                                                     <button type="button" class="btn btn-secondary"
                                                                         id="close-modal"
                                                                         data-dismiss="modal">Tidak</button>
-                                                                    <a href="/deleteCustomer/{{ encrypt($data->id) }}"
+                                                                    <a href="/deleteCustomer/{{ encrypt($data->customer_id) }}"
                                                                         class="btn btn-danger">YAKIN
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="modal fade" id="editModalCenter{{ $data->id }}"
+
+                                                    {{-- EDIT CUSTOMER MODAL --}}
+                                                    <div class="modal fade" id="editModalCenter{{ $data->customer_id }}"
                                                         tabindex="-1" role="dialog"
                                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -204,7 +207,7 @@
 
                                                                             <input type="hidden" class="form-control"
                                                                                 name="customerIdHidden"
-                                                                                value="{{ $data->id }}">
+                                                                                value="{{ $data->customer_id }}">
 
 
                                                                             {{-- <div class="row">
@@ -311,9 +314,9 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            <input type="hidden" class="form-control"
+                                                                            {{-- <input type="hidden" class="form-control"
                                                                                 name="userIdHidden"
-                                                                                value="{{ $data->id }}">
+                                                                                value="{{ $data->id }}"> --}}
                                                                         </div>
                                                                     </form>
                                                                 </div>

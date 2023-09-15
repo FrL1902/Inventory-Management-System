@@ -284,7 +284,9 @@ class CustomerController extends Controller
     {
         $noInput = "-";
 
-        $customer = Customer::where('id', $request->customerIdHidden)->first();
+        // $customer = Customer::where('customer_id', $request->customerIdHidden)->first();
+        $customer = Customer::find($request->customerIdHidden);
+        // dd($customer);
 
         $flagNull = 0;
 
@@ -471,8 +473,6 @@ class CustomerController extends Controller
 
     public function deleteCustomer($id)
     {
-        // dd($id);
-        // decrypt Customer ID
         try {
             $decrypted = decrypt($id);
         } catch (DecryptException $e) {

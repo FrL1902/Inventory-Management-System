@@ -445,7 +445,7 @@
     <script>
         // kolom: Pemilik Brand
         $('#customeridforbrand').select2({
-            placeholder: 'Select an option'
+            placeholder: 'Pilih Customer'
         });
     </script>
 
@@ -453,7 +453,8 @@
     <script>
         // modal + kolom customer
         $('#customerLabelExportBrand').select2({
-            dropdownParent: $('#exportCustomerBrandModal')
+            dropdownParent: $('#exportCustomerBrandModal'),
+            placeholder: 'Pilih Customer'
         });
     </script>
 

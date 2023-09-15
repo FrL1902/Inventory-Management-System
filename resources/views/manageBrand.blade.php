@@ -7,7 +7,6 @@
 @section('content')
     <div class="main-panel">
         <div class="content">
-            {{-- ini page buat manage brands --}}
             <div class="page-inner">
 
                 @if (session('sukses_delete_brand'))
@@ -28,7 +27,11 @@
                 @elseif ($errors->any())
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Update Gagal: {{ $errors->first() }}</strong>
+                        @if ($errors->first() == 'Kolom "Customer" harus dipilih')
+                            <strong>Export Gagal: {{ $errors->first() }}</strong>
+                        @else
+                            <strong>Update Gagal: {{ $errors->first() }}</strong>
+                        @endif
                     </div>
                 @endif
 
@@ -67,14 +70,14 @@
                                                 <div class="modal-body">
                                                     <form method="post" action="/exportCustomerBrand">
                                                         @csrf
-
                                                         <div class="card-body">
                                                             <div class="form-group">
                                                                 <label for="customerLabelExportBrand">Customer</label>
                                                                 <select class="form-control" id="customerLabelExportBrand"
                                                                     data-width="100%" name="customerBrandExport">
                                                                     @foreach ($customer as $data)
-                                                                        <option value="{{ $data->id }}">
+                                                                        <option></option>
+                                                                        <option value="{{ $data->customer_id }}">
                                                                             {{ $data->customer_name }}
                                                                         </option>
                                                                     @endforeach
@@ -124,15 +127,15 @@
                                                     <td>
                                                         <div class="d-flex justify-content-center">
                                                             <a style="cursor: pointer"
-                                                                data-target="#editModalCenter{{ $brand->id }}"
+                                                                data-target="#editModalCenter{{ $brand->brand_id }}"
                                                                 data-toggle="modal">
                                                                 <i class="fa fa-edit mt-3 text-primary"
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Edit Brand"></i>
                                                             </a>
-                                                            @if (App\Models\Item::checkNullItemBrand($brand->id) == 'kosong')
+                                                            @if (App\Models\Item::checkNullItemBrand($brand->brand_id) == 'kosong')
                                                                 <a class="ml-3 mb-2" style="cursor: pointer"
-                                                                    data-target="#deleteModal{{ $brand->id }}"
+                                                                    data-target="#deleteModal{{ $brand->brand_id }}"
                                                                     data-toggle="modal">
                                                                     <i class="fa fa-times mt-3 text-danger"
                                                                         data-toggle="tooltip"
@@ -147,7 +150,7 @@
                                                             @endif
                                                         </div>
 
-                                                        <div class="modal fade" id="deleteModal{{ $brand->id }}">
+                                                        <div class="modal fade" id="deleteModal{{ $brand->brand_id }}">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -169,16 +172,17 @@
                                                                         <button type="button" class="btn btn-secondary"
                                                                             id="close-modal"
                                                                             data-dismiss="modal">Tidak</button>
-                                                                        <a href="/deleteBrand/{{ encrypt($brand->id) }}"
+                                                                        <a href="/deleteBrand/{{ encrypt($brand->brand_id) }}"
                                                                             class="btn btn-danger">YAKIN
                                                                         </a>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="modal fade" id="editModalCenter{{ $brand->id }}"
-                                                            tabindex="-1" role="dialog"
-                                                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal fade"
+                                                            id="editModalCenter{{ $brand->brand_id }}" tabindex="-1"
+                                                            role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                            aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered"
                                                                 role="document">
                                                                 <div class="modal-content">
@@ -213,7 +217,7 @@
                                                                                 </div>
                                                                                 <input type="hidden" class="form-control"
                                                                                     name="brandIdHidden"
-                                                                                    value="{{ $brand->id }}">
+                                                                                    value="{{ $brand->brand_id }}">
                                                                             </div>
                                                                         </form>
                                                                     </div>

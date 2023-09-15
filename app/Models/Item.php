@@ -11,6 +11,12 @@ class Item extends Model
 
     protected $table = 'items';
 
+    protected $fillable = [
+        'item_name',
+        'stocks',
+        'item_pictures',
+    ];
+
     protected $primaryKey = 'item_id';
     public $incrementing = false;
     protected $keyType = 'string';

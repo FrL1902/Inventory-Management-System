@@ -26,7 +26,7 @@ class customerExport implements FromCollection, ShouldAutoSize, WithHeadings, Wi
     public function map($item): array
     {
         return [
-            $item->id,
+            // $item->id,
             $item->customer_id,
             $item->customer_name,
             $item->address,
@@ -47,6 +47,7 @@ class customerExport implements FromCollection, ShouldAutoSize, WithHeadings, Wi
 
     public function headings(): array
     {
-        return ["ID", "ID Customer", "Nama Customer", "Alamat", "Email", "Phone 1", "Phone 2", "Fax", "Website", "Nama Person In Charge (PIC)", "PIC phone", "NPWP Perusahaan", "Created At", "Last Updated At"];
+        // return ["ID", "ID Customer", "Nama Customer", "Alamat", "Email", "Phone 1", "Phone 2", "Fax", "Website", "Nama Person In Charge (PIC)", "PIC phone", "NPWP Perusahaan", "Created At", "Last Updated At"];
+        return ["ID Customer", "Nama Customer", "Alamat", "Email", "Phone 1", "Phone 2", "Fax", "Website", "Nama Person In Charge (PIC)", "PIC phone", "NPWP Perusahaan", "Created At", "Last Updated At"];
     }
 }

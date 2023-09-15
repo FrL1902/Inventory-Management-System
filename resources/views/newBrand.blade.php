@@ -32,11 +32,13 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="customeridforbrand">Pemilik Brand</label>
+                                        <label for="customeridforbrand">Pemilik Brand<span style="color: red"> (harus dipilih)
+                                        </span></label>
                                         <select class="form-control" id="customeridforbrand" name="customeridforbrand">
+                                            <option></option>
                                             @foreach ($customer as $cust)
                                                 {{-- <option value="{{ $cust->customer_id }}">{{ $cust->customer_name }}</option> --}}
-                                                <option value="{{ $cust->id }}">{{ $cust->customer_name }}</option>
+                                                <option value="{{ $cust->customer_id }}">{{ $cust->customer_name }}</option>
                                                 {{-- ^ini diatas diganti ke id yang auto increment di tabel customer soalnya fk ga tau knp selalu constraintnya bigint, ga bisa string --}}
                                             @endforeach
 

@@ -13,10 +13,8 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class BrandController extends Controller
 {
-    //
     public function new_brand_page()
     {
-
         $customer = Customer::all();
         return view('newBrand', compact('customer'));
     }
@@ -30,11 +28,12 @@ class BrandController extends Controller
 
     public function makeBrand(Request $request)
     {
-
         $request->validate([
+            'customeridforbrand' => 'required',
             'brandid' => 'required',
             'brandname' => 'required',
         ], [
+            'customeridforbrand.required' => 'Kolom "Pemilik Brand" harus dipilih',
             'brandid.required' => 'Kolom "ID Brand" Harus Diisi',
             'brandname.required' => 'Kolom "Nama Brand" Harus Diisi'
         ]);
@@ -69,13 +68,10 @@ class BrandController extends Controller
         $item->customer_id = $request->customeridforbrand;
         $item->brand_id = $request->brandid;
         $item->brand_name = $request->brandname;
-
         $item->save();
 
         $itemAdded = "Brand " . "\"" . $request->brandname . "\"" . " berhasil di tambahkan";
-
         $request->session()->flash('sukses_addNewBrand', $itemAdded);
-
         return redirect()->back();
 
         // return $request->input();
@@ -83,28 +79,26 @@ class BrandController extends Controller
 
     public function deleteBrand($id)
     {
-        // dd($id);
-
         try {
             $decrypted = decrypt($id);
         } catch (DecryptException $e) {
             abort(403);
         }
 
-        $nullCheckItem = Item::where('brand_id', $decrypted)->first();
         $brand = Brand::find($decrypted);
         $deletedBrand = $brand->brand_name;
-        if (is_null($nullCheckItem)) {
-            // dd(1);
-            $brand->delete();
 
+        // cek kalo brand yang mau di delete mempunyai item atau tidak
+        $nullCheckItem = Item::where('brand_id', $decrypted)->first();
+
+        if (is_null($nullCheckItem)) {
+            $brand->delete();
             $brandDeleted = "Brand" . " \"" . $deletedBrand . "\" " . "berhasil di hapus";
 
             session()->flash('sukses_delete_brand', $brandDeleted);
 
             return redirect('manageBrand');
         } else {
-            // dd(2);
             session()->flash('gagal_delete_brand', 'Brand' . " \"" . $deletedBrand . "\" " . 'Gagal Dihapus karena sudah mempunyai Item');
             return redirect('manageBrand');
         }
@@ -112,11 +106,8 @@ class BrandController extends Controller
 
     public function updateBrand(Request $request)
     {
-        $brandInfo = Brand::where('id', $request->brandIdHidden)->first();
-        $oldBrandName = $brandInfo->brand_name;
-
         $request->validate([
-            'brandnameformupdate' => 'required|min:2|max:50|regex:/^[\pL\s\-\0-9]+$/u', //updated to include numbers
+            'brandnameformupdate' => 'required|min:2|max:50|regex:/^[\pL\s\-\0-9]+$/u',
         ], [
             'brandnameformupdate.required' => 'Kolom "Nama Brand" Harus Diisi',
             'brandnameformupdate.min' => 'Nama Brand minimal 3 karakter',
@@ -124,18 +115,22 @@ class BrandController extends Controller
             'brandnameformupdate.regex' => 'Nama Brand hanya membolehkan huruf, angka, spasi, dan tanda penghubung(-)',
         ]);
 
-        Brand::where('id', $request->brandIdHidden)->update([
+        Brand::where('brand_id', $request->brandIdHidden)->update([
             'brand_name' => $request->brandnameformupdate,
         ]);
 
         $request->session()->flash('sukses_editBrand', $request->brandnameformupdate);
-        // $request->session()->flash('sukses_editBrand', $oldBrandName);
-
         return redirect('manageBrand');
     }
 
     public function exportCustomerBrand(Request $request)
     {
+        $request->validate([
+            'customerBrandExport' => 'required',
+        ], [
+            'customerBrandExport.required' => 'Kolom "Customer" harus dipilih',
+        ]);
+        
         $customer = Customer::find($request->customerBrandExport);
 
         $sortBrand = Brand::all()->where('customer_id', $request->customerBrandExport);

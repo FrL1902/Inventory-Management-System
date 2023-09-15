@@ -31,7 +31,7 @@ class brandExport implements FromCollection, ShouldAutoSize, WithHeadings, WithM
     public function map($item): array
     {
         return [
-            $item->id,
+            // $item->id,
             $item->customer_id,
             $item->customer->customer_name,
             $item->brand_id,
@@ -45,6 +45,7 @@ class brandExport implements FromCollection, ShouldAutoSize, WithHeadings, WithM
 
     public function headings(): array
     {
-        return ["ID", "ID Customer", "Nama Customer", "ID Brand", "Nama Brand", "Created At", "Last Updated At"];
+        // return ["ID", "ID Customer", "Nama Customer", "ID Brand", "Nama Brand", "Created At", "Last Updated At"];
+        return ["ID Customer", "Nama Customer", "ID Brand", "Nama Brand", "Created At", "Last Updated At"];
     }
 }
