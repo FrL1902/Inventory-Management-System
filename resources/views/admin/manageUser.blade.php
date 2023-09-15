@@ -220,11 +220,16 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                     data-original-title="Assign Customer">
                                                                 </i></a>
                                                         @else
-                                                            <a style="cursor: pointer"
+                                                            {{-- <a style="cursor: pointer"
                                                                 href="/userAccess/{{ encrypt($data->id) }}"><i
                                                                     class="fa fa-users mt-3 text-primary"
                                                                     data-toggle="tooltip"
                                                                     data-original-title="edit customer access">
+                                                                </i></a> --}}
+                                                                <a style="cursor: pointer"><i
+                                                                    class="fa fa-users mt-3 text-success"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="gudang can view all customer data">
                                                                 </i></a>
                                                         @endif
                                                         <a style="cursor: pointer" class="ml-3"
