@@ -34,7 +34,7 @@
                                     <div class="form-group">
                                         <label for="customeridforbrand">Pemilik Brand<span style="color: red"> (harus dipilih)
                                         </span></label>
-                                        <select class="form-control" id="customeridforbrand" name="customeridforbrand">
+                                        <select class="form-control" id="customeridforbrand" name="customeridforbrand" data-width="100%">
                                             <option></option>
                                             @foreach ($customer as $cust)
                                                 {{-- <option value="{{ $cust->customer_id }}">{{ $cust->customer_name }}</option> --}}

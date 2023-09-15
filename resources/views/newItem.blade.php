@@ -9,10 +9,7 @@
 
 <div class="main-panel">
     <div class="content">
-        {{-- ini page buat add new item --}}
-
         <div class="page-inner">
-
             @if (session('sukses_addNewItem'))
                 <div class="alert alert-success alert-block" id="alertSuccess">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -45,10 +42,12 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="brandidforitem">Brand Pemilik Barang</label>
-                                    <select class="form-control" id="brandidforitem" name="brandidforitem">
+                                    <label for="brandidforitem">Brand Pemilik Barang<span style="color: red"> (harus dipilih)
+                                    </span></label>
+                                    <select class="form-control" id="brandidforitem" name="brandidforitem" data-width="100%">
+                                        <option></option>
                                         @foreach ($brand as $brand)
-                                            <option value="{{ $brand->id }}">{{ $brand->brand_name }}</option>
+                                            <option value="{{ $brand->brand_id }}">{{ $brand->brand_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

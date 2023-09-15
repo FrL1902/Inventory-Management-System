@@ -29,24 +29,18 @@ class ItemController extends Controller
     public function makeItem(Request $request)
     {
         $item = new Item();
-
-        // $request->validate([
-        //     'brandid' => 'required|unique:App\Models\Brand,brand_id|min:3|max:20',
-        //     'brandname' => 'required|min:2|max:50',
-        // ]);
-
-        $customer = Brand::where('id', $request->brandidforitem)->first();
-
-        // dd($customer->customer_id);
+        $customer = Brand::find($request->brandidforitem);
 
         $request->validate([
+            'brandidforitem' => 'required',
             'itemid' => 'required',
             'itemname' => 'required',
             'itemImage' => 'required',
         ], [
-            'itemid.required' => 'Kolom ID Barang harus diisi',
-            'itemname.required' => 'Kolom Nama Barang harus diisi',
-            'itemImage.required' => 'Harus ada foto barang',
+            'brandidforitem.required' => 'Kolom "Brand Pemilik Barang" harus dipilih',
+            'itemid.required' => 'Kolom "ID Barang" harus diisi',
+            'itemname.required' => 'Kolom "Nama Barang" harus diisi',
+            'itemImage.required' => 'Gambar harus ada di kolom "Foto Barang"',
         ]);
 
         $request->validate([
@@ -54,17 +48,17 @@ class ItemController extends Controller
             'itemname' => 'required|unique:App\Models\Item,item_name|min:3|max:75|regex:/^[\pL\s\-\0-9]+$/u', //ga perlu pake unique sih, soalnya udah ada item_id, tp gpp buat skrg deh, //ini regex lama tanpa pake number /^[\pL\s\-]+$/u  , ini yg baru  /^[\pL\s\-\0-9]+$/u
             'itemImage' => 'required|mimes:jpeg,png,jpg',
         ], [
-            'itemid.required' => 'Kolom ID Barang harus diisi',
-            'itemid.unique' => 'ID Barang yang diisi sudah terambil, masukkan ID yang lain',
-            'itemid.min' => 'ID Barang minimal 3 karakter',
-            'itemid.max' => 'ID Barang maksimal 20 karakter',
-            'itemid.alpha_dash' => 'ID Barang hanya membolehkan huruf, angka, -, _ (spasi dan simbol lainnya tidak diterima)',
-            'itemname.required' => 'Kolom Nama Barang harus diisi',
-            'itemname.unique' => 'Nama Barang yang diisi sudah terambil, masukkan nama yang lain',
-            'itemname.min' => 'Nama Barang minimal 3 karakter',
-            'itemname.max' => 'Nama Barang maksimal 75 karakter',
-            'itemname.regex' => 'Nama Barang hanya membolehkan huruf, angka, spasi, dan tanda penghubung(-)',
-            'itemImage.required' => 'Harus ada foto barang',
+            'itemid.required' => 'Kolom "ID Barang" harus diisi',
+            'itemid.unique' => '"ID Barang" yang diisi sudah terambil, masukkan ID yang lain',
+            'itemid.min' => '"ID Barang" minimal 3 karakter',
+            'itemid.max' => '"ID Barang" maksimal 20 karakter',
+            'itemid.alpha_dash' => '"ID Barang" hanya membolehkan huruf, angka, -, _ (spasi dan simbol lainnya tidak diterima)',
+            'itemname.required' => 'Kolom "Nama Barang" harus diisi',
+            'itemname.unique' => '"Nama Barang" yang diisi sudah terambil, masukkan nama yang lain',
+            'itemname.min' => '"Nama Barang" minimal 3 karakter',
+            'itemname.max' => '"Nama Barang" maksimal 75 karakter',
+            'itemname.regex' => '"Nama Barang" hanya membolehkan huruf, angka, spasi, dan tanda penghubung(-)',
+            'itemImage.required' => 'Gambar harus ada di kolom "Foto Barang"',
             'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
         ]);
 
@@ -103,8 +97,6 @@ class ItemController extends Controller
         // $itemAdded = "Brand " . "\"" . $request->brandname . "\"" . " berhasil di tambahkan";
 
         $request->session()->flash('sukses_addNewItem', $request->itemname);
-
-        // dd($request->itemStock);
         return redirect()->back();
     }
 
@@ -334,9 +326,9 @@ class ItemController extends Controller
             ->select('pallets.*', 'items.item_name', 'items.item_id', 'customer.id as customer_id', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures', 'brand.brand_id')
             ->where('brand.brand_id', $request->itemIdReportCustomer)->get();
 
-            // dd($sortCustomerReport);
+        // dd($sortCustomerReport);
 
-            // return Excel::download(new CustomerReportExport($sortCustomerReport), 'Laporan Customer' . $sortCustomerReport->customer_name . '.xlsx');
-            return Excel::download(new CustomerReportExport($sortCustomerReport), 'Laporan Customer' . '.xlsx');
+        // return Excel::download(new CustomerReportExport($sortCustomerReport), 'Laporan Customer' . $sortCustomerReport->customer_name . '.xlsx');
+        return Excel::download(new CustomerReportExport($sortCustomerReport), 'Laporan Customer' . '.xlsx');
     }
 }

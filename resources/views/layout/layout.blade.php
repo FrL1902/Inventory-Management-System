@@ -449,6 +449,14 @@
         });
     </script>
 
+    {{-- Add New Item --}}
+    <script>
+        // page: add new item, kolom: Brand Pemilik Barang
+        $('#brandidforitem').select2({
+            placeholder: 'Select an option'
+        });
+    </script>
+    
     {{-- Edit Brands --}}
     <script>
         // modal + kolom customer
@@ -459,13 +467,6 @@
     </script>
 
 
-    {{-- Add New Item --}}
-    <script>
-        // page: add new item, kolom: Brand Pemilik Barang
-        $('#brandidforitem').select2({
-            placeholder: 'Select an option'
-        });
-    </script>
 
 
     {{-- EDIT ITEM --}}
