@@ -352,7 +352,8 @@
                                                             </div>
                                                         </div>
 
-                                                        {{-- <div class="modal fade" id="addModalCenter{{ $item->id }}"
+                                                        {{-- old feature to add incoming package in this page --}}
+                                                         {{-- <div class="modal fade" id="addModalCenter{{ $item->id }}"
                                                             tabindex="-1" role="dialog"
                                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered"
@@ -397,9 +398,10 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
 
-                                                        <div class="modal fade" id="reduceModalCenter{{ $item->id }}"
+                                                        {{-- old feature to add outgoing package in this page --}}
+                                                        {{-- <div class="modal fade" id="reduceModalCenter{{ $item->id }}"
                                                             tabindex="-1" role="dialog"
                                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered"

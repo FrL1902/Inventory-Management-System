@@ -76,30 +76,6 @@
                                                 data-toggle="modal">Tanggal</a>
                                         </div>
                                     </div>
-                                    {{-- <div class="ml-3 mr-2">
-                                        Export ke Excel Berdasarkan
-                                    </div> --}}
-                                    {{-- <div class="btn-group">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-target="#exportIncomingCustomerModal"
-                                            data-toggle="modal"><strong>Customer</strong>
-                                        </button>
-
-                                        <button type="button" class="btn btn-secondary"
-                                            data-target="#exportIncomingBrandModal"
-                                            data-toggle="modal"><strong>Brand</strong>
-                                        </button>
-
-                                        <button type="button" class="btn btn-secondary"
-                                            data-target="#exportIncomingItemModal"
-                                            data-toggle="modal"><strong>Barang</strong>
-                                        </button>
-
-                                        <button type="button" class="btn btn-secondary"
-                                            data-target="#exportIncomingALLModal"
-                                            data-toggle="modal"><strong>Tanggal</strong>
-                                        </button>
-                                    </div> --}}
 
                                     {{-- export by customer --}}
                                     <div class="modal fade" id="exportIncomingCustomerModal" tabindex="-1" role="dialog"
@@ -126,9 +102,10 @@
                                                                 <label for="customerLabelExportIncoming">Customer</label>
                                                                 <select class="form-control"
                                                                     id="customerLabelExportIncoming" data-width="100%"
-                                                                    name="customerIncoming">
+                                                                    name="customerIncoming" required>
+                                                                    <option></option>
                                                                     @foreach ($customer as $data)
-                                                                        <option value="{{ $data->id }}">
+                                                                        <option value="{{ $data->customer_id }}">
                                                                             {{ $data->customer_name }}
                                                                         </option>
                                                                     @endforeach
@@ -184,9 +161,10 @@
                                                             <div class="form-group">
                                                                 <label for="brandLabelExportincoming">Brand</label>
                                                                 <select class="form-control" id="brandLabelExportincoming"
-                                                                    data-width="100%" name="brandIncoming">
+                                                                    data-width="100%" name="brandIncoming" required>
+                                                                    <option></option>
                                                                     @foreach ($brand as $data)
-                                                                        <option value="{{ $data->id }}">
+                                                                        <option value="{{ $data->brand_id }}">
                                                                             {{ $data->brand_name }}
                                                                         </option>
                                                                     @endforeach
@@ -243,9 +221,10 @@
                                                                 <label for="itemLabelExportincoming">Nama
                                                                     Barang</label>
                                                                 <select class="form-control" id="itemLabelExportincoming"
-                                                                    data-width="100%" name="itemIncoming">
+                                                                    data-width="100%" name="itemIncoming" required>
+                                                                    <option></option>
                                                                     @foreach ($item as $data)
-                                                                        <option value="{{ $data->id }}">
+                                                                        <option value="{{ $data->item_id }}">
                                                                             {{ $data->item_name }}
                                                                         </option>
                                                                     @endforeach
@@ -317,8 +296,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <input type="hidden" class="form-control"
-                                                                name="userIdHidden" value="{{ auth()->user()->id }}">
+                                                        <input type="hidden" class="form-control" name="userIdHidden"
+                                                            value="{{ auth()->user()->id }}">
                                                     </form>
                                                 </div>
                                             </div>
@@ -352,9 +331,10 @@
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
                                                                 <select class="form-control" data-width="100%"
-                                                                    id="incomingidforitem" name="incomingiditem">
+                                                                    id="incomingidforitem" name="incomingiditem" required>
+                                                                    <option></option>
                                                                     @foreach ($item as $item)
-                                                                        <option value="{{ $item->id }}">
+                                                                        <option value="{{ $item->item_id }}">
                                                                             {{ $item->item_name }}</option>
                                                                     @endforeach
                                                                 </select>
@@ -400,15 +380,6 @@
 
                                                             <input type="hidden" class="form-control"
                                                                 name="userIdHidden" value="{{ auth()->user()->id }}">
-
-                                                            {{-- <input type="hidden" class="form-control"
-                                                                name="customerIdHidden"
-                                                                value="{{ $item->customer->id }}">
-                                                            <input type="hidden" class="form-control"
-                                                                name="brandIdHidden" value="{{ $item->brand->id }}"> --}}
-                                                            {{-- <input type="hidden" class="form-control"
-                                                                name="itemIdHidden" value="{{ $item->id }}"> --}}
-
                                                         </div>
                                                     </form>
                                                 </div>

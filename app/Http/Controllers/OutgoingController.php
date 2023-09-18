@@ -24,68 +24,72 @@ class OutgoingController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->level == 'admin') {
+        $item = DB::table('items')
+            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+            ->select('items.item_name', 'items.item_id')->get();
 
-            $item = DB::table('items')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->select('items.item_name', 'items.item_id', 'items.id')->get();
+        $customer = DB::table('customer')
+            ->select('customer.customer_name', 'customer.customer_id')->get();
 
-            $customer = DB::table('customer')
-                ->select('customer.customer_name', 'customer.customer_id', 'customer.id')->get();
+        $outgoing = DB::table('outgoings')
+            ->join('customer', 'outgoings.customer_id', '=', 'customer.customer_id')
+            ->join('brand', 'outgoings.brand_id', '=', 'brand.brand_id')
+            ->join('items', 'outgoings.item_id', '=', 'items.item_id')
+            ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')->get();
 
-            $outgoing = DB::table('outgoings')
-                ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
-                ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
-                ->join('items', 'outgoings.item_id', '=', 'items.id')
-                ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')->get();
+        $brand =  DB::table('brand')
+            ->select('brand.brand_id', 'brand.brand_name')->get();
 
-            $brand =  DB::table('brand')
-                ->select('brand.id', 'brand.brand_name')->get();
-        } else {
-            $item = DB::table('items')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->select('items.item_name', 'items.item_id', 'items.id')
-                ->where('user_id', $user->id)->get();
+        // if ($user->level == 'admin') {
 
-            $customer = DB::table('customer')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.id')
-                ->select('customer.customer_name', 'customer.customer_id', 'customer.id')
-                ->where('user_id', $user->id)->get();
+        //     $item = DB::table('items')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->select('items.item_name', 'items.item_id', 'items.id')->get();
 
-            $outgoing = DB::table('outgoings')
-                ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
-                ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
-                ->join('items', 'outgoings.item_id', '=', 'items.id')
-                ->join('user_accesses', 'outgoings.customer_id', '=', 'user_accesses.customer_id')
-                ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-                ->where('user_id', $user->id)->get();
+        //     $customer = DB::table('customer')
+        //         ->select('customer.customer_name', 'customer.customer_id', 'customer.id')->get();
 
-            $brand =  DB::table('brand')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
-                ->select('brand.id', 'brand.brand_name')->where('user_id', $user->id)->get();
-        }
+        //     $outgoing = DB::table('outgoings')
+        //         ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
+        //         ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
+        //         ->join('items', 'outgoings.item_id', '=', 'items.id')
+        //         ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')->get();
+
+        //     $brand =  DB::table('brand')
+        //         ->select('brand.id', 'brand.brand_name')->get();
+        // } else {
+        //     $item = DB::table('items')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+        //         ->select('items.item_name', 'items.item_id', 'items.id')
+        //         ->where('user_id', $user->id)->get();
+
+        //     $customer = DB::table('customer')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.id')
+        //         ->select('customer.customer_name', 'customer.customer_id', 'customer.id')
+        //         ->where('user_id', $user->id)->get();
+
+        //     $outgoing = DB::table('outgoings')
+        //         ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
+        //         ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
+        //         ->join('items', 'outgoings.item_id', '=', 'items.id')
+        //         ->join('user_accesses', 'outgoings.customer_id', '=', 'user_accesses.customer_id')
+        //         ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //         ->where('user_id', $user->id)->get();
+
+        //     $brand =  DB::table('brand')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
+        //         ->select('brand.id', 'brand.brand_name')->where('user_id', $user->id)->get();
+        // }
 
         return view('outgoingItem', compact('outgoing', 'item', 'customer', 'brand'));
-
-        // if ($item->isempty()) {
-        //     // $message = "no item is present, please input an item before accessing the \"outgoing\" or \"incoming\" page";
-        //     $message = "Tidak ada barang,  Masukkan barang baru terlebih dahulu sebelum mengakses halaman \"outgoing\" atau \"incoming\"";
-        //     session()->flash('no_item_outgoing', $message);
-
-        //     // $brand = Brand::all();
-        //     // return view('newItem', compact('brand'));
-        //     return redirect('/newItem');
-        // } else {
-        //     return view('outgoingItem', compact('outgoing', 'item', 'customer', 'brand'));
-        // }
     }
 
     public function reduceItemStock(Request $request) //OUTGOING, BARANG KELUAR
     {
 
         $userInfo = User::where('id', $request->userIdHidden)->first();
-        $itemInfo = Item::where('id', $request->outgoingiditem)->first();
+        $itemInfo = Item::where('item_id', $request->outgoingiditem)->first();
 
         if ($request->itemReduceStock > $itemInfo->stocks) {
             $request->session()->flash('gagalReduceValue', $itemInfo->item_name);
@@ -106,7 +110,7 @@ class OutgoingController extends Controller
 
         $newValue = $itemInfo->stocks - $request->itemReduceStock;
 
-        Item::where('id', $request->outgoingiditem)->update([
+        Item::where('item_id', $request->outgoingiditem)->update([
             'stocks' => $newValue,
         ]);
 
@@ -230,11 +234,11 @@ class OutgoingController extends Controller
         }
 
         $outgoingInfo = Outgoing::where('id', $decrypted)->first();
-        $itemInfo = Item::where('id', $outgoingInfo->item_id)->first();
+        $itemInfo = Item::where('item_id', $outgoingInfo->item_id)->first();
 
         $newValue = $itemInfo->stocks + $outgoingInfo->stock_taken;
 
-        Item::where('id', $outgoingInfo->item_id)->update([ //kurangin stock sesuai jumlah stock dalam incoming ini
+        Item::where('item_id', $outgoingInfo->item_id)->update([ //kurangin stock sesuai jumlah stock dalam incoming ini
             'stocks' => $newValue
         ]);
 
@@ -252,7 +256,7 @@ class OutgoingController extends Controller
             $outgoingInfo = Outgoing::where('id', $request->itemIdHidden)->first();
 
             // ini buat update valuenya
-            $itemInfo = Item::where('id', $outgoingInfo->item_id)->first();
+            $itemInfo = Item::where('item_id', $outgoingInfo->item_id)->first();
 
 
             $file = $request->file('itemImage');
@@ -307,7 +311,7 @@ class OutgoingController extends Controller
                     return redirect()->back();
                 }
 
-                Item::where('id', $outgoingInfo->item_id)->update([ //kurangin stock sesuai jumlah stock dalam incoming ini
+                Item::where('item_id', $outgoingInfo->item_id)->update([ //kurangin stock sesuai jumlah stock dalam incoming ini
                     'stocks' => $newValue
                 ]);
 

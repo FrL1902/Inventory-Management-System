@@ -21,30 +21,40 @@ class PalletController extends Controller
 
         // $pallet = Pallet::all();
         // $item = Item::all();
-        if ($user->level == 'admin') {
-            $pallet = DB::table('pallets')
-                ->join('items', 'pallets.item_id', '=', 'items.id')
-                ->select('pallets.*', 'items.item_name')->get();
-            // dd($pallet);
 
-            $item = DB::table('items')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->select('items.item_name', 'items.item_id', 'items.id')->get();
-        } else {
-            $pallet = DB::table('pallets')
-                ->join('items', 'pallets.item_id', '=', 'items.id')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->select('pallets.*', 'items.item_name', 'customer.id as customer_id', 'customer.customer_name', 'user_accesses.user_id')
-                ->where('user_id', $user->id)->get();
-            // dd($pallet);
+        $pallet = DB::table('pallets')
+            ->join('items', 'pallets.item_id', '=', 'items.item_id')
+            ->select('pallets.*', 'items.item_name')->get();
+        // dd($pallet);
 
-            $item = DB::table('items')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->select('items.item_name', 'items.item_id', 'items.id')
-                ->where('user_id', $user->id)->get();
-        }
+        $item = DB::table('items')
+            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+            ->select('items.item_name', 'items.item_id')->get();
+
+        // if ($user->level == 'admin') {
+        //     $pallet = DB::table('pallets')
+        //         ->join('items', 'pallets.item_id', '=', 'items.id')
+        //         ->select('pallets.*', 'items.item_name')->get();
+        //     // dd($pallet);
+
+        //     $item = DB::table('items')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->select('items.item_name', 'items.item_id', 'items.id')->get();
+        // } else {
+        //     $pallet = DB::table('pallets')
+        //         ->join('items', 'pallets.item_id', '=', 'items.id')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+        //         ->select('pallets.*', 'items.item_name', 'customer.id as customer_id', 'customer.customer_name', 'user_accesses.user_id')
+        //         ->where('user_id', $user->id)->get();
+        //     // dd($pallet);
+
+        //     $item = DB::table('items')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+        //         ->select('items.item_name', 'items.item_id', 'items.id')
+        //         ->where('user_id', $user->id)->get();
+        // }
 
         return view('managePallet', compact('pallet', 'item'));
     }
@@ -183,7 +193,7 @@ class PalletController extends Controller
     public function manage_pallet_history_page()
     {
         session()->forget('deleteFilterButton');
-        
+
         $user = Auth::user();
 
         // $pallet = Pallet::all();

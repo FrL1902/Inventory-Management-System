@@ -88,7 +88,7 @@
                                                                 <select class="form-control" data-width="100%"
                                                                     id="itemidforpallet" name="itemidforpallet">
                                                                     @foreach ($item as $item)
-                                                                        <option value="{{ $item->id }}">
+                                                                        <option value="{{ $item->item_id }}">
                                                                             {{ $item->item_name }}</option>
                                                                     @endforeach
                                                                 </select>

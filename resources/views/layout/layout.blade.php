@@ -435,12 +435,6 @@
         });
     </script> --}}
 
-    <script>
-        $('#incomingidforitem').select2({
-            dropdownParent: $('#addModalCenter')
-        });
-    </script>
-
     {{-- Add New Brand --}}
     <script>
         // kolom: Pemilik Brand
@@ -453,10 +447,10 @@
     <script>
         // page: add new item, kolom: Brand Pemilik Barang
         $('#brandidforitem').select2({
-            placeholder: 'Select an option'
+            placeholder: 'Pilih Brand'
         });
     </script>
-    
+
     {{-- Edit Brands --}}
     <script>
         // modal + kolom customer
@@ -488,19 +482,29 @@
     <script>
         // export by customer
         $('#customerLabelExportIncoming').select2({
-            dropdownParent: $('#exportIncomingCustomerModal')
+            dropdownParent: $('#exportIncomingCustomerModal'),
+            placeholder: 'Pilih Customer'
         });
     </script>
     <script>
         // export by brand
         $('#brandLabelExportincoming').select2({
-            dropdownParent: $('#exportIncomingBrandModal')
+            dropdownParent: $('#exportIncomingBrandModal'),
+            placeholder: 'Pilih Brand'
         });
     </script>
     <script>
         // export by product
         $('#itemLabelExportincoming').select2({
-            dropdownParent: $('#exportIncomingItemModal')
+            dropdownParent: $('#exportIncomingItemModal'),
+            placeholder: 'Pilih Barang'
+        });
+    </script>
+    <script>
+        // add new incoming package modal
+        $('#incomingidforitem').select2({
+            dropdownParent: $('#addModalCenter'),
+            placeholder: 'Pilih Barang'
         });
     </script>
 
@@ -508,25 +512,29 @@
     <script>
         // export by customer di outgoing
         $('#customerLabelExportoutgoing').select2({
-            dropdownParent: $('#exportOutgoingCustomerModal')
+            dropdownParent: $('#exportOutgoingCustomerModal'),
+            placeholder: 'Pilih Customer'
         });
     </script>
     <script>
         // export by brand di outgoing
         $('#brandLabelExportoutgoing').select2({
-            dropdownParent: $('#exportOutgoingBrandModal')
+            dropdownParent: $('#exportOutgoingBrandModal'),
+            placeholder: 'Pilih Brand'
         });
     </script>
     <script>
         // export by item di outgoing
         $('#itemLabelExportoutgoing').select2({
-            dropdownParent: $('#exportOutgoingItemModal')
+            dropdownParent: $('#exportOutgoingItemModal'),
+            placeholder: 'Pilih Barang'
         });
     </script>
     <script>
         // add new outgoing package di outgoing
         $('#outgoingidforitem').select2({
-            dropdownParent: $('#outModalCenter')
+            dropdownParent: $('#outModalCenter'),
+            placeholder: 'Pilih Barang'
         });
     </script>
 
@@ -566,23 +574,6 @@
             dropdownParent: $('#exportItemReportModal')
         });
     </script>
-
-
-
-
-
-    {{-- <script type="text/javascript">
-        function display_c() {
-            var refresh = 1000; // Refresh rate in milli seconds
-            mytime = setTimeout('display_ct()', refresh)
-        }
-
-        // function display_ct() {
-        //     var x = new Date()
-        //     document.getElementById('ct').innerHTML = x;
-        //     display_c();
-        // }
-    </script> --}}
 
     <script type="text/javascript">
         function showTime() {

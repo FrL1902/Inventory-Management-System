@@ -255,50 +255,60 @@ class ItemController extends Controller
 
     public function customer_report_page()
     {
-
         // session()->forget('deleteFilterButton'); //ini buat tombol filter yang ga jadi digunain
 
         $user = Auth::user();
 
-        if ($user->level == 'admin') {
-            $pallet = DB::table('pallets')
-                ->join('items', 'pallets.item_id', '=', 'items.id')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->join('brand', 'items.brand_id', '=', 'brand.id')
-                // ->select('pallets.*', 'items.item_name', 'items.item_id')
-                ->select('pallets.*', 'items.item_name', 'items.item_id', 'customer.id as customer_id', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
-                ->get();
-            // dd($pallet);
+        $pallet = DB::table('pallets')
+            ->join('items', 'pallets.item_id', '=', 'items.item_id')
+            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+            ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+            ->select('pallets.*', 'items.item_name', 'items.item_id', 'customer.customer_id', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
+            ->get();
 
-            // $item = DB::table('items')
-            //     ->join('customer', 'items.customer_id', '=', 'customer.id')
-            //     ->select('items.item_name', 'items.item_id', 'items.id')->get();
+        $brand = DB::table('brand')
+            ->join('customer', 'brand.customer_id', '=', 'customer.customer_id')
+            ->select('brand.brand_name', 'brand.brand_id')->get();
 
-            $brand = DB::table('brand')
-                ->join('customer', 'brand.customer_id', '=', 'customer.id')
-                ->select('brand.brand_name', 'brand.brand_id')->get();
-        } else {
-            $pallet = DB::table('pallets')
-                ->join('items', 'pallets.item_id', '=', 'items.id')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->join('brand', 'items.brand_id', '=', 'brand.id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->select('pallets.*', 'items.item_name', 'items.item_id', 'customer.id as customer_id', 'customer.customer_name', 'user_accesses.user_id', 'brand.brand_name', 'items.item_pictures')
-                ->where('user_id', $user->id)->get();
-            // dd($pallet);
+        // if ($user->level == 'admin') {
+        //     $pallet = DB::table('pallets')
+        //         ->join('items', 'pallets.item_id', '=', 'items.id')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->join('brand', 'items.brand_id', '=', 'brand.id')
+        //         // ->select('pallets.*', 'items.item_name', 'items.item_id')
+        //         ->select('pallets.*', 'items.item_name', 'items.item_id', 'customer.id as customer_id', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
+        //         ->get();
+        //     // dd($pallet);
 
-            // $brand = DB::table('items')
-            //     ->join('customer', 'items.customer_id', '=', 'customer.id')
-            //     ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-            //     ->select('items.item_name', 'items.item_id', 'items.id')
-            //     ->where('user_id', $user->id)->get();
+        //     // $item = DB::table('items')
+        //     //     ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //     //     ->select('items.item_name', 'items.item_id', 'items.id')->get();
 
-            $brand = DB::table('brand')
-                ->join('customer', 'brand.customer_id', '=', 'customer.id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
-                ->select('brand.brand_name', 'brand.brand_id')
-                ->where('user_id', $user->id)->get();
-        }
+        //     $brand = DB::table('brand')
+        //         ->join('customer', 'brand.customer_id', '=', 'customer.id')
+        //         ->select('brand.brand_name', 'brand.brand_id')->get();
+        // } else {
+        //     $pallet = DB::table('pallets')
+        //         ->join('items', 'pallets.item_id', '=', 'items.id')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->join('brand', 'items.brand_id', '=', 'brand.id')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+        //         ->select('pallets.*', 'items.item_name', 'items.item_id', 'customer.id as customer_id', 'customer.customer_name', 'user_accesses.user_id', 'brand.brand_name', 'items.item_pictures')
+        //         ->where('user_id', $user->id)->get();
+        //     // dd($pallet);
+
+        //     // $brand = DB::table('items')
+        //     //     ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //     //     ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+        //     //     ->select('items.item_name', 'items.item_id', 'items.id')
+        //     //     ->where('user_id', $user->id)->get();
+
+        //     $brand = DB::table('brand')
+        //         ->join('customer', 'brand.customer_id', '=', 'customer.id')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
+        //         ->select('brand.brand_name', 'brand.brand_id')
+        //         ->where('user_id', $user->id)->get();
+        // }
 
         return view('customerReport', compact('brand', 'pallet'));
     }

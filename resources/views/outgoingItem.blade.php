@@ -78,30 +78,6 @@
                                                 data-toggle="modal">Tanggal</a>
                                         </div>
                                     </div>
-                                    {{-- <div class="ml-3 mr-2">
-                                        Export ke Excel Berdasarkan
-                                    </div>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-target="#exportOutgoingCustomerModal"
-                                            data-toggle="modal"><strong>Customer</strong>
-                                        </button>
-
-                                        <button type="button" class="btn btn-secondary"
-                                            data-target="#exportOutgoingBrandModal"
-                                            data-toggle="modal"><strong>Brand</strong>
-                                        </button>
-
-                                        <button type="button" class="btn btn-secondary"
-                                            data-target="#exportOutgoingItemModal"
-                                            data-toggle="modal"><strong>Barang</strong>
-                                        </button>
-
-                                        <button type="button" class="btn btn-secondary"
-                                            data-target="#exportOutgoingALLModal"
-                                            data-toggle="modal"><strong>Tanggal</strong>
-                                        </button>
-                                    </div> --}}
 
                                     {{-- export by customer --}}
                                     <div class="modal fade" id="exportOutgoingCustomerModal" tabindex="-1" role="dialog"
@@ -128,9 +104,10 @@
                                                                 <label for="customerLabelExport">Customer</label>
                                                                 <select class="form-control"
                                                                     id="customerLabelExportoutgoing" data-width="100%"
-                                                                    name="customerOutgoing">
+                                                                    name="customerOutgoing" required>
+                                                                    <option></option>
                                                                     @foreach ($customer as $data)
-                                                                        <option value="{{ $data->id }}">
+                                                                        <option value="{{ $data->customer_id }}">
                                                                             {{ $data->customer_name }}
                                                                         </option>
                                                                     @endforeach
@@ -186,9 +163,10 @@
                                                             <div class="form-group">
                                                                 <label for="brandLabelExport">Brand</label>
                                                                 <select class="form-control" id="brandLabelExportoutgoing"
-                                                                    data-width="100%" name="brandOutgoing">
+                                                                    data-width="100%" name="brandOutgoing" required>
+                                                                    <option></option>
                                                                     @foreach ($brand as $data)
-                                                                        <option value="{{ $data->id }}">
+                                                                        <option value="{{ $data->brand_id }}">
                                                                             {{ $data->brand_name }}
                                                                         </option>
                                                                     @endforeach
@@ -244,9 +222,10 @@
                                                             <div class="form-group">
                                                                 <label for="itemLabelExport">Nama Barang</label>
                                                                 <select class="form-control" id="itemLabelExportoutgoing"
-                                                                    data-width="100%" name="itemOutgoing">
+                                                                    data-width="100%" name="itemOutgoing" required>
+                                                                    <option></option>
                                                                     @foreach ($item as $data)
-                                                                        <option value="{{ $data->id }}">
+                                                                        <option value="{{ $data->item_id }}">
                                                                             {{ $data->item_name }}
                                                                         </option>
                                                                     @endforeach
@@ -353,9 +332,10 @@
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
                                                                 <select class="form-control" id="outgoingidforitem"
-                                                                    data-width="100%" name="outgoingiditem">
+                                                                    data-width="100%" name="outgoingiditem" required>
+                                                                    <option></option>
                                                                     @foreach ($item as $item)
-                                                                        <option value="{{ $item->id }}">
+                                                                        <option value="{{ $item->item_id }}">
                                                                             {{ $item->item_name }}</option>
                                                                     @endforeach
                                                                 </select>
