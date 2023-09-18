@@ -182,22 +182,29 @@ class IncomingController extends Controller
 
         // $sortAll = Incoming::all()->whereBetween('arrive_date', [$date_from, $date_to]);
 
-        if ($user->level == 'gudang') {
-            $sortAll = DB::table('incomings')
-                ->join('customer', 'incomings.customer_id', '=', 'customer.id')
-                ->join('brand', 'incomings.brand_id', '=', 'brand.id')
-                ->join('items', 'incomings.item_id', '=', 'items.id')
-                ->join('user_accesses', 'incomings.customer_id', '=', 'user_accesses.customer_id')
-                ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-                ->where('user_id', $request->userIdHidden)->whereBetween('arrive_date', [$date_from, $date_to])->get();
-        } else {
-            $sortAll = DB::table('incomings')
-                ->join('customer', 'incomings.customer_id', '=', 'customer.id')
-                ->join('brand', 'incomings.brand_id', '=', 'brand.id')
-                ->join('items', 'incomings.item_id', '=', 'items.id')
-                ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-                ->whereBetween('arrive_date', [$date_from, $date_to])->get();
-        }
+        $sortAll = DB::table('incomings')
+            ->join('customer', 'incomings.customer_id', '=', 'customer.id')
+            ->join('brand', 'incomings.brand_id', '=', 'brand.id')
+            ->join('items', 'incomings.item_id', '=', 'items.id')
+            ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->whereBetween('arrive_date', [$date_from, $date_to])->get();
+
+        // if ($user->level == 'gudang') {
+        //     $sortAll = DB::table('incomings')
+        //         ->join('customer', 'incomings.customer_id', '=', 'customer.id')
+        //         ->join('brand', 'incomings.brand_id', '=', 'brand.id')
+        //         ->join('items', 'incomings.item_id', '=', 'items.id')
+        //         ->join('user_accesses', 'incomings.customer_id', '=', 'user_accesses.customer_id')
+        //         ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //         ->where('user_id', $request->userIdHidden)->whereBetween('arrive_date', [$date_from, $date_to])->get();
+        // } else {
+        //     $sortAll = DB::table('incomings')
+        //         ->join('customer', 'incomings.customer_id', '=', 'customer.id')
+        //         ->join('brand', 'incomings.brand_id', '=', 'brand.id')
+        //         ->join('items', 'incomings.item_id', '=', 'items.id')
+        //         ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //         ->whereBetween('arrive_date', [$date_from, $date_to])->get();
+        // }
 
         $formatFileName = 'DataBarangDatang ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 

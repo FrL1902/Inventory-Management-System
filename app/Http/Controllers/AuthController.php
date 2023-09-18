@@ -40,30 +40,6 @@ class AuthController extends Controller
         }
     }
 
-    // public function login(Request $request)
-    // {
-    //     $user = User::where('name', $request->name);
-
-    //     $credentials = [
-    //         'email' => $request->name,
-    //         'password' => $request->nik,
-    //     ];
-
-    //     if (Auth::attempt($credentials)) {
-
-    //         if ($user->level == 'admin') {
-    //             // kalo user level = admin
-    //         } elseif ($user->level == 'kepala_desa') {
-    //             // kalo user level = kepala_desa
-    //         } else {
-    //             // else
-    //         }
-    //     } else {
-    //         $request->session()->flash('status', 'informasi yang dimasukkan salah'); //error ato apa lah kalo login credentialnya salah
-    //         return redirect()->back();
-    //     }
-    // }
-
     public function show_creds($id)
     {
         try {

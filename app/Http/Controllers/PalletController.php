@@ -195,42 +195,35 @@ class PalletController extends Controller
         session()->forget('deleteFilterButton');
 
         $user = Auth::user();
+        $item = Item::all();
+        $palletHistory = DB::table('pallet_histories')
+            ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
+            ->join('users', 'pallet_histories.user', '=', 'users.id')
+            ->select('pallet_histories.*', 'items.item_name', 'users.name')->get();
 
-        // $pallet = Pallet::all();
-        // $item = Item::all();
-        if ($user->level == 'admin') {
-            $item = Item::all();
-            // $palletHistory = PalletHistory::all();
-            $palletHistory = DB::table('pallet_histories')
-                ->join('items', 'pallet_histories.item_id', '=', 'items.item_id') //join('tabel yang mau di tambahin', 'tabel utama.value yang mau dicocokin', '=', 'tabel yang ditambahin.value yang mau dicocokin')
-                ->join('users', 'pallet_histories.user', '=', 'users.id') //bagian join bisa dilakuin berkali kali
-                ->select('pallet_histories.*', 'items.item_name', 'users.name')->get(); //jgn lupa manggil semua tabel utamanya terus ditambah lagi kolom yang diinginkan
-            // dd($palletHistory);
-        } else {
-            $item = DB::table('items')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->select('items.item_name', 'items.item_id', 'items.id')
-                ->where('user_id', $user->id)->get();
-
-            $palletHistory = DB::table('pallet_histories')
-                ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->join('users', 'pallet_histories.user', '=', 'users.id')
-                ->select('pallet_histories.*', 'items.item_name', 'users.name')
-                ->where('user_id', $user->id)->get();
-        }
-
-
-
-        // $pallet = DB::table('pallets')
-        //         ->join('items', 'pallets.item_id', '=', 'items.id')
+        // if ($user->level == 'admin') {
+        //     $item = Item::all();
+        //     // $palletHistory = PalletHistory::all();
+        //     $palletHistory = DB::table('pallet_histories')
+        //         ->join('items', 'pallet_histories.item_id', '=', 'items.item_id') //join('tabel yang mau di tambahin', 'tabel utama.value yang mau dicocokin', '=', 'tabel yang ditambahin.value yang mau dicocokin')
+        //         ->join('users', 'pallet_histories.user', '=', 'users.id') //bagian join bisa dilakuin berkali kali
+        //         ->select('pallet_histories.*', 'items.item_name', 'users.name')->get(); //jgn lupa manggil semua tabel utamanya terus ditambah lagi kolom yang diinginkan
+        //     // dd($palletHistory);
+        // } else {
+        //     $item = DB::table('items')
         //         ->join('customer', 'items.customer_id', '=', 'customer.id')
         //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-        //         ->select('pallets.*', 'items.item_name', 'customer.id as customer_id', 'customer.customer_name', 'user_accesses.user_id')
+        //         ->select('items.item_name', 'items.item_id', 'items.id')
         //         ->where('user_id', $user->id)->get();
 
+        //     $palletHistory = DB::table('pallet_histories')
+        //         ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+        //         ->join('users', 'pallet_histories.user', '=', 'users.id')
+        //         ->select('pallet_histories.*', 'items.item_name', 'users.name')
+        //         ->where('user_id', $user->id)->get();
+        // }
 
         return view('palletHistory', compact('palletHistory', 'item'));
     }
@@ -260,22 +253,28 @@ class PalletController extends Controller
 
         $user = Auth::user();
 
-        if ($user->level != 'admin') {
-            $sortHistoryDate = DB::table('pallet_histories')
-                ->join('items', 'items.item_id', '=', 'pallet_histories.item_id')
-                ->join('users', 'users.id', '=', 'pallet_histories.user')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->select('pallet_histories.*', 'items.item_name', 'users.name')
-                ->where('user_id', $user->id)
-                ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])->get();
-            // dd($sortHistoryDate);
-        } else {
-            $sortHistoryDate = DB::table('pallet_histories')
+        $sortHistoryDate = DB::table('pallet_histories')
                 ->join('items', 'items.item_id', '=', 'pallet_histories.item_id')
                 ->join('users', 'users.id', '=', 'pallet_histories.user')
                 ->select('pallet_histories.*', 'items.item_name', 'users.name')
                 ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])->get();
-        }
+
+        // if ($user->level != 'admin') {
+        //     $sortHistoryDate = DB::table('pallet_histories')
+        //         ->join('items', 'items.item_id', '=', 'pallet_histories.item_id')
+        //         ->join('users', 'users.id', '=', 'pallet_histories.user')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+        //         ->select('pallet_histories.*', 'items.item_name', 'users.name')
+        //         ->where('user_id', $user->id)
+        //         ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])->get();
+        //     // dd($sortHistoryDate);
+        // } else {
+        //     $sortHistoryDate = DB::table('pallet_histories')
+        //         ->join('items', 'items.item_id', '=', 'pallet_histories.item_id')
+        //         ->join('users', 'users.id', '=', 'pallet_histories.user')
+        //         ->select('pallet_histories.*', 'items.item_name', 'users.name')
+        //         ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])->get();
+        // }
 
         $formatFileName = 'DataHistoryPalet ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 
@@ -290,30 +289,37 @@ class PalletController extends Controller
 
         $user = Auth::user();
 
-        if ($user->level == 'admin') {
-            $item = Item::all();
-            $palletHistory = DB::table('pallet_histories')
-                ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
-                ->join('users', 'pallet_histories.user', '=', 'users.id')
-                ->select('pallet_histories.*', 'items.item_name', 'users.name')
-                ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])->get();
-        } else {
-            $item = DB::table('items')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->select('items.item_name', 'items.item_id', 'items.id')
-                ->where('user_id', $user->id)->get();
+        $item = Item::all();
+        $palletHistory = DB::table('pallet_histories')
+            ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
+            ->join('users', 'pallet_histories.user', '=', 'users.id')
+            ->select('pallet_histories.*', 'items.item_name', 'users.name')
+            ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])->get();
 
-            $palletHistory = DB::table('pallet_histories')
-                ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->join('users', 'pallet_histories.user', '=', 'users.id')
-                ->select('pallet_histories.*', 'items.item_name', 'users.name')
-                ->where('user_id', $user->id)
-                ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])
-                ->get();
-        }
+        // if ($user->level == 'admin') {
+        //     $item = Item::all();
+        //     $palletHistory = DB::table('pallet_histories')
+        //         ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
+        //         ->join('users', 'pallet_histories.user', '=', 'users.id')
+        //         ->select('pallet_histories.*', 'items.item_name', 'users.name')
+        //         ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])->get();
+        // } else {
+        //     $item = DB::table('items')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+        //         ->select('items.item_name', 'items.item_id', 'items.id')
+        //         ->where('user_id', $user->id)->get();
+
+        //     $palletHistory = DB::table('pallet_histories')
+        //         ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+        //         ->join('users', 'pallet_histories.user', '=', 'users.id')
+        //         ->select('pallet_histories.*', 'items.item_name', 'users.name')
+        //         ->where('user_id', $user->id)
+        //         ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])
+        //         ->get();
+        // }
         $request->session()->flash('deleteFilterButton', 'yea');
 
         return view('palletHistory', compact('palletHistory', 'item'));

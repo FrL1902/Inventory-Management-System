@@ -21,17 +21,19 @@ class StockHistoryController extends Controller
 
         $user = Auth::user();
 
-        if ($user->level != 'admin') {
-            $history = DB::table('stock_histories')
-                ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
-                ->join('customer', 'items.customer_id', '=', 'customer.id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->select('stock_histories.*')
-                ->where('user_id', $user->id)->whereBetween('stock_histories.created_at', [$date_from, $date_to])->get();
-            // dd($sortHistoryDate);
-        } else {
-            $history = StockHistory::all()->whereBetween('created_at', [$date_from, $date_to]);
-        }
+        $history = StockHistory::all()->whereBetween('created_at', [$date_from, $date_to]);
+
+        // if ($user->level != 'admin') {
+        //     $history = DB::table('stock_histories')
+        //         ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
+        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+        //         ->select('stock_histories.*')
+        //         ->where('user_id', $user->id)->whereBetween('stock_histories.created_at', [$date_from, $date_to])->get();
+        //     // dd($sortHistoryDate);
+        // } else {
+        //     $history = StockHistory::all()->whereBetween('created_at', [$date_from, $date_to]);
+        // }
 
 
         $request->session()->flash('deleteFilterButton', 'yea');

@@ -165,22 +165,29 @@ class OutgoingController extends Controller
         // $sortAll = Outgoing::all()->whereBetween('created_at', [$date_from, $date_to]); // versi lama pake created at
         // $sortAll = Outgoing::all()->whereBetween('depart_date', [$date_from, $date_to]);
 
-        if ($user->level == 'gudang') {
-            $sortAll = DB::table('outgoings')
-                ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
-                ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
-                ->join('items', 'outgoings.item_id', '=', 'items.id')
-                ->join('user_accesses', 'outgoings.customer_id', '=', 'user_accesses.customer_id')
-                ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-                ->where('user_id', $request->userIdHidden)->whereBetween('depart_date', [$date_from, $date_to])->get();
-        } else {
-            $sortAll = DB::table('outgoings')
+        $sortAll = DB::table('outgoings')
                 ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
                 ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
                 ->join('items', 'outgoings.item_id', '=', 'items.id')
                 ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
                 ->whereBetween('depart_date', [$date_from, $date_to])->get();
-        }
+
+        // if ($user->level == 'gudang') {
+        //     $sortAll = DB::table('outgoings')
+        //         ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
+        //         ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
+        //         ->join('items', 'outgoings.item_id', '=', 'items.id')
+        //         ->join('user_accesses', 'outgoings.customer_id', '=', 'user_accesses.customer_id')
+        //         ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //         ->where('user_id', $request->userIdHidden)->whereBetween('depart_date', [$date_from, $date_to])->get();
+        // } else {
+        //     $sortAll = DB::table('outgoings')
+        //         ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
+        //         ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
+        //         ->join('items', 'outgoings.item_id', '=', 'items.id')
+        //         ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //         ->whereBetween('depart_date', [$date_from, $date_to])->get();
+        // }
 
         $formatFileName = 'DataBarangKeluar ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 
