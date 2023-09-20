@@ -166,11 +166,11 @@ class OutgoingController extends Controller
         // $sortAll = Outgoing::all()->whereBetween('depart_date', [$date_from, $date_to]);
 
         $sortAll = DB::table('outgoings')
-                ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
-                ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
-                ->join('items', 'outgoings.item_id', '=', 'items.id')
-                ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-                ->whereBetween('depart_date', [$date_from, $date_to])->get();
+            ->join('customer', 'outgoings.customer_id', '=', 'customer.customer_id')
+            ->join('brand', 'outgoings.brand_id', '=', 'brand.brand_id')
+            ->join('items', 'outgoings.item_id', '=', 'items.item_id')
+            ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->whereBetween('depart_date', [$date_from, $date_to])->get();
 
         // if ($user->level == 'gudang') {
         //     $sortAll = DB::table('outgoings')

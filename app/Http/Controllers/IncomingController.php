@@ -183,9 +183,9 @@ class IncomingController extends Controller
         // $sortAll = Incoming::all()->whereBetween('arrive_date', [$date_from, $date_to]);
 
         $sortAll = DB::table('incomings')
-            ->join('customer', 'incomings.customer_id', '=', 'customer.id')
-            ->join('brand', 'incomings.brand_id', '=', 'brand.id')
-            ->join('items', 'incomings.item_id', '=', 'items.id')
+            ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+            ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+            ->join('items', 'incomings.item_id', '=', 'items.item_id')
             ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
             ->whereBetween('arrive_date', [$date_from, $date_to])->get();
 

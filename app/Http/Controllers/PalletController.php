@@ -61,7 +61,7 @@ class PalletController extends Controller
 
     public function add_pallet(Request $request)
     {
-        $itemInfo = Item::where('id', $request->itemidforpallet)->first();
+        $itemInfo = Item::where('item_id', $request->itemidforpallet)->first();
         $totalInPalletCurrently = Pallet::where('item_id', $request->itemidforpallet)->sum('stock'); //INI BISA DAPET TOTALNYA
 
         // stok total yg di palet pada suatu item tidak boleh melebihi stok item di tabel items
@@ -110,13 +110,16 @@ class PalletController extends Controller
 
     public function reduce_pallet_stock(Request $request)
     {
+        // dd($request->palletIdHidden);
         $palletInfo = Pallet::where('id', $request->palletIdHidden)->first();
         // dd($palletInfo);
         // $itemInfo = Item::where('item_id',$palletInfo->item_id)->first();
 
         $itemInfo = DB::table('pallets')
-            ->join('items', 'items.id', '=', 'pallets.item_id')
-            ->select('items.*')->first();
+            ->join('items', 'items.item_id', '=', 'pallets.item_id')
+            ->select('items.*')->where('pallets.id', $request->palletIdHidden)->first();
+
+        // dd($itemInfo);
         $id = Auth::user()->id;
 
         if ($palletInfo->stock < $request->palletStockOut) {
@@ -139,10 +142,11 @@ class PalletController extends Controller
             return redirect()->back();
         } else if ($palletInfo->stock > $request->palletStockOut) { //ini kalau keluar sebagian stoknya
             $newValue = $palletInfo->stock - $request->palletStockOut;
-
             // memasukkan data ke tabel sejarah palet
             $history = new PalletHistory();
+            // dd($itemInfo->item_id);
             $history->item_id = $itemInfo->item_id;
+            // dd('s');
             $history->stock = $newValue;
             $history->bin = $palletInfo->bin;
             $history->status = 'KELUAR SEBAGIAN ' . '(' . (string)$request->palletStockOut . ')';
@@ -169,10 +173,11 @@ class PalletController extends Controller
         $palletInfo = Pallet::where('id', $decrypted)->first();
         $id = Auth::user()->id;
 
-        // dd($palletInfo->stock);
+        // dd($decrypted);
+        // dd($palletInfo->item_id);
 
 
-        $palletInfo = Pallet::where('id', $decrypted)->first();
+        // $palletInfo = Pallet::where('id', $decrypted)->first();
 
         $palletInfo->delete();
 
@@ -254,10 +259,10 @@ class PalletController extends Controller
         $user = Auth::user();
 
         $sortHistoryDate = DB::table('pallet_histories')
-                ->join('items', 'items.item_id', '=', 'pallet_histories.item_id')
-                ->join('users', 'users.id', '=', 'pallet_histories.user')
-                ->select('pallet_histories.*', 'items.item_name', 'users.name')
-                ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])->get();
+            ->join('items', 'items.item_id', '=', 'pallet_histories.item_id')
+            ->join('users', 'users.id', '=', 'pallet_histories.user')
+            ->select('pallet_histories.*', 'items.item_name', 'users.name')
+            ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])->get();
 
         // if ($user->level != 'admin') {
         //     $sortHistoryDate = DB::table('pallet_histories')
