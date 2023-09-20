@@ -28,7 +28,7 @@ class OutgoingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
     {
         return [
             // 'ID', 'Customer Name', 'Brand Name', 'Item Name', 'Date Departed', 'Stock Before', 'Stock Taken', 'Stock After', 'description', 'picture link'
-            'ID', 'Nama Customer', 'Nama Brand', 'Nama Barang', 'Tanggal Keluar', 'Stock Keluar', 'deskripsi', 'link gambar'
+            'Nama Customer', 'Nama Brand', 'ID Barang', 'Nama Barang', 'Tanggal Datang', 'Stok Datang', 'deskripsi', 'link gambar'
         ];
     }
 
@@ -40,12 +40,13 @@ class OutgoingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
     public function map($item): array
     {
         return [
-            $item->id,
+            // $item->id,
             // $item->customer->customer_name,
             // $item->brand->brand_name,
             // $item->item->item_name,
             (is_null($item->customer_name)) ? $item->customer->customer_name : $item->customer_name,
             (is_null($item->brand_name)) ? $item->brand->brand_name : $item->brand_name,
+            $item->item_id,
             (is_null($item->item_name)) ? $item->item->item_name : $item->item_name,
             // $item->depart_date,
             date_format(date_create($item->depart_date), 'd-m-Y'),
@@ -64,7 +65,7 @@ class OutgoingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
     {
         return [
             AfterSheet::class    => function (AfterSheet $event) {
-                $event->sheet->getStyle('A1:J1')->applyFromArray([
+                $event->sheet->getStyle('A1:H1')->applyFromArray([
                     'font' => ['bold' => true]
                 ]);
                 $styleArrayHeading = [
@@ -84,10 +85,10 @@ class OutgoingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
                     ],
                 ];
 
-                $frontTolastData = 'A2:J' . strval(count($this->outgoingData) + 1);
-                $event->sheet->getStyle('A1:J1')->applyFromArray($styleArrayHeading);
+                $frontTolastData = 'A2:H' . strval(count($this->outgoingData) + 1);
+                $event->sheet->getStyle('A1:H1')->applyFromArray($styleArrayHeading);
                 $event->sheet->getStyle($frontTolastData)->applyFromArray($styleArrayContent);
-                $event->sheet->getStyle('A1:J1')->getAlignment()->setHorizontal('center');
+                $event->sheet->getStyle('A1:H1')->getAlignment()->setHorizontal('center');
                 $event->sheet->getStyle($frontTolastData)->getAlignment()->setHorizontal('left');
             },
 
