@@ -38,7 +38,7 @@
                                         </span>
                                         <h4 class="card-title mt-1 mr-3">
                                             <span class="align-middle">
-                                            <strong>Sejarah Stok</strong>
+                                                <strong>Sejarah Stok</strong>
                                             </span>
                                         </h4>
                                         <div class="ml-3 mr-2 mt-2">
@@ -104,7 +104,7 @@
                                                                 {{-- <label for="largeInput">Item Name (case sensitive)</label>
                                                                 <input type="text" class="form-control form-control"
                                                                     placeholder="item name" name="itemHistoryExport"> --}}
-                                                                    <select class="form-control" data-width="100%"
+                                                                <select class="form-control" data-width="100%"
                                                                     id="itemHistoryExport" name="itemHistoryExport">
                                                                     @foreach ($item as $item)
                                                                         <option value="{{ $item->item_id }}">
@@ -144,7 +144,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form method="post" action="/exportPalletHistoryByDate">
+                                                    <form method="post" action="/exportHistoryByDate">
                                                         @csrf
 
                                                         <div class="card-body">
