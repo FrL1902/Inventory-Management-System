@@ -227,7 +227,7 @@
                     </div>
                     <ul class="nav">
                         <li class="nav-item @yield('home')">
-                            <a href="/home">
+                            <a href="home">
                                 <i class="fas fa-home"></i>
                                 <p>Home</p>
                                 {{-- <span class="badge badge-count">5</span> --}}
@@ -292,13 +292,13 @@
                                         @if (Auth::user()->level != 'gudang')
                                             <li class="@yield('report')">
                                                 <a href="/customerReport">
-                                                    <span class="sub-item">Laporan Customer</span>
+                                                    <span class="sub-item">Laporan Stok by pcs</span>
                                                 </a>
                                             </li>
                                         @endif
                                     @endauth
                                     @auth
-                                        @if (Auth::user()->level == 'admin')
+                                        @if (Auth::user()->level == 'admin' || Auth::user()->level == 'cargo')
                                             <li class="@yield('newitem')">
                                                 <a href="/newItem">
                                                     <span class="sub-item">Tambah Barang Baru</span>
@@ -342,6 +342,15 @@
                             {{-- color of the pressed button is style="background-color: #f7f7f7" --}}
                             <div class="collapse @yield('showmanagepallet')" id="pallet">
                                 <ul class="nav nav-collapse">
+                                    @auth
+                                        @if (Auth::user()->level != 'gudang')
+                                            <li class="@yield('report')">
+                                                <a href="/customerReport">
+                                                    <span class="sub-item">Laporan Stok by palet</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endauth
                                     @auth
                                         @if (Auth::user()->level != 'customer')
                                             <li class="@yield('managepallet')">
