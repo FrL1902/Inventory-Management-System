@@ -79,7 +79,7 @@ class UserController extends Controller
 
         session()->flash('sukses_delete', $userDeleted);
 
-        return redirect('manageUser');
+        return redirect()->back();
     }
 
 
@@ -98,7 +98,7 @@ class UserController extends Controller
 
         $request->session()->flash('sukses_editUser', $oldUsername);
 
-        return redirect('manageUser');
+        return redirect()->back();
     }
 
     public function user_access_page($id)

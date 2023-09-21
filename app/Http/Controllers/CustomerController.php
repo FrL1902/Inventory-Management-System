@@ -16,12 +16,12 @@ class CustomerController extends Controller
     {
         $customer = Customer::all();
 
-        return view('manageCustomer', compact('customer'));
+        return view('manage_views.manageCustomer', compact('customer'));
     }
 
     public function new_customer_page(Request $request)
     {
-        return view('newCustomer');
+        return view('new_views.newCustomer');
     }
 
     public function makeCustomer(Request $request)
@@ -459,7 +459,7 @@ class CustomerController extends Controller
 
         if ($flagNull == 10) {
             session()->flash('noInput', "Update Gagal: tidak ada data yang dimasukkan");
-            return redirect('manageCustomer');
+            return redirect()->back();
         }
 
         $customer->update();
@@ -468,7 +468,7 @@ class CustomerController extends Controller
 
         session()->flash('sukses_update_customer', $customerUpdated);
 
-        return redirect('manageCustomer');
+        return redirect()->back();
     }
 
     public function deleteCustomer($id)
@@ -491,10 +491,10 @@ class CustomerController extends Controller
 
             session()->flash('sukses_delete_customer', $customerDeleted);
 
-            return redirect('manageCustomer');
+            return redirect()->back();
         } else {
             session()->flash('gagal_delete_customer', 'Customer' . " \"" . $deletedCustomer . "\" " . 'Gagal Dihapus karena sudah mempunyai Brand');
-            return redirect('manageCustomer');
+            return redirect()->back();
         }
     }
 

@@ -56,7 +56,7 @@ class PalletController extends Controller
         //         ->where('user_id', $user->id)->get();
         // }
 
-        return view('managePallet', compact('pallet', 'item'));
+        return view('manage_views.managePallet', compact('pallet', 'item'));
     }
 
     public function add_pallet(Request $request)
@@ -230,7 +230,7 @@ class PalletController extends Controller
         //         ->where('user_id', $user->id)->get();
         // }
 
-        return view('palletHistory', compact('palletHistory', 'item'));
+        return view('history_views.palletHistory', compact('palletHistory', 'item'));
     }
 
     public function exportPalletItemHistory(Request $request)
@@ -327,6 +327,6 @@ class PalletController extends Controller
         // }
         $request->session()->flash('deleteFilterButton', 'yea');
 
-        return view('palletHistory', compact('palletHistory', 'item'));
+        return view('history_views.palletHistory', compact('palletHistory', 'item'));
     }
 }

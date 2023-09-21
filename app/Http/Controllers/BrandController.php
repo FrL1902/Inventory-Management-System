@@ -16,14 +16,14 @@ class BrandController extends Controller
     public function new_brand_page()
     {
         $customer = Customer::all();
-        return view('newBrand', compact('customer'));
+        return view('new_views.newBrand', compact('customer'));
     }
 
     public function manage_brand_page()
     {
         $customer = Customer::all();
         $brand = Brand::all();
-        return view('manageBrand', compact('brand', 'customer'));
+        return view('manage_views.manageBrand', compact('brand', 'customer'));
     }
 
     public function makeBrand(Request $request)

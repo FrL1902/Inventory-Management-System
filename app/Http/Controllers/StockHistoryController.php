@@ -38,7 +38,7 @@ class StockHistoryController extends Controller
 
         $request->session()->flash('deleteFilterButton', 'yea');
 
-        return view('itemHistory', compact('history'));
+        return view('history_views.itemHistory', compact('history'));
     }
 
     public function exportItemHistory(Request $request)

@@ -23,7 +23,7 @@ class ItemController extends Controller
     public function new_item_page()
     {
         $brand = Brand::all();
-        return view('newItem', compact('brand'));
+        return view('new_views.newItem', compact('brand'));
     }
 
     public function makeItem(Request $request)
@@ -98,7 +98,7 @@ class ItemController extends Controller
         $item = Item::all();
         $customer = Customer::all();
         $brand = Brand::all();
-        return view('manageItem', compact('item', 'customer', 'brand'));
+        return view('manage_views.manageItem', compact('item', 'customer', 'brand'));
     }
 
     public function item_history_page()
@@ -131,7 +131,7 @@ class ItemController extends Controller
         //         ->where('user_id', $user->id)->get();
         // }
 
-        return view('itemHistory', compact('history', 'item'));
+        return view('history_views.itemHistory', compact('history', 'item'));
     }
 
     public function deleteItem($id)
@@ -153,10 +153,10 @@ class ItemController extends Controller
             $item->delete();
             $itemDeleted = "Barang" . " \"" . $deletedItem . "\" " . "berhasil di hapus";
             session()->flash('sukses_delete_item', $itemDeleted);
-            return redirect('manageItem');
+            return redirect()->back();
         } else {
             session()->flash('gagal_delete_item', 'Item' . " \"" . $deletedItem . "\" " . 'Gagal Dihapus karena sudah mempunyai Sejarah Incoming/Outgoing');
-            return redirect('manageItem');
+            return redirect()->back();
         }
     }
 
@@ -165,7 +165,7 @@ class ItemController extends Controller
         // kalo ada data yang dimasukin
         if ($request->file('itemImage') || $request->itemnameformupdate) {
 
-            $itemInfo = Item::where('id', $request->itemIdHidden)->first();
+            $itemInfo = Item::where('item_id', $request->itemIdHidden)->first();
 
             $file = $request->file('itemImage');
 
@@ -205,12 +205,12 @@ class ItemController extends Controller
 
                 Storage::delete('public/' . $itemInfo->item_pictures);
 
-                Item::where('id', $request->itemIdHidden)->update([
+                Item::where('item_id', $request->itemIdHidden)->update([
                     'item_pictures' => $imageName,
                 ]);
             } else {
                 // dd("lha");
-                Item::where('id', $request->itemIdHidden)->update([
+                Item::where('item_id', $request->itemIdHidden)->update([
                     'item_pictures' => $itemInfo->item_pictures,
                 ]);
             }
@@ -220,7 +220,7 @@ class ItemController extends Controller
 
                 $oldItemName = $itemInfo->item_name;
 
-                Item::where('id', $request->itemIdHidden)->update([
+                Item::where('item_id', $request->itemIdHidden)->update([
                     'item_name' => $request->itemnameformupdate,
                 ]);
 
@@ -232,7 +232,7 @@ class ItemController extends Controller
             $request->session()->flash('noData_editItem', 'tidak ada');
         }
 
-        return redirect('manageItem');
+        return redirect()->back();
     }
 
     public function exportCustomerItem(Request $request)
@@ -310,7 +310,7 @@ class ItemController extends Controller
         //         ->where('user_id', $user->id)->get();
         // }
 
-        return view('customerReport', compact('brand', 'pallet'));
+        return view('report_views.customerReport', compact('brand', 'pallet'));
     }
 
     public function exportItemReport(Request $request)
