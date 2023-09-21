@@ -33,92 +33,98 @@ Route::get('/', function () {
 Route::post('/login', [AuthController::class, 'cek_login']);
 
 // HANYA BISA DIAKSES OLEH ADMIN
-Route::middleware(['role:admin'])->group(function(){
-    // admin
+Route::middleware(['role:admin'])->group(function () {
+    // Page: Tambah User Baru
     Route::get('/newUser', [UserController::class, 'new_user_page']);
-    Route::get('/manageUser', [UserController::class, 'manage_user_page']);
     Route::post('/makeUser', [Usercontroller::class, 'makeUser']);
+
+    // Page: Ubah Data User
+    Route::get('/manageUser', [UserController::class, 'manage_user_page']);
     Route::get('/deleteUser/{id}', [UserController::class, 'destroy']);
     Route::post('/tex',            [UserController::class, 'tex']);
     Route::post('/newPasswordFromAdmin', [UserController::class, 'newPasswordFromAdmin']);
-    Route::get('/userAccess/{id}', [UserController::class, 'user_access_page']);
-    Route::post('/addNewUserAccess', [UserController::class, 'add_new_user_access']);
-    Route::get('/deleteAccess/{id}', [UserController::class, 'delete_user_access']);
     Route::post('/customerAssign', [UserController::class, 'customer_assign']);
     Route::get('/exportExcel', [UserController::class, 'exportExcel'])->name('exportExcel'); //export user ALL
+    Route::get('/userAccess/{id}', [UserController::class, 'user_access_page']);
 
-    //customer
-    Route::get('/manageCustomer', [CustomerController::class, 'manage_customer_page']);
+    // Page: User Access (LAGI NGGA DIPAKE)
+    Route::post('/addNewUserAccess', [UserController::class, 'add_new_user_access']);
+    Route::get('/deleteAccess/{id}', [UserController::class, 'delete_user_access']);
+
+    // Page: Tambah Customer Baru
     Route::get('/newCustomer', [CustomerController::class, 'new_customer_page']);
     Route::post('/makeCustomer', [CustomerController::class, 'makeCustomer']);
+
+    // Page: Ubah Data Customer
+    Route::get('/manageCustomer', [CustomerController::class, 'manage_customer_page']);
     Route::get('/deleteCustomer/{id}', [CustomerController::class, 'deleteCustomer']);
     Route::post('/updateCustomer', [CustomerController::class, 'updateCustomer']);
     Route::get('/exportCustomerExcel', [CustomerController::class, 'exportCustomerExcel'])->name('exportCustomerExcel');
 
-    //brand
+    // Page: Tambah Brand Baru
     Route::get('/newBrand', [BrandController::class, 'new_brand_page']);
-    Route::get('/manageBrand', [BrandController::class, 'manage_brand_page']);
     Route::post('/makeBrand', [BrandController::class, 'makeBrand']);
+
+    // Page: Ubah Data Brand
+    Route::get('/manageBrand', [BrandController::class, 'manage_brand_page']);
     Route::get('/deleteBrand/{id}', [BrandController::class, 'deleteBrand']);
     Route::post('/updateBrand', [BrandController::class, 'updateBrand']);
     Route::post('exportCustomerBrand', [BrandController::class, 'exportCustomerBrand'])->name('exportCustomerBrand');
-
-    //item & stockhistory
-    Route::get('/newItem', [ItemController::class, 'new_item_page']);
-    Route::post('/makeItem', [ItemController::class, 'makeItem']);
-    Route::get('/manageItem', [ItemController::class, 'manage_item_page']);
-    Route::get('/deleteItem/{id}', [ItemController::class, 'deleteItem']);
-    Route::post('/updateItem', [ItemController::class, 'updateItem']);
-    Route::post('/exportCustomerItem', [ItemController::class, 'exportCustomerItem'])->name('exportCustomerItem');
-    Route::post('/exportBrandItem', [ItemController::class, 'exportBrandItem'])->name('exportBrandItem');
 });
 
+//Combination of role middlewares starts here================
+
+// Page: Tambah Barang Baru
+Route::get('/newItem', [ItemController::class, 'new_item_page'])->middleware('role:admin,cargo');
+Route::post('/makeItem', [ItemController::class, 'makeItem'])->middleware('role:admin,cargo');
+
+// Page: Ubah Data Barang
+Route::get('/manageItem', [ItemController::class, 'manage_item_page'])->middleware('role:admin,cargo');
+Route::get('/deleteItem/{id}', [ItemController::class, 'deleteItem'])->middleware('role:admin,cargo');
+Route::post('/updateItem', [ItemController::class, 'updateItem'])->middleware('role:admin,cargo');
+Route::post('/exportCustomerItem', [ItemController::class, 'exportCustomerItem'])->name('exportCustomerItem')->middleware('role:admin,cargo');
+Route::post('/exportBrandItem', [ItemController::class, 'exportBrandItem'])->name('exportBrandItem')->middleware('role:admin,cargo');
+
+// Page: Barang Datang
+Route::post('/addItemStock', [IncomingController::class, 'addItemStock'])->middleware('role:admin,gudang,cargo');
+Route::get('/newIncoming', [IncomingController::class, 'add_incoming_item_page'])->middleware('role:admin,gudang,cargo');
+Route::get('/deleteItemIncoming/{id}', [IncomingController::class, 'deleteItemIncoming'])->middleware('role:admin,gudang,cargo');
+Route::post('/updateIncomingData', [IncomingController::class, 'updateIncomingData'])->middleware('role:admin,gudang,cargo');
+Route::post('/exportIncoming', [IncomingController::class, 'exportIncoming'])->name('exportIncoming')->middleware('role:admin,gudang,cargo');
+Route::post('/exportIncomingCustomer', [IncomingController::class, 'exportIncomingCustomer'])->name('exportIncomingCustomer')->middleware('role:admin,gudang,cargo');
+Route::post('/exportIncomingBrand', [IncomingController::class, 'exportIncomingBrand'])->name('exportIncomingBrand')->middleware('role:admin,gudang,cargo');
+Route::post('/exportIncomingItem', [IncomingController::class, 'exportIncomingItem'])->name('exportIncomingItem')->middleware('role:admin,gudang,cargo');
+
+// Page: Barang Keluar
+Route::post('/reduceItemStock', [OutgoingController::class, 'reduceItemStock'])->middleware('role:admin,gudang,cargo');
+Route::get('/newOutgoing', [OutgoingController::class, 'add_outgoing_item_page'])->middleware('role:admin,gudang,cargo');
+Route::get('/deleteItemOutgoing/{id}', [OutgoingController::class, 'deleteItemOutgoing'])->middleware('role:admin,gudang,cargo');
+Route::post('/updateOutgoingData', [OutgoingController::class, 'updateOutgoingData'])->middleware('role:admin,gudang,cargo');
+Route::post('/exportOutgoing', [OutgoingController::class, 'exportOutgoing'])->name('exportOutgoing')->middleware('role:admin,gudang,cargo');
+Route::post('/exportOutgoingCustomer', [OutgoingController::class, 'exportOutgoingCustomer'])->name('exportOutgoingCustomer')->middleware('role:admin,gudang,cargo');
+Route::post('/exportOutgoingBrand', [OutgoingController::class, 'exportOutgoingBrand'])->name('exportOutgoingBrand')->middleware('role:admin,gudang,cargo');
+Route::post('/exportOutgoingItem', [OutgoingController::class, 'exportOutgoingItem'])->name('exportOutgoingItem')->middleware('role:admin,gudang,cargo');
+
+// Pallet
+Route::get('/managePallet', [PalletController::class, 'manage_pallet_page'])->middleware('role:admin,gudang,cargo');
+Route::post('/addNewPallet', [PalletController::class, 'add_pallet'])->middleware('role:admin,gudang,cargo');
+Route::get('/removePallet/{id}', [PalletController::class, 'remove_pallet'])->middleware('role:admin,gudang,cargo');
+Route::post('/reducePalletStock', [PalletController::class, 'reduce_pallet_stock'])->middleware('role:admin,gudang,cargo');
 
 
-Route::get('/creds/{id}', [AuthController::class, 'show_creds']);
-Route::post('/updateUser', [AuthController::class, 'updateUser']);
+// Page: Laporan Stok by pcs
+Route::get('/customerReport', [ItemController::class, 'customer_report_page'])->middleware('role:admin,customer,cargo');
+Route::post('/exportItemReport', [ItemController::class, 'exportItemReport'])->middleware('role:admin,customer,cargo');
 
-// HANYA BISA DIAKSES OLEH ADMIN DAN GUDANG
-Route::middleware(['role:admin,gudang'])->group(function(){
-    //incoming
-    Route::post('/addItemStock', [IncomingController::class, 'addItemStock']);
-    Route::get('/newIncoming', [IncomingController::class, 'add_incoming_item_page']);
-    Route::get('/deleteItemIncoming/{id}', [IncomingController::class, 'deleteItemIncoming']);
-    Route::post('/updateIncomingData', [IncomingController::class, 'updateIncomingData']);
-    Route::post('/exportIncoming', [IncomingController::class, 'exportIncoming'])->name('exportIncoming');
-    Route::post('/exportIncomingCustomer', [IncomingController::class, 'exportIncomingCustomer'])->name('exportIncomingCustomer');
-    Route::post('/exportIncomingBrand', [IncomingController::class, 'exportIncomingBrand'])->name('exportIncomingBrand');
-    Route::post('/exportIncomingItem', [IncomingController::class, 'exportIncomingItem'])->name('exportIncomingItem');
 
-    //outgoing
-    Route::post('/reduceItemStock', [OutgoingController::class, 'reduceItemStock']);
-    Route::get('/newOutgoing', [OutgoingController::class, 'add_outgoing_item_page']);
-    Route::get('/deleteItemOutgoing/{id}', [OutgoingController::class, 'deleteItemOutgoing']);
-    Route::post('/updateOutgoingData', [OutgoingController::class, 'updateOutgoingData']);
-    Route::post('/exportOutgoing', [OutgoingController::class, 'exportOutgoing'])->name('exportOutgoing');
-    Route::post('/exportOutgoingCustomer', [OutgoingController::class, 'exportOutgoingCustomer'])->name('exportOutgoingCustomer');
-    Route::post('/exportOutgoingBrand', [OutgoingController::class, 'exportOutgoingBrand'])->name('exportOutgoingBrand');
-    Route::post('/exportOutgoingItem', [OutgoingController::class, 'exportOutgoingItem'])->name('exportOutgoingItem');
-
-    // Pallet
-    Route::get('/managePallet', [PalletController::class, 'manage_pallet_page'])->middleware('login');
-    Route::post('/addNewPallet', [PalletController::class, 'add_pallet'])->middleware('login');
-    Route::get('/removePallet/{id}', [PalletController::class, 'remove_pallet'])->middleware('login');
-    Route::post('/reducePalletStock', [PalletController::class, 'reduce_pallet_stock'])->middleware('login');
-});
-
-// HANYA BISA DIAKSES ADMIN DAN CUSTOMER
-Route::middleware(['role:admin,customer'])->group(function(){
-    Route::get('/customerReport', [ItemController::class, 'customer_report_page']);
-    Route::post('/exportItemReport', [ItemController::class, 'exportItemReport']);
-});
+//Combination of role middlewares ends here ================
 
 // BISA DIAKSES SEMUA
-    Route::middleware(['role:admin,customer,gudang'])->group(function(){
-    Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('all');
-    Route::get('/logout', [AuthController::class, 'logout'])->middleware('all');
+Route::middleware(['role:admin,customer,gudang,cargo'])->group(function () {
+    Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('/logout', [AuthController::class, 'logout']);
 
-    //item & stockhistory
+    // Page: Sejarah Semua Barang
     Route::get('/manageHistory', [ItemController::class, 'item_history_page']);
     Route::post('/filterHistoryDate', [StockHistoryController::class, 'filterHistoryDate']);
     Route::post('/exportItemHistory', [StockHistoryController::class, 'exportItemHistory'])->name('exportItemHistory');
@@ -129,6 +135,10 @@ Route::middleware(['role:admin,customer'])->group(function(){
     Route::post('/exportPalletItemHistory', [PalletController::class, 'exportPalletItemHistory'])->name('exportPalletItemHistory');
     Route::post('/exportPalletHistoryByDate', [PalletController::class, 'exportPalletHistoryByDate'])->name('exportPalletHistoryByDate');
     Route::post('/filterPalletHistoryDate', [PalletController::class, 'filterPalletHistoryDate']);
+
+    // User Credentials
+    Route::get('/creds/{id}', [AuthController::class, 'show_creds']);
+    Route::post('/updateUser', [AuthController::class, 'updateUser']);
 });
 
 
