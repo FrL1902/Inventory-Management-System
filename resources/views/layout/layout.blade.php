@@ -290,8 +290,8 @@
                                 <ul class="nav nav-collapse">
                                     @auth
                                         @if (Auth::user()->level != 'gudang')
-                                            <li class="@yield('report')">
-                                                <a href="/customerReport">
+                                            <li class="@yield('itemreport')">
+                                                <a href="/itemReport">
                                                     <span class="sub-item">Laporan Stok by pcs</span>
                                                 </a>
                                             </li>
@@ -344,8 +344,8 @@
                                 <ul class="nav nav-collapse">
                                     @auth
                                         @if (Auth::user()->level != 'gudang')
-                                            <li class="@yield('report')">
-                                                <a href="/customerReport">
+                                            <li class="@yield('palletreport')">
+                                                <a href="/palletReport">
                                                     <span class="sub-item">Laporan Stok by palet</span>
                                                 </a>
                                             </li>

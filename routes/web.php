@@ -74,6 +74,10 @@ Route::middleware(['role:admin'])->group(function () {
 
 //Combination of role middlewares starts here================
 
+// Page: Laporan Stok by pcs
+Route::get('/itemReport', [ItemController::class, 'item_report_page'])->middleware('role:admin,customer,cargo');
+Route::post('/exportItemReport', [ItemController::class, 'exportItemReport'])->middleware('role:admin,customer,cargo');
+
 // Page: Tambah Barang Baru
 Route::get('/newItem', [ItemController::class, 'new_item_page'])->middleware('role:admin,cargo');
 Route::post('/makeItem', [ItemController::class, 'makeItem'])->middleware('role:admin,cargo');
@@ -111,10 +115,8 @@ Route::post('/addNewPallet', [PalletController::class, 'add_pallet'])->middlewar
 Route::get('/removePallet/{id}', [PalletController::class, 'remove_pallet'])->middleware('role:admin,gudang,cargo');
 Route::post('/reducePalletStock', [PalletController::class, 'reduce_pallet_stock'])->middleware('role:admin,gudang,cargo');
 
-
-// Page: Laporan Stok by pcs
-Route::get('/customerReport', [ItemController::class, 'customer_report_page'])->middleware('role:admin,customer,cargo');
-Route::post('/exportItemReport', [ItemController::class, 'exportItemReport'])->middleware('role:admin,customer,cargo');
+// Page: Laporan Stok by palet
+Route::get('/palletReport', [PalletController::class, 'pallet_report_page'])->middleware('role:admin,customer,cargo');
 
 
 //Combination of role middlewares ends here ================
@@ -130,7 +132,7 @@ Route::middleware(['role:admin,customer,gudang,cargo'])->group(function () {
     Route::post('/exportItemHistory', [StockHistoryController::class, 'exportItemHistory'])->name('exportItemHistory');
     Route::post('/exportHistoryByDate', [StockHistoryController::class, 'exportHistoryByDate'])->name('exportHistoryByDate');
 
-    // Pallet
+    // Page: Sejarah Palet
     Route::get('/managePalletHistory', [PalletController::class, 'manage_pallet_history_page']);
     Route::post('/exportPalletItemHistory', [PalletController::class, 'exportPalletItemHistory'])->name('exportPalletItemHistory');
     Route::post('/exportPalletHistoryByDate', [PalletController::class, 'exportPalletHistoryByDate'])->name('exportPalletHistoryByDate');

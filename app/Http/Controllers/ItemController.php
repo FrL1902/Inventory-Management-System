@@ -253,7 +253,7 @@ class ItemController extends Controller
         return Excel::download(new editItemExport($sortItem), 'Item milik Brand ' .  $brand->brand_name . '.xlsx');
     }
 
-    public function customer_report_page()
+    public function item_report_page()
     {
         // session()->forget('deleteFilterButton'); //ini buat tombol filter yang ga jadi digunain
 
@@ -310,7 +310,7 @@ class ItemController extends Controller
         //         ->where('user_id', $user->id)->get();
         // }
 
-        return view('report_views.customerReport', compact('brand', 'pallet'));
+        return view('report_views.itemReport', compact('brand', 'pallet'));
     }
 
     public function exportItemReport(Request $request)

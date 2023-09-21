@@ -329,4 +329,9 @@ class PalletController extends Controller
 
         return view('history_views.palletHistory', compact('palletHistory', 'item'));
     }
+
+    public function pallet_report_page(){
+
+        return view('report_views.palletReport');
+    }
 }
