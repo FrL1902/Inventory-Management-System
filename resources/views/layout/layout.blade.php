@@ -355,9 +355,19 @@
                                         @if (Auth::user()->level != 'customer')
                                             <li class="@yield('managepallet')">
                                                 <a href="/managePallet">
-                                                    <span class="sub-item">Kelola Data Palet</span>
+                                                    <span class="sub-item">Palet Masuk</span>
                                                 </a>
                                             </li>
+                                            <li class="@yield('managepallet')">
+                                                <a href="/managePallet">
+                                                    <span class="sub-item">Palet Keluar</span>
+                                                </a>
+                                            </li>
+                                            {{-- <li class="@yield('managepallet')">
+                                                <a href="/managePallet">
+                                                    <span class="sub-item">Kelola Data Palet</span>
+                                                </a>
+                                            </li> --}}
                                         @endif
                                     @endauth
                                     <li class="@yield('managepallethistory')">

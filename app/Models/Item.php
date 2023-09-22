@@ -46,6 +46,16 @@ class Item extends Model
         return $this->hasMany(Pallet::class, 'item_id');
     }
 
+    public function inPallet()
+    {
+        return $this->hasMany(InPallet::class, 'item_id');
+    }
+
+    public function outPallet()
+    {
+        return $this->hasMany(OutPallet::class, 'item_id');
+    }
+
     public static function checkNullItemBrand($id)
     {
         $nullCheckItem = Item::where('brand_id', $id)->first();
