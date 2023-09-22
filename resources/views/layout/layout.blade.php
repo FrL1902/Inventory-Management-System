@@ -353,13 +353,13 @@
                                     @endauth
                                     @auth
                                         @if (Auth::user()->level != 'customer')
-                                            <li class="@yield('managepallet')">
-                                                <a href="/managePallet">
+                                            <li class="@yield('inpallet')">
+                                                <a href="/inPallet">
                                                     <span class="sub-item">Palet Masuk</span>
                                                 </a>
                                             </li>
-                                            <li class="@yield('managepallet')">
-                                                <a href="/managePallet">
+                                            <li class="@yield('outpallet')">
+                                                <a href="/outPallet">
                                                     <span class="sub-item">Palet Keluar</span>
                                                 </a>
                                             </li>

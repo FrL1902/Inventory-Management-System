@@ -5,8 +5,10 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncomingController;
+use App\Http\Controllers\InPalletController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OutgoingController;
+use App\Http\Controllers\OutPalletController;
 use App\Http\Controllers\PalletController;
 use App\Http\Controllers\StockHistoryController;
 use App\Http\Controllers\UserController;
@@ -121,6 +123,12 @@ Route::post('/reducePalletStock', [PalletController::class, 'reduce_pallet_stock
 
 // Page: Laporan Stok by palet
 Route::get('/palletReport', [PalletController::class, 'pallet_report_page'])->middleware('role:admin,customer,cargo');
+
+// inPallet
+Route::get('/inPallet', [InPalletController::class, 'in_pallet_page'])->middleware('role:admin,gudang,cargo');
+
+// outPallet
+Route::get('/outPallet', [OutPalletController::class, 'out_pallet_page'])->middleware('role:admin,gudang,cargo');
 
 
 //Combination of role middlewares ends here ================
