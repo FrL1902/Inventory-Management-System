@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\CustomerReportExport;
 use App\Exports\editItemExport;
+use App\Exports\ItemReportExport;
 use App\Models\Brand;
 use App\Models\Customer;
 use App\Models\Incoming;
@@ -11,6 +12,7 @@ use App\Models\Item;
 use App\Models\Outgoing;
 use App\Models\StockHistory;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -218,15 +220,16 @@ class ItemController extends Controller
             // buat update nama
             if ($request->itemnameformupdate != null) {
 
-                $oldItemName = $itemInfo->item_name;
 
                 Item::where('item_id', $request->itemIdHidden)->update([
                     'item_name' => $request->itemnameformupdate,
                 ]);
 
-                $request->session()->flash('sukses_editItem', $oldItemName);
+                $request->session()->flash('sukses_editItem', $request->itemnameformupdate);
             } else {
-                $request->session()->flash('sukses_editItem', $request->item_name);
+                $oldItemName = $itemInfo->item_name;
+
+                $request->session()->flash('sukses_editItem', $oldItemName);
             }
         } else {
             $request->session()->flash('noData_editItem', 'tidak ada');
@@ -257,18 +260,24 @@ class ItemController extends Controller
     {
         // session()->forget('deleteFilterButton'); //ini buat tombol filter yang ga jadi digunain
 
-        $user = Auth::user();
+        $incoming = Incoming::all();
+        $customer = Customer::all();
+        $item = Item::all();
+        $brand = Brand::all();
+        return view('report_views.itemReport', compact('incoming', 'brand', 'customer', 'item'));
 
-        $pallet = DB::table('pallets')
-            ->join('items', 'pallets.item_id', '=', 'items.item_id')
-            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
-            ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-            ->select('pallets.*', 'items.item_name', 'items.item_id', 'customer.customer_id', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
-            ->get();
+        // $user = Auth::user();
 
-        $brand = DB::table('brand')
-            ->join('customer', 'brand.customer_id', '=', 'customer.customer_id')
-            ->select('brand.brand_name', 'brand.brand_id')->get();
+        // $pallet = DB::table('pallets')
+        //     ->join('items', 'pallets.item_id', '=', 'items.item_id')
+        //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+        //     ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+        //     ->select('pallets.*', 'items.item_name', 'items.item_id', 'customer.customer_id', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
+        //     ->get();
+
+        // $brand = DB::table('brand')
+        //     ->join('customer', 'brand.customer_id', '=', 'customer.customer_id')
+        //     ->select('brand.brand_name', 'brand.brand_id')->get();
 
         // if ($user->level == 'admin') {
         //     $pallet = DB::table('pallets')
@@ -310,21 +319,82 @@ class ItemController extends Controller
         //         ->where('user_id', $user->id)->get();
         // }
 
-        return view('report_views.itemReport', compact('brand', 'pallet'));
+        // return view('report_views.itemReport', compact('brand', 'pallet'));
     }
 
-    public function exportItemReport(Request $request)
+    // public function exportItemReport(Request $request)
+    // {
+    //     $sortCustomerReport = DB::table('pallets')
+    //         ->join('items', 'items.id', '=', 'pallets.item_id') //integer
+    //         ->join('customer', 'items.customer_id', '=', 'customer.id')
+    //         ->join('brand', 'items.brand_id', '=', 'brand.id')
+    //         ->select('pallets.*', 'items.item_name', 'items.item_id', 'customer.id as customer_id', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures', 'brand.brand_id')
+    //         ->where('brand.brand_id', $request->itemIdReportCustomer)->get();
+
+    //     // dd($sortCustomerReport);
+
+    //     // return Excel::download(new CustomerReportExport($sortCustomerReport), 'Laporan Customer' . $sortCustomerReport->customer_name . '.xlsx');
+    //     return Excel::download(new CustomerReportExport($sortCustomerReport), 'Laporan Customer' . '.xlsx');
+    // }
+
+    public function exportItemReportCustomer(Request $request)
     {
-        $sortCustomerReport = DB::table('pallets')
-            ->join('items', 'items.id', '=', 'pallets.item_id') //integer
-            ->join('customer', 'items.customer_id', '=', 'customer.id')
-            ->join('brand', 'items.brand_id', '=', 'brand.id')
-            ->select('pallets.*', 'items.item_name', 'items.item_id', 'customer.id as customer_id', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures', 'brand.brand_id')
-            ->where('brand.brand_id', $request->itemIdReportCustomer)->get();
+        $customer = Customer::find($request->customerIdItemReport);
 
-        // dd($sortCustomerReport);
+        $sortAll = DB::table('incomings')
+            ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+            ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+            ->join('items', 'incomings.item_id', '=', 'items.item_id')
+            ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->where('incomings.customer_id', $request->customerIdItemReport)->get();
 
-        // return Excel::download(new CustomerReportExport($sortCustomerReport), 'Laporan Customer' . $sortCustomerReport->customer_name . '.xlsx');
-        return Excel::download(new CustomerReportExport($sortCustomerReport), 'Laporan Customer' . '.xlsx');
+        $formatFileName = 'Laporan Stok by pcs Customer ' . $customer->customer_name;
+        return Excel::download(new ItemReportExport($sortAll), $formatFileName . '.xlsx');
+    }
+
+    public function exportItemReportBrand(Request $request)
+    {
+        $brand = Brand::find($request->brandIdItemReport);
+
+        $sortAll = DB::table('incomings')
+            ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+            ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+            ->join('items', 'incomings.item_id', '=', 'items.item_id')
+            ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->where('incomings.brand_id', $request->brandIdItemReport)->get();
+
+        $formatFileName = 'Laporan Stok by pcs Brand ' . $brand->brand_name;
+        return Excel::download(new ItemReportExport($sortAll), $formatFileName . '.xlsx');
+    }
+
+    public function exportItemReportItem(Request $request)
+    {
+        $item = Item::find($request->itemIdItemReport);
+
+        $sortAll = DB::table('incomings')
+            ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+            ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+            ->join('items', 'incomings.item_id', '=', 'items.item_id')
+            ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->where('incomings.item_id', $request->itemIdItemReport)->get();
+
+        $formatFileName = 'Laporan Stok by pcs Barang ' . $item->item_name;
+        return Excel::download(new ItemReportExport($sortAll), $formatFileName . '.xlsx');
+    }
+
+    public function exportItemReportDate(Request $request)
+    {
+        $date_from = Carbon::parse($request->startRange)->startOfDay();
+        $date_to = Carbon::parse($request->endRange)->endOfDay();
+
+        $sortAll = DB::table('incomings')
+            ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+            ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+            ->join('items', 'incomings.item_id', '=', 'items.item_id')
+            ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->whereBetween('arrive_date', [$date_from, $date_to])->get();
+
+        $formatFileName = 'Laporan Stok by pcs ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
+        return Excel::download(new ItemReportExport($sortAll), $formatFileName . '.xlsx');
     }
 }

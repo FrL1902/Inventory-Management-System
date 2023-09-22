@@ -2,18 +2,18 @@
 
 namespace App\Exports;
 
-use App\Models\Pallet;
+use App\Models\Incoming;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\FromCollection;
 
-class CustomerReportExport implements FromCollection, ShouldAutoSize, WithHeadings, WithMapping
+class ItemReportExport implements FromCollection, ShouldAutoSize, WithHeadings, WithMapping
 {
     /**
-     * @return \Illuminate\Support\Collection
-     */
+    * @return \Illuminate\Support\Collection
+    */
     public function __construct($data)
     {
         $this->itemData = $data;
@@ -33,9 +33,9 @@ class CustomerReportExport implements FromCollection, ShouldAutoSize, WithHeadin
             $item->brand_name,
             $item->item_id,
             $item->item_name,
-            $item->stock,
-            $item->bin,
-            // "http://127.0.0.1:8000/storage/" . $item->item_pictures,
+            $item->stock_added,
+            date_format(date_create($item->arrive_date), 'D d-m-Y'),
+            $item->description,
             "http://wms.intanutama.co.id/storage/" . $item->item_pictures,
         ];
     }

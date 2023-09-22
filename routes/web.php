@@ -76,7 +76,11 @@ Route::middleware(['role:admin'])->group(function () {
 
 // Page: Laporan Stok by pcs
 Route::get('/itemReport', [ItemController::class, 'item_report_page'])->middleware('role:admin,customer,cargo');
-Route::post('/exportItemReport', [ItemController::class, 'exportItemReport'])->middleware('role:admin,customer,cargo');
+// Route::post('/exportItemReport', [ItemController::class, 'exportItemReport'])->middleware('role:admin,customer,cargo');
+Route::post('/exportItemReportCustomer', [ItemController::class, 'exportItemReportCustomer'])->middleware('role:admin,customer,cargo');
+Route::post('/exportItemReportBrand', [ItemController::class, 'exportItemReportBrand'])->middleware('role:admin,customer,cargo');
+Route::post('/exportItemReportItem', [ItemController::class, 'exportItemReportItem'])->middleware('role:admin,customer,cargo');
+Route::post('/exportItemReportDate', [ItemController::class, 'exportItemReportDate'])->middleware('role:admin,customer,cargo');
 
 // Page: Tambah Barang Baru
 Route::get('/newItem', [ItemController::class, 'new_item_page'])->middleware('role:admin,cargo');

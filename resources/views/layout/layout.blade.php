@@ -563,10 +563,23 @@
         });
     </script> --}}
 
-    {{-- ITEM HISTORY PAGE --}}
+    {{-- Laporan Stok By pcs Page --}}
     <script>
-        $('#itemHistoryExport').select2({
-            dropdownParent: $('#exportItemHistorymModal')
+        $('#customerIdItemReport').select2({
+            dropdownParent: $('#exportItemReportCustomerModal'),
+            placeholder: 'Pilih Customer'
+        });
+    </script>
+    <script>
+        $('#brandIdItemReport').select2({
+            dropdownParent: $('#exportItemReportBrandModal'),
+            placeholder: 'Pilih Brand'
+        });
+    </script>
+    <script>
+        $('#itemIdItemReport').select2({
+            dropdownParent: $('#exportItemReportItemModal'),
+            placeholder: 'Pilih Barang'
         });
     </script>
 
