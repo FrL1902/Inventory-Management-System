@@ -97,14 +97,21 @@ class IncomingController extends Controller
 
         // dd($maxValueAvailable);
         if ($request->itemAddStock > $maxValueAvailable) {
-            // dd('ga bisa');
             $request->validate([
-                'itemAddStock' => 'required|max:2147483647|min:1|numeric'
+                'itemAddStock' => 'required|max:2147483647|min:1|numeric',
+                'incomingItemDesc' => 'required|min:1|max:255',
+                'supplier' => 'required|min:1|max:255'
             ], [
                 'itemAddStock.required' => 'Kolom stok harus diisi',
                 'itemAddStock.max' => 'Stok melebihi 32 bit integer',
                 'itemAddStock.min' => 'Stok harus melebihi 1',
-                'itemAddStock.numeric' => 'input stok harus angka'
+                'itemAddStock.numeric' => 'input stok harus angka',
+                'incomingItemDesc.required' => 'Kolom "Deskripsi" harus diisi',
+                'incomingItemDesc.min' => 'Deskripsi minimal 1 karakter',
+                'incomingItemDesc.max' => 'Deskripsi maksimal 255 karakter',
+                'supplier.required' => 'Kolom "Supplier" harus diisi',
+                'supplier.min' => 'Supplier minimal 1 karakter',
+                'supplier.max' => 'Supplier maksimal 255 karakter',
             ]);
             $request->session()->flash('intOverflow', 'Melebihi 32 bit integer (2147483647)');
             return redirect()->back();
@@ -133,10 +140,10 @@ class IncomingController extends Controller
         $incoming->customer_id = $itemInfo->customer_id;
         $incoming->brand_id = $itemInfo->brand_id;
         $incoming->item_id = $request->incomingiditem;
-        // $incoming->item_name = $itemInfo->item_name;
         $incoming->stock_before = $itemInfo->stocks;
         $incoming->stock_added = $request->itemAddStock;
         $incoming->stock_now = $newValue;
+        $incoming->supplier = $request->supplier;
         $incoming->description = $request->incomingItemDesc;
         $incoming->arrive_date = $request->itemArrive;
 
@@ -145,27 +152,21 @@ class IncomingController extends Controller
         Storage::putFileAs('public/incomingItemImage', $file, $imageName);
         $imageName = 'incomingItemImage/' . $imageName;
         $incoming->item_pictures = $imageName;
-        // $incoming->picture_link = 'http://127.0.0.1:8000/storage/' . $imageName;
         $incoming->save();
-
-        $request->session()->flash('sukses_addStock', $itemInfo->item_name);
         //end process add item
 
         //proses history
         $history = new StockHistory();
         $history->item_id = $itemInfo->item_id;
         $history->item_name = $itemInfo->item_name;
-        // $history->stock_before = $itemInfo->stocks;
         $history->status = "BARANG DATANG";
         $history->value = $request->itemAddStock;
-        // $history->stock_taken = 0;
-        // $history->stock_now = $newValue;
+        $history->supplier = $request->supplier;
         $history->user_who_did = $userInfo->name;
-
+        $history->user_action_date = $request->itemArrive;
         $history->save();
 
-
-        // return redirect('manageItem');
+        $request->session()->flash('sukses_addStock', $itemInfo->item_name);
         return redirect()->back();
     }
 

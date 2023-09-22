@@ -20,7 +20,7 @@
                 @elseif (session('sukses_addStock'))
                     <div class="alert alert-success alert-block" id="alertSuccess">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Sukses menambah stok" {{ session('sukses_addStock') }}"</strong>
+                        <strong>Sukses menambah stok "{{ session('sukses_addStock') }}"</strong>
                     </div>
                 @elseif (session('newValueMinus'))
                     <div class="alert alert-danger alert-block" id="alertFailed">
@@ -351,6 +351,15 @@
                                                             </div>
 
                                                             <div class="form-group">
+                                                                <label for="supplier">Supplier<span style="color: red">
+                                                                        (harus diisi)
+                                                                    </span></label>
+                                                                <input type="text" class="form-control form-control"
+                                                                    placeholder="supplier barang" id="supplier"
+                                                                    name="supplier" required>
+                                                            </div>
+
+                                                            <div class="form-group">
                                                                 <label for="incomingidforitem">Deskripsi<span
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
@@ -401,6 +410,7 @@
                                                 <th>Nama Barang</th>
                                                 <th>Penambahan Stok</th>
                                                 <th>Tanggal Sampai</th>
+                                                <th>Supplier</th>
                                                 <th>Deskripsi</th>
                                                 <th>Gambar</th>
                                                 <th>Edit</th>
@@ -419,6 +429,7 @@
                                                 <th>Nama Barang</th>
                                                 <th>Penambahan Stok</th>
                                                 <th>Tanggal Sampai</th>
+                                                <th>Supplier</th>
                                                 <th>Deskripsi</th>
                                                 <th>Gambar</th>
                                                 <th>Edit</th>
@@ -440,6 +451,7 @@
                                                     <td>{{ date_format(date_create($incoming->arrive_date), 'D d-m-Y') }}
                                                     </td>
                                                     {{-- <td>{{ $incoming->arrive_date }}</td> --}}
+                                                    <td>{{ $incoming->supplier }}</td>
                                                     <td>{{ $incoming->description }}</td>
                                                     <td>
                                                         <a style="cursor: pointer"

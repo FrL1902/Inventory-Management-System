@@ -38,7 +38,7 @@
                                         </span>
                                         <h4 class="card-title mt-1 mr-3">
                                             <span class="align-middle">
-                                                <strong>Sejarah Stok</strong>
+                                                <strong>Sejarah Barang</strong>
                                             </span>
                                         </h4>
                                         <div class="ml-3 mr-2 mt-2">
@@ -75,7 +75,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print an item's history
+                                                            Export Sejarah Suatu Barang
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -135,7 +135,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print ALL History By Date
+                                                            Export Semua Berdasarkan Tanggal
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -165,6 +165,10 @@
                                                                     <button id="" class="btn btn-primary">Export
                                                                         Data</button>
                                                                 </div>
+                                                                <div>
+                                                                    <h5 style="text-align: center;">
+                                                                        Export Berdasarkan Waktu Sistem</h5>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -184,6 +188,7 @@
                                                             Filter by date range
                                                         </strong>
                                                     </h3>
+
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -209,7 +214,11 @@
                                                             <div class="form-group">
                                                                 <div class="card mt-5 ">
                                                                     <button id=""
-                                                                        class="btn btn-primary">Sort</button>
+                                                                        class="btn btn-primary">Filter</button>
+                                                                </div>
+                                                                <div>
+                                                                    <h5 style="text-align: center;">
+                                                                        Filter Berdasarkan Waktu Sistem</h5>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -230,7 +239,9 @@
                                                 <th>Nama Barang</th>
                                                 <th>Status</th>
                                                 <th>Stok</th>
+                                                <th>Supplier</th>
                                                 <th>Oleh User</th>
+                                                <th>Waktu (user)</th>
                                                 <th>Waktu (system)</th>
                                             </tr>
                                         </thead>
@@ -251,7 +262,9 @@
                                                 <th>Nama Barang</th>
                                                 <th>Status</th>
                                                 <th>Stok</th>
+                                                <th>Supplier</th>
                                                 <th>Oleh User</th>
+                                                <th>Waktu (user)</th>
                                                 <th>Waktu (system)</th>
 
                                             </tr>
@@ -280,7 +293,9 @@
                                                         </td>
                                                     @endif
                                                     <td>{{ $history->value }}</td>
+                                                    <td>{{ $history->supplier }}</td>
                                                     <td>{{ $history->user_who_did }}</td>
+                                                    <td>{{ date_format(date_create($history->user_action_date), 'D d-m-Y') }}
                                                     <td>{{ date_format(date_create($history->created_at), 'D, H:i:s, d-m-Y') }}
                                                     </td>
                                                 </tr>

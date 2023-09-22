@@ -18,7 +18,9 @@
                                     <div class="d-flex flex-row">
                                         <h4 class="card-title mt-1 mr-3">
                                             <span class="align-middle">
-                                                Laporan Barang
+                                                <strong>
+                                                    Laporan Barang
+                                                </strong>
                                             </span>
                                         </h4>
                                         <div class="dropdown">
@@ -110,8 +112,8 @@
                                                             <div class="card-body">
                                                                 <div class="form-group">
                                                                     <select class="form-control" data-width="100%"
-                                                                        id="brandIdItemReport"
-                                                                        name="brandIdItemReport" required>
+                                                                        id="brandIdItemReport" name="brandIdItemReport"
+                                                                        required>
                                                                         <option></option>
                                                                         @foreach ($brand as $data)
                                                                             <option value="{{ $data->brand_id }}">
@@ -157,8 +159,8 @@
                                                             <div class="card-body">
                                                                 <div class="form-group">
                                                                     <select class="form-control" data-width="100%"
-                                                                        id="itemIdItemReport"
-                                                                        name="itemIdItemReport" required>
+                                                                        id="itemIdItemReport" name="itemIdItemReport"
+                                                                        required>
                                                                         <option></option>
                                                                         @foreach ($item as $data)
                                                                             <option value="{{ $data->item_id }}">
@@ -285,6 +287,7 @@
                                                     <th>Nama Barang</th>
                                                     <th>Stok</th>
                                                     <th>Tanggal Sampai</th>
+                                                    <th>Supplier</th>
                                                     <th>Deskripsi</th>
                                                     <th style="width: 13%">Gambar</th>
                                                 </tr>
@@ -297,6 +300,7 @@
                                                     <th>Nama Barang</th>
                                                     <th>Stok</th>
                                                     <th>Tanggal Sampai</th>
+                                                    <th>Supplier</th>
                                                     <th>Deskripsi</th>
                                                     <th>Gambar</th>
                                                 </tr>
@@ -311,6 +315,7 @@
                                                         <td>{{ $data->stock_added }}</td>
                                                         <td>{{ date_format(date_create($data->arrive_date), 'D d-m-Y') }}
                                                         </td>
+                                                        <td>{{ $data->supplier }}</td>
                                                         <td>{{ $data->description }}</td>
                                                         <td>
                                                             <a style="cursor: pointer"

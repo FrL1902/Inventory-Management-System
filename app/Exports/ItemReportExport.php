@@ -35,6 +35,7 @@ class ItemReportExport implements FromCollection, ShouldAutoSize, WithHeadings, 
             $item->item_name,
             $item->stock_added,
             date_format(date_create($item->arrive_date), 'D d-m-Y'),
+            $item->supplier,
             $item->description,
             "http://wms.intanutama.co.id/storage/" . $item->item_pictures,
         ];
@@ -42,6 +43,6 @@ class ItemReportExport implements FromCollection, ShouldAutoSize, WithHeadings, 
 
     public function headings(): array
     {
-        return ["Nama Customer", "Nama Brand", "ID Barang", "Nama Barang", "Stok", "Tanggal Sampai", "Deskripsi", "Link Gambar Barang"];
+        return ["Nama Customer", "Nama Brand", "ID Barang", "Nama Barang", "Stok", "Tanggal Sampai", "Supplier", "Deskripsi", "Link Gambar Barang"];
     }
 }

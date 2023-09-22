@@ -327,7 +327,7 @@
                                     @endauth
                                     <li class="@yield('managehistory')">
                                         <a href="/manageHistory">
-                                            <span class="sub-item">Sejarah Semua Barang</span>
+                                            <span class="sub-item">History Stok by pcs</span>
                                         </a>
                                     </li>
                                 </ul>

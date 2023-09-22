@@ -39,7 +39,7 @@ class IncomingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
     {
         return [
             // 'ID', 'Customer Name', 'Brand Name', 'Item Name', 'Date Arrived', 'Stock Before', 'Stock Added', 'Stock After', 'description', 'picture link'
-            'Nama Customer', 'Nama Brand', 'ID Barang', 'Nama Barang', 'Tanggal Datang', 'Stok Datang', 'deskripsi', 'link gambar'
+            'Nama Customer', 'Nama Brand', 'ID Barang', 'Nama Barang', 'Tanggal Datang', 'Stok Datang', 'Supplier', 'deskripsi', 'link gambar'
         ];
     }
 
@@ -54,33 +54,16 @@ class IncomingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
 
     public function map($item): array
     {
-
-        // $formattedDate = date_format($item->created_at, "D/d/m/y H:i:s");
-
-        // dd($formattedDate);
-        // dd($item);
-
         return [
-            // $formattedDate = date_format($item->created_at, "D/d/m/y H:i:s"),
-
-            // $item->id,
             (is_null($item->customer_name)) ? $item->customer->customer_name : $item->customer_name,
             (is_null($item->brand_name)) ? $item->brand->brand_name : $item->brand_name,
             $item->item_id,
             (is_null($item->item_name)) ? $item->item->item_name : $item->item_name,
-            // $item->arrive_date,
             date_format(date_create($item->arrive_date), 'd-m-Y'),
-            // ($item->stock_before == 0) ? "0" : $item->stock_before,
             $item->stock_added,
-            // ($item->stock_now == 0) ? "0" : $item->stock_now,
+            $item->supplier,
             $item->description,
-            // $item->picture_link,
-            // "http://127.0.0.1:8000/storage/" . $item->item_pictures,
             "http://wms.intanutama.co.id/storage/" . $item->item_pictures,
-            // date_format(date_create($history->created_at), 'D, H:i:s, d-m-Y')
-            // $$item->created_at
-            // date_format($item->arrive_date, "D/d/m/y H:i:s"),
-
         ];
     }
 
@@ -91,7 +74,7 @@ class IncomingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
 
         return [
             AfterSheet::class    => function (AfterSheet $event) {
-                $event->sheet->getStyle('A1:H1')->applyFromArray([
+                $event->sheet->getStyle('A1:I1')->applyFromArray([
                     'font' => ['bold' => true]
                 ]);
                 $styleArrayHeading = [
@@ -126,11 +109,11 @@ class IncomingExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
                     ],
                 ];
 
-                $frontTolastData = 'A2:H' . strval(count($this->incomingData) + 1);
-                $event->sheet->getStyle('A1:H1')->applyFromArray($styleArrayHeading);
+                $frontTolastData = 'A2:I' . strval(count($this->incomingData) + 1);
+                $event->sheet->getStyle('A1:I1')->applyFromArray($styleArrayHeading);
                 $event->sheet->getStyle($frontTolastData)->applyFromArray($styleArrayContent);
                 // $event->sheet->getStyle('A1:J1')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                $event->sheet->getStyle('A1:H1')->getAlignment()->setHorizontal('center'); //set heading horizontal alignment to center
+                $event->sheet->getStyle('A1:I1')->getAlignment()->setHorizontal('center'); //set heading horizontal alignment to center
                 $event->sheet->getStyle($frontTolastData)->getAlignment()->setHorizontal('left'); //set data below heading alignment to left
 
 

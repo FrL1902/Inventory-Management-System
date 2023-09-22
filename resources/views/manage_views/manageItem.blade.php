@@ -66,7 +66,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print barang milik customer
+                                                            Export barang milik customer
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -111,7 +111,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print barang milik Brand
+                                                            Export barang milik Brand
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"

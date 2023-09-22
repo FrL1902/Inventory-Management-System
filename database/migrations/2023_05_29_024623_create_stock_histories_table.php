@@ -23,7 +23,9 @@ class CreateStockHistoriesTable extends Migration
             // $table->integer('stock_now');
             $table->string('status');
             $table->integer('value');
+            $table->string('supplier');
             $table->string('user_who_did');
+            $table->dateTime('user_action_date');
             $table->timestamps();
         });
     }

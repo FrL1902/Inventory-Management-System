@@ -59,7 +59,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print semua brand milik customer:
+                                                            Export semua brand milik customer:
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"

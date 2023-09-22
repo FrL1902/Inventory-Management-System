@@ -99,13 +99,17 @@ class OutgoingController extends Controller
 
         $request->validate([
             'outgoingItemImage' => 'required|mimes:jpeg,png,jpg',
-            'itemReduceStock' => 'required|max:2147483647|min:1|numeric'
+            'itemReduceStock' => 'required|max:2147483647|min:1|numeric',
+            'outgoingItemDesc' => 'required|min:1|max:255',
         ], [
             'outgoingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
             'itemReduceStock.required' => 'Kolom stok harus diisi',
             'itemReduceStock.max' => 'Stok melebihi 32 bit integer',
             'itemReduceStock.min' => 'Stok harus melebihi 1',
-            'itemReduceStock.numeric' => 'input stok harus angka'
+            'itemReduceStock.numeric' => 'input stok harus angka',
+            'outgoingItemDesc.required' => 'Kolom "Deskripsi" harus diisi',
+            'outgoingItemDesc.min' => 'Deskripsi minimal 1 karakter',
+            'outgoingItemDesc.max' => 'Deskripsi maksimal 255 karakter',
         ]);
 
         $newValue = $itemInfo->stocks - $request->itemReduceStock;
@@ -136,22 +140,18 @@ class OutgoingController extends Controller
 
 
 
-        $request->session()->flash('sukses_reduceStock', $itemInfo->item_name);
-
+        // history
         $history = new StockHistory();
         $history->item_id = $itemInfo->item_id;
         $history->item_name = $itemInfo->item_name;
-        // $history->stock_before = $itemInfo->stocks;
-        // $history->stock_added = 0;
         $history->status = "BARANG KELUAR";
         $history->value = $request->itemReduceStock;
-        // $history->stock_now = $newValue;
         $history->user_who_did = $userInfo->name;
-
+        $history->user_action_date = $request->itemDepart;
+        $history->supplier = "";
         $history->save();
 
-
-        // return redirect('manageItem');
+        $request->session()->flash('sukses_reduceStock', $itemInfo->item_name);
         return redirect()->back();
     }
 
