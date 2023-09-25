@@ -59,109 +59,109 @@ class PalletController extends Controller
         return view('manage_views.managePallet', compact('pallet', 'item'));
     }
 
-    public function add_pallet(Request $request)
-    {
-        $itemInfo = Item::where('item_id', $request->itemidforpallet)->first();
-        $totalInPalletCurrently = Pallet::where('item_id', $request->itemidforpallet)->sum('stock'); //INI BISA DAPET TOTALNYA
+    // public function add_pallet(Request $request)
+    // {
+    //     $itemInfo = Item::where('item_id', $request->itemidforpallet)->first();
+    //     $totalInPalletCurrently = Pallet::where('item_id', $request->itemidforpallet)->sum('stock'); //INI BISA DAPET TOTALNYA
 
-        // stok total yg di palet pada suatu item tidak boleh melebihi stok item di tabel items
-        $availableStock = $itemInfo->stocks - $totalInPalletCurrently;
+    //     // stok total yg di palet pada suatu item tidak boleh melebihi stok item di tabel items
+    //     $availableStock = $itemInfo->stocks - $totalInPalletCurrently;
 
-        // dd($availableStock);
-        if ($availableStock < $request->palletStock) {
-            session()->flash('gagalMasukPaletVALUE', 'stok ke palet melebihi stok barang');
-            return redirect()->back();
-        }
+    //     // dd($availableStock);
+    //     if ($availableStock < $request->palletStock) {
+    //         session()->flash('gagalMasukPaletVALUE', 'stok ke palet melebihi stok barang');
+    //         return redirect()->back();
+    //     }
 
-        $request->validate([
-            'palletDesc' => 'min:1|max:50',
-            'bin' => 'max:10'
-        ], [
-            'palletDesc.min' => 'Deskripsi minimal 1 karakter',
-            'palletDesc.max' => 'Deskripsi maksimal 50 karakter',
-            'bin.max' => 'BIN maksimal 10 karakter',
-        ]);
+    //     $request->validate([
+    //         'palletDesc' => 'min:1|max:50',
+    //         'bin' => 'max:10'
+    //     ], [
+    //         'palletDesc.min' => 'Deskripsi minimal 1 karakter',
+    //         'palletDesc.max' => 'Deskripsi maksimal 50 karakter',
+    //         'bin.max' => 'BIN maksimal 10 karakter',
+    //     ]);
 
-        // memasukkan data ke tabel palet
-        $pallet = new Pallet();
-        $pallet->item_id = $request->itemidforpallet;
-        $pallet->stock = $request->palletStock;
-        $pallet->bin = $request->bin;
-        $pallet->description = $request->palletDesc;
+    //     // memasukkan data ke tabel palet
+    //     $pallet = new Pallet();
+    //     $pallet->item_id = $request->itemidforpallet;
+    //     $pallet->stock = $request->palletStock;
+    //     $pallet->bin = $request->bin;
+    //     $pallet->description = $request->palletDesc;
 
-        $pallet->save();
+    //     $pallet->save();
 
 
-        // memasukkan data ke tabel sejarah palet
-        $history = new PalletHistory();
-        // $history->item_id = $request->itemidforpallet;
-        $history->item_id = $itemInfo->item_id;
-        $history->stock = $request->palletStock;
-        $history->bin = $request->bin;
-        $history->status = 'DALAM INVENTORY';
-        $history->user = $request->userIdHidden;
+    //     // memasukkan data ke tabel sejarah palet
+    //     $history = new PalletHistory();
+    //     // $history->item_id = $request->itemidforpallet;
+    //     $history->item_id = $itemInfo->item_id;
+    //     $history->stock = $request->palletStock;
+    //     $history->bin = $request->bin;
+    //     $history->status = 'DALAM INVENTORY';
+    //     $history->user = $request->userIdHidden;
 
-        $history->save();
+    //     $history->save();
 
-        session()->flash('suksesMasukPaletVALUE', 'Stok barang dimasukkan ke palet');
+    //     session()->flash('suksesMasukPaletVALUE', 'Stok barang dimasukkan ke palet');
 
-        return redirect()->back();
-    }
+    //     return redirect()->back();
+    // }
 
-    public function reduce_pallet_stock(Request $request)
-    {
-        // dd($request->palletIdHidden);
-        $palletInfo = Pallet::where('id', $request->palletIdHidden)->first();
-        // dd($palletInfo);
-        // $itemInfo = Item::where('item_id',$palletInfo->item_id)->first();
+    // public function reduce_pallet_stock(Request $request)
+    // {
+    //     // dd($request->palletIdHidden);
+    //     $palletInfo = Pallet::where('id', $request->palletIdHidden)->first();
+    //     // dd($palletInfo);
+    //     // $itemInfo = Item::where('item_id',$palletInfo->item_id)->first();
 
-        $itemInfo = DB::table('pallets')
-            ->join('items', 'items.item_id', '=', 'pallets.item_id')
-            ->select('items.*')->where('pallets.id', $request->palletIdHidden)->first();
+    //     $itemInfo = DB::table('pallets')
+    //         ->join('items', 'items.item_id', '=', 'pallets.item_id')
+    //         ->select('items.*')->where('pallets.id', $request->palletIdHidden)->first();
 
-        // dd($itemInfo);
-        $id = Auth::user()->id;
+    //     // dd($itemInfo);
+    //     $id = Auth::user()->id;
 
-        if ($palletInfo->stock < $request->palletStockOut) {
-            session()->flash('gagalStokPalletKeluar', 'stok yang ingin dikeluarkan lebih besar dari stok di palet');
-            return redirect()->back();
-        } else if ($palletInfo->stock == $request->palletStockOut) { //ini kalau keluar semua stoknya
-            $palletInfo->delete();
+    //     if ($palletInfo->stock < $request->palletStockOut) {
+    //         session()->flash('gagalStokPalletKeluar', 'stok yang ingin dikeluarkan lebih besar dari stok di palet');
+    //         return redirect()->back();
+    //     } else if ($palletInfo->stock == $request->palletStockOut) { //ini kalau keluar semua stoknya
+    //         $palletInfo->delete();
 
-            // memasukkan data ke tabel sejarah palet
-            $history = new PalletHistory();
-            $history->item_id = $itemInfo->item_id;
-            $history->stock = $palletInfo->stock;
-            $history->bin = $palletInfo->bin;
-            $history->status = 'KELUAR';
-            $history->user = $id;
+    //         // memasukkan data ke tabel sejarah palet
+    //         $history = new PalletHistory();
+    //         $history->item_id = $itemInfo->item_id;
+    //         $history->stock = $palletInfo->stock;
+    //         $history->bin = $palletInfo->bin;
+    //         $history->status = 'KELUAR';
+    //         $history->user = $id;
 
-            $history->save();
+    //         $history->save();
 
-            session()->flash('suksesPaletKeluar', 'Barang Berhasil Dikeluarkan dari Palet');
-            return redirect()->back();
-        } else if ($palletInfo->stock > $request->palletStockOut) { //ini kalau keluar sebagian stoknya
-            $newValue = $palletInfo->stock - $request->palletStockOut;
-            // memasukkan data ke tabel sejarah palet
-            $history = new PalletHistory();
-            // dd($itemInfo->item_id);
-            $history->item_id = $itemInfo->item_id;
-            // dd('s');
-            $history->stock = $newValue;
-            $history->bin = $palletInfo->bin;
-            $history->status = 'KELUAR SEBAGIAN ' . '(' . (string)$request->palletStockOut . ')';
-            $history->user = $id;
+    //         session()->flash('suksesPaletKeluar', 'Barang Berhasil Dikeluarkan dari Palet');
+    //         return redirect()->back();
+    //     } else if ($palletInfo->stock > $request->palletStockOut) { //ini kalau keluar sebagian stoknya
+    //         $newValue = $palletInfo->stock - $request->palletStockOut;
+    //         // memasukkan data ke tabel sejarah palet
+    //         $history = new PalletHistory();
+    //         // dd($itemInfo->item_id);
+    //         $history->item_id = $itemInfo->item_id;
+    //         // dd('s');
+    //         $history->stock = $newValue;
+    //         $history->bin = $palletInfo->bin;
+    //         $history->status = 'KELUAR SEBAGIAN ' . '(' . (string)$request->palletStockOut . ')';
+    //         $history->user = $id;
 
-            Pallet::where('id', $request->palletIdHidden)->update([
-                'stock' => $newValue
-            ]);
+    //         Pallet::where('id', $request->palletIdHidden)->update([
+    //             'stock' => $newValue
+    //         ]);
 
-            $history->save();
+    //         $history->save();
 
-            session()->flash('suksesPaletKeluar2', 'Barang Berhasil Dikeluarkan Sebanyak ' . $request->palletStockOut);
-            return redirect()->back();
-        }
-    }
+    //         session()->flash('suksesPaletKeluar2', 'Barang Berhasil Dikeluarkan Sebanyak ' . $request->palletStockOut);
+    //         return redirect()->back();
+    //     }
+    // }
 
     public function remove_pallet($id)
     {
@@ -330,8 +330,21 @@ class PalletController extends Controller
         return view('history_views.palletHistory', compact('palletHistory', 'item'));
     }
 
-    public function pallet_report_page(){
+    public function pallet_report_page()
+    {
+        // return view('inPallet');
+        $inpallet = DB::table('inpallet')
+            ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+            ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+            ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')->get();
+        // dd($pallet);
 
-        return view('report_views.palletReport');
+        $item = DB::table('items')
+            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+            ->select('items.item_name', 'items.item_id')->get();
+
+        return view('report_views.palletReport', compact('inpallet', 'item'));
+        // return view('report_views.palletReport');
     }
 }
