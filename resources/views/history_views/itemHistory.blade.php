@@ -9,24 +9,6 @@
         <div class="content">
             {{-- ini page buat liat history keluar masuk stock tiap produk / item --}}
             <div class="page-inner">
-
-                {{-- @if (session('sukses_delete_brand'))
-                    <div class="alert alert-warning alert-block">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>{{ session('sukses_delete_brand') }}</strong>
-                    </div>
-                @elseif (session('sukses_editBrand'))
-                    <div class="alert alert-primary alert-block" id="alerts">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Sukses mengupdate data "{{ session('sukses_editBrand') }}"</strong>
-                    </div>
-                @elseif ($errors->any())
-                    <div class="alert alert-danger alert-block" id="alerts">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Update Failed, validation not met</strong>
-                    </div>
-                @endif --}}
-
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
@@ -105,7 +87,8 @@
                                                                 <input type="text" class="form-control form-control"
                                                                     placeholder="item name" name="itemHistoryExport"> --}}
                                                                 <select class="form-control" data-width="100%"
-                                                                    id="itemHistoryExport" name="itemHistoryExport">
+                                                                    id="itemHistoryExport" name="itemHistoryExport" required>
+                                                                    <option></option>
                                                                     @foreach ($item as $item)
                                                                         <option value="{{ $item->item_id }}">
                                                                             {{ $item->item_name }}</option>

@@ -486,13 +486,15 @@
     <script>
         // page: Edit Item, kolom: Modal + Kolom Customer
         $('#customerLabelExport').select2({
-            dropdownParent: $('#exportCustomerItemModal')
+            dropdownParent: $('#exportCustomerItemModal'),
+            placeholder: 'Pilih Customer'
         });
     </script>
     <script>
         // page: Edit Item, kolom: Modal + kolom brand
         $('#brandLabelExport').select2({
-            dropdownParent: $('#exportBrandItemModal')
+            dropdownParent: $('#exportBrandItemModal'),
+            placeholder: 'Pilih Brand'
         });
     </script>
 
@@ -553,6 +555,14 @@
         // add new outgoing package di outgoing
         $('#outgoingidforitem').select2({
             dropdownParent: $('#outModalCenter'),
+            placeholder: 'Pilih Barang'
+        });
+    </script>
+
+    {{-- History stok by pcs --}}
+    <script>
+        $('#itemHistoryExport').select2({
+            dropdownParent: $('#exportItemHistorymModal'),
             placeholder: 'Pilih Barang'
         });
     </script>

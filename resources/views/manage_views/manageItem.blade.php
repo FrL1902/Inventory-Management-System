@@ -82,7 +82,8 @@
                                                             <div class="form-group">
                                                                 <label for="customerLabelExport">Customer</label>
                                                                 <select class="form-control" data-width="100%"
-                                                                    id="customerLabelExport" name="customerItemExport">
+                                                                    id="customerLabelExport" name="customerItemExport" required>
+                                                                    <option></option>
                                                                     @foreach ($customer as $data)
                                                                         <option value="{{ $data->customer_id }}">
                                                                             {{ $data->customer_name }}
@@ -127,7 +128,8 @@
                                                             <div class="form-group">
                                                                 <label for="brandLabelExport">Brand</label>
                                                                 <select class="form-control" id="brandLabelExport"
-                                                                    data-width="100%" name="brandItemExport">
+                                                                    data-width="100%" name="brandItemExport" required>
+                                                                    <option></option>
                                                                     @foreach ($brand as $data)
                                                                         <option value="{{ $data->brand_id }}">
                                                                             {{ $data->brand_name }}
