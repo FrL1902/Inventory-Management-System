@@ -560,9 +560,9 @@
     {{-- MANAGE PALLET PAGE --}}
     <script>
         // add new outgoing package di outgoing
-        $('#itemidforpallet').select2({
-            dropdownParent: $('#addPalletModal')
-        });
+        // $('#itemidforpallet').select2({
+        //     dropdownParent: $('#addPalletModal')
+        // });
     </script>
 
     {{-- MANAGE USER PAGE --}}
@@ -589,6 +589,14 @@
     <script>
         $('#itemIdItemReport').select2({
             dropdownParent: $('#exportItemReportItemModal'),
+            placeholder: 'Pilih Barang'
+        });
+    </script>
+
+    {{-- IN PALLET --}}
+    <script>
+        $('#itemidforpallet').select2({
+            dropdownParent: $('#addInPalletModal'),
             placeholder: 'Pilih Barang'
         });
     </script>
