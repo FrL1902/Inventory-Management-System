@@ -117,15 +117,17 @@ Route::post('/exportOutgoingItem', [OutgoingController::class, 'exportOutgoingIt
 
 // Pallet
 Route::get('/managePallet', [PalletController::class, 'manage_pallet_page'])->middleware('role:admin,gudang,cargo');
-Route::post('/addNewPallet', [PalletController::class, 'add_pallet'])->middleware('role:admin,gudang,cargo');
-Route::get('/removePallet/{id}', [PalletController::class, 'remove_pallet'])->middleware('role:admin,gudang,cargo');
-Route::post('/reducePalletStock', [PalletController::class, 'reduce_pallet_stock'])->middleware('role:admin,gudang,cargo');
+// Route::post('/addNewPallet', [PalletController::class, 'add_pallet'])->middleware('role:admin,gudang,cargo');
+// Route::get('/removePallet/{id}', [PalletController::class, 'remove_pallet'])->middleware('role:admin,gudang,cargo');
+// Route::post('/reducePalletStock', [PalletController::class, 'reduce_pallet_stock'])->middleware('role:admin,gudang,cargo');
 
 // Page: Laporan Stok by palet
 Route::get('/palletReport', [PalletController::class, 'pallet_report_page'])->middleware('role:admin,customer,cargo');
 
 // inPallet
 Route::get('/inPallet', [InPalletController::class, 'in_pallet_page'])->middleware('role:admin,gudang,cargo');
+Route::post('/addNewPallet', [InPalletController::class, 'add_pallet'])->middleware('role:admin,gudang,cargo');
+Route::post('/reducePalletStock', [InPalletController::class, 'reduce_pallet_stock'])->middleware('role:admin,gudang,cargo');
 
 // outPallet
 Route::get('/outPallet', [OutPalletController::class, 'out_pallet_page'])->middleware('role:admin,gudang,cargo');
