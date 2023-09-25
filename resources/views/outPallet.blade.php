@@ -10,7 +10,102 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                page palet keluar
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center">
+                                    <h4 class="card-title"><strong>Palet Keluar</strong></h4>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="add-row" class="display table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Brand</th>
+                                                <th>ID Barang</th>
+                                                <th>Nama Barang</th>
+                                                <th>Stok</th>
+                                                <th>BIN</th>
+                                                <th>Tanggal Keluar</th>
+                                                <th>Deskripsi</th>
+                                                <th>Gambar</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Brand</th>
+                                                <th>ID Barang</th>
+                                                <th>Nama Barang</th>
+                                                <th>Stok</th>
+                                                <th>BIN</th>
+                                                <th>Tanggal Keluar</th>
+                                                <th>Deskripsi</th>
+                                                <th>Gambar</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+
+                                            @foreach ($outpallet as $data)
+                                                <tr>
+                                                    <td>{{ $data->customer_name }}</td>
+                                                    <td>{{ $data->brand_name }}</td>
+                                                    <td>{{ $data->item_id }}</td>
+                                                    <td>{{ $data->item_name }}</td>
+                                                    <td>{{ $data->stock }}</td>
+                                                    <td>{{ $data->bin }}</td>
+                                                    <td>{{ date_format(date_create($data->user_date), 'D d-m-Y') }}
+                                                    <td>{{ $data->description }}</td>
+                                                    <td>
+                                                        <a style="cursor: pointer"
+                                                            data-target="#imageModalCenter{{ $data->id }}"
+                                                            data-toggle="modal">
+                                                            <img class="rounded mx-auto d-block"
+                                                                style="width: 100px; height: auto;"
+                                                                src="{{ Storage::url($data->item_pictures) }}"
+                                                                alt="no picture" loading="lazy">
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+                                                {{-- FullSize Gambar --}}
+                                                <div class="modal fade" id="imageModalCenter{{ $data->id }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg"
+                                                        role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h3 class="modal-title" id="exampleModalLongTitle">
+                                                                    <strong>Foto Barang
+                                                                        "{{ $data->item_name }}" pada
+                                                                        {{ date_format(date_create($data->user_date), 'D d-m-Y') }}</strong>
+                                                                </h3>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <img class="rounded mx-auto d-block"
+                                                                    style="width: 750px; height: auto;"
+                                                                    src="{{ Storage::url($data->item_pictures) }}"
+                                                                    alt="no picture" loading="lazy">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
