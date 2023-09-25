@@ -514,8 +514,8 @@
                                                             <div class="modal-header">
                                                                 <h3 class="modal-title" id="exampleModalLongTitle">
                                                                     <strong>Barang Datang
-                                                                        "{{ $incoming->item_name }}" pada
-                                                                        {{ $incoming->created_at }}</strong>
+                                                                        "{{ $incoming->item_name }}"
+                                                                        pada {{ date_format(date_create($incoming->arrive_date), 'D d-m-Y') }}</strong>
                                                                 </h3>
                                                                 <button type="button" class="close"
                                                                     data-dismiss="modal" aria-label="Close">
