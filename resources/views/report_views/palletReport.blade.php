@@ -21,6 +21,23 @@
                                                 Laporan Barang
                                             </span>
                                         </h4>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false"> <i class="fa fa-file-excel" aria-hidden="true"></i>
+                                                Export Berdasarkan
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" data-target="#exportItemReportCustomerModal"
+                                                    data-toggle="modal">Customer</a>
+                                                <a class="dropdown-item" data-target="#exportItemReportBrandModal"
+                                                    data-toggle="modal">Brand</a>
+                                                <a class="dropdown-item" data-target="#exportItemReportItemModal"
+                                                    data-toggle="modal">Barang</a>
+                                                <a class="dropdown-item" data-target="#exportItemReportALLModal"
+                                                    data-toggle="modal">Tanggal</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
