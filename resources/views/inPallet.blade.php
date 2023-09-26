@@ -281,7 +281,9 @@
                                                                         </div>
 
                                                                         <div class="form-group">
-                                                                            <label for="quantity">Stok</label>
+                                                                            <label for="quantity">Stok<span style="color: red"> (harus
+                                                                                diisi)
+                                                                            </span></label>
                                                                             <input type="number" id="quantity"
                                                                                 name="palletStockOut" min="1"
                                                                                 max="999999999999999" style="width: 100%"
