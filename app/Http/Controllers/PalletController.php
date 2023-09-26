@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PalletHistoryExport;
+use App\Exports\PalletReportExport;
+use App\Models\Brand;
+use App\Models\Customer;
 use App\Models\Item;
 use App\Models\Pallet;
 use App\Models\PalletHistory;
@@ -340,7 +343,72 @@ class PalletController extends Controller
             ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
             ->select('items.item_name', 'items.item_id')->get();
 
-        return view('report_views.palletReport', compact('inpallet', 'item'));
+        $brand = Brand::all();
+        $customer = Customer::all();
+
+
+        return view('report_views.palletReport', compact('inpallet', 'item', 'customer', 'brand'));
         // return view('report_views.palletReport');
+    }
+
+    public function exportPalletReportCustomer(Request $request)
+    {
+        $customer = Customer::find($request->customerIdPalletReport);
+
+        $sortAll = DB::table('inpallet')
+            ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+            ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+            ->select('inpallet.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->where('items.customer_id', $request->customerIdPalletReport)->get();
+
+        $formatFileName = 'Laporan Stok by palet Customer ' . $customer->customer_name;
+        return Excel::download(new PalletReportExport($sortAll), $formatFileName . '.xlsx');
+    }
+
+    public function exportPalletReportBrand(Request $request)
+    {
+        $brand = Brand::find($request->brandIdPalletReport);
+
+        $sortAll = DB::table('inpallet')
+            ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+            ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+            ->select('inpallet.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->where('items.brand_id', $request->brandIdPalletReport)->get();
+
+        $formatFileName = 'Laporan Stok by palet Brand ' . $brand->brand_name;
+        return Excel::download(new PalletReportExport($sortAll), $formatFileName . '.xlsx');
+    }
+
+    public function exportPalletReportItem(Request $request)
+    {
+        $item = Item::find($request->itemIdPalletReport);
+
+        $sortAll = DB::table('inpallet')
+            ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+            ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+            ->select('inpallet.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->where('inpallet.item_id', $request->itemIdPalletReport)->get();
+
+        $formatFileName = 'Laporan Stok by palet Barang ' . $item->item_name;
+        return Excel::download(new PalletReportExport($sortAll), $formatFileName . '.xlsx');
+    }
+
+    public function exportPalletReportDate(Request $request)
+    {
+        $date_from = Carbon::parse($request->startRange)->startOfDay();
+        $date_to = Carbon::parse($request->endRange)->endOfDay();
+
+        $sortAll = DB::table('inpallet')
+            ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+            ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+            ->select('inpallet.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->whereBetween('user_date', [$date_from, $date_to])->get();
+
+        $formatFileName = 'Laporan Stok by palet ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
+        return Excel::download(new PalletReportExport($sortAll), $formatFileName . '.xlsx');
     }
 }

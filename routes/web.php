@@ -123,6 +123,10 @@ Route::get('/managePallet', [PalletController::class, 'manage_pallet_page'])->mi
 
 // Page: Laporan Stok by palet
 Route::get('/palletReport', [PalletController::class, 'pallet_report_page'])->middleware('role:admin,customer,cargo');
+Route::post('/exportPalletReportCustomer', [PalletController::class, 'exportPalletReportCustomer'])->middleware('role:admin,customer,cargo');
+Route::post('/exportPalletReportBrand', [PalletController::class, 'exportPalletReportBrand'])->middleware('role:admin,customer,cargo');
+Route::post('/exportPalletReportItem', [PalletController::class, 'exportPalletReportItem'])->middleware('role:admin,customer,cargo');
+Route::post('/exportPalletReportDate', [PalletController::class, 'exportPalletReportDate'])->middleware('role:admin,customer,cargo');
 
 // inPallet
 Route::get('/inPallet', [InPalletController::class, 'in_pallet_page'])->middleware('role:admin,gudang,cargo');
@@ -140,13 +144,13 @@ Route::middleware(['role:admin,customer,gudang,cargo'])->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('/logout', [AuthController::class, 'logout']);
 
-    // Page: Sejarah Semua Barang
+    // Page: History Stok by pcs
     Route::get('/manageHistory', [ItemController::class, 'item_history_page']);
     Route::post('/filterHistoryDate', [StockHistoryController::class, 'filterHistoryDate']);
     Route::post('/exportItemHistory', [StockHistoryController::class, 'exportItemHistory'])->name('exportItemHistory');
     Route::post('/exportHistoryByDate', [StockHistoryController::class, 'exportHistoryByDate'])->name('exportHistoryByDate');
 
-    // Page: Sejarah Palet
+    // Page: History Stok by palet
     Route::get('/managePalletHistory', [PalletController::class, 'manage_pallet_history_page']);
     Route::post('/exportPalletItemHistory', [PalletController::class, 'exportPalletItemHistory'])->name('exportPalletItemHistory');
     Route::post('/exportPalletHistoryByDate', [PalletController::class, 'exportPalletHistoryByDate'])->name('exportPalletHistoryByDate');

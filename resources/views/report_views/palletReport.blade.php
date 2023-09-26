@@ -28,14 +28,201 @@
                                                 Export Berdasarkan
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" data-target="#exportItemReportCustomerModal"
+                                                <a class="dropdown-item" data-target="#exportPalletReportCustomerModal"
                                                     data-toggle="modal">Customer</a>
-                                                <a class="dropdown-item" data-target="#exportItemReportBrandModal"
+                                                <a class="dropdown-item" data-target="#exportPalletReportBrandModal"
                                                     data-toggle="modal">Brand</a>
-                                                <a class="dropdown-item" data-target="#exportItemReportItemModal"
+                                                <a class="dropdown-item" data-target="#exportPalletReportItemModal"
                                                     data-toggle="modal">Barang</a>
-                                                <a class="dropdown-item" data-target="#exportItemReportALLModal"
+                                                <a class="dropdown-item" data-target="#exportPalletReportALLModal"
                                                     data-toggle="modal">Tanggal</a>
+                                            </div>
+                                        </div>
+
+                                        {{-- export by CUSTOMER --}}
+                                        <div class="modal fade" id="exportPalletReportCustomerModal" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title" id="exampleModalLongTitle">
+                                                            <strong>
+                                                                Export Laporan Berdasarkan Customer
+                                                            </strong>
+                                                        </h3>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+
+                                                    {{-- export by customer name --}}
+                                                    <div class="modal-body">
+                                                        <form method="post" action="/exportPalletReportCustomer">
+                                                            @csrf
+                                                            <div class="card-body">
+                                                                <div class="form-group">
+                                                                    <select class="form-control" data-width="100%"
+                                                                        id="customerIdPalletReport"
+                                                                        name="customerIdPalletReport" required>
+                                                                        <option></option>
+                                                                        @foreach ($customer as $data)
+                                                                            <option value="{{ $data->customer_id }}">
+                                                                                {{ $data->customer_name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="card mt-5 ">
+                                                                        <button id=""
+                                                                            class="btn btn-primary">Export
+                                                                            Data</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- export by BRAND --}}
+                                        <div class="modal fade" id="exportPalletReportBrandModal" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title" id="exampleModalLongTitle">
+                                                            <strong>
+                                                                Export Laporan Berdasarkan Brand
+                                                            </strong>
+                                                        </h3>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+
+                                                    {{-- export by brand name --}}
+                                                    <div class="modal-body">
+                                                        <form method="post" action="/exportPalletReportBrand">
+                                                            @csrf
+                                                            <div class="card-body">
+                                                                <div class="form-group">
+                                                                    <select class="form-control" data-width="100%"
+                                                                        id="brandIdPalletReport" name="brandIdPalletReport"
+                                                                        required>
+                                                                        <option></option>
+                                                                        @foreach ($brand as $data)
+                                                                            <option value="{{ $data->brand_id }}">
+                                                                                {{ $data->brand_name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="card mt-5 ">
+                                                                        <button id=""
+                                                                            class="btn btn-primary">Export
+                                                                            Data</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- export by ITEM --}}
+                                        <div class="modal fade" id="exportPalletReportItemModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title" id="exampleModalLongTitle">
+                                                            <strong>
+                                                                Export Laporan Berdasarkan Barang
+                                                            </strong>
+                                                        </h3>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+
+                                                    {{-- export by item name --}}
+                                                    <div class="modal-body">
+                                                        <form method="post" action="/exportPalletReportItem">
+                                                            @csrf
+                                                            <div class="card-body">
+                                                                <div class="form-group">
+                                                                    <select class="form-control" data-width="100%"
+                                                                        id="itemIdPalletReport" name="itemIdPalletReport"
+                                                                        required>
+                                                                        <option></option>
+                                                                        @foreach ($item as $data)
+                                                                            <option value="{{ $data->item_id }}">
+                                                                                {{ $data->item_name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="card mt-5 ">
+                                                                        <button id=""
+                                                                            class="btn btn-primary">Export
+                                                                            Data</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- export by ALL DATA BY DATE  --}}
+                                        <div class="modal fade" id="exportPalletReportALLModal" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title" id="exampleModalLongTitle">
+                                                            <strong>
+                                                                Export Laporan Berdasarkan "Tanggal Sampai"
+                                                            </strong>
+                                                        </h3>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form method="post" action="/exportPalletReportDate">
+                                                            @csrf
+
+                                                            <div class="card-body">
+                                                                <div class="form-group">
+                                                                    <label for="startRange">Dari Tanggal</label>
+                                                                    <input type="date" class="form-control"
+                                                                        id="startRange" required name="startRange">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="endRange">Hingga Tanggal</label>
+                                                                    <input type="date" class="form-control"
+                                                                        id="endRange" required name="endRange">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="card mt-5 ">
+                                                                        <button id=""
+                                                                            class="btn btn-primary">Export Data</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
