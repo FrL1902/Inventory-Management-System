@@ -34,14 +34,12 @@ class InPalletController extends Controller
 
     public function add_pallet(Request $request)
     {
-        // dd('123');
         $itemInfo = Item::where('item_id', $request->itemidforpallet)->first();
-        $totalInPalletCurrently = InPallet::where('item_id', $request->itemidforpallet)->sum('stock'); //INI BISA DAPET TOTALNYA
+        $totalInPalletCurrently = InPallet::where('item_id', $request->itemidforpallet)->sum('stock'); //INI BISA DAPET TOTAL STOK SUATU BARANG DI TABEL INPALLET
 
         // stok total yg di palet pada suatu item tidak boleh melebihi stok item di tabel items
         $availableStock = $itemInfo->stocks - $totalInPalletCurrently;
 
-        // dd($availableStock);
         if ($availableStock < $request->palletStock) {
             session()->flash('gagalMasukPaletVALUE', 'stok ke palet melebihi stok barang');
             return redirect()->back();
@@ -49,12 +47,13 @@ class InPalletController extends Controller
 
         $request->validate([
             'palletDesc' => 'min:1|max:50',
-            'bin' => 'max:10',
+            'bin' => 'max:10|regex:/^[A-Z0-9.]+$/u',
             'inPalletImage' => 'required|mimes:jpeg,png,jpg',
         ], [
             'palletDesc.min' => 'Deskripsi minimal 1 karakter',
             'palletDesc.max' => 'Deskripsi maksimal 50 karakter',
             'bin.max' => 'BIN maksimal 10 karakter',
+            'bin.regex' => 'BIN hanya menerima huruf kapital A-Z, titik (.), dan angka 0-9',
             'inPalletImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
         ]);
 
@@ -102,6 +101,15 @@ class InPalletController extends Controller
 
         $id = Auth::user()->id;
 
+        $request->validate([
+            'palletDesc' => 'min:1|max:50',
+            'outPalletImage' => 'required|mimes:jpeg,png,jpg',
+        ], [
+            'palletDesc.min' => 'Deskripsi minimal 1 karakter',
+            'palletDesc.max' => 'Deskripsi maksimal 50 karakter',
+            'outPalletImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+        ]);
+
         if ($palletInfo->stock < $request->palletStockOut) {
             session()->flash('gagalStokPalletKeluar', 'stok yang ingin dikeluarkan lebih besar dari stok di palet');
             return redirect()->back();
@@ -118,13 +126,14 @@ class InPalletController extends Controller
             $history->user = $id;
             $history->user_date = $request->palletDepart;
 
+            $history->save();
 
             // outpallet
             $outPallet = new OutPallet();
             $outPallet->item_id = $itemInfo->item_id;
-            $outPallet->user_date = $request->palletDepart;
             $outPallet->stock = $palletInfo->stock;
             $outPallet->bin = $palletInfo->bin;
+            $outPallet->user_date = $request->palletDepart;
             $outPallet->description = $request->palletDesc;
 
             $file = $request->file('outPalletImage');
@@ -133,8 +142,6 @@ class InPalletController extends Controller
             $imageName = 'outPalletImage/' . $imageName;
             $outPallet->item_pictures = $imageName;
 
-
-            $history->save();
             $outPallet->save();
 
             session()->flash('suksesPaletKeluar', 'Barang Berhasil Dikeluarkan dari Palet');

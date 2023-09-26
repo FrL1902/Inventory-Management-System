@@ -67,6 +67,8 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
+
+                                                {{-- memasukkan data palet baru --}}
                                                 <div class="modal-body">
                                                     <form enctype="multipart/form-data" method="post"
                                                         action="/addNewPallet">
