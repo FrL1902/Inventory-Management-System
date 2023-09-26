@@ -42,7 +42,16 @@ class UserController extends Controller
         $request->validate([
             'usernameform' => 'required|unique:App\Models\User,name|min:4|max:50',
             'emailform' => 'required|unique:App\Models\User,email',
-            'passwordform' => 'required|min:6|max:20'
+            'passwordform' => 'required|min:6|max:20',
+            'optionsRadios' => 'required'
+        ], [
+            'usernameform.unique' => 'Username sudah terambil, masukkan username yang berbeda',
+            'usernameform.min' => 'Username minimal 4 karakter',
+            'usernameform.max' => 'Username maksimal 50 karakter',
+            'emailform.unique' => 'Email sudah terambil, masukkan email yang berbeda',
+            'passwordform.min' => 'Password minimal 6 karakter',
+            'passwordform.max' => 'Password maksimal 20 karakter',
+            'optionsRadios.required' => 'Kolom "Role" harus dipilih',
         ]);
 
         $account = new User();

@@ -44,42 +44,33 @@ https://www.w3schools.com/css/css3_animations.asp --}}
 
             {{-- buat ganti password --}}
             @if (session('passwordInputDifferent'))
-                <div class="alert alert-danger alert-block" id="alerts">
+                <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('passwordInputDifferent') }}</strong>
                 </div>
             @elseif (session('passwordSameOld'))
-                <div class="alert alert-danger alert-block" id="alerts">
+                <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('passwordSameOld') }}</strong>
                 </div>
             @elseif (session('passwordUpdated'))
-                <div class="alert alert-success alert-block" id="alerts">
+                <div class="alert alert-success alert-block" id="alertSuccess">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('passwordUpdated') }}</strong>
                 </div>
-
-                {{-- @if ($errors->any())
-                <div class="alert alert-danger alert-block">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Update Gagal: panjang password baru harus 6 - 20 karakter</strong>
-                </div>
-            @endif --}}
-
-
                 {{-- buat edit data user dan delete --}}
             @elseif (session('sukses_delete'))
-                <div class="alert alert-warning alert-block" id="alerts">
+                <div class="alert alert-warning alert-block" id="alertDelete">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('sukses_delete') }}</strong>
                 </div>
             @elseif (session('sukses_editUser'))
-                <div class="alert alert-primary alert-block" id="alerts">
+                <div class="alert alert-success alert-block" id="alertSuccess">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>informasi user "{{ session('sukses_editUser') }}" telah diubah</strong>
                 </div>
             @elseif ($errors->any())
-                <div class="alert alert-danger alert-block" id="alerts">
+                <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     {{-- <strong>Update Gagal, validasi tidak terpenuhi: </strong> --}}
                     <strong>Update Gagal</strong>
@@ -120,7 +111,7 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Manage User Accounts</h4>
+                                <h4 class="card-title">Mengelola Akun</h4>
                                 <a href="\exportExcel" class="btn btn-primary ml-3">EXPORT EXCEL</a>
                                 {{-- <button type="button" class="btn btn-primary ml-3" data-target="#exportuserModal"
                                     data-toggle="modal"><strong>EXPORT EXCEL</strong></button> --}}
@@ -209,7 +200,7 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                             <a style="cursor: pointer"><i
                                                                     class="fa fa-users mt-3 text-success"
                                                                     data-toggle="tooltip"
-                                                                    data-original-title="admin has all access">
+                                                                    data-original-title="admin punya semua akses">
                                                                 </i></a>
                                                         @elseif ($data->level == 'customer')
                                                             <a style="cursor: pointer"
@@ -229,7 +220,7 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                 <a style="cursor: pointer"><i
                                                                     class="fa fa-users mt-3 text-success"
                                                                     data-toggle="tooltip"
-                                                                    data-original-title="gudang can view all customer data">
+                                                                    data-original-title="gudang & cargo bisa melihat semua customer data">
                                                                 </i></a>
                                                         @endif
                                                         <a style="cursor: pointer" class="ml-3"

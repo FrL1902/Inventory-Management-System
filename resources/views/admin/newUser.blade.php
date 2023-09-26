@@ -12,14 +12,14 @@
         <div class="page-inner">
 
             @if (session('sukses_add'))
-                <div class="alert alert-success alert-block">
+                <div class="alert alert-success alert-block" id="alertSuccess">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('sukses_add') }}</strong>
                 </div>
             @elseif ($errors->any())
-                <div class="alert alert-danger alert-block" id="alerts">
+                <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Pembuatan User Baru Gagal, validation not met: {{ $errors->first() }}</strong>
+                    <strong>Pembuatan User Baru Gagal: {{ $errors->first() }}</strong>
                 </div>
             @endif
 
@@ -29,18 +29,18 @@
                         <form method="post" action="/makeUser">
                             @csrf
                             <div class="card-header">
-                                <div class="card-title">Make New User Account</div>
+                                <div class="card-title">Buat Akun User Baru</div>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Username</label>
                                     <input type="text" class="form-control" placeholder="Username" aria-label=""
-                                        aria-describedby="basic-addon1" name="usernameform">
+                                        aria-describedby="basic-addon1" name="usernameform" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="email1">Email Address</label>
                                     <input type="email" class="form-control" id="email1" placeholder="Enter Email"
-                                        name="emailform">
+                                        name="emailform" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
@@ -48,7 +48,7 @@
                                         name="passwordform" required> --}}
                                     {{-- contoh "required" kalo lgsg dari htmlnya^, tp sih pake aja yg dari phpnya --}}
                                     <input type="password" class="form-control" id="password" placeholder="Password"
-                                        name="passwordform">
+                                        name="passwordform" required>
                                 </div>
                                 <div class="form-check">
                                     <label>Role</label><br />
