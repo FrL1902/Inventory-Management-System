@@ -372,7 +372,7 @@
                                     @endauth
                                     <li class="@yield('managepallethistory')">
                                         <a href="/managePalletHistory">
-                                            <span class="sub-item">Sejarah Palet</span>
+                                            <span class="sub-item">History Stok by palet</span>
                                         </a>
                                     </li>
                                 </ul>

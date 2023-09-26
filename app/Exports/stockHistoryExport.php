@@ -12,8 +12,8 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 class stockHistoryExport implements FromCollection, ShouldAutoSize, WithHeadings, WithMapping
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
 
     public function __construct($data)
     {
@@ -49,7 +49,7 @@ class stockHistoryExport implements FromCollection, ShouldAutoSize, WithHeadings
     {
         return [
             // "ID", "Item ID", "Item Name", "Status", "Value", "By User", "Created At", "Last Updated At"
-            "ID Barang", "Nama Barang", "Status", "Stok","Supplier", "Oleh User", "Waktu User", "Waktu Sistem"
-    ];
+            "ID Barang", "Nama Barang", "Status", "Stok", "Supplier", "Oleh User", "Waktu User", "Waktu Sistem"
+        ];
     }
 }
