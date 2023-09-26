@@ -204,13 +204,13 @@
 
                                                             <div class="card-body">
                                                                 <div class="form-group">
-                                                                    <label for="startRange">Start Date Range</label>
+                                                                    <label for="startRange">Dari Tanggal</label>
                                                                     <input type="date" class="form-control"
                                                                         id="startRange" required name="startRange">
                                                                 </div>
 
                                                                 <div class="form-group">
-                                                                    <label for="endRange">End Date Range</label>
+                                                                    <label for="endRange">Hingga Tanggal</label>
                                                                     <input type="date" class="form-control"
                                                                         id="endRange" required name="endRange">
                                                                 </div>
@@ -228,52 +228,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {{-- filter by date --}}
-                                        <div class="modal fade" id="sortByDateModal" tabindex="-1" role="dialog"
-                                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h3 class="modal-title" id="exampleModalLongTitle">
-                                                            <strong>
-                                                                Filter by date range
-                                                            </strong>
-                                                        </h3>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form method="post" action="/filterHistoryDate">
-                                                            @csrf
-
-                                                            <div class="card-body">
-                                                                <div class="form-group">
-                                                                    <label for="startRange">Start Date Range</label>
-                                                                    <input type="date" class="form-control"
-                                                                        id="startRange" required name="startRange">
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="endRange">End Date Range</label>
-                                                                    <input type="date" class="form-control"
-                                                                        id="endRange" required name="endRange">
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <div class="card mt-5 ">
-                                                                        <button id=""
-                                                                            class="btn btn-primary">Sort</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="card-body">

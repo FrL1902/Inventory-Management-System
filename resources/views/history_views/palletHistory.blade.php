@@ -58,7 +58,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print an item's pallet history
+                                                            Export Sejarah Palet Suatu Barang
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -76,7 +76,8 @@
                                                             <div class="form-group">
                                                                 <select class="form-control" data-width="100%"
                                                                     id="itemPalletHistoryExport"
-                                                                    name="itemPalletHistoryExport">
+                                                                    name="itemPalletHistoryExport" required>
+                                                                    <option></option>
                                                                     @foreach ($item as $item)
                                                                         <option value="{{ $item->item_id }}">
                                                                             {{ $item->item_name }}</option>
@@ -104,7 +105,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print ALL Pallet History By Date
+                                                            Export Semua Berdasarkan Tanggal
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -117,13 +118,13 @@
                                                         @csrf
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="startRange">Start Date Range</label>
+                                                                <label for="startRange">Dari Tanggal</label>
                                                                 <input type="date" class="form-control" id="startRange"
                                                                     required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">End Date Range</label>
+                                                                <label for="endRange">Hingga Tanggal</label>
                                                                 <input type="date" class="form-control" id="endRange"
                                                                     required name="endRange">
                                                             </div>
@@ -132,6 +133,10 @@
                                                                 <div class="card mt-5 ">
                                                                     <button id="" class="btn btn-primary">Export
                                                                         Data</button>
+                                                                </div>
+                                                                <div>
+                                                                    <h5 style="text-align: center;">
+                                                                        Export Berdasarkan Waktu Sistem</h5>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -150,7 +155,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Filter by date range
+                                                            Filter Berdasarkan Tanggal
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -164,13 +169,13 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="startRange">Start Date Range</label>
+                                                                <label for="startRange">Dari Tanggal</label>
                                                                 <input type="date" class="form-control"
                                                                     id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">End Date Range</label>
+                                                                <label for="endRange">Hingga Tanggal</label>
                                                                 <input type="date" class="form-control" id="endRange"
                                                                     required name="endRange">
                                                             </div>
@@ -178,7 +183,11 @@
                                                             <div class="form-group">
                                                                 <div class="card mt-5 ">
                                                                     <button id=""
-                                                                        class="btn btn-primary">Sort</button>
+                                                                        class="btn btn-primary">Filter</button>
+                                                                </div>
+                                                                <div>
+                                                                    <h5 style="text-align: center;">
+                                                                        Filter Berdasarkan Waktu Sistem</h5>
                                                                 </div>
                                                             </div>
                                                         </div>

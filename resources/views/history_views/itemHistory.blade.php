@@ -132,13 +132,13 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="startRange">Start Date Range</label>
+                                                                <label for="startRange">Dari Tanggal</label>
                                                                 <input type="date" class="form-control" id="startRange"
                                                                     required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">End Date Range</label>
+                                                                <label for="endRange">Hingga Tanggal</label>
                                                                 <input type="date" class="form-control" id="endRange"
                                                                     required name="endRange">
                                                             </div>
@@ -168,7 +168,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Filter by date range
+                                                            Filter Berdasarkan Tanggal
                                                         </strong>
                                                     </h3>
 
@@ -183,13 +183,13 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="startRange">Start Date Range</label>
+                                                                <label for="startRange">Dari Tanggal</label>
                                                                 <input type="date" class="form-control"
                                                                     id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">End Date Range</label>
+                                                                <label for="endRange">Hingga Tanggal</label>
                                                                 <input type="date" class="form-control" id="endRange"
                                                                     required name="endRange">
                                                             </div>
