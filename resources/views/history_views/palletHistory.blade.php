@@ -39,8 +39,9 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <button type="button" class="btn btn-secondary" data-target="#sortByDatePalletModal"
-                                            data-toggle="modal"><strong>Filter by Date</strong>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-target="#sortByDatePalletModal" data-toggle="modal"><strong>Filter by
+                                                Date</strong>
                                         </button>
                                         @if (session('deleteFilterButton'))
                                             <a type="button" class="btn btn-danger" style="cursor: pointer"
@@ -73,8 +74,9 @@
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                    <select class="form-control" data-width="100%"
-                                                                    id="itemPalletHistoryExport" name="itemPalletHistoryExport">
+                                                                <select class="form-control" data-width="100%"
+                                                                    id="itemPalletHistoryExport"
+                                                                    name="itemPalletHistoryExport">
                                                                     @foreach ($item as $item)
                                                                         <option value="{{ $item->item_id }}">
                                                                             {{ $item->item_name }}</option>
@@ -95,8 +97,8 @@
                                     </div>
 
                                     {{-- export by ALL --}}
-                                    <div class="modal fade" id="exportPalletHistoryByDateModal" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal fade" id="exportPalletHistoryByDateModal" tabindex="-1"
+                                        role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -196,6 +198,7 @@
                                                 <th>Stok</th>
                                                 <th>BIN</th>
                                                 <th>Status</th>
+                                                <th>Waktu (user)</th>
                                                 <th>Waktu (system)</th>
                                                 <th>User</th>
                                             </tr>
@@ -206,6 +209,7 @@
                                                 <th>Stok</th>
                                                 <th>BIN</th>
                                                 <th>Status</th>
+                                                <th>Waktu (user)</th>
                                                 <th>Waktu (system)</th>
                                                 <th>User</th>
                                             </tr>
@@ -247,8 +251,9 @@
                                                                 {{ $pallet->status }}</p>
                                                         </strong> --}}
                                                     @endif
+                                                    <td>{{ date_format(date_create($pallet->user_date), 'D d-m-Y') }}</td>
                                                     <td>{{ $pallet->created_at }}</td>
-                                                    <td>{{ $pallet->name }}</td>
+                                                    <td>{{ $pallet->user }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

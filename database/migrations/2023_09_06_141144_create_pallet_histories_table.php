@@ -19,7 +19,8 @@ class CreatePalletHistoriesTable extends Migration
             $table->integer('stock');
             $table->string('bin');
             $table->string('status');
-            $table->integer('user');
+            // $table->integer('user');
+            $table->string('user');
             $table->dateTime('user_date');
             $table->timestamps();
         });
