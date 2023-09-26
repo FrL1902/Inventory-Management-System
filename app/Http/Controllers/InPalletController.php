@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\OutPallet;
 use App\Models\Pallet;
 use App\Models\PalletHistory;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -36,6 +37,8 @@ class InPalletController extends Controller
     {
         $itemInfo = Item::where('item_id', $request->itemidforpallet)->first();
         $totalInPalletCurrently = InPallet::where('item_id', $request->itemidforpallet)->sum('stock'); //INI BISA DAPET TOTAL STOK SUATU BARANG DI TABEL INPALLET
+        $userInfo = User::where('id', $request->userIdHidden)->first();
+        // dd($userInfo->name);
 
         // stok total yg di palet pada suatu item tidak boleh melebihi stok item di tabel items
         $availableStock = $itemInfo->stocks - $totalInPalletCurrently;
@@ -81,7 +84,7 @@ class InPalletController extends Controller
         $history->stock = $request->palletStock;
         $history->bin = $request->bin;
         $history->status = 'DALAM INVENTORY';
-        $history->user = $request->userIdHidden;
+        $history->user = $userInfo->name;
         $history->user_date = $request->palletArrive;
 
         $history->save();
@@ -100,6 +103,7 @@ class InPalletController extends Controller
             ->select('items.*')->where('inpallet.id', $request->palletIdHidden)->first();
 
         $id = Auth::user()->id;
+        $userInfo = User::where('id', $id)->first();
 
         $request->validate([
             'palletDesc' => 'min:1|max:50',
@@ -123,7 +127,7 @@ class InPalletController extends Controller
             $history->stock = $palletInfo->stock;
             $history->bin = $palletInfo->bin;
             $history->status = 'KELUAR';
-            $history->user = $id;
+            $history->user = $userInfo->name;
             $history->user_date = $request->palletDepart;
 
             $history->save();
@@ -155,7 +159,7 @@ class InPalletController extends Controller
             $history->stock = $request->palletStockOut;
             $history->bin = $palletInfo->bin;
             $history->status = 'KELUAR SEBAGIAN ';
-            $history->user = $id;
+            $history->user = $userInfo->name;
             $history->user_date = $request->palletDepart;
 
             InPallet::where('id', $request->palletIdHidden)->update([

@@ -35,9 +35,10 @@ class PalletHistoryExport implements FromCollection, ShouldAutoSize, WithHeading
             $item->bin,
             $item->status,
             $item->user,
+            date_format(date_create($item->user_date), 'D d-m-Y'),
             $item->created_at,
             // date_format($item->joined_at, "D/d/m/y H:i:s"),
-            $item->updated_at,
+            // $item->updated_at,
             // date_format($item->updated_at, "D/d/m/y H:i:s"), //mungkin coba ini tp ntar ae https://stackoverflow.com/questions/15567854/warning-date-format-expects-parameter-1-to-be-datetime
         ];
     }
@@ -46,7 +47,7 @@ class PalletHistoryExport implements FromCollection, ShouldAutoSize, WithHeading
     {
         return [
             // "ID", "Item ID", "Item Name", "Status", "Value", "By User", "Created At", "Last Updated At"
-            "ID Barang", "Nama Barang", "Stok", "BIN", "Status", "Oleh User", "Created At", "Last Updated At"
+            "ID Barang", "Nama Barang", "Stok", "BIN", "Status", "Oleh User", "Waktu User", "Waktu Sistem"
     ];
     }
 }

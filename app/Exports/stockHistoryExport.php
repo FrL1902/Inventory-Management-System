@@ -30,15 +30,17 @@ class stockHistoryExport implements FromCollection, ShouldAutoSize, WithHeadings
     public function map($item): array
     {
         return [
-            $item->id,
+            // $item->id,
             $item->item_id,
             $item->item_name,
             $item->status,
             $item->value,
+            $item->supplier,
             $item->user_who_did,
+            date_format(date_create($item->user_action_date), 'D d-m-Y'),
             $item->created_at,
             // date_format($item->joined_at, "D/d/m/y H:i:s"),
-            $item->updated_at,
+            // $item->updated_at,
             // date_format($item->updated_at, "D/d/m/y H:i:s"), //mungkin coba ini tp ntar ae https://stackoverflow.com/questions/15567854/warning-date-format-expects-parameter-1-to-be-datetime
         ];
     }
@@ -47,7 +49,7 @@ class stockHistoryExport implements FromCollection, ShouldAutoSize, WithHeadings
     {
         return [
             // "ID", "Item ID", "Item Name", "Status", "Value", "By User", "Created At", "Last Updated At"
-            "ID", "ID Barang", "Nama Barang", "Status", "Stok", "Oleh User", "Created At", "Last Updated At"
+            "ID Barang", "Nama Barang", "Status", "Stok","Supplier", "Oleh User", "Waktu User", "Waktu Sistem"
     ];
     }
 }

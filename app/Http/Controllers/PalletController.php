@@ -163,37 +163,37 @@ class PalletController extends Controller
     //     }
     // }
 
-    public function remove_pallet($id)
-    {
-        try {
-            $decrypted = decrypt($id);
-        } catch (DecryptException $e) {
-            abort(403);
-        }
-        $palletInfo = Pallet::where('id', $decrypted)->first();
-        $id = Auth::user()->id;
+    // public function remove_pallet($id)
+    // {
+    //     try {
+    //         $decrypted = decrypt($id);
+    //     } catch (DecryptException $e) {
+    //         abort(403);
+    //     }
+    //     $palletInfo = Pallet::where('id', $decrypted)->first();
+    //     $id = Auth::user()->id;
 
-        // dd($decrypted);
-        // dd($palletInfo->item_id);
+    //     // dd($decrypted);
+    //     // dd($palletInfo->item_id);
 
 
-        // $palletInfo = Pallet::where('id', $decrypted)->first();
+    //     // $palletInfo = Pallet::where('id', $decrypted)->first();
 
-        $palletInfo->delete();
+    //     $palletInfo->delete();
 
-        // memasukkan data ke tabel sejarah palet
-        $history = new PalletHistory();
-        $history->item_id = $palletInfo->item_id;
-        $history->stock = $palletInfo->stock;
-        $history->bin = $palletInfo->bin;
-        $history->status = 'KELUAR';
-        $history->user = $id;
+    //     // memasukkan data ke tabel sejarah palet
+    //     $history = new PalletHistory();
+    //     $history->item_id = $palletInfo->item_id;
+    //     $history->stock = $palletInfo->stock;
+    //     $history->bin = $palletInfo->bin;
+    //     $history->status = 'KELUAR';
+    //     $history->user = $id;
 
-        $history->save();
+    //     $history->save();
 
-        session()->flash('suksesPaletKeluar', 'Barang Berhasil Dikeluarkan dari Palet');
-        return redirect()->back();
-    }
+    //     session()->flash('suksesPaletKeluar', 'Barang Berhasil Dikeluarkan dari Palet');
+    //     return redirect()->back();
+    // }
 
     public function manage_pallet_history_page()
     {
@@ -203,8 +203,7 @@ class PalletController extends Controller
         $item = Item::all();
         $palletHistory = DB::table('pallet_histories')
             ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
-            ->join('users', 'pallet_histories.user', '=', 'users.id')
-            ->select('pallet_histories.*', 'items.item_name', 'users.name')->get();
+            ->select('pallet_histories.*', 'items.item_name')->get();
 
         // if ($user->level == 'admin') {
         //     $item = Item::all();
@@ -241,8 +240,7 @@ class PalletController extends Controller
 
         $sortPalletItemHistory = DB::table('pallet_histories')
             ->join('items', 'items.item_id', '=', 'pallet_histories.item_id')
-            ->join('users', 'users.id', '=', 'pallet_histories.user')
-            ->select('pallet_histories.*', 'items.item_name', 'users.name')
+            ->select('pallet_histories.*', 'items.item_name')
             ->where('pallet_histories.item_id', $request->itemPalletHistoryExport)->get();
         // dd($sortPalletItemHistory);
 
@@ -260,8 +258,7 @@ class PalletController extends Controller
 
         $sortHistoryDate = DB::table('pallet_histories')
             ->join('items', 'items.item_id', '=', 'pallet_histories.item_id')
-            ->join('users', 'users.id', '=', 'pallet_histories.user')
-            ->select('pallet_histories.*', 'items.item_name', 'users.name')
+            ->select('pallet_histories.*', 'items.item_name')
             ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])->get();
 
         // if ($user->level != 'admin') {
@@ -297,8 +294,7 @@ class PalletController extends Controller
         $item = Item::all();
         $palletHistory = DB::table('pallet_histories')
             ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
-            ->join('users', 'pallet_histories.user', '=', 'users.id')
-            ->select('pallet_histories.*', 'items.item_name', 'users.name')
+            ->select('pallet_histories.*', 'items.item_name')
             ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])->get();
 
         // if ($user->level == 'admin') {
