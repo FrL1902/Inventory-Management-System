@@ -614,7 +614,8 @@
     {{-- PALLET HISTORY PAGE --}}
     <script>
         $('#itemPalletHistoryExport').select2({
-            dropdownParent: $('#exportPalletItemHistorymModal')
+            dropdownParent: $('#exportPalletItemHistorymModal'),
+            placeholder: 'Pilih Barang'
         });
     </script>
 
@@ -622,6 +623,26 @@
     <script>
         $('#itemIdReportCustomer').select2({
             dropdownParent: $('#exportItemReportModal')
+        });
+    </script>
+
+    {{-- Laporan Stok By palet Page --}}
+    <script>
+        $('#customerIdPalletReport').select2({
+            dropdownParent: $('#exportPalletReportCustomerModal'),
+            placeholder: 'Pilih Customer'
+        });
+    </script>
+    <script>
+        $('#brandIdPalletReport').select2({
+            dropdownParent: $('#exportPalletReportBrandModal'),
+            placeholder: 'Pilih Brand'
+        });
+    </script>
+    <script>
+        $('#itemIdPalletReport').select2({
+            dropdownParent: $('#exportPalletReportItemModal'),
+            placeholder: 'Pilih Barang'
         });
     </script>
 
