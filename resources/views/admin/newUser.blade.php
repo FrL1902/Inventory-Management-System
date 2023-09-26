@@ -54,7 +54,9 @@
                                     <label>Role</label><br />
                                     <label class="form-radio-label">
                                         <input class="form-radio-input" type="radio" name="optionsRadios"
-                                            value="admin" checked="">
+                                            value="admin">
+                                            {{-- <input class="form-radio-input" type="radio" name="optionsRadios"
+                                            value="admin" checked=""> --}}
                                         <span class="form-radio-sign">Admin</span>
                                     </label>
                                     <label class="form-radio-label ml-3">
@@ -66,6 +68,11 @@
                                         <input class="form-radio-input" type="radio" name="optionsRadios"
                                             value="customer">
                                         <span class="form-radio-sign">Customer</span>
+                                    </label>
+                                    <label class="form-radio-label ml-3">
+                                        <input class="form-radio-input" type="radio" name="optionsRadios"
+                                            value="cargo">
+                                        <span class="form-radio-sign">Kargo</span>
                                     </label>
                                 </div>
                                 <div class="card mt-4">
