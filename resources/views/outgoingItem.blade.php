@@ -369,13 +369,21 @@
 
                                                             <div class="form-group">
                                                                 <label for="largeInput">Gambar Barang Keluar<span
-                                                                        style="color: red"> (harus diisi)
+                                                                        style="color: red"> (harus diisi dan harus dibawah
+                                                                        10MB)
                                                                     </span></label>
                                                                 <input type="file" class="form-control form-control"
                                                                     id="itemImage" name="outgoingItemImage" required>
                                                                 <div class="card mt-5 ">
-                                                                    <button id="" class="btn btn-primary">Insert
-                                                                        Data</button>
+                                                                    {{-- <button id="" class="btn btn-primary">Insert
+                                                                        Data</button> --}}
+                                                                    <button class="btn btn-primary"
+                                                                        onclick="document.getElementById('itemAdd').style.display='inline-block';">
+                                                                        <strong>Insert Data</strong>
+                                                                        <i id="itemAdd" style="display:none"
+                                                                            class="loading-icon fa fa-spinner fa-spin"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
                                                                 </div>
                                                             </div>
 
@@ -539,16 +547,25 @@
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="largeInput">Gambar
-                                                                                    Barang</label>
+                                                                                    Barang<span style="color: red"> (harus
+                                                                                        dibawah 10MB)
+                                                                                    </span></label>
                                                                                 <input type="file"
                                                                                     class="form-control form-control"
-                                                                                    id="itemImage" name="itemImage">
+                                                                                    id="itemImage"
+                                                                                    name="outgoingItemImage">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <div class="card mt-5 ">
-                                                                                    <button id=""
-                                                                                        class="btn btn-primary">Update
-                                                                                        Data Barang</button>
+                                                                                    <button class="btn btn-primary"
+                                                                                        onclick="document.getElementById('itemAdd1').style.display='inline-block';">
+                                                                                        <strong>Update Data
+                                                                                            Barang</strong>
+                                                                                        <i id="itemAdd1"
+                                                                                            style="display:none"
+                                                                                            class="loading-icon fa fa-spinner fa-spin"
+                                                                                            aria-hidden="true"></i>
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
                                                                             <div>

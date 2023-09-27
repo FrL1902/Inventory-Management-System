@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use Intervention\Image\Facades\Image;
 
 class OutgoingController extends Controller
 {
@@ -87,7 +88,6 @@ class OutgoingController extends Controller
 
     public function reduceItemStock(Request $request) //OUTGOING, BARANG KELUAR
     {
-
         $userInfo = User::where('id', $request->userIdHidden)->first();
         $itemInfo = Item::where('item_id', $request->outgoingiditem)->first();
 
@@ -98,11 +98,12 @@ class OutgoingController extends Controller
         }
 
         $request->validate([
-            'outgoingItemImage' => 'required|mimes:jpeg,png,jpg',
+            'outgoingItemImage' => 'required|mimes:jpeg,png,jpg|max:10240',
             'itemReduceStock' => 'required|max:2147483647|min:1|numeric',
             'outgoingItemDesc' => 'required|min:1|max:255',
         ], [
             'outgoingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
+            'outgoingItemImage.max' => 'Ukuran foto harus dibawah 10 MB',
             'itemReduceStock.required' => 'Kolom stok harus diisi',
             'itemReduceStock.max' => 'Stok melebihi 32 bit integer',
             'itemReduceStock.min' => 'Stok harus melebihi 1',
@@ -130,10 +131,36 @@ class OutgoingController extends Controller
         $outgoing->description = $request->outgoingItemDesc;
         $outgoing->depart_date = $request->itemDepart;
 
+        // $file = $request->file('outgoingItemImage');
+        // $imageName = time() . '.' . $file->getClientOriginalExtension();
+        // Storage::putFileAs('public/outgoingItemImage', $file, $imageName);
+        // $imageName = 'outgoingItemImage/' . $imageName;
+
         $file = $request->file('outgoingItemImage');
         $imageName = time() . '.' . $file->getClientOriginalExtension();
-        Storage::putFileAs('public/outgoingItemImage', $file, $imageName);
+        $destination = public_path('storage\outgoingItemImage') . '\\' . $imageName;
+
+        $data = getimagesize($file);
+        $width = $data[0];
+        $height = $data[1];
+        // dd($width . ' ' . $height);
+        // image resizing with "Image Intervention"
+        if ($width > $height) {
+            $resize_image = Image::make($file->getRealPath())->resize(
+                1920,
+                1080
+            )->save($destination);
+        } else {
+            $resize_image = Image::make($file->getRealPath())->resize(
+                1080,
+                1920
+            )->save($destination);
+        }
+        $resize_image->save($destination);
+        // image resizing with "Image Intervention" end line of code
         $imageName = 'outgoingItemImage/' . $imageName;
+        //
+
         $outgoing->item_pictures = $imageName;
         // $outgoing->picture_link = 'http://127.0.0.1:8000/storage/' . $imageName;
         $outgoing->save();
@@ -259,36 +286,57 @@ class OutgoingController extends Controller
     public function updateOutgoingData(Request $request)
     {
 
-        if ($request->file('itemImage') || $request->outgoingEdit) {
+        if ($request->file('outgoingItemImage') || $request->outgoingEdit) {
             $outgoingInfo = Outgoing::where('id', $request->itemIdHidden)->first();
 
             // ini buat update valuenya
             $itemInfo = Item::where('item_id', $outgoingInfo->item_id)->first();
 
 
-            $file = $request->file('itemImage');
+            $file = $request->file('outgoingItemImage');
 
             // validasi data buat mastiin gambar nggak null
             if ($file != null) {
                 $request->validate([
-                    'itemImage' => 'mimes:jpeg,png,jpg',
+                    'outgoingItemImage' => 'mimes:jpeg,png,jpg|max:10240',
+
                 ], [
-                    'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+                    'outgoingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
+                    'outgoingItemImage.max' => 'Ukuran foto harus dibawah 10 MB',
                 ]);
             }
 
             // buat update image
             if ($file != null) {
                 // dd('msk');
-                $request->validate([
-                    'itemImage' => 'mimes:jpeg,png,jpg',
-                ], [
-                    'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
-                ]);
+
+                // $imageName = time() . '.' . $file->getClientOriginalExtension();
+                // Storage::putFileAs('public/outgoingItemImage', $file, $imageName);
+                // $imageName = 'outgoingItemImage/' . $imageName;
 
                 $imageName = time() . '.' . $file->getClientOriginalExtension();
-                Storage::putFileAs('public/outgoingItemImage', $file, $imageName);
+                $destination = public_path('storage\outgoingItemImage') . '\\' . $imageName;
+
+                $data = getimagesize($file);
+                $width = $data[0];
+                $height = $data[1];
+                // dd($width . ' ' . $height);
+                // image resizing with "Image Intervention"
+                if ($width > $height) {
+                    $resize_image = Image::make($file->getRealPath())->resize(
+                        1920,
+                        1080
+                    )->save($destination);
+                } else {
+                    $resize_image = Image::make($file->getRealPath())->resize(
+                        1080,
+                        1920
+                    )->save($destination);
+                }
+                $resize_image->save($destination);
+                // image resizing with "Image Intervention" end line of code
                 $imageName = 'outgoingItemImage/' . $imageName;
+                //
 
                 Storage::delete('public/' . $outgoingInfo->item_pictures);
 
