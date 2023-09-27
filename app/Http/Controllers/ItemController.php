@@ -107,8 +107,8 @@ class ItemController extends Controller
             )->save($destination);
         }
         $resize_image->save($destination);
-        $imageName = 'itemImages/' . $imageName;
         // image resizing with "Image Intervention" end line of code
+        $imageName = 'itemImages/' . $imageName;
 
         $item->item_id = $request->itemid;
         // ini pada kurang validasi, terutama angkanya tuh, harus pake php biar validasi manual kyknya, sebenernhya kyknya sihudah bisa sama html, tp ya validasi aja lg
@@ -202,9 +202,10 @@ class ItemController extends Controller
             // validasi data buat mastiin nggak null
             if ($file != null) {
                 $request->validate([
-                    'itemImage' => 'mimes:jpeg,png,jpg',
+                    'itemImage' => 'mimes:jpeg,png,jpg|max:10240',
                 ], [
-                    'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+                    'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
+                    'itemImage.max' => 'Ukuran foto harus dibawah 10 MB'
                 ]);
             }
             if ($request->itemnameformupdate != null) {
@@ -228,9 +229,34 @@ class ItemController extends Controller
                     'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
                 ]);
 
+                // $imageName = time() . '.' . $file->getClientOriginalExtension();
+                // Storage::putFileAs('public/itemImages', $file, $imageName);
+                // $imageName = 'itemImages/' . $imageName;
+
+                //
                 $imageName = time() . '.' . $file->getClientOriginalExtension();
-                Storage::putFileAs('public/itemImages', $file, $imageName);
+                $destination = public_path('storage\itemImages') . '\\' . $imageName;
+
+                $data = getimagesize($file);
+                $width = $data[0];
+                $height = $data[1];
+                // dd($width . ' ' . $height);
+                // image resizing with "Image Intervention"
+                if ($width > $height) {
+                    $resize_image = Image::make($file->getRealPath())->resize(
+                        1920,
+                        1080
+                    )->save($destination);
+                } else {
+                    $resize_image = Image::make($file->getRealPath())->resize(
+                        1080,
+                        1920
+                    )->save($destination);
+                }
+                $resize_image->save($destination);
+                // image resizing with "Image Intervention" end line of code
                 $imageName = 'itemImages/' . $imageName;
+                //
 
                 Storage::delete('public/' . $itemInfo->item_pictures);
 
