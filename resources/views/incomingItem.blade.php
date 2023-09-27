@@ -377,13 +377,21 @@
 
                                                             <div class="form-group">
                                                                 <label for="largeInput">Gambar Barang Datang<span
-                                                                        style="color: red"> (harus diisi)
+                                                                        style="color: red"> (harus diisi dan harus dibawah 10MB)
                                                                     </span></label>
                                                                 <input type="file" class="form-control form-control"
                                                                     id="itemImage" name="incomingItemImage" required>
                                                                 <div class="card mt-5 ">
-                                                                    <button id="" class="btn btn-primary">Insert
-                                                                        Data</button>
+                                                                    {{-- <button id="" class="btn btn-primary">Insert
+                                                                        Data</button> --}}
+                                                                    <button class="btn btn-primary"
+                                                                        onclick="document.getElementById('itemAdd1').style.display='inline-block';">
+                                                                        <strong>Update Data
+                                                                            Barang</strong>
+                                                                        <i id="itemAdd1" style="display:none"
+                                                                            class="loading-icon fa fa-spinner fa-spin"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
                                                                 </div>
                                                             </div>
 
@@ -515,7 +523,8 @@
                                                                 <h3 class="modal-title" id="exampleModalLongTitle">
                                                                     <strong>Barang Datang
                                                                         "{{ $incoming->item_name }}"
-                                                                        pada {{ date_format(date_create($incoming->arrive_date), 'D d-m-Y') }}</strong>
+                                                                        pada
+                                                                        {{ date_format(date_create($incoming->arrive_date), 'D d-m-Y') }}</strong>
                                                                 </h3>
                                                                 <button type="button" class="close"
                                                                     data-dismiss="modal" aria-label="Close">
@@ -605,16 +614,27 @@
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="largeInput">Gambar
-                                                                                    Barang</label>
+                                                                                    Barang<span style="color: red">
+                                                                                        (harus dibawah 10MB)
+                                                                                    </span></label>
                                                                                 <input type="file"
                                                                                     class="form-control form-control"
-                                                                                    id="itemImage" name="itemImage">
+                                                                                    id="itemImage" name="incomingItemImage">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <div class="card mt-5 ">
-                                                                                    <button id=""
+                                                                                    {{-- <button id=""
                                                                                         class="btn btn-primary">Update
-                                                                                        Data Barang</button>
+                                                                                        Data Barang</button> --}}
+                                                                                    <button class="btn btn-primary"
+                                                                                        onclick="document.getElementById('itemAdd').style.display='inline-block';">
+                                                                                        <strong>Update Data
+                                                                                            Barang</strong>
+                                                                                        <i id="itemAdd"
+                                                                                            style="display:none"
+                                                                                            class="loading-icon fa fa-spinner fa-spin"
+                                                                                            aria-hidden="true"></i>
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
                                                                             <div>

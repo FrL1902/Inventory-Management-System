@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use Intervention\Image\Facades\Image;
 
 class IncomingController extends Controller
 {
@@ -118,9 +119,10 @@ class IncomingController extends Controller
         }
 
         $request->validate([ //harus tambahin error disini
-            'incomingItemImage' => 'required|mimes:jpeg,png,jpg',
+            'incomingItemImage' => 'required|mimes:jpeg,png,jpg|max:10240',
         ], [
-            'incomingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+            'incomingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
+            'incomingItemImage.max' => 'Ukuran foto harus dibawah 10 MB'
         ]);
 
         $newValue = $itemInfo->stocks + $request->itemAddStock;
@@ -147,10 +149,36 @@ class IncomingController extends Controller
         $incoming->description = $request->incomingItemDesc;
         $incoming->arrive_date = $request->itemArrive;
 
+        // $file = $request->file('incomingItemImage');
+        // $imageName = time() . '.' . $file->getClientOriginalExtension();
+        // Storage::putFileAs('public/incomingItemImage', $file, $imageName);
+        // $imageName = 'incomingItemImage/' . $imageName;
+
         $file = $request->file('incomingItemImage');
         $imageName = time() . '.' . $file->getClientOriginalExtension();
-        Storage::putFileAs('public/incomingItemImage', $file, $imageName);
+        $destination = public_path('storage\incomingItemImage') . '\\' . $imageName;
+
+        $data = getimagesize($file);
+        $width = $data[0];
+        $height = $data[1];
+        // dd($width . ' ' . $height);
+        // image resizing with "Image Intervention"
+        if ($width > $height) {
+            $resize_image = Image::make($file->getRealPath())->resize(
+                1920,
+                1080
+            )->save($destination);
+        } else {
+            $resize_image = Image::make($file->getRealPath())->resize(
+                1080,
+                1920
+            )->save($destination);
+        }
+        $resize_image->save($destination);
+        // image resizing with "Image Intervention" end line of code
         $imageName = 'incomingItemImage/' . $imageName;
+        //
+
         $incoming->item_pictures = $imageName;
         $incoming->save();
         //end process add item
@@ -288,36 +316,57 @@ class IncomingController extends Controller
     public function updateIncomingData(Request $request)
     {
 
-        if ($request->file('itemImage') || $request->incomingEdit) {
+        if ($request->file('incomingItemImage') || $request->incomingEdit) {
             $incomingInfo = Incoming::where('id', $request->itemIdHidden)->first();
 
             // ini buat update valuenya
             $itemInfo = Item::where('item_id', $incomingInfo->item_id)->first();
 
 
-            $file = $request->file('itemImage');
+            $file = $request->file('incomingItemImage');
 
             // validasi data buat mastiin gambar nggak null
             if ($file != null) {
                 $request->validate([
-                    'itemImage' => 'mimes:jpeg,png,jpg',
+                    'incomingItemImage' => 'mimes:jpeg,png,jpg|max:10240',
+
                 ], [
-                    'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+                    'incomingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
+                    'incomingItemImage.max' => 'Ukuran foto harus dibawah 10 MB'
                 ]);
             }
 
             // buat update image
             if ($file != null) {
                 // dd('msk');
-                $request->validate([
-                    'itemImage' => 'mimes:jpeg,png,jpg',
-                ], [
-                    'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
-                ]);
+                // $imageName = time() . '.' . $file->getClientOriginalExtension();
+                // Storage::putFileAs('public/incomingItemImage', $file, $imageName);
+                // $imageName = 'incomingItemImage/' . $imageName;
 
+                //
                 $imageName = time() . '.' . $file->getClientOriginalExtension();
-                Storage::putFileAs('public/incomingItemImage', $file, $imageName);
+                $destination = public_path('storage\incomingItemImage') . '\\' . $imageName;
+
+                $data = getimagesize($file);
+                $width = $data[0];
+                $height = $data[1];
+                // dd($width . ' ' . $height);
+                // image resizing with "Image Intervention"
+                if ($width > $height) {
+                    $resize_image = Image::make($file->getRealPath())->resize(
+                        1920,
+                        1080
+                    )->save($destination);
+                } else {
+                    $resize_image = Image::make($file->getRealPath())->resize(
+                        1080,
+                        1920
+                    )->save($destination);
+                }
+                $resize_image->save($destination);
+                // image resizing with "Image Intervention" end line of code
                 $imageName = 'incomingItemImage/' . $imageName;
+                //
 
                 Storage::delete('public/' . $incomingInfo->item_pictures);
 
