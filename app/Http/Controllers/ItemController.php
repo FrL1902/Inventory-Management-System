@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use Intervention\Image\Facades\Image;
 
 class ItemController extends Controller
 {
@@ -30,6 +31,7 @@ class ItemController extends Controller
 
     public function makeItem(Request $request)
     {
+
         $item = new Item();
         $customer = Brand::find($request->brandidforitem);
 
@@ -48,7 +50,7 @@ class ItemController extends Controller
         $request->validate([
             'itemid' => 'required|unique:App\Models\Item,item_id|min:3|max:20|alpha_dash',
             'itemname' => 'required|unique:App\Models\Item,item_name|min:3|max:75|regex:/^[\pL\s\-\0-9]+$/u', //ga perlu pake unique sih, soalnya udah ada item_id, tp gpp buat skrg deh, //ini regex lama tanpa pake number /^[\pL\s\-]+$/u  , ini yg baru  /^[\pL\s\-\0-9]+$/u
-            'itemImage' => 'required|mimes:jpeg,png,jpg',
+            'itemImage' => 'required|mimes:jpeg,png,jpg|max:10240',
         ], [
             'itemid.required' => 'Kolom "ID Barang" harus diisi',
             'itemid.unique' => '"ID Barang" yang diisi sudah terambil, masukkan ID yang lain',
@@ -61,7 +63,8 @@ class ItemController extends Controller
             'itemname.max' => '"Nama Barang" maksimal 75 karakter',
             'itemname.regex' => '"Nama Barang" hanya membolehkan huruf, angka, spasi, dan tanda penghubung(-)',
             'itemImage.required' => 'Gambar harus ada di kolom "Foto Barang"',
-            'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+            'itemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
+            'itemImage.max' => 'Ukuran foto harus dibawah 10 MB'
         ]);
 
         //ini kalo input angkanya null, di set ke 0
@@ -78,10 +81,34 @@ class ItemController extends Controller
             $item->stocks = $request->itemStock;
         }
 
+        // $file = $request->file('itemImage');
+        // $imageName = time() . '.' . $file->getClientOriginalExtension();
+        // Storage::putFileAs('public/itemImages', $file, $imageName);
+        // $imageName = 'itemImages/' . $imageName;
+
         $file = $request->file('itemImage');
         $imageName = time() . '.' . $file->getClientOriginalExtension();
-        Storage::putFileAs('public/itemImages', $file, $imageName);
+        $destination = public_path('storage\itemImages') . '\\' . $imageName;
+
+        $data = getimagesize($file);
+        $width = $data[0];
+        $height = $data[1];
+        // dd($width . ' ' . $height);
+        // image resizing with "Image Intervention"
+        if ($width > $height) {
+            $resize_image = Image::make($file->getRealPath())->resize(
+                1920,
+                1080
+            )->save($destination);
+        } else {
+            $resize_image = Image::make($file->getRealPath())->resize(
+                1080,
+                1920
+            )->save($destination);
+        }
+        $resize_image->save($destination);
         $imageName = 'itemImages/' . $imageName;
+        // image resizing with "Image Intervention" end line of code
 
         $item->item_id = $request->itemid;
         // ini pada kurang validasi, terutama angkanya tuh, harus pake php biar validasi manual kyknya, sebenernhya kyknya sihudah bisa sama html, tp ya validasi aja lg

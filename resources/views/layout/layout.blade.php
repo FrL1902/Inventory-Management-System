@@ -102,6 +102,19 @@
             background-color: white;
         }
     }
+
+    #overlayPage {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: black;
+        opacity: 0.2;
+        z-index: 1;
+        overflow-x: hidden;
+        /* Disable horizontal scroll */
+    }
 </style>
 
 {{-- <body onload=display_ct();> --}}
@@ -109,8 +122,8 @@
 
 
 
-
 <body>
+    <div id="overlayPage" style="display:none"></div>
     <div class="wrapper">
         <!--
     Tip 1: You can change the background color of the main header using: data-background-color="blue | purple | light-blue | green | orange | red"
@@ -469,6 +482,11 @@
             placeholder: 'Pilih Brand'
         });
     </script>
+    {{-- <script>
+        $(document).ready(function() {
+            itemAdd
+        });
+    </script> --}}
 
     {{-- Edit Brands --}}
     <script>
@@ -497,6 +515,13 @@
             placeholder: 'Pilih Brand'
         });
     </script>
+    {{-- <script>
+        $(document).ready(function() {
+            ("#buttonItem").on("click", function() {
+                $("#itemAddButton").style.display='inline-block';
+            });
+        });
+    </script> --}}
 
 
     {{-- INCOMING PAGE --}}

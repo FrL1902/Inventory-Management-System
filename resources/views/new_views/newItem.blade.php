@@ -6,7 +6,6 @@
 @section('newitem', 'active')
 @section('showmanageitem', 'show')
 
-
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -42,9 +41,11 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="brandidforitem">Brand Pemilik Barang<span style="color: red"> (harus dipilih)
-                                    </span></label>
-                                    <select class="form-control" id="brandidforitem" name="brandidforitem" data-width="100%">
+                                    <label for="brandidforitem">Brand Pemilik Barang<span style="color: red"> (harus
+                                            dipilih)
+                                        </span></label>
+                                    <select class="form-control" id="brandidforitem" name="brandidforitem"
+                                        data-width="100%">
                                         <option></option>
                                         @foreach ($brand as $brand)
                                             <option value="{{ $brand->brand_id }}">{{ $brand->brand_name }}</option>
@@ -73,14 +74,20 @@
                                         style="width: 200px" class="form-control" placeholder="0 - 999999999">
                                 </div>
                                 <div class="form-group">
-                                    <label for="largeInput">Foto Barang<span style="color: red"> (harus diisi)
+                                    <label for="largeInput">Foto Barang<span style="color: red"> (harus diisi dan harus dibawah 10MB)
                                         </span></label>
                                     <input type="file" class="form-control form-control" id="itemImage"
                                         name="itemImage">
                                 </div>
                                 <div class="form-group">
                                     <div class="card mt-4">
-                                        <button class="btn btn-success"><strong>Masukkan Barang Baru</strong></button>
+                                        <button class="button-item btn btn-success"
+                                            onclick="document.getElementById('itemAdd').style.display='inline-block'; document.getElementById('overlayPage').style.display='block';">
+                                            {{-- <button id="buttonItem" class="btn btn-success"> --}}
+                                            <strong>Masukkan Barang Baru</strong>
+                                            <i id="itemAdd" style="display:none"
+                                                class="loading-icon fa fa-spinner fa-spin" aria-hidden="true"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
