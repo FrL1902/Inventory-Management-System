@@ -74,14 +74,15 @@
                                         style="width: 200px" class="form-control" placeholder="0 - 999999999">
                                 </div>
                                 <div class="form-group">
-                                    <label for="largeInput">Foto Barang<span style="color: red"> (harus diisi dan harus dibawah 10MB)
+                                    <label for="largeInput">Foto Barang<span style="color: red"> (harus diisi dan harus
+                                            dibawah 10MB)
                                         </span></label>
                                     <input type="file" class="form-control form-control" id="itemImage"
                                         name="itemImage">
                                 </div>
                                 <div class="form-group">
                                     <div class="card mt-4">
-                                        <button class="button-item btn btn-success"
+                                        <button class="btn btn-success"
                                             onclick="document.getElementById('itemAdd').style.display='inline-block'; document.getElementById('overlayPage').style.display='block';">
                                             {{-- <button id="buttonItem" class="btn btn-success"> --}}
                                             <strong>Masukkan Barang Baru</strong>

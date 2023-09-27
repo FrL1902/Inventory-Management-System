@@ -82,7 +82,8 @@
                                                             <div class="form-group">
                                                                 <label for="customerLabelExport">Customer</label>
                                                                 <select class="form-control" data-width="100%"
-                                                                    id="customerLabelExport" name="customerItemExport" required>
+                                                                    id="customerLabelExport" name="customerItemExport"
+                                                                    required>
                                                                     <option></option>
                                                                     @foreach ($customer as $data)
                                                                         <option value="{{ $data->customer_id }}">
@@ -322,7 +323,9 @@
                                                                                     </div>
                                                                                     <div class="form-group">
                                                                                         <label for="largeInput">Gambar
-                                                                                            Barang</label>
+                                                                                            Barang<span style="color: red">
+                                                                                                (harus dibawah 10MB)
+                                                                                            </span></label>
                                                                                         <input type="file"
                                                                                             class="form-control form-control"
                                                                                             id="itemImage"
@@ -330,9 +333,18 @@
                                                                                     </div>
                                                                                     <div class="form-group">
                                                                                         <div class="card mt-5 ">
-                                                                                            <button id=""
+                                                                                            {{-- <button id=""
                                                                                                 class="btn btn-primary">Update
-                                                                                                Data Barang</button>
+                                                                                                Data Barang</button> --}}
+                                                                                            <button class="btn btn-primary"
+                                                                                                onclick="document.getElementById('itemAdd').style.display='inline-block'; document.getElementById('overlayPage').style.display='block';">
+                                                                                                <strong>Update Data
+                                                                                                    Barang</strong>
+                                                                                                <i id="itemAdd"
+                                                                                                    style="display:none"
+                                                                                                    class="loading-icon fa fa-spinner fa-spin"
+                                                                                                    aria-hidden="true"></i>
+                                                                                            </button>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div>
@@ -355,7 +367,7 @@
                                                         </div>
 
                                                         {{-- old feature to add incoming package in this page --}}
-                                                         {{-- <div class="modal fade" id="addModalCenter{{ $item->id }}"
+                                                        {{-- <div class="modal fade" id="addModalCenter{{ $item->id }}"
                                                             tabindex="-1" role="dialog"
                                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered"
