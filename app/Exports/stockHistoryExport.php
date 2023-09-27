@@ -33,11 +33,11 @@ class stockHistoryExport implements FromCollection, ShouldAutoSize, WithHeadings
             // $item->id,
             $item->item_id,
             $item->item_name,
+            date_format(date_create($item->user_action_date), 'd-m-Y'),
             $item->status,
             $item->value,
             $item->supplier,
             $item->user_who_did,
-            date_format(date_create($item->user_action_date), 'D d-m-Y'),
             $item->created_at,
             // date_format($item->joined_at, "D/d/m/y H:i:s"),
             // $item->updated_at,
@@ -49,7 +49,7 @@ class stockHistoryExport implements FromCollection, ShouldAutoSize, WithHeadings
     {
         return [
             // "ID", "Item ID", "Item Name", "Status", "Value", "By User", "Created At", "Last Updated At"
-            "ID Barang", "Nama Barang", "Status", "Stok", "Supplier", "Oleh User", "Waktu User", "Waktu Sistem"
+            "ID Barang", "Nama Barang", "Tanggal", "Status", "Stok", "Supplier", "Oleh User", "Waktu Sistem"
         ];
     }
 }

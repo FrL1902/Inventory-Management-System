@@ -87,7 +87,8 @@
                                                                 <input type="text" class="form-control form-control"
                                                                     placeholder="item name" name="itemHistoryExport"> --}}
                                                                 <select class="form-control" data-width="100%"
-                                                                    id="itemHistoryExport" name="itemHistoryExport" required>
+                                                                    id="itemHistoryExport" name="itemHistoryExport"
+                                                                    required>
                                                                     <option></option>
                                                                     @foreach ($item as $item)
                                                                         <option value="{{ $item->item_id }}">
@@ -220,11 +221,11 @@
                                                 {{-- <th>History ID</th> --}}
                                                 <th>ID barang</th>
                                                 <th>Nama Barang</th>
+                                                <th>Tanggal</th>
                                                 <th>Status</th>
                                                 <th>Stok</th>
                                                 <th>Supplier</th>
                                                 <th>Oleh User</th>
-                                                <th>Waktu (user)</th>
                                                 <th>Waktu (system)</th>
                                             </tr>
                                         </thead>
@@ -243,11 +244,11 @@
                                                 {{-- <th>History ID</th> --}}
                                                 <th>ID barang</th>
                                                 <th>Nama Barang</th>
+                                                <th>Tanggal</th>
                                                 <th>Status</th>
                                                 <th>Stok</th>
                                                 <th>Supplier</th>
                                                 <th>Oleh User</th>
-                                                <th>Waktu (user)</th>
                                                 <th>Waktu (system)</th>
 
                                             </tr>
@@ -258,6 +259,8 @@
                                                     {{-- <td>{{ $history->id }}</td> --}}
                                                     <td>{{ $history->item_id }}</td>
                                                     <td>{{ $history->item_name }}</td>
+                                                    <td>{{ date_format(date_create($history->user_action_date), 'd-m-Y') }}
+                                                    </td>
                                                     @if ($history->status == 'BARANG KELUAR')
                                                         <td style="display: block; min-width:200px; text-align: center;">
                                                             <strong>
@@ -278,7 +281,6 @@
                                                     <td>{{ $history->value }}</td>
                                                     <td>{{ $history->supplier }}</td>
                                                     <td>{{ $history->user_who_did }}</td>
-                                                    <td>{{ date_format(date_create($history->user_action_date), 'D d-m-Y') }}
                                                     <td>{{ date_format(date_create($history->created_at), 'D, H:i:s, d-m-Y') }}
                                                     </td>
                                                 </tr>

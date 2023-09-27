@@ -204,10 +204,10 @@
                                         <thead>
                                             <tr>
                                                 <th style="width: 30%">Nama Barang</th>
+                                                <th>Tanggal</th>
                                                 <th>Stok</th>
                                                 <th>BIN</th>
                                                 <th>Status</th>
-                                                <th>Waktu (user)</th>
                                                 <th>Waktu (system)</th>
                                                 <th>User</th>
                                             </tr>
@@ -215,10 +215,10 @@
                                         <tfoot>
                                             <tr>
                                                 <th>Nama Barang</th>
+                                                <th>Tanggal</th>
                                                 <th>Stok</th>
                                                 <th>BIN</th>
                                                 <th>Status</th>
-                                                <th>Waktu (user)</th>
                                                 <th>Waktu (system)</th>
                                                 <th>User</th>
                                             </tr>
@@ -228,6 +228,7 @@
                                             @foreach ($palletHistory as $pallet)
                                                 <tr>
                                                     <td>{{ $pallet->item_name }}</td>
+                                                    <td>{{ date_format(date_create($pallet->user_date), 'd-m-Y') }}</td>
                                                     <td>{{ $pallet->stock }}</td>
                                                     <td>{{ $pallet->bin }}</td>
                                                     @if ($pallet->status == 'KELUAR')
@@ -260,7 +261,6 @@
                                                                 {{ $pallet->status }}</p>
                                                         </strong> --}}
                                                     @endif
-                                                    <td>{{ date_format(date_create($pallet->user_date), 'D d-m-Y') }}</td>
                                                     <td>{{ $pallet->created_at }}</td>
                                                     <td>{{ $pallet->user }}</td>
                                                 </tr>
