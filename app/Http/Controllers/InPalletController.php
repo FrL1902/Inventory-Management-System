@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
 
 class InPalletController extends Controller
 {
@@ -51,13 +53,14 @@ class InPalletController extends Controller
         $request->validate([
             'palletDesc' => 'min:1|max:50',
             'bin' => 'max:10|regex:/^[A-Z0-9.]+$/u',
-            'inPalletImage' => 'required|mimes:jpeg,png,jpg',
+            'inPalletImage' => 'required|mimes:jpeg,png,jpg|max:10240',
         ], [
             'palletDesc.min' => 'Deskripsi minimal 1 karakter',
             'palletDesc.max' => 'Deskripsi maksimal 50 karakter',
             'bin.max' => 'BIN maksimal 10 karakter',
             'bin.regex' => 'BIN hanya menerima huruf kapital A-Z, titik (.), dan angka 0-9',
-            'inPalletImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+            'inPalletImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
+            'inPalletImage.max' => 'Ukuran foto harus dibawah 10 MB',
         ]);
 
         // memasukkan data ke tabel inpalet
@@ -68,10 +71,37 @@ class InPalletController extends Controller
         $inpallet->bin = $request->bin;
         $inpallet->description = $request->palletDesc;
 
+        // $file = $request->file('inPalletImage');
+        // $imageName = time() . '.' . $file->getClientOriginalExtension();
+        // Storage::putFileAs('public/inPalletImage', $file, $imageName);
+        // $imageName = 'inPalletImage/' . $imageName;
+
         $file = $request->file('inPalletImage');
         $imageName = time() . '.' . $file->getClientOriginalExtension();
-        Storage::putFileAs('public/inPalletImage', $file, $imageName);
+        $destination = public_path('storage\inPalletImage') . '\\' . $imageName;
+
+        $data = getimagesize($file);
+        $width = $data[0];
+        $height = $data[1];
+        // dd($width . ' ' . $height);
+        // image resizing with "Image Intervention"
+        if ($width > $height) {
+            $resize_image = Image::make($file->getRealPath())->resize(
+                1920,
+                1080
+            )->save($destination);
+        } else {
+            $resize_image = Image::make($file->getRealPath())->resize(
+                1080,
+                1920
+            )->save($destination);
+        }
+        $resize_image->save($destination);
+        // image resizing with "Image Intervention" end line of code
         $imageName = 'inPalletImage/' . $imageName;
+        //
+
+
         $inpallet->item_pictures = $imageName;
 
         $inpallet->save();
@@ -107,11 +137,12 @@ class InPalletController extends Controller
 
         $request->validate([
             'palletDesc' => 'min:1|max:50',
-            'outPalletImage' => 'required|mimes:jpeg,png,jpg',
+            'outPalletImage' => 'required|mimes:jpeg,png,jpg|max:10240',
         ], [
             'palletDesc.min' => 'Deskripsi minimal 1 karakter',
             'palletDesc.max' => 'Deskripsi maksimal 50 karakter',
-            'outPalletImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png'
+            'outPalletImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
+            'outPalletImage.max' => 'Ukuran foto harus dibawah 10 MB',
         ]);
 
         if ($palletInfo->stock < $request->palletStockOut) {
@@ -140,10 +171,37 @@ class InPalletController extends Controller
             $outPallet->user_date = $request->palletDepart;
             $outPallet->description = $request->palletDesc;
 
+            // $file = $request->file('outPalletImage');
+            // $imageName = time() . '.' . $file->getClientOriginalExtension();
+            // Storage::putFileAs('public/outPalletImage', $file, $imageName);
+            // $imageName = 'outPalletImage/' . $imageName;
+
             $file = $request->file('outPalletImage');
             $imageName = time() . '.' . $file->getClientOriginalExtension();
-            Storage::putFileAs('public/outPalletImage', $file, $imageName);
+            $destination = public_path('storage\outPalletImage') . '\\' . $imageName;
+
+            $data = getimagesize($file);
+            $width = $data[0];
+            $height = $data[1];
+            // dd($width . ' ' . $height);
+            // image resizing with "Image Intervention"
+            if ($width > $height) {
+                $resize_image = Image::make($file->getRealPath())->resize(
+                    1920,
+                    1080
+                )->save($destination);
+            } else {
+                $resize_image = Image::make($file->getRealPath())->resize(
+                    1080,
+                    1920
+                )->save($destination);
+            }
+            $resize_image->save($destination);
+            // image resizing with "Image Intervention" end line of code
             $imageName = 'outPalletImage/' . $imageName;
+            //
+
+
             $outPallet->item_pictures = $imageName;
 
             $outPallet->save();
@@ -177,10 +235,36 @@ class InPalletController extends Controller
             $outPallet->bin = $palletInfo->bin;
             $outPallet->description = $request->palletDesc;
 
+            // $file = $request->file('outPalletImage');
+            // $imageName = time() . '.' . $file->getClientOriginalExtension();
+            // Storage::putFileAs('public/outPalletImage', $file, $imageName);
+            // $imageName = 'outPalletImage/' . $imageName;
+
             $file = $request->file('outPalletImage');
             $imageName = time() . '.' . $file->getClientOriginalExtension();
-            Storage::putFileAs('public/outPalletImage', $file, $imageName);
+            $destination = public_path('storage\outPalletImage') . '\\' . $imageName;
+
+            $data = getimagesize($file);
+            $width = $data[0];
+            $height = $data[1];
+            // dd($width . ' ' . $height);
+            // image resizing with "Image Intervention"
+            if ($width > $height) {
+                $resize_image = Image::make($file->getRealPath())->resize(
+                    1920,
+                    1080
+                )->save($destination);
+            } else {
+                $resize_image = Image::make($file->getRealPath())->resize(
+                    1080,
+                    1920
+                )->save($destination);
+            }
+            $resize_image->save($destination);
+            // image resizing with "Image Intervention" end line of code
             $imageName = 'outPalletImage/' . $imageName;
+            //
+
             $outPallet->item_pictures = $imageName;
 
             $outPallet->save();

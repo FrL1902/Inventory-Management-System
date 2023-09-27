@@ -126,13 +126,21 @@
 
                                                             <div class="form-group">
                                                                 <label for="largeInput">Gambar Palet/Barang Datang<span
-                                                                        style="color: red"> (harus diisi)
+                                                                        style="color: red"> (harus diisi dan harus dibawah
+                                                                        10MB)
                                                                     </span></label>
                                                                 <input type="file" class="form-control form-control"
                                                                     id="itemImage" name="inPalletImage" required>
                                                                 <div class="card mt-5 ">
-                                                                    <button id="" class="btn btn-primary">Insert
-                                                                        Data</button>
+                                                                    {{-- <button id="" class="btn btn-primary">Insert
+                                                                        Data</button> --}}
+                                                                    <button class="btn btn-primary"
+                                                                        onclick="document.getElementById('itemAdd').style.display='inline-block';">
+                                                                        <strong>Insert Data</strong>
+                                                                        <i id="itemAdd" style="display:none"
+                                                                            class="loading-icon fa fa-spinner fa-spin"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                             <input type="hidden" class="form-control"
@@ -281,9 +289,10 @@
                                                                         </div>
 
                                                                         <div class="form-group">
-                                                                            <label for="quantity">Stok<span style="color: red"> (harus
-                                                                                diisi)
-                                                                            </span></label>
+                                                                            <label for="quantity">Stok<span
+                                                                                    style="color: red"> (harus
+                                                                                    diisi)
+                                                                                </span></label>
                                                                             <input type="number" id="quantity"
                                                                                 name="palletStockOut" min="1"
                                                                                 max="999999999999999" style="width: 100%"
@@ -312,7 +321,7 @@
                                                                         <div class="form-group">
                                                                             <label for="largeInput">Gambar Palet/Barang
                                                                                 Datang<span style="color: red"> (harus
-                                                                                    diisi)
+                                                                                    diisi dan harus dibawah 10MB)
                                                                                 </span></label>
                                                                             <input type="file"
                                                                                 class="form-control form-control"
@@ -322,9 +331,17 @@
 
                                                                         <div class="form-group">
                                                                             <div class="card mt-5 ">
-                                                                                <button id=""
+                                                                                {{-- <button id=""
                                                                                     class="btn btn-primary">Keluarkan
-                                                                                    Stok Palet</button>
+                                                                                    Stok Palet</button> --}}
+                                                                                <button class="btn btn-primary"
+                                                                                    onclick="document.getElementById('itemAdd1').style.display='inline-block';">
+                                                                                    <strong>Keluarkan
+                                                                                        Stok Palet</strong>
+                                                                                    <i id="itemAdd1" style="display:none"
+                                                                                        class="loading-icon fa fa-spinner fa-spin"
+                                                                                        aria-hidden="true"></i>
+                                                                                </button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
