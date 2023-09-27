@@ -3,6 +3,7 @@ HAL YANG HARUS DILAKUKAN SEBELUM NGERUN PROGRAM INI
 Di folder php.ini (bisa diakses dari xampp terus php config, ato ngga cari di windows start menu aja)
 hapus tanda baca ini ; dari extensions berikut, zip, gd, pdo_pgsql, pgsql
 tujuannya biar kodenya ngerun
+sama cari "memory_limit" dan set ke 1024 karena image resizing mayan berat
 
 penjelasan:
 zip = buat unzip data pas ngejalanin composer Update
