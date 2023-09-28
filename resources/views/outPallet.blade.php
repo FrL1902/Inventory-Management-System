@@ -57,7 +57,7 @@
                                                     <td>{{ $data->item_name }}</td>
                                                     <td>{{ $data->stock }}</td>
                                                     <td>{{ $data->bin }}</td>
-                                                    <td>{{ date_format(date_create($data->user_date), 'D d-m-Y') }}
+                                                    <td>{{ date_format(date_create($data->user_date), 'd-m-Y') }}
                                                     <td>{{ $data->description }}</td>
                                                     <td>
                                                         <a style="cursor: pointer"
@@ -82,7 +82,7 @@
                                                                 <h3 class="modal-title" id="exampleModalLongTitle">
                                                                     <strong>Foto Barang
                                                                         "{{ $data->item_name }}" pada
-                                                                        {{ date_format(date_create($data->user_date), 'D d-m-Y') }}</strong>
+                                                                        {{ date_format(date_create($data->user_date), 'd-m-Y') }}</strong>
                                                                 </h3>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">

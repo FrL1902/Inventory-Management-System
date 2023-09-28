@@ -35,7 +35,7 @@ class PalletReportExport implements FromCollection, ShouldAutoSize, WithHeadings
             $item->item_name,
             $item->stock,
             $item->bin,
-            date_format(date_create($item->user_date), 'D d-m-Y'),
+            date_format(date_create($item->user_date), 'd-m-Y'),
             $item->description,
             "http://wms.intanutama.co.id/storage/" . $item->item_pictures,
         ];

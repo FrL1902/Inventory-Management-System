@@ -228,7 +228,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -268,7 +267,7 @@
                                                         <td>{{ $data->item->item_id }}</td>
                                                         <td>{{ $data->item->item_name }}</td>
                                                         <td>{{ $data->stock_added }}</td>
-                                                        <td>{{ date_format(date_create($data->arrive_date), 'D d-m-Y') }}
+                                                        <td>{{ date_format(date_create($data->arrive_date), 'd-m-Y') }}
                                                         </td>
                                                         <td>{{ $data->supplier }}</td>
                                                         <td>{{ $data->description }}</td>
