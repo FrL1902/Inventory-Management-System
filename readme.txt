@@ -4,6 +4,7 @@ Di folder php.ini (bisa diakses dari xampp terus php config, ato ngga cari di wi
 hapus tanda baca ini ; dari extensions berikut, zip, gd, pdo_pgsql, pgsql
 tujuannya biar kodenya ngerun
 sama cari "memory_limit" dan set ke 1024 karena image resizing mayan berat
+untuk image intervention, harus bikin foldernya dulu jgn lupa, ditambahin baru inPalletImage dan outPalletImage ato ga bakal error "cannot write"
 
 penjelasan:
 zip = buat unzip data pas ngejalanin composer Update
