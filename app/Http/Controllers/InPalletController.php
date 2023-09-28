@@ -37,6 +37,31 @@ class InPalletController extends Controller
 
     public function add_pallet(Request $request)
     {
+        $request->validate([
+            'itemidforpallet' => 'required',
+            'palletStock' => 'required|max:2147483647|min:1|numeric',
+            'bin' => 'required|max:10|regex:/^[A-Z0-9.]+$/u',
+            'palletArrive' => 'required',
+            'palletDesc' => 'required|min:1|max:50',
+            'inPalletImage' => 'required|mimes:jpeg,png,jpg|max:10240',
+        ], [
+            'itemidforpallet.required' => 'Kolom "Nama Barang" harus dipilih',
+            'palletStock.required' => 'Kolom "Stok" harus diisi',
+            'palletStock.max' => 'Stok melebihi 32 bit integer',
+            'palletStock.min' => 'Stok harus melebihi 1',
+            'palletStock.numeric' => 'input stok harus angka',
+            'bin.required' => 'Kolom "BIN" harus diisi',
+            'bin.max' => 'BIN maksimal 10 karakter',
+            'bin.regex' => 'BIN hanya menerima huruf kapital A-Z, titik (.), dan angka 0-9',
+            'palletArrive.required' => 'Kolom "Tanggal Palet Masuk" harus diisi',
+            'palletDesc.required' => 'Kolom "Keterangan" harus diisi',
+            'palletDesc.min' => 'Deskripsi minimal 1 karakter',
+            'palletDesc.max' => 'Deskripsi maksimal 50 karakter',
+            'inPalletImage.required' => 'Kolom "Gambar Palet/Barang Datang" harus diisi',
+            'inPalletImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
+            'inPalletImage.max' => 'Ukuran foto harus dibawah 10 MB',
+        ]);
+
         $itemInfo = Item::where('item_id', $request->itemidforpallet)->first();
         $totalInPalletCurrently = InPallet::where('item_id', $request->itemidforpallet)->sum('stock'); //INI BISA DAPET TOTAL STOK SUATU BARANG DI TABEL INPALLET
         $userInfo = User::where('id', $request->userIdHidden)->first();
@@ -50,20 +75,7 @@ class InPalletController extends Controller
             return redirect()->back();
         }
 
-        $request->validate([
-            'palletDesc' => 'min:1|max:50',
-            'bin' => 'max:10|regex:/^[A-Z0-9.]+$/u',
-            'inPalletImage' => 'required|mimes:jpeg,png,jpg|max:10240',
-        ], [
-            'palletDesc.min' => 'Deskripsi minimal 1 karakter',
-            'palletDesc.max' => 'Deskripsi maksimal 50 karakter',
-            'bin.max' => 'BIN maksimal 10 karakter',
-            'bin.regex' => 'BIN hanya menerima huruf kapital A-Z, titik (.), dan angka 0-9',
-            'inPalletImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
-            'inPalletImage.max' => 'Ukuran foto harus dibawah 10 MB',
-        ]);
-
-        // memasukkan data ke tabel inpalet
+        // memasukkan data ke tabel inpaletd
         $inpallet = new InPallet();
         $inpallet->item_id = $request->itemidforpallet;
         $inpallet->user_date = $request->palletArrive;
@@ -79,6 +91,8 @@ class InPalletController extends Controller
         $file = $request->file('inPalletImage');
         $imageName = time() . '.' . $file->getClientOriginalExtension();
         $destination = public_path('storage\inPalletImage') . '\\' . $imageName;
+        // dd(public_path());
+        // dd($destination);
 
         $data = getimagesize($file);
         $width = $data[0];
@@ -96,7 +110,7 @@ class InPalletController extends Controller
                 1920
             )->save($destination);
         }
-        $resize_image->save($destination);
+        // $resize_image->save($destination);
         // image resizing with "Image Intervention" end line of code
         $imageName = 'inPalletImage/' . $imageName;
         //
@@ -126,6 +140,25 @@ class InPalletController extends Controller
 
     public function reduce_pallet_stock(Request $request)
     {
+        $request->validate([
+            'palletStockOut' => 'required|max:2147483647|min:1|numeric',
+            'palletDepart' => 'required',
+            'palletDesc' => 'required|min:1|max:50',
+            'outPalletImage' => 'required|mimes:jpeg,png,jpg|max:10240',
+        ], [
+            'palletStockOut.required' => 'Kolom "Stok" harus diisi',
+            'palletStockOut.max' => 'Stok melebihi 32 bit integer',
+            'palletStockOut.min' => 'Stok harus melebihi 1',
+            'palletStockOut.numeric' => 'input stok harus angka',
+            'palletDepart.required' => 'Kolom "Tanggal Palet Keluar" harus diisi',
+            'palletDesc.required' => 'Kolom "Keterangan" harus diisi',
+            'palletDesc.min' => 'Deskripsi minimal 1 karakter',
+            'palletDesc.max' => 'Deskripsi maksimal 50 karakter',
+            'outPalletImage.required' => 'Kolom "Gambar Palet/Barang Datang" harus diisi',
+            'outPalletImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
+            'outPalletImage.max' => 'Ukuran foto harus dibawah 10 MB',
+        ]);
+
         $palletInfo = InPallet::where('id', $request->palletIdHidden)->first();
 
         $itemInfo = DB::table('inpallet')
@@ -135,15 +168,6 @@ class InPalletController extends Controller
         $id = Auth::user()->id;
         $userInfo = User::where('id', $id)->first();
 
-        $request->validate([
-            'palletDesc' => 'min:1|max:50',
-            'outPalletImage' => 'required|mimes:jpeg,png,jpg|max:10240',
-        ], [
-            'palletDesc.min' => 'Deskripsi minimal 1 karakter',
-            'palletDesc.max' => 'Deskripsi maksimal 50 karakter',
-            'outPalletImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
-            'outPalletImage.max' => 'Ukuran foto harus dibawah 10 MB',
-        ]);
 
         if ($palletInfo->stock < $request->palletStockOut) {
             session()->flash('gagalStokPalletKeluar', 'stok yang ingin dikeluarkan lebih besar dari stok di palet');
@@ -196,7 +220,7 @@ class InPalletController extends Controller
                     1920
                 )->save($destination);
             }
-            $resize_image->save($destination);
+            // $resize_image->save($destination);
             // image resizing with "Image Intervention" end line of code
             $imageName = 'outPalletImage/' . $imageName;
             //
@@ -260,7 +284,7 @@ class InPalletController extends Controller
                     1920
                 )->save($destination);
             }
-            $resize_image->save($destination);
+            // $resize_image->save($destination);
             // image resizing with "Image Intervention" end line of code
             $imageName = 'outPalletImage/' . $imageName;
             //

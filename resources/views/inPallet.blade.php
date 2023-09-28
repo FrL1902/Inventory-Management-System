@@ -62,7 +62,7 @@
                                                             Tambahkan Data Barang di Palet
                                                         </strong>
                                                     </h3>
-                                                    <button type="button" class="close" data-dismiss="modal"
+                                                    <button id="addInPalletClose" style="display:inline-block" type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -80,7 +80,7 @@
                                                                         style="color: red"> (harus dipilih)
                                                                     </span></label>
                                                                 <select class="form-control" data-width="100%"
-                                                                    id="itemidforpallet" name="itemidforpallet" required>
+                                                                    id="itemidforpallet" name="itemidforpallet" >
                                                                     <option></option>
                                                                     @foreach ($item as $item)
                                                                         <option value="{{ $item->item_id }}">
@@ -93,10 +93,10 @@
                                                                 <label for="quantity">Stok<span style="color: red"> (harus
                                                                         diisi)
                                                                     </span></label>
-                                                                <input type="number" id="quantity" name="palletStock"
-                                                                    min="1" max="999999999" style="width: 100%"
+                                                                <input type="text" id="quantity" name="palletStock"
+                                                                style="width: 100%"
                                                                     class="form-control" placeholder="min 1, max 999999999"
-                                                                    required>
+                                                                    >
                                                             </div>
 
                                                             <div class="form-group">
@@ -105,15 +105,15 @@
                                                                     </span></label>
                                                                 <input type="text" class="form-control form-control"
                                                                     placeholder="Contoh: J2.1" id="bin" name="bin"
-                                                                    required>
+                                                                    >
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="startRange">Tanggal Barang Datang<span
+                                                                <label for="startRange">Tanggal Palet Masuk<span
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
                                                                 <input type="date" class="form-control" id="startRange"
-                                                                    required name="palletArrive">
+                                                                     name="palletArrive">
                                                             </div>
 
                                                             <div class="form-group">
@@ -121,7 +121,7 @@
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
                                                                 <textarea class="form-control" id="incomingItemDesc" rows="3" placeholder="deskripsi barang masuk"
-                                                                    name="palletDesc" required></textarea>
+                                                                    name="palletDesc" ></textarea>
                                                             </div>
 
                                                             <div class="form-group">
@@ -130,11 +130,14 @@
                                                                         10MB)
                                                                     </span></label>
                                                                 <input type="file" class="form-control form-control"
-                                                                    id="itemImage" name="inPalletImage" required>
-                                                                <div class="card mt-5 ">
+                                                                    id="itemImage" name="inPalletImage">
+                                                            </div>
+
+                                                            {{-- <div class="form-group">
+                                                                <div class="card mt-5 "> --}}
                                                                     {{-- <button id="" class="btn btn-primary">Insert
                                                                         Data</button> --}}
-                                                                    <button class="btn btn-primary"
+                                                                    {{-- <button class="btn btn-primary"
                                                                         onclick="document.getElementById('itemAdd').style.display='inline-block';">
                                                                         <strong>Insert Data</strong>
                                                                         <i id="itemAdd" style="display:none"
@@ -142,7 +145,36 @@
                                                                             aria-hidden="true"></i>
                                                                     </button>
                                                                 </div>
+                                                            </div> --}}
+
+                                                            <div class="form-group" id="submitInPalletButtonAdd">
+                                                                <div class="card mt-5 ">
+                                                                    {{-- <button id="" class="btn btn-primary">Insert
+                                                                        Data</button> --}}
+                                                                    <button class="btn btn-primary"
+                                                                        onclick="document.getElementById('itemAdd2').style.display='inline-block';
+                                                                        document.getElementById('addInPalletClose').style.display='none';
+                                                                        document.getElementById('overlayPage').style.display='inline-block';
+                                                                        document.getElementById('submitInPalletButtonAdd').style.display='none';
+                                                                        document.getElementById('submitInPalletButtonAddAfter').style.display='';">
+                                                                        <strong>Insert
+                                                                            Data</strong>
+
+                                                                    </button>
+                                                                </div>
                                                             </div>
+
+                                                            <div class="form-group" id="submitInPalletButtonAddAfter" style="display:none">
+                                                                <div class="card mt-5 ">
+                                                                    <button class="btn btn-primary" disabled>
+                                                                        <strong>loading</strong>
+                                                                        <i id="itemAdd2" style="display:none"
+                                                                                class="loading-icon fa fa-spinner fa-spin"
+                                                                                aria-hidden="true"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+
                                                             <input type="hidden" class="form-control"
                                                                 name="userIdHidden" value="{{ auth()->user()->id }}">
                                                         </div>
@@ -194,7 +226,7 @@
                                                     <td>{{ $data->item_name }}</td>
                                                     <td>{{ $data->stock }}</td>
                                                     <td>{{ $data->bin }}</td>
-                                                    <td>{{ date_format(date_create($data->user_date), 'D d-m-Y') }}
+                                                    <td>{{ date_format(date_create($data->user_date), 'd-m-Y') }}
                                                     <td>{{ $data->description }}</td>
                                                     <td>
                                                         <a style="cursor: pointer"
@@ -230,7 +262,7 @@
                                                                 <h3 class="modal-title" id="exampleModalLongTitle">
                                                                     <strong>Foto Barang
                                                                         "{{ $data->item_name }}" pada
-                                                                        {{ date_format(date_create($data->user_date), 'D d-m-Y') }}</strong>
+                                                                        {{ date_format(date_create($data->user_date), 'd-m-Y') }}</strong>
                                                                 </h3>
                                                                 <button type="button" class="close"
                                                                     data-dismiss="modal" aria-label="Close">
@@ -263,7 +295,7 @@
                                                                         </h3>
                                                                     </div>
                                                                 </div>
-                                                                <button type="button" class="close"
+                                                                <button id="addOutPalletClose" style="display:inline-block" type="button" class="close"
                                                                     data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -293,20 +325,18 @@
                                                                                     style="color: red"> (harus
                                                                                     diisi)
                                                                                 </span></label>
-                                                                            <input type="number" id="quantity"
-                                                                                name="palletStockOut" min="1"
-                                                                                max="999999999999999" style="width: 100%"
+                                                                            <input type="text" id="quantity"
+                                                                                name="palletStockOut" style="width: 100%"
                                                                                 class="form-control" placeholder="min 1"
-                                                                                required>
+                                                                                >
                                                                         </div>
 
                                                                         <div class="form-group">
-                                                                            <label for="startRange">Tanggal Barang
-                                                                                Datang<span style="color: red"> (harus
+                                                                            <label for="startRange">Tanggal Palet Keluar<span style="color: red"> (harus
                                                                                     diisi)
                                                                                 </span></label>
                                                                             <input type="date" class="form-control"
-                                                                                id="startRange" required
+                                                                                id="startRange"
                                                                                 name="palletDepart">
                                                                         </div>
 
@@ -315,7 +345,7 @@
                                                                                     style="color: red"> (harus diisi)
                                                                                 </span></label>
                                                                             <textarea class="form-control" id="incomingItemDesc" rows="3" placeholder="deskripsi barang keluar"
-                                                                                name="palletDesc" required></textarea>
+                                                                                name="palletDesc" ></textarea>
                                                                         </div>
 
                                                                         <div class="form-group">
@@ -326,21 +356,49 @@
                                                                             <input type="file"
                                                                                 class="form-control form-control"
                                                                                 id="itemImage" name="outPalletImage"
-                                                                                required>
+                                                                                >
                                                                         </div>
 
-                                                                        <div class="form-group">
-                                                                            <div class="card mt-5 ">
+                                                                        {{-- <div class="form-group">
+                                                                            <div class="card mt-5 "> --}}
                                                                                 {{-- <button id=""
                                                                                     class="btn btn-primary">Keluarkan
                                                                                     Stok Palet</button> --}}
-                                                                                <button class="btn btn-primary"
+                                                                                {{-- <button class="btn btn-primary"
                                                                                     onclick="document.getElementById('itemAdd1').style.display='inline-block';">
                                                                                     <strong>Keluarkan
                                                                                         Stok Palet</strong>
                                                                                     <i id="itemAdd1" style="display:none"
                                                                                         class="loading-icon fa fa-spinner fa-spin"
                                                                                         aria-hidden="true"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div> --}}
+
+                                                                        <div class="form-group" id="submitOutPalletButtonAdd">
+                                                                            <div class="card mt-5 ">
+                                                                                {{-- <button id="" class="btn btn-primary">Insert
+                                                                                    Data</button> --}}
+                                                                                <button class="btn btn-primary"
+                                                                                    onclick="document.getElementById('itemAdd3').style.display='inline-block';
+                                                                                    document.getElementById('addOutPalletClose').style.display='none';
+                                                                                    document.getElementById('overlayPage').style.display='inline-block';
+                                                                                    document.getElementById('submitOutPalletButtonAdd').style.display='none';
+                                                                                    document.getElementById('submitOutPalletButtonAddAfter').style.display='';">
+                                                                                    <strong>Insert
+                                                                                        Data</strong>
+
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group" id="submitOutPalletButtonAddAfter" style="display:none">
+                                                                            <div class="card mt-5 ">
+                                                                                <button class="btn btn-primary" disabled>
+                                                                                    <strong>loading</strong>
+                                                                                    <i id="itemAdd3" style="display:none"
+                                                                                            class="loading-icon fa fa-spinner fa-spin"
+                                                                                            aria-hidden="true"></i>
                                                                                 </button>
                                                                             </div>
                                                                         </div>
