@@ -264,7 +264,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print semua data barang datang
+                                                            Export semua data barang datang
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -315,7 +315,7 @@
                                                             Tambahkan Barang Datang Baru
                                                         </strong>
                                                     </h3>
-                                                    <button type="button" class="close" data-dismiss="modal"
+                                                    <button id="addIncomingClose" style="display:inline-block" type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -331,7 +331,7 @@
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
                                                                 <select class="form-control" data-width="100%"
-                                                                    id="incomingidforitem" name="incomingiditem" required>
+                                                                    id="incomingidforitem" name="incomingiditem">
                                                                     <option></option>
                                                                     @foreach ($item as $item)
                                                                         <option value="{{ $item->item_id }}">
@@ -344,10 +344,9 @@
                                                                 <label for="quantity">Stok<span style="color: red"> (harus
                                                                         diisi)
                                                                     </span></label>
-                                                                <input type="number" id="quantity" name="itemAddStock"
-                                                                    min="1" max="999999999" style="width: 100%"
+                                                                <input type="text" id="quantity" name="itemAddStock" style="width: 100%"
                                                                     class="form-control"
-                                                                    placeholder="min 1, max 999999999" required>
+                                                                    placeholder="min 1, max 999999999">
                                                             </div>
 
                                                             <div class="form-group">
@@ -356,15 +355,15 @@
                                                                     </span></label>
                                                                 <input type="text" class="form-control form-control"
                                                                     placeholder="supplier barang" id="supplier"
-                                                                    name="supplier" required>
+                                                                    name="supplier">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="incomingidforitem">Deskripsi<span
+                                                                <label for="incomingdescforitem">Deskripsi<span
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
-                                                                <textarea class="form-control" id="incomingidforitem" rows="3" placeholder="deskripsi barang masuk"
-                                                                    name="incomingItemDesc" required></textarea>
+                                                                <textarea class="form-control" id="incomingdescforitem" rows="3" placeholder="deskripsi barang masuk"
+                                                                    name="incomingItemDesc" ></textarea>
                                                             </div>
 
                                                             <div class="form-group">
@@ -372,7 +371,7 @@
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
                                                                 <input type="date" class="form-control"
-                                                                    id="startRange" required name="itemArrive">
+                                                                    id="startRange" name="itemArrive">
                                                             </div>
 
                                                             <div class="form-group">
@@ -380,17 +379,34 @@
                                                                         style="color: red"> (harus diisi dan harus dibawah 10MB)
                                                                     </span></label>
                                                                 <input type="file" class="form-control form-control"
-                                                                    id="itemImage" name="incomingItemImage" required>
+                                                                    id="itemImage" name="incomingItemImage">
+                                                            </div>
+
+
+                                                            <div class="form-group" id="submitIncomingButtonAdd">
                                                                 <div class="card mt-5 ">
                                                                     {{-- <button id="" class="btn btn-primary">Insert
                                                                         Data</button> --}}
                                                                     <button class="btn btn-primary"
-                                                                        onclick="document.getElementById('itemAdd1').style.display='inline-block';">
-                                                                        <strong>Update Data
-                                                                            Barang</strong>
+                                                                        onclick="document.getElementById('itemAdd1').style.display='inline-block';
+                                                                        document.getElementById('addIncomingClose').style.display='none';
+                                                                        document.getElementById('overlayPage').style.display='inline-block';
+                                                                        document.getElementById('submitIncomingButtonAdd').style.display='none';
+                                                                        document.getElementById('submitIncomingButtonAddAfter').style.display='';">
+                                                                        <strong>Insert
+                                                                            Data</strong>
+
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group" id="submitIncomingButtonAddAfter" style="display:none">
+                                                                <div class="card mt-5 ">
+                                                                    <button class="btn btn-primary" disabled>
+                                                                        <strong>loading</strong>
                                                                         <i id="itemAdd1" style="display:none"
-                                                                            class="loading-icon fa fa-spinner fa-spin"
-                                                                            aria-hidden="true"></i>
+                                                                                class="loading-icon fa fa-spinner fa-spin"
+                                                                                aria-hidden="true"></i>
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -456,9 +472,7 @@
                                                     <td>{{ $incoming->item_id }}</td>
                                                     <td>{{ $incoming->item_name }}</td>
                                                     <td>{{ $incoming->stock_added }}</td>
-                                                    <td>{{ date_format(date_create($incoming->arrive_date), 'D d-m-Y') }}
-                                                    </td>
-                                                    {{-- <td>{{ $incoming->arrive_date }}</td> --}}
+                                                    <td>{{ date_format(date_create($incoming->arrive_date), 'd-m-Y') }}</td>
                                                     <td>{{ $incoming->supplier }}</td>
                                                     <td>{{ $incoming->description }}</td>
                                                     <td>
@@ -524,7 +538,7 @@
                                                                     <strong>Barang Datang
                                                                         "{{ $incoming->item_name }}"
                                                                         pada
-                                                                        {{ date_format(date_create($incoming->arrive_date), 'D d-m-Y') }}</strong>
+                                                                        {{ date_format(date_create($incoming->arrive_date), 'd-m-Y') }}</strong>
                                                                 </h3>
                                                                 <button type="button" class="close"
                                                                     data-dismiss="modal" aria-label="Close">
@@ -647,7 +661,7 @@
                                                                         </div>
 
                                                                         <input type="hidden" class="form-control"
-                                                                            name="itemIdHidden"
+                                                                            name="incomingIdHidden"
                                                                             value="{{ $incoming->id }}">
                                                                     </div>
                                                                 </form>

@@ -89,56 +89,51 @@ class IncomingController extends Controller
 
     public function addItemStock(Request $request) //INCOMING, BARANG MASUK
     {
-        // dd($request->incomingiditem);
-        // dd($request->userIdHidden);
-        $userInfo = User::where('id', $request->userIdHidden)->first();
+        $request->validate([
+            'incomingiditem' => 'required', //validasi kolom "Nama Barang"
+            'itemAddStock' => 'required|max:2147483647|min:1|numeric', //validasi "Stok"
+            'supplier' => 'required|min:1|max:255', //validasi kolom "supplier"
+            'incomingItemDesc' => 'required|min:1|max:255', //validasi kolom "deskripsi"
+            'itemArrive' => 'required', //validasi kolom "deskripsi"
+        ], [
+            'incomingiditem.required' => 'Kolom "Nama Barang" harus dipilih',
+            'itemAddStock.required' => 'Kolom "Stok" harus diisi',
+            'itemAddStock.max' => 'Stok melebihi 32 bit integer',
+            'itemAddStock.min' => 'Stok harus melebihi 0',
+            'itemAddStock.numeric' => 'input stok harus angka dan tidak boleh ada spasi',
+            'supplier.required' => 'Kolom "Supplier" harus diisi',
+            'supplier.min' => 'Supplier minimal 1 karakter',
+            'supplier.max' => 'Supplier maksimal 255 karakter',
+            'incomingItemDesc.required' => 'Kolom "Deskripsi" harus diisi',
+            'incomingItemDesc.min' => 'Deskripsi minimal 1 karakter',
+            'incomingItemDesc.max' => 'Deskripsi maksimal 255 karakter',
+            'itemArrive.required' => 'Kolom "Tanggal Barang Datang" harus diisi'
+        ]);
+
+        // $userInfo = User::where('id', $request->userIdHidden)->first(); // buat ambil nama user
         $itemInfo = Item::where('item_id', $request->incomingiditem)->first();
 
         $maxValueAvailable = 2147483647 - $itemInfo->stocks;
-
-        // dd($maxValueAvailable);
-        if ($request->itemAddStock > $maxValueAvailable) {
-            $request->validate([
-                'itemAddStock' => 'required|max:2147483647|min:1|numeric',
-                'incomingItemDesc' => 'required|min:1|max:255',
-                'supplier' => 'required|min:1|max:255'
-            ], [
-                'itemAddStock.required' => 'Kolom stok harus diisi',
-                'itemAddStock.max' => 'Stok melebihi 32 bit integer',
-                'itemAddStock.min' => 'Stok harus melebihi 1',
-                'itemAddStock.numeric' => 'input stok harus angka',
-                'incomingItemDesc.required' => 'Kolom "Deskripsi" harus diisi',
-                'incomingItemDesc.min' => 'Deskripsi minimal 1 karakter',
-                'incomingItemDesc.max' => 'Deskripsi maksimal 255 karakter',
-                'supplier.required' => 'Kolom "Supplier" harus diisi',
-                'supplier.min' => 'Supplier minimal 1 karakter',
-                'supplier.max' => 'Supplier maksimal 255 karakter',
-            ]);
+        if ($request->itemAddStock > $maxValueAvailable) { //ngecek kalo total stok di tabel "items" ngelebihin 32 bit integer
             $request->session()->flash('intOverflow', 'Melebihi 32 bit integer (2147483647)');
             return redirect()->back();
         }
 
-        $request->validate([ //harus tambahin error disini
+        $newValue = $itemInfo->stocks + $request->itemAddStock; //kalo dibawah 32 bit integer, ditambahin jadi newValue
+
+        $request->validate([ // cek image terakhir karena berat
             'incomingItemImage' => 'required|mimes:jpeg,png,jpg|max:10240',
         ], [
             'incomingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
             'incomingItemImage.max' => 'Ukuran foto harus dibawah 10 MB'
         ]);
 
-        $newValue = $itemInfo->stocks + $request->itemAddStock;
-
-        Item::where('item_id', $request->incomingiditem)->update([ //nambahin stock di tabel item
-            'stocks' => $newValue,
-        ]);
+        // $incoming->customer_id = $request->customerIdHidden; jgn pake kedua ini, ga jelas inputnya
+        // $incoming->brand_id = $request->brandIdHidden;
+        //reference customer_id sama brand_id mending tabel itemnya aja, jgn dari bladenya
 
         // masukin data ke tabel incoming
         $incoming = new Incoming();
-
-        // $incoming->customer_id = $request->customerIdHidden; jgn pake kedua ini, ga jelas inputnya
-        // $incoming->brand_id = $request->brandIdHidden;
-
-        //reference customer_id sama brand_id mending tabel itemnya aja, jgn dari bladenya
-
         $incoming->customer_id = $itemInfo->customer_id;
         $incoming->brand_id = $itemInfo->brand_id;
         $incoming->item_id = $request->incomingiditem;
@@ -149,6 +144,7 @@ class IncomingController extends Controller
         $incoming->description = $request->incomingItemDesc;
         $incoming->arrive_date = $request->itemArrive;
 
+        // old method of inserting image without "Image Intervention"
         // $file = $request->file('incomingItemImage');
         // $imageName = time() . '.' . $file->getClientOriginalExtension();
         // Storage::putFileAs('public/incomingItemImage', $file, $imageName);
@@ -174,13 +170,17 @@ class IncomingController extends Controller
                 1920
             )->save($destination);
         }
-        $resize_image->save($destination);
+        // $resize_image->save($destination);
         // image resizing with "Image Intervention" end line of code
         $imageName = 'incomingItemImage/' . $imageName;
         //
 
         $incoming->item_pictures = $imageName;
         $incoming->save();
+
+        Item::where('item_id', $request->incomingiditem)->update([ //nambahin stock di tabel item
+            'stocks' => $newValue,
+        ]);
         //end process add item
 
         //proses history
@@ -190,7 +190,8 @@ class IncomingController extends Controller
         $history->status = "BARANG DATANG";
         $history->value = $request->itemAddStock;
         $history->supplier = $request->supplier;
-        $history->user_who_did = $userInfo->name;
+        // $history->user_who_did = $userInfo->name;
+        $history->user_who_did = auth()->user()->name;
         $history->user_action_date = $request->itemArrive;
         $history->save();
 
@@ -317,7 +318,8 @@ class IncomingController extends Controller
     {
 
         if ($request->file('incomingItemImage') || $request->incomingEdit) {
-            $incomingInfo = Incoming::where('id', $request->itemIdHidden)->first();
+            // $incomingInfo = Incoming::where('id', $request->incomingIdHidden)->first();
+            $incomingInfo = Incoming::find($request->incomingIdHidden);
 
             // ini buat update valuenya
             $itemInfo = Item::where('item_id', $incomingInfo->item_id)->first();
@@ -363,14 +365,14 @@ class IncomingController extends Controller
                         1920
                     )->save($destination);
                 }
-                $resize_image->save($destination);
+                // $resize_image->save($destination);
                 // image resizing with "Image Intervention" end line of code
                 $imageName = 'incomingItemImage/' . $imageName;
                 //
 
                 Storage::delete('public/' . $incomingInfo->item_pictures);
 
-                Incoming::where('id', $request->itemIdHidden)->update([
+                Incoming::where('id', $request->incomingIdHidden)->update([
                     'item_pictures' => $imageName,
                 ]);
 
@@ -378,7 +380,7 @@ class IncomingController extends Controller
                 $file = $request->file('incomingItemImage');
             } else {
                 // dd("lha");
-                Incoming::where('id', $request->itemIdHidden)->update([
+                Incoming::where('id', $request->incomingIdHidden)->update([
                     'item_pictures' => $incomingInfo->item_pictures,
                 ]);
             }
@@ -400,7 +402,7 @@ class IncomingController extends Controller
                     'stocks' => $newValue
                 ]);
 
-                Incoming::where('id', $request->itemIdHidden)->update([
+                Incoming::where('id', $request->incomingIdHidden)->update([
                     'stock_added' => $request->incomingEdit,
                     'stock_now' => $newStockNow
                 ]);
