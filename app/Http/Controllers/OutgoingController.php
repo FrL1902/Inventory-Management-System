@@ -88,6 +88,27 @@ class OutgoingController extends Controller
 
     public function reduceItemStock(Request $request) //OUTGOING, BARANG KELUAR
     {
+        $request->validate([
+            'outgoingiditem' => 'required',
+            'itemReduceStock' => 'required|max:2147483647|min:1|numeric',
+            'outgoingItemDesc' => 'required|min:1|max:255',
+            'itemDepart' => 'required',
+            'outgoingItemImage' => 'required|mimes:jpeg,png,jpg|max:10240',
+        ], [
+            'outgoingiditem.required' => 'Kolom "Nama Barang" harus dipilih',
+            'itemReduceStock.required' => 'Kolom "Stok" harus diisi',
+            'itemReduceStock.max' => 'Stok melebihi 32 bit integer',
+            'itemReduceStock.min' => 'Stok harus melebihi 1',
+            'itemReduceStock.numeric' => 'input stok harus angka',
+            'outgoingItemDesc.required' => 'Kolom "Deskripsi" harus diisi',
+            'outgoingItemDesc.min' => 'Deskripsi minimal 1 karakter',
+            'outgoingItemDesc.max' => 'Deskripsi maksimal 255 karakter',
+            'itemDepart.required' => 'Kolom "Tanggal Barang Keluar" harus diisi',
+            'outgoingItemImage.required' => 'Kolom "Gambar Barang Keluar" harus diisi',
+            'outgoingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
+            'outgoingItemImage.max' => 'Ukuran foto harus dibawah 10 MB',
+        ]);
+
         $userInfo = User::where('id', $request->userIdHidden)->first();
         $itemInfo = Item::where('item_id', $request->outgoingiditem)->first();
 
@@ -96,22 +117,6 @@ class OutgoingController extends Controller
             // return redirect('manageItem');
             return redirect()->back();
         }
-
-        $request->validate([
-            'outgoingItemImage' => 'required|mimes:jpeg,png,jpg|max:10240',
-            'itemReduceStock' => 'required|max:2147483647|min:1|numeric',
-            'outgoingItemDesc' => 'required|min:1|max:255',
-        ], [
-            'outgoingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
-            'outgoingItemImage.max' => 'Ukuran foto harus dibawah 10 MB',
-            'itemReduceStock.required' => 'Kolom stok harus diisi',
-            'itemReduceStock.max' => 'Stok melebihi 32 bit integer',
-            'itemReduceStock.min' => 'Stok harus melebihi 1',
-            'itemReduceStock.numeric' => 'input stok harus angka',
-            'outgoingItemDesc.required' => 'Kolom "Deskripsi" harus diisi',
-            'outgoingItemDesc.min' => 'Deskripsi minimal 1 karakter',
-            'outgoingItemDesc.max' => 'Deskripsi maksimal 255 karakter',
-        ]);
 
         $newValue = $itemInfo->stocks - $request->itemReduceStock;
 
@@ -139,7 +144,8 @@ class OutgoingController extends Controller
         $file = $request->file('outgoingItemImage');
         $imageName = time() . '.' . $file->getClientOriginalExtension();
         $destination = public_path('storage\outgoingItemImage') . '\\' . $imageName;
-
+        // dd(public_path());
+        // dd($destination);
         $data = getimagesize($file);
         $width = $data[0];
         $height = $data[1];
@@ -156,7 +162,7 @@ class OutgoingController extends Controller
                 1920
             )->save($destination);
         }
-        $resize_image->save($destination);
+        // $resize_image->save($destination);
         // image resizing with "Image Intervention" end line of code
         $imageName = 'outgoingItemImage/' . $imageName;
         //
@@ -287,7 +293,7 @@ class OutgoingController extends Controller
     {
 
         if ($request->file('outgoingItemImage') || $request->outgoingEdit) {
-            $outgoingInfo = Outgoing::where('id', $request->itemIdHidden)->first();
+            $outgoingInfo = Outgoing::where('id', $request->outgoingIdHidden)->first();
 
             // ini buat update valuenya
             $itemInfo = Item::where('item_id', $outgoingInfo->item_id)->first();
@@ -333,14 +339,14 @@ class OutgoingController extends Controller
                         1920
                     )->save($destination);
                 }
-                $resize_image->save($destination);
+                // $resize_image->save($destination);
                 // image resizing with "Image Intervention" end line of code
                 $imageName = 'outgoingItemImage/' . $imageName;
                 //
 
                 Storage::delete('public/' . $outgoingInfo->item_pictures);
 
-                Outgoing::where('id', $request->itemIdHidden)->update([
+                Outgoing::where('id', $request->outgoingIdHidden)->update([
                     'item_pictures' => $imageName,
                 ]);
 
@@ -348,7 +354,7 @@ class OutgoingController extends Controller
                 $file = $request->file('outgoingItemImage');
             } else {
                 // dd("lha");
-                Outgoing::where('id', $request->itemIdHidden)->update([
+                Outgoing::where('id', $request->outgoingIdHidden)->update([
                     'item_pictures' => $outgoingInfo->item_pictures,
                 ]);
             }
@@ -370,7 +376,7 @@ class OutgoingController extends Controller
                     'stocks' => $newValue
                 ]);
 
-                Outgoing::where('id', $request->itemIdHidden)->update([
+                Outgoing::where('id', $request->outgoingIdHidden)->update([
                     'stock_taken' => $request->outgoingEdit,
                     'stock_now' => $newStockNow
                 ]);

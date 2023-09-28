@@ -265,7 +265,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Print semua data barang keluar
+                                                            Export semua data barang keluar
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -316,7 +316,7 @@
                                                             Tambahkan Barang Keluar Baru
                                                         </strong>
                                                     </h3>
-                                                    <button type="button" class="close" data-dismiss="modal"
+                                                    <button id="addOutgoingClose" style="display:inline-block" type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -332,7 +332,7 @@
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
                                                                 <select class="form-control" id="outgoingidforitem"
-                                                                    data-width="100%" name="outgoingiditem" required>
+                                                                    data-width="100%" name="outgoingiditem">
                                                                     <option></option>
                                                                     @foreach ($item as $item)
                                                                         <option value="{{ $item->item_id }}">
@@ -345,10 +345,9 @@
                                                                 <label for="quantity">Stok<span style="color: red"> (harus
                                                                         diisi)
                                                                     </span></label>
-                                                                <input type="number" id="quantity"
-                                                                    name="itemReduceStock" min="1"
-                                                                    max="999999999999999" style="width: 100%"
-                                                                    class="form-control" placeholder="minimum 1" required>
+                                                                <input type="text" id="quantity"
+                                                                    name="itemReduceStock"style="width: 100%"
+                                                                    class="form-control" placeholder="minimum 1" >
                                                             </div>
 
                                                             <div class="form-group">
@@ -356,7 +355,7 @@
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
                                                                 <textarea class="form-control" id="outgoingidforitem" rows="3" placeholder="deskripsi barang keluar"
-                                                                    name="outgoingItemDesc" required></textarea>
+                                                                    name="outgoingItemDesc" ></textarea>
                                                             </div>
 
                                                             <div class="form-group">
@@ -364,7 +363,7 @@
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
                                                                 <input type="date" class="form-control"
-                                                                    id="startRange" required name="itemDepart">
+                                                                    id="startRange"  name="itemDepart">
                                                             </div>
 
                                                             <div class="form-group">
@@ -373,16 +372,47 @@
                                                                         10MB)
                                                                     </span></label>
                                                                 <input type="file" class="form-control form-control"
-                                                                    id="itemImage" name="outgoingItemImage" required>
-                                                                <div class="card mt-5 ">
+                                                                    id="itemImage" name="outgoingItemImage">
+                                                            </div>
+
+                                                            {{-- <div class="form-group">
+                                                                <div class="card mt-5 "> --}}
                                                                     {{-- <button id="" class="btn btn-primary">Insert
                                                                         Data</button> --}}
-                                                                    <button class="btn btn-primary"
+                                                                    {{-- <button class="btn btn-primary"
                                                                         onclick="document.getElementById('itemAdd').style.display='inline-block';">
                                                                         <strong>Insert Data</strong>
                                                                         <i id="itemAdd" style="display:none"
                                                                             class="loading-icon fa fa-spinner fa-spin"
                                                                             aria-hidden="true"></i>
+                                                                    </button> --}}
+                                                                {{-- </div>
+                                                            </div> --}}
+
+                                                            <div class="form-group" id="submitOutgoingButtonAdd">
+                                                                <div class="card mt-5 ">
+                                                                    {{-- <button id="" class="btn btn-primary">Insert
+                                                                        Data</button> --}}
+                                                                    <button class="btn btn-primary"
+                                                                        onclick="document.getElementById('itemAdd').style.display='inline-block';
+                                                                        document.getElementById('addOutgoingClose').style.display='none';
+                                                                        document.getElementById('overlayPage').style.display='inline-block';
+                                                                        document.getElementById('submitOutgoingButtonAdd').style.display='none';
+                                                                        document.getElementById('submitOutgoingButtonAddAfter').style.display='';">
+                                                                        <strong>Insert
+                                                                            Data</strong>
+
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group" id="submitOutgoingButtonAddAfter" style="display:none">
+                                                                <div class="card mt-5 ">
+                                                                    <button class="btn btn-primary" disabled>
+                                                                        <strong>loading</strong>
+                                                                        <i id="itemAdd" style="display:none"
+                                                                                class="loading-icon fa fa-spinner fa-spin"
+                                                                                aria-hidden="true"></i>
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -442,7 +472,7 @@
                                                     <td>{{ $outgoing->item_name }}</td>
                                                     <td>{{ $outgoing->stock_taken }}</td>
                                                     {{-- <td>{{ $outgoing->depart_date }}</td> --}}
-                                                    <td>{{ date_format(date_create($outgoing->depart_date), 'D d-m-Y') }}
+                                                    <td>{{ date_format(date_create($outgoing->depart_date), 'd-m-Y') }}
                                                     </td>
                                                     <td>{{ $outgoing->description }}</td>
                                                     <td>
@@ -578,7 +608,7 @@
                                                                         </div>
 
                                                                         <input type="hidden" class="form-control"
-                                                                            name="itemIdHidden"
+                                                                            name="outgoingIdHidden"
                                                                             value="{{ $outgoing->id }}">
                                                                     </div>
                                                                 </form>

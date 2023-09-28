@@ -124,6 +124,7 @@ class IncomingController extends Controller
         $request->validate([ // cek image terakhir karena berat
             'incomingItemImage' => 'required|mimes:jpeg,png,jpg|max:10240',
         ], [
+            'incomingItemImage.required' => 'Kolom "Gambar Barang Datang" harus diisi',
             'incomingItemImage.mimes' => 'Tipe foto yang diterima hanya jpeg, jpg, dan png',
             'incomingItemImage.max' => 'Ukuran foto harus dibawah 10 MB'
         ]);
