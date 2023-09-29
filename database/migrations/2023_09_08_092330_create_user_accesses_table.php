@@ -15,8 +15,8 @@ class CreateUserAccessesTable extends Migration
     {
         Schema::create('user_accesses', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('customer_id');
+            $table->string('user_id');
+            $table->string('customer_id');
             $table->timestamps();
         });
     }

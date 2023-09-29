@@ -217,7 +217,7 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                     data-toggle="tooltip"
                                                                     data-original-title="edit customer access">
                                                                 </i></a> --}}
-                                                                <a style="cursor: pointer"><i
+                                                            <a style="cursor: pointer"><i
                                                                     class="fa fa-users mt-3 text-success"
                                                                     data-toggle="tooltip"
                                                                     data-original-title="gudang & cargo bisa melihat semua customer data">
@@ -293,9 +293,11 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                                     <select class="form-control"
                                                                                         id="customeridforassign"
                                                                                         name="customeridforassign">
+                                                                                        <option value="0">SEMUA
+                                                                                            AKSES</option>
                                                                                         @foreach ($customer as $cust)
                                                                                             <option
-                                                                                                value="{{ $cust->id }}">
+                                                                                                value="{{ $cust->customer_id }}">
                                                                                                 {{ $cust->customer_name }}
                                                                                             </option>
                                                                                         @endforeach
@@ -311,7 +313,7 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                                 <input type="hidden"
                                                                                     class="form-control"
                                                                                     name="userIdHidden"
-                                                                                    value="{{ $data->id }}">
+                                                                                    value="{{ $data->name }}">
                                                                             </div>
                                                                         </form>
                                                                     </div>
@@ -319,7 +321,7 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                             </div>
                                                         </div>
 
-                                                        <!-- Modal -->
+                                                        <!-- Modal update username -->
                                                         <div class="modal fade"
                                                             id="editModalCenter{{ $data->id }}" tabindex="-1"
                                                             role="dialog" aria-labelledby="exampleModalCenterTitle"

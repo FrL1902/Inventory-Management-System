@@ -63,6 +63,13 @@ class UserController extends Controller
 
         $account->save();
 
+        if($request->optionsRadios == "customer"){
+            $access = new UserAccess();
+            $access->user_id = $request->usernameform;
+            $access->customer_id = 0;
+            $access->save();
+        }
+
         $userAdded = $request->usernameform . " [" . $request->optionsRadios . "] " . "berhasil di tambahkan";
         $request->session()->flash('sukses_add', $userAdded);
 
@@ -136,7 +143,7 @@ class UserController extends Controller
         return view('admin.userAccess', compact('user', 'customer', 'access'));
     }
 
-    public function add_new_user_access(Request $request)
+    public function add_new_user_access(Request $request) //ini juga harus pake name //ntar aja tapi ini mah, fiturnya ga dipake soalnya
     {
         // dd($request->userIdHidden);
         $exist = UserAccess::where('user_id', 'LIKE', $request->userIdHidden)->where('customer_id', 'LIKE', $request->customerforaccess)->first();
@@ -219,10 +226,23 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function customer_assign(Request $request)
+    public function customer_assign(Request $request) //ini harus pake user name
     {
         // dd($request->userIdHidden);
-        dd($request->customeridforassign);
+        // dd($request->customeridforassign);
+        if($request->customeridforassign == 0){ //ini buat akses semua
+            $delete = UserAccess::where('user_id', 'LIKE', $request->userIdHidden)->first();
+            if (!is_null($delete)) {
+                $delete->delete();
+            }
+            $access = new UserAccess();
+            $access->user_id = $request->userIdHidden;
+            $access->customer_id = 0;
+            $access->save();
+
+            $request->session()->flash('userAccessSuccess', 'Sukses: Customer punya akses semua data');
+            return redirect()->back();
+        }
 
         // dd($request->userIdHidden);
         $exist = UserAccess::where('user_id', 'LIKE', $request->userIdHidden)->where('customer_id', 'LIKE', $request->customeridforassign)->first();

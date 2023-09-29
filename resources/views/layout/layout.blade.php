@@ -603,6 +603,11 @@
 
     {{-- MANAGE USER PAGE --}}
     {{-- <script>
+        $('#customeridforassign').select2({
+            dropdownParent: $('#editCustomerAccess')
+        });
+    </script> --}}
+    {{-- <script>
         // add new outgoing package di outgoing
         $('#customeridforassign').select2({
             dropdownParent: $('#editCustomerAccess')
