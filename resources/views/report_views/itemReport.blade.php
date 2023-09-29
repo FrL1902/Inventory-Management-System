@@ -36,8 +36,8 @@
                                                     data-toggle="modal">Brand</a>
                                                 <a class="dropdown-item" data-target="#exportItemReportItemModal"
                                                     data-toggle="modal">Barang</a>
-                                                <a class="dropdown-item" data-target="#exportItemReportALLModal"
-                                                    data-toggle="modal">Tanggal</a>
+                                                {{-- <a class="dropdown-item" data-target="#exportItemReportALLModal"
+                                                    data-toggle="modal">Tanggal</a> --}}
                                             </div>
                                         </div>
 
@@ -183,7 +183,7 @@
                                         </div>
 
                                         {{-- export by ALL DATA BY DATE  --}}
-                                        <div class="modal fade" id="exportItemReportALLModal" tabindex="-1"
+                                        {{-- <div class="modal fade" id="exportItemReportALLModal" tabindex="-1"
                                             role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
@@ -227,10 +227,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
-                                <div class="card-body">
+                                {{-- <div class="card-body">
                                     <div class="table-responsive">
                                         <table id="add-row" class="display table table-striped table-hover">
                                             <thead>
@@ -302,6 +302,84 @@
                                                                     <img class="rounded mx-auto d-block"
                                                                         style="width: 750px; height: auto;"
                                                                         src="{{ Storage::url($data->item_pictures) }}"
+                                                                        alt="no picture" loading="lazy">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> --}}
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="add-row" class="display table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Customer</th>
+                                                    <th>Brand</th>
+                                                    <th>ID Barang</th>
+                                                    <th>Nama Barang</th>
+                                                    <th>Stok</th>
+                                                    <th>Tanggal Data Dimasukkan</th>
+                                                    <th>Tanggal Terakhir Diupdate</th>
+                                                    <th>Gambar Barang</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Customer</th>
+                                                    <th>Brand</th>
+                                                    <th>ID Barang</th>
+                                                    <th>Nama Barang</th>
+                                                    <th>Stok</th>
+                                                    <th>Tanggal Data Dimasukkan</th>
+                                                    <th>Tanggal Terakhir Diupdate</th>
+                                                    <th>Gambar Barang</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                @foreach ($item as $item)
+                                                    <tr>
+                                                        <td>{{ $item->customer->customer_name }}</td>
+                                                        <td>{{ $item->brand->brand_name }}</td>
+                                                        <td>{{ $item->item_id }}</td>
+                                                        <td>{{ $item->item_name }}</td>
+                                                        <td>{{ $item->stocks }}</td>
+                                                        <td>{{ $item->created_at }}</td>
+                                                        <td>{{ $item->updated_at }}</td>
+                                                        <td>
+                                                            <a style="cursor: pointer"
+                                                                data-target="#imageModalCenter{{ $item->item_id }}"
+                                                                data-toggle="modal">
+                                                                <img class="rounded mx-auto d-block"
+                                                                    style="width: 100px; height: auto;"
+                                                                    src="{{ Storage::url($item->item_pictures) }}"
+                                                                    alt="no picture" loading="lazy">
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <div class="modal fade" id="imageModalCenter{{ $item->item_id }}"
+                                                        tabindex="-1" role="dialog"
+                                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-lg"
+                                                            role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h3 class="modal-title" id="exampleModalLongTitle">
+                                                                        <strong>Gambar barang "
+                                                                            {{ $item->item_name }}"</strong>
+                                                                    </h3>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <img class="rounded mx-auto d-block"
+                                                                        style="width: 750px; height: auto;"
+                                                                        src="{{ Storage::url($item->item_pictures) }}"
                                                                         alt="no picture" loading="lazy">
                                                                 </div>
                                                             </div>

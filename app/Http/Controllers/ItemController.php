@@ -398,12 +398,14 @@ class ItemController extends Controller
     {
         $customer = Customer::find($request->customerIdItemReport);
 
-        $sortAll = DB::table('incomings')
-            ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
-            ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
-            ->join('items', 'incomings.item_id', '=', 'items.item_id')
-            ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-            ->where('incomings.customer_id', $request->customerIdItemReport)->get();
+        // $sortAll = DB::table('incomings')
+        //     ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+        //     ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+        //     ->join('items', 'incomings.item_id', '=', 'items.item_id')
+        //     ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //     ->where('incomings.customer_id', $request->customerIdItemReport)->get();
+
+        $sortAll = Item::all()->where('customer_id', $request->customerIdItemReport);
 
         $formatFileName = 'Laporan Stok by pcs Customer ' . $customer->customer_name;
         return Excel::download(new ItemReportExport($sortAll), $formatFileName . '.xlsx');
@@ -413,12 +415,14 @@ class ItemController extends Controller
     {
         $brand = Brand::find($request->brandIdItemReport);
 
-        $sortAll = DB::table('incomings')
-            ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
-            ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
-            ->join('items', 'incomings.item_id', '=', 'items.item_id')
-            ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-            ->where('incomings.brand_id', $request->brandIdItemReport)->get();
+        // $sortAll = DB::table('incomings')
+        //     ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+        //     ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+        //     ->join('items', 'incomings.item_id', '=', 'items.item_id')
+        //     ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //     ->where('incomings.brand_id', $request->brandIdItemReport)->get();
+
+        $sortAll = Item::all()->where('brand_id', $request->brandIdItemReport);
 
         $formatFileName = 'Laporan Stok by pcs Brand ' . $brand->brand_name;
         return Excel::download(new ItemReportExport($sortAll), $formatFileName . '.xlsx');
@@ -428,12 +432,14 @@ class ItemController extends Controller
     {
         $item = Item::find($request->itemIdItemReport);
 
-        $sortAll = DB::table('incomings')
-            ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
-            ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
-            ->join('items', 'incomings.item_id', '=', 'items.item_id')
-            ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-            ->where('incomings.item_id', $request->itemIdItemReport)->get();
+        // $sortAll = DB::table('incomings')
+        //     ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+        //     ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+        //     ->join('items', 'incomings.item_id', '=', 'items.item_id')
+        //     ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //     ->where('incomings.item_id', $request->itemIdItemReport)->get();
+
+        $sortAll = Item::all()->where('item_id', $request->itemIdItemReport);
 
         $formatFileName = 'Laporan Stok by pcs Barang ' . $item->item_name;
         return Excel::download(new ItemReportExport($sortAll), $formatFileName . '.xlsx');
