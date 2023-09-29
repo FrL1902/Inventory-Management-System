@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\stockHistoryExport;
 use App\Models\Item;
 use App\Models\StockHistory;
+use App\Models\UserAccess;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,20 @@ class StockHistoryController extends Controller
         $date_to = Carbon::parse($request->endRange)->endOfDay();
 
         $user = Auth::user();
+        $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
+        if ($user->level == "customer" && $cekAll->customer_id != 0) {
+            // $history = StockHistory::all();
+            $history = DB::table('stock_histories')
+                ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('stock_histories.*')
+                ->where('items.customer_id', $cekAll->customer_id)->get();
+            $item = Item::all()->where('customer_id', $cekAll->customer_id);
+
+            return view('history_views.itemHistory', compact('history', 'item'));
+        }
+
+
         $item = Item::all();
 
         $history = StockHistory::all()->whereBetween('user_action_date', [$date_from, $date_to]);

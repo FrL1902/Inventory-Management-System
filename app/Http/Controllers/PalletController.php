@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Item;
 use App\Models\Pallet;
 use App\Models\PalletHistory;
+use App\Models\UserAccess;
 use Carbon\Carbon;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
@@ -203,6 +204,19 @@ class PalletController extends Controller
         session()->forget('deleteFilterButton');
 
         $user = Auth::user();
+        $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
+        if ($user->level == "customer" && $cekAll->customer_id != 0) {
+            // $history = StockHistory::all();
+            $palletHistory = DB::table('pallet_histories')
+                ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('pallet_histories.*', 'items.item_name')
+                ->where('items.customer_id', $cekAll->customer_id)->get();
+            $item = Item::all()->where('customer_id', $cekAll->customer_id);
+
+            return view('history_views.palletHistory', compact('palletHistory', 'item'));
+        }
+
         $item = Item::all();
         $palletHistory = DB::table('pallet_histories')
             ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
@@ -258,6 +272,20 @@ class PalletController extends Controller
         $date_to = Carbon::parse($request->endRange)->endOfDay();
 
         $user = Auth::user();
+        $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
+        if ($user->level == "customer" && $cekAll->customer_id != 0) {
+            // $history = StockHistory::all();
+            $sortHistoryDate = DB::table('pallet_histories')
+                ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('pallet_histories.*', 'items.item_name')
+                ->where('items.customer_id', $cekAll->customer_id)
+                ->whereBetween('pallet_histories.user_date', [$date_from, $date_to])->get();
+
+            $formatFileName = 'DataHistoryPalet ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
+
+            return Excel::download(new PalletHistoryExport($sortHistoryDate), $formatFileName . '.xlsx');
+        }
 
         $sortHistoryDate = DB::table('pallet_histories')
             ->join('items', 'items.item_id', '=', 'pallet_histories.item_id')
@@ -293,6 +321,21 @@ class PalletController extends Controller
         // dd($date_from . $date_to);
 
         $user = Auth::user();
+        $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
+        if ($user->level == "customer" && $cekAll->customer_id != 0) {
+            // $history = StockHistory::all();
+            $palletHistory = DB::table('pallet_histories')
+                ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('pallet_histories.*', 'items.item_name')
+                ->where('items.customer_id', $cekAll->customer_id)
+                ->whereBetween('pallet_histories.user_date', [$date_from, $date_to])->get();
+            $item = Item::all()->where('customer_id', $cekAll->customer_id);
+
+            $request->session()->flash('deleteFilterButton', 'yea');
+
+            return view('history_views.palletHistory', compact('palletHistory', 'item'));
+        }
 
         $item = Item::all();
         $palletHistory = DB::table('pallet_histories')
@@ -332,6 +375,24 @@ class PalletController extends Controller
     public function pallet_report_page()
     {
         // return view('inPallet');
+
+        $user = Auth::user();
+        $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
+        if ($user->level == "customer" && $cekAll->customer_id != 0) {
+            // $history = StockHistory::all();
+            $brand = Brand::all()->where('customer_id', $cekAll->customer_id);
+            $customer = Customer::all()->where('customer_id', $cekAll->customer_id);
+            $inpallet = DB::table('inpallet')
+                ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+                ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')
+                ->where('items.customer_id', $cekAll->customer_id)->get();
+            $item = Item::all()->where('customer_id', $cekAll->customer_id);
+
+            return view('report_views.palletReport', compact('inpallet', 'item', 'customer', 'brand'));
+        }
+
         $inpallet = DB::table('inpallet')
             ->join('items', 'inpallet.item_id', '=', 'items.item_id')
             ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
@@ -400,6 +461,21 @@ class PalletController extends Controller
     {
         $date_from = Carbon::parse($request->startRange)->startOfDay();
         $date_to = Carbon::parse($request->endRange)->endOfDay();
+
+        $user = Auth::user();
+        $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
+        if ($user->level == "customer" && $cekAll->customer_id != 0) {
+            $sortAll = DB::table('inpallet')
+                ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+                ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')
+                ->where('items.customer_id', $cekAll->customer_id)
+                ->whereBetween('user_date', [$date_from, $date_to])->get();
+
+            $formatFileName = 'Laporan Stok by palet ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
+            return Excel::download(new PalletReportExport($sortAll), $formatFileName . '.xlsx');
+        }
 
         $sortAll = DB::table('inpallet')
             ->join('items', 'inpallet.item_id', '=', 'items.item_id')

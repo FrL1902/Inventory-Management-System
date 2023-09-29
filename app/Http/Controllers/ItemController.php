@@ -12,6 +12,7 @@ use App\Models\Item;
 use App\Models\Outgoing;
 use App\Models\StockHistory;
 use App\Models\User;
+use App\Models\UserAccess;
 use Carbon\Carbon;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
@@ -135,6 +136,18 @@ class ItemController extends Controller
         session()->forget('deleteFilterButton');
 
         $user = Auth::user();
+        $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
+        if ($user->level == "customer" && $cekAll->customer_id != 0) {
+            // $history = StockHistory::all();
+            $history = DB::table('stock_histories')
+                ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('stock_histories.*')
+                ->where('items.customer_id', $cekAll->customer_id)->get();
+            $item = Item::all()->where('customer_id', $cekAll->customer_id);
+
+            return view('history_views.itemHistory', compact('history', 'item'));
+        }
 
         // sementara
         $history = StockHistory::all();
@@ -317,11 +330,23 @@ class ItemController extends Controller
     {
         // session()->forget('deleteFilterButton'); //ini buat tombol filter yang ga jadi digunain
 
-        $incoming = Incoming::all();
+        $user = Auth::user();
+        $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
+        if ($user->level == "customer" && $cekAll->customer_id != 0) {
+            // $incoming = Incoming::all();
+            $customer = Customer::all()->where('customer_id', $cekAll->customer_id);
+            $brand = Brand::all()->where('customer_id', $cekAll->customer_id);
+            // $item = Item::all();
+            $item = Item::all()->where('customer_id', $cekAll->customer_id);
+
+            return view('report_views.itemReport', compact('brand', 'customer', 'item'));
+        }
+
+        // $incoming = Incoming::all();
         $customer = Customer::all();
         $item = Item::all();
         $brand = Brand::all();
-        return view('report_views.itemReport', compact('incoming', 'brand', 'customer', 'item'));
+        return view('report_views.itemReport', compact('brand', 'customer', 'item'));
 
         // $user = Auth::user();
 
