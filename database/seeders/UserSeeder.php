@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin'),
             'level' => 'admin',
+            'pass' => 'admin',
         ]);
 
         DB::table('users')->insert([
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
             'email' => 'gudang@gmail.com',
             'password' => Hash::make('gudang'),
             'level' => 'gudang',
+            'pass' => 'gudang',
         ]);
 
         DB::table('users')->insert([
@@ -35,6 +37,7 @@ class UserSeeder extends Seeder
             'email' => 'customer@gmail.com',
             'password' => Hash::make('customer'),
             'level' => 'customer',
+            'pass' => 'customer',
         ]);
 
         DB::table('users')->insert([
@@ -42,6 +45,7 @@ class UserSeeder extends Seeder
             'email' => 'kargo@gmail.com',
             'password' => Hash::make('kargo'),
             'level' => 'cargo',
+            'pass' => 'cargo',
         ]);
     }
 }

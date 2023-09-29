@@ -74,6 +74,7 @@ class AuthController extends Controller
         } else {
             User::where('id',  auth()->user()->id)->update([
                 'password' => Hash::make($request->changePassword),
+                'pass' => $request->changePassword,
             ]);
             $request->session()->flash('passwordUpdated', 'Update Berhasil: password berhasil diubah');
             return redirect()->back();

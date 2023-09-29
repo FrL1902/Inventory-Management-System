@@ -59,6 +59,7 @@ class UserController extends Controller
         $account->email = $request->emailform;
         $account->level = $request->optionsRadios;
         $account->password = Hash::make($request->passwordform);
+        $account->pass = $request->passwordform;
 
         $account->save();
 
@@ -193,6 +194,7 @@ class UserController extends Controller
         } else {
             User::where('id',  $getUser->id)->update([
                 'password' => Hash::make($request->changePassword),
+                'pass' => $request->changePassword,
             ]);
             $request->session()->flash('passwordUpdated', 'Update Berhasil: password berhasil diubah');
             return redirect()->back();
@@ -220,6 +222,7 @@ class UserController extends Controller
     public function customer_assign(Request $request)
     {
         // dd($request->userIdHidden);
+        dd($request->customeridforassign);
 
         // dd($request->userIdHidden);
         $exist = UserAccess::where('user_id', 'LIKE', $request->userIdHidden)->where('customer_id', 'LIKE', $request->customeridforassign)->first();
