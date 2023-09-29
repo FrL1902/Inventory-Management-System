@@ -264,7 +264,7 @@
                                             </li>
                                             <li class="@yield('managecustomer')">
                                                 <a href="/manageCustomer">
-                                                    <span class="sub-item">Ubah Data Customer</span>
+                                                    <span class="sub-item">Data Customer</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -285,7 +285,7 @@
                                             </li>
                                             <li class="@yield('managebrand')">
                                                 <a href="/manageBrand">
-                                                    <span class="sub-item">Ubah Data Brands</span>
+                                                    <span class="sub-item">Data Brands</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -320,7 +320,7 @@
                                             </li>
                                             <li class="@yield('manageitem')">
                                                 <a href="/manageItem">
-                                                    <span class="sub-item">Ubah Data Barang</span>
+                                                    <span class="sub-item">Data Barang</span>
                                                 </a>
                                             </li>
                                         @endif
@@ -417,7 +417,7 @@
                                             {{-- <li class="active"> itu pake class active buat nge darken kyk button gt --}}
                                             <li class="@yield('manageuser')">
                                                 <a href="/manageUser">
-                                                    <span class="sub-item">Ubah Data User</span>
+                                                    <span class="sub-item">Data User</span>
                                                 </a>
                                             </li>
                                         </ul>
