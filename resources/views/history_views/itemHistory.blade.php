@@ -151,7 +151,7 @@
                                                                 </div>
                                                                 <div>
                                                                     <h5 style="text-align: center;">
-                                                                        Export Berdasarkan Waktu Sistem</h5>
+                                                                        Export Berdasarkan Tanggal</h5>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -202,7 +202,7 @@
                                                                 </div>
                                                                 <div>
                                                                     <h5 style="text-align: center;">
-                                                                        Filter Berdasarkan Waktu Sistem</h5>
+                                                                        Filter Berdasarkan Tanggal</h5>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -281,7 +281,8 @@
                                                     <td>{{ $history->value }}</td>
                                                     <td>{{ $history->supplier }}</td>
                                                     <td>{{ $history->user_who_did }}</td>
-                                                    <td>{{ date_format(date_create($history->created_at), 'D, H:i:s, d-m-Y') }}
+                                                    <td>{{ $history->created_at }}</td>
+                                                    {{-- <td>{{ date_format(date_create($history->created_at), 'D, H:i:s, d-m-Y') }} --}}
                                                     </td>
                                                 </tr>
                                             @endforeach

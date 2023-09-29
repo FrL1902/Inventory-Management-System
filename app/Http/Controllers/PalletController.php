@@ -262,7 +262,7 @@ class PalletController extends Controller
         $sortHistoryDate = DB::table('pallet_histories')
             ->join('items', 'items.item_id', '=', 'pallet_histories.item_id')
             ->select('pallet_histories.*', 'items.item_name')
-            ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])->get();
+            ->whereBetween('pallet_histories.user_date', [$date_from, $date_to])->get();
 
         // if ($user->level != 'admin') {
         //     $sortHistoryDate = DB::table('pallet_histories')
@@ -298,7 +298,7 @@ class PalletController extends Controller
         $palletHistory = DB::table('pallet_histories')
             ->join('items', 'pallet_histories.item_id', '=', 'items.item_id')
             ->select('pallet_histories.*', 'items.item_name')
-            ->whereBetween('pallet_histories.created_at', [$date_from, $date_to])->get();
+            ->whereBetween('pallet_histories.user_date', [$date_from, $date_to])->get();
 
         // if ($user->level == 'admin') {
         //     $item = Item::all();

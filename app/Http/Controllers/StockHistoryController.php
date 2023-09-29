@@ -20,8 +20,9 @@ class StockHistoryController extends Controller
         $date_to = Carbon::parse($request->endRange)->endOfDay();
 
         $user = Auth::user();
+        $item = Item::all();
 
-        $history = StockHistory::all()->whereBetween('created_at', [$date_from, $date_to]);
+        $history = StockHistory::all()->whereBetween('user_action_date', [$date_from, $date_to]);
 
         // if ($user->level != 'admin') {
         //     $history = DB::table('stock_histories')
@@ -38,7 +39,7 @@ class StockHistoryController extends Controller
 
         $request->session()->flash('deleteFilterButton', 'yea');
 
-        return view('history_views.itemHistory', compact('history'));
+        return view('history_views.itemHistory', compact('history', 'item'));
     }
 
     public function exportItemHistory(Request $request)
@@ -58,7 +59,7 @@ class StockHistoryController extends Controller
 
         $user = Auth::user();
 
-        $sortHistoryDate = StockHistory::all()->whereBetween('created_at', [$date_from, $date_to]);
+        $sortHistoryDate = StockHistory::all()->whereBetween('user_action_date', [$date_from, $date_to]);
         // dd($sortHistoryDate);
 
         // if ($user->level != 'admin') {
