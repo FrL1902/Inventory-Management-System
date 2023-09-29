@@ -278,6 +278,10 @@ class ItemController extends Controller
                     'item_name' => $request->itemnameformupdate,
                 ]);
 
+                StockHistory::where('item_id', $request->itemIdHidden)->update([ //ngupdate nama di tabel history
+                    'item_name' => $request->itemnameformupdate,
+                ]);
+
                 $request->session()->flash('sukses_editItem', $request->itemnameformupdate);
             } else {
                 $oldItemName = $itemInfo->item_name;
