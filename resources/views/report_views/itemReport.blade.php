@@ -322,7 +322,7 @@
                                                     <th>ID Barang</th>
                                                     <th>Nama Barang</th>
                                                     <th>Stok</th>
-                                                    <th>Tanggal Data Dimasukkan</th>
+                                                    <th>Tanggal</th>
                                                     <th>Tanggal Terakhir Diupdate</th>
                                                     <th>Gambar Barang</th>
                                                 </tr>
@@ -334,7 +334,7 @@
                                                     <th>ID Barang</th>
                                                     <th>Nama Barang</th>
                                                     <th>Stok</th>
-                                                    <th>Tanggal Data Dimasukkan</th>
+                                                    <th>Tanggal</th>
                                                     <th>Tanggal Terakhir Diupdate</th>
                                                     <th>Gambar Barang</th>
                                                 </tr>

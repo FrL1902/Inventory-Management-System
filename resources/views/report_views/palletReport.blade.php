@@ -239,8 +239,8 @@
                                                 <th>Nama Barang</th>
                                                 <th>Stok</th>
                                                 <th>BIN</th>
-                                                <th>Tanggal Sampai</th>
-                                                <th>Deskripsi</th>
+                                                <th>Tanggal</th>
+                                                {{-- <th>Deskripsi</th> --}}
                                                 <th>Gambar</th>
                                             </tr>
                                         </thead>
@@ -252,8 +252,8 @@
                                                 <th>Nama Barang</th>
                                                 <th>Stok</th>
                                                 <th>BIN</th>
-                                                <th>Tanggal Sampai</th>
-                                                <th>Deskripsi</th>
+                                                <th>Tanggal</th>
+                                                {{-- <th>Deskripsi</th> --}}
                                                 <th>Gambar</th>
                                             </tr>
                                         </tfoot>
@@ -265,13 +265,13 @@
                                                     <td>{{ $data->brand_name }}</td>
                                                     <td>{{ $data->item_id }}</td>
                                                     <td>{{ $data->item_name }}</td>
-                                                    <td>{{ $data->stock }}</td>
+                                                    <td>{{ $data->jumlah_stok }}</td>
                                                     <td>{{ $data->bin }}</td>
-                                                    <td>{{ date_format(date_create($data->user_date), 'd-m-Y') }}
-                                                    <td>{{ $data->description }}</td>
+                                                    <td>{{ date_format(date_create($data->tanggal), 'd-m-Y') }}
+                                                    {{-- <td>{{ $data->description }}</td> --}}
                                                     <td>
                                                         <a style="cursor: pointer"
-                                                            data-target="#imageModalCenter{{ $data->id }}"
+                                                            data-target="#imageModalCenter{{ $data->item_id }}"
                                                             data-toggle="modal">
                                                             <img class="rounded mx-auto d-block"
                                                                 style="width: 100px; height: auto;"
@@ -282,7 +282,7 @@
                                                 </tr>
 
                                                 {{-- FullSize Gambar --}}
-                                                <div class="modal fade" id="imageModalCenter{{ $data->id }}"
+                                                <div class="modal fade" id="imageModalCenter{{ $data->item_id }}"
                                                     tabindex="-1" role="dialog"
                                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered modal-lg"
@@ -291,8 +291,10 @@
                                                             <div class="modal-header">
                                                                 <h3 class="modal-title" id="exampleModalLongTitle">
                                                                     <strong>Foto Barang
-                                                                        "{{ $data->item_name }}" pada
-                                                                        {{ date_format(date_create($data->user_date), 'd-m-Y') }}</strong>
+                                                                        "{{ $data->item_name }}"
+                                                                        {{-- pada
+                                                                        {{ date_format(date_create($data->tanggal), 'd-m-Y') }} --}}
+                                                                    </strong>
                                                                 </h3>
                                                                 <button type="button" class="close"
                                                                     data-dismiss="modal" aria-label="Close">
