@@ -509,11 +509,20 @@ class PalletController extends Controller
         $user = Auth::user();
         $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
         if ($user->level == "customer" && $cekAll->customer_id != 0) {
+            // $sortAll = DB::table('inpallet')
+            //     ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+            //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+            //     ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+            //     ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')
+            //     ->where('items.customer_id', $cekAll->customer_id)
+            //     ->whereBetween('user_date', [$date_from, $date_to])->get();
+
             $sortAll = DB::table('inpallet')
                 ->join('items', 'inpallet.item_id', '=', 'items.item_id')
                 ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
                 ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-                ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')
+                ->select('inpallet.bin', 'inpallet.item_id', 'items.item_name', 'items.item_pictures', 'customer.customer_name', 'brand.brand_name', DB::raw("SUM(inpallet.stock) as jumlah_stok"), DB::raw("MAX(inpallet.user_date) as tanggal"))
+                ->groupBy('inpallet.item_id', 'inpallet.bin', 'items.item_name', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
                 ->where('items.customer_id', $cekAll->customer_id)
                 ->whereBetween('user_date', [$date_from, $date_to])->get();
 
@@ -521,11 +530,18 @@ class PalletController extends Controller
             return Excel::download(new PalletReportExport($sortAll), $formatFileName . '.xlsx');
         }
 
+        // $sortAll = DB::table('inpallet')
+        //     ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+        //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+        //     ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+        //     ->select('inpallet.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //     ->whereBetween('user_date', [$date_from, $date_to])->get();
         $sortAll = DB::table('inpallet')
             ->join('items', 'inpallet.item_id', '=', 'items.item_id')
             ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
             ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-            ->select('inpallet.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->select('inpallet.bin', 'inpallet.item_id', 'items.item_name', 'items.item_pictures', 'customer.customer_name', 'brand.brand_name', DB::raw("SUM(inpallet.stock) as jumlah_stok"), DB::raw("MAX(inpallet.user_date) as tanggal"))
+            ->groupBy('inpallet.item_id', 'inpallet.bin', 'items.item_name', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
             ->whereBetween('user_date', [$date_from, $date_to])->get();
 
         $formatFileName = 'Laporan Stok by palet ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
