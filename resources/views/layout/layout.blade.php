@@ -303,13 +303,13 @@
                             <div class="collapse @yield('showmanageitem')" id="item">
                                 <ul class="nav nav-collapse">
                                     @auth
-                                        @if (Auth::user()->level != 'gudang')
+                                        {{-- @if (Auth::user()->level != 'gudang') --}}
                                             <li class="@yield('itemreport')">
                                                 <a href="/itemReport">
                                                     <span class="sub-item">Laporan Stok by pcs</span>
                                                 </a>
                                             </li>
-                                        @endif
+                                        {{-- @endif --}}
                                     @endauth
                                     @auth
                                         @if (Auth::user()->level == 'admin' || Auth::user()->level == 'cargo')
@@ -357,13 +357,13 @@
                             <div class="collapse @yield('showmanagepallet')" id="pallet">
                                 <ul class="nav nav-collapse">
                                     @auth
-                                        @if (Auth::user()->level != 'gudang')
+                                        {{-- @if (Auth::user()->level != 'gudang') --}}
                                             <li class="@yield('palletreport')">
                                                 <a href="/palletReport">
                                                     <span class="sub-item">Laporan Stok by palet</span>
                                                 </a>
                                             </li>
-                                        @endif
+                                        {{-- @endif --}}
                                     @endauth
                                     @auth
                                         @if (Auth::user()->level != 'customer')

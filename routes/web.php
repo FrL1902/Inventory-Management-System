@@ -76,14 +76,6 @@ Route::middleware(['role:admin'])->group(function () {
 
 //Combination of role middlewares starts here================
 
-// Page: Laporan Stok by pcs
-Route::get('/itemReport', [ItemController::class, 'item_report_page'])->middleware('role:admin,customer,cargo');
-// Route::post('/exportItemReport', [ItemController::class, 'exportItemReport'])->middleware('role:admin,customer,cargo');
-Route::post('/exportItemReportCustomer', [ItemController::class, 'exportItemReportCustomer'])->middleware('role:admin,customer,cargo');
-Route::post('/exportItemReportBrand', [ItemController::class, 'exportItemReportBrand'])->middleware('role:admin,customer,cargo');
-Route::post('/exportItemReportItem', [ItemController::class, 'exportItemReportItem'])->middleware('role:admin,customer,cargo');
-Route::post('/exportItemReportDate', [ItemController::class, 'exportItemReportDate'])->middleware('role:admin,customer,cargo');
-
 // Page: Tambah Barang Baru
 Route::get('/newItem', [ItemController::class, 'new_item_page'])->middleware('role:admin,cargo');
 Route::post('/makeItem', [ItemController::class, 'makeItem'])->middleware('role:admin,cargo');
@@ -121,13 +113,6 @@ Route::get('/managePallet', [PalletController::class, 'manage_pallet_page'])->mi
 // Route::get('/removePallet/{id}', [PalletController::class, 'remove_pallet'])->middleware('role:admin,gudang,cargo');
 // Route::post('/reducePalletStock', [PalletController::class, 'reduce_pallet_stock'])->middleware('role:admin,gudang,cargo');
 
-// Page: Laporan Stok by palet
-Route::get('/palletReport', [PalletController::class, 'pallet_report_page'])->middleware('role:admin,customer,cargo');
-Route::post('/exportPalletReportCustomer', [PalletController::class, 'exportPalletReportCustomer'])->middleware('role:admin,customer,cargo');
-Route::post('/exportPalletReportBrand', [PalletController::class, 'exportPalletReportBrand'])->middleware('role:admin,customer,cargo');
-Route::post('/exportPalletReportItem', [PalletController::class, 'exportPalletReportItem'])->middleware('role:admin,customer,cargo');
-Route::post('/exportPalletReportDate', [PalletController::class, 'exportPalletReportDate'])->middleware('role:admin,customer,cargo');
-
 // inPallet
 Route::get('/inPallet', [InPalletController::class, 'in_pallet_page'])->middleware('role:admin,gudang,cargo');
 Route::post('/addNewPallet', [InPalletController::class, 'add_pallet'])->middleware('role:admin,gudang,cargo');
@@ -149,6 +134,21 @@ Route::middleware(['role:admin,customer,gudang,cargo'])->group(function () {
     Route::post('/filterHistoryDate', [StockHistoryController::class, 'filterHistoryDate']);
     Route::post('/exportItemHistory', [StockHistoryController::class, 'exportItemHistory'])->name('exportItemHistory');
     Route::post('/exportHistoryByDate', [StockHistoryController::class, 'exportHistoryByDate'])->name('exportHistoryByDate');
+
+    // Page: Laporan Stok by pcs
+    Route::get('/itemReport', [ItemController::class, 'item_report_page']);
+    // Route::post('/exportItemReport', [ItemController::class, 'exportItemReport']);
+    Route::post('/exportItemReportCustomer', [ItemController::class, 'exportItemReportCustomer']);
+    Route::post('/exportItemReportBrand', [ItemController::class, 'exportItemReportBrand']);
+    Route::post('/exportItemReportItem', [ItemController::class, 'exportItemReportItem']);
+    Route::post('/exportItemReportDate', [ItemController::class, 'exportItemReportDate']);
+
+    // Page: Laporan Stok by palet
+    Route::get('/palletReport', [PalletController::class, 'pallet_report_page']);
+    Route::post('/exportPalletReportCustomer', [PalletController::class, 'exportPalletReportCustomer']);
+    Route::post('/exportPalletReportBrand', [PalletController::class, 'exportPalletReportBrand']);
+    Route::post('/exportPalletReportItem', [PalletController::class, 'exportPalletReportItem']);
+    Route::post('/exportPalletReportDate', [PalletController::class, 'exportPalletReportDate']);
 
     // Page: History Stok by palet
     Route::get('/managePalletHistory', [PalletController::class, 'manage_pallet_history_page']);
