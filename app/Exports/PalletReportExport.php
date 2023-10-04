@@ -33,16 +33,16 @@ class PalletReportExport implements FromCollection, ShouldAutoSize, WithHeadings
             $item->brand_name,
             $item->item_id,
             $item->item_name,
-            $item->stock,
+            $item->jumlah_stok,
             $item->bin,
-            date_format(date_create($item->user_date), 'd-m-Y'),
-            $item->description,
+            date_format(date_create($item->tanggal), 'd-m-Y'),
+            // $item->description,
             "http://wms.intanutama.co.id/storage/" . $item->item_pictures,
         ];
     }
 
     public function headings(): array
     {
-        return ["Nama Customer", "Nama Brand", "ID Barang", "Nama Barang", "Stok", "BIN", "Tanggal Sampai", "Deskripsi", "Link Gambar Barang"];
+        return ["Nama Customer", "Nama Brand", "ID Barang", "Nama Barang", "Stok", "BIN", "Tanggal Sampai", "Link Gambar Barang"];
     }
 }

@@ -382,23 +382,43 @@ class PalletController extends Controller
             // $history = StockHistory::all();
             $brand = Brand::all()->where('customer_id', $cekAll->customer_id);
             $customer = Customer::all()->where('customer_id', $cekAll->customer_id);
+            // $inpallet = DB::table('inpallet')
+            //     ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+            //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+            //     ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+            //     ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')
+            //     ->where('items.customer_id', $cekAll->customer_id)->get();
+
             $inpallet = DB::table('inpallet')
                 ->join('items', 'inpallet.item_id', '=', 'items.item_id')
                 ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
                 ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-                ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')
+                ->select('inpallet.bin', 'inpallet.item_id', 'items.item_name', 'items.item_pictures', 'customer.customer_name', 'brand.brand_name', DB::raw("SUM(inpallet.stock) as jumlah_stok"), DB::raw("MAX(inpallet.user_date) as tanggal"))
+                ->groupBy('inpallet.item_id', 'inpallet.bin', 'items.item_name', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
                 ->where('items.customer_id', $cekAll->customer_id)->get();
+
             $item = Item::all()->where('customer_id', $cekAll->customer_id);
 
             return view('report_views.palletReport', compact('inpallet', 'item', 'customer', 'brand'));
         }
 
+        // $inpallet = DB::table('inpallet')
+        //     ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+        //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+        //     ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+        //     ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')->get();
+
         $inpallet = DB::table('inpallet')
             ->join('items', 'inpallet.item_id', '=', 'items.item_id')
             ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
             ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-            ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')->get();
-        // dd($pallet);
+            ->select('inpallet.bin', 'inpallet.item_id', 'items.item_name', 'items.item_pictures', 'customer.customer_name', 'brand.brand_name', DB::raw("SUM(inpallet.stock) as jumlah_stok"), DB::raw("MAX(inpallet.user_date) as tanggal"))
+            ->groupBy('inpallet.item_id', 'inpallet.bin', 'items.item_name', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
+            ->get();
+        // ->selectRaw("SUM(inpallet.stock) as jumlah_stok", "MAX(inpallet.user_date) as tanggal")->get();
+
+
+        // dd($inpallet);
 
         $item = DB::table('items')
             ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
@@ -416,11 +436,19 @@ class PalletController extends Controller
     {
         $customer = Customer::find($request->customerIdPalletReport);
 
+        // $sortAll = DB::table('inpallet')
+        //     ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+        //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+        //     ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+        //     ->select('inpallet.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //     ->where('items.customer_id', $request->customerIdPalletReport)->get();
+
         $sortAll = DB::table('inpallet')
             ->join('items', 'inpallet.item_id', '=', 'items.item_id')
             ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
             ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-            ->select('inpallet.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->select('inpallet.bin', 'inpallet.item_id', 'items.item_name', 'items.item_pictures', 'customer.customer_name', 'brand.brand_name', DB::raw("SUM(inpallet.stock) as jumlah_stok"), DB::raw("MAX(inpallet.user_date) as tanggal"))
+            ->groupBy('inpallet.item_id', 'inpallet.bin', 'items.item_name', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
             ->where('items.customer_id', $request->customerIdPalletReport)->get();
 
         $formatFileName = 'Laporan Stok by palet Customer ' . $customer->customer_name;
@@ -431,11 +459,19 @@ class PalletController extends Controller
     {
         $brand = Brand::find($request->brandIdPalletReport);
 
+        // $sortAll = DB::table('inpallet')
+        //     ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+        //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+        //     ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+        //     ->select('inpallet.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //     ->where('items.brand_id', $request->brandIdPalletReport)->get();
+
         $sortAll = DB::table('inpallet')
             ->join('items', 'inpallet.item_id', '=', 'items.item_id')
             ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
             ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-            ->select('inpallet.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->select('inpallet.bin', 'inpallet.item_id', 'items.item_name', 'items.item_pictures', 'customer.customer_name', 'brand.brand_name', DB::raw("SUM(inpallet.stock) as jumlah_stok"), DB::raw("MAX(inpallet.user_date) as tanggal"))
+            ->groupBy('inpallet.item_id', 'inpallet.bin', 'items.item_name', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
             ->where('items.brand_id', $request->brandIdPalletReport)->get();
 
         $formatFileName = 'Laporan Stok by palet Brand ' . $brand->brand_name;
@@ -446,11 +482,19 @@ class PalletController extends Controller
     {
         $item = Item::find($request->itemIdPalletReport);
 
+        // $sortAll = DB::table('inpallet')
+        //     ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+        //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+        //     ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+        //     ->select('inpallet.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //     ->where('inpallet.item_id', $request->itemIdPalletReport)->get();
+
         $sortAll = DB::table('inpallet')
             ->join('items', 'inpallet.item_id', '=', 'items.item_id')
             ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
             ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-            ->select('inpallet.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+            ->select('inpallet.bin', 'inpallet.item_id', 'items.item_name', 'items.item_pictures', 'customer.customer_name', 'brand.brand_name', DB::raw("SUM(inpallet.stock) as jumlah_stok"), DB::raw("MAX(inpallet.user_date) as tanggal"))
+            ->groupBy('inpallet.item_id', 'inpallet.bin', 'items.item_name', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
             ->where('inpallet.item_id', $request->itemIdPalletReport)->get();
 
         $formatFileName = 'Laporan Stok by palet Barang ' . $item->item_name;
