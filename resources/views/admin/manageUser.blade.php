@@ -198,15 +198,29 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                     <div class="d-flex justify-content-center">
                                                         @if ($data->level == 'admin')
                                                             <a style="cursor: pointer"><i
-                                                                    class="fa fa-users mt-3 text-success"
+                                                                    class="fa fa-tasks mt-3 text-success"
                                                                     data-toggle="tooltip"
-                                                                    data-original-title="admin punya semua akses">
+                                                                    data-original-title="Admin punya semua akses">
+                                                                </i></a>
+                                                        @else
+                                                            <a style="cursor: pointer"
+                                                            href="/userPagePermission/{{ encrypt($data->id) }}"><i
+                                                                    class="fa fa-tasks mt-3 text-primary"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Edit akses page user">
+                                                                </i></a>
+                                                        @endif
+                                                        @if ($data->level == 'admin')
+                                                            <a style="cursor: pointer"><i
+                                                                    class="fa fa-users mt-3 ml-3 text-success"
+                                                                    data-toggle="tooltip"
+                                                                    data-original-title="Admin punya semua akses">
                                                                 </i></a>
                                                         @elseif ($data->level == 'customer')
                                                             <a style="cursor: pointer"
                                                                 data-target="#editCustomerAccess{{ $data->id }}"
                                                                 data-toggle="modal"><i
-                                                                    class="fa fa-users mt-3 text-primary"
+                                                                    class="fa fa-users mt-3 ml-3 text-primary"
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Assign Customer">
                                                                 </i></a>
@@ -218,7 +232,7 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                     data-original-title="edit customer access">
                                                                 </i></a> --}}
                                                             <a style="cursor: pointer"><i
-                                                                    class="fa fa-users mt-3 text-success"
+                                                                    class="fa fa-users mt-3 ml-3 text-success"
                                                                     data-toggle="tooltip"
                                                                     data-original-title="gudang & cargo bisa melihat semua customer data">
                                                                 </i></a>

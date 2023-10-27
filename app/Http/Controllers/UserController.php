@@ -63,7 +63,7 @@ class UserController extends Controller
 
         $account->save();
 
-        if($request->optionsRadios == "customer"){
+        if ($request->optionsRadios == "customer") {
             $access = new UserAccess();
             $access->user_id = $request->usernameform;
             $access->customer_id = 0;
@@ -230,7 +230,7 @@ class UserController extends Controller
     {
         // dd($request->userIdHidden);
         // dd($request->customeridforassign);
-        if($request->customeridforassign == 0){ //ini buat akses semua
+        if ($request->customeridforassign == 0) { //ini buat akses semua
             $delete = UserAccess::where('user_id', 'LIKE', $request->userIdHidden)->first();
             if (!is_null($delete)) {
                 $delete->delete();
@@ -270,5 +270,18 @@ class UserController extends Controller
             $request->session()->flash('akses_already_there', 'sudah punya akses ke customer ini');
             return redirect()->back();
         }
+    }
+
+    public function user_page_permission($id)
+    {
+        try {
+            $decrypted = decrypt($id);
+        } catch (DecryptException $e) {
+            abort(403);
+        }
+
+        $user = User::find($decrypted);
+
+        return view('admin.userPermission', compact('user'));
     }
 }

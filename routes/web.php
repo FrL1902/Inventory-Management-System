@@ -48,6 +48,7 @@ Route::middleware(['role:admin'])->group(function () {
     Route::post('/customerAssign', [UserController::class, 'customer_assign']);
     Route::get('/exportExcel', [UserController::class, 'exportExcel'])->name('exportExcel'); //export user ALL
     Route::get('/userAccess/{id}', [UserController::class, 'user_access_page']);
+    Route::get('/userPagePermission/{id}', [UserController::class, 'user_page_permission']);
 
     // Page: User Access (LAGI NGGA DIPAKE)
     Route::post('/addNewUserAccess', [UserController::class, 'add_new_user_access']);
