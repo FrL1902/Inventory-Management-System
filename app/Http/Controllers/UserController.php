@@ -6,6 +6,7 @@ use App\Exports\UserExport;
 use App\Models\Customer;
 use App\Models\User;
 use App\Models\UserAccess;
+use App\Models\UserPermission;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
@@ -283,5 +284,25 @@ class UserController extends Controller
         $user = User::find($decrypted);
 
         return view('admin.userPermission', compact('user'));
+    }
+
+    public function permission_true(Request $request){
+        // dd(1);
+        // $tes = UserPermission::where('name', $request->name)->where('page', $request->page)->first();
+        // dd($tes);
+        UserPermission::where('name', $request->name)->where('page', $request->page)->update([
+            'status' => 1
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function permission_false(Request $request){
+        // dd(2);
+        // dd(UserPermission::where('name', $request->name)->where('page', $request->page)->first());
+        UserPermission::where('name', $request->name)->where('page', $request->page)->update([
+            'status' => 0
+        ]);
+        return redirect()->back();
     }
 }

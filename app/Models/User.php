@@ -25,4 +25,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function permission()
+    {
+        return $this->hasMany(UserPermission::class, 'name');
+    }
 }

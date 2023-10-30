@@ -49,6 +49,8 @@ Route::middleware(['role:admin'])->group(function () {
     Route::get('/exportExcel', [UserController::class, 'exportExcel'])->name('exportExcel'); //export user ALL
     Route::get('/userAccess/{id}', [UserController::class, 'user_access_page']);
     Route::get('/userPagePermission/{id}', [UserController::class, 'user_page_permission']);
+    Route::post('/permissionToTrue', [UserController::class, 'permission_true']);
+    Route::post('/permissionToFalse', [UserController::class, 'permission_false']);
 
     // Page: User Access (LAGI NGGA DIPAKE)
     Route::post('/addNewUserAccess', [UserController::class, 'add_new_user_access']);
@@ -128,7 +130,7 @@ Route::get('/outPallet', [OutPalletController::class, 'out_pallet_page'])->middl
 // BISA DIAKSES SEMUA
 Route::middleware(['role:admin,customer,gudang,cargo'])->group(function () {
     Route::get('/home', [HomeController::class, 'index']);
-    // Route::get('/home', [HomeController::class, 'index'])->name('home'); jadi kalo pake name ini, misal masuk page dynamic kyk creds (Change Password) ato gak kayak "userPagePermission" nanti bakal ngestack jadi kyk http://127.0.0.1:8000/creds/home. nah ini nanti rutenya gagal karena ya ga ada rutenya. jadi jgn pake name 
+    // Route::get('/home', [HomeController::class, 'index'])->name('home'); jadi kalo pake name ini, misal masuk page dynamic kyk creds (Change Password) ato gak kayak "userPagePermission" nanti bakal ngestack jadi kyk http://127.0.0.1:8000/creds/home. nah ini nanti rutenya gagal karena ya ga ada rutenya. jadi jgn pake name
     Route::get('/logout', [AuthController::class, 'logout']);
 
     // Page: History Stok by pcs

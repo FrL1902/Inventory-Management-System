@@ -39,10 +39,30 @@
                                             <tr>
                                                 <th scope="row">1</th>
                                                 <td>Home</td>
-                                                <td>
-                                                    <a type="button" class="btn btn-success" style="cursor: pointer; width: 100px"
-                                                        href="/manageHistory">Active</a>
-                                                </td>
+                                                @if (App\Models\UserPermission::checkPageStatus($user->name, 'home') == 1)
+                                                    <td>
+                                                        <form method="post" action="/permissionToFalse">
+                                                            @csrf
+
+                                                            <button class="btn btn-success"
+                                                                style="cursor: pointer; width: 100px">Active</button>
+
+                                                            <input type="hidden" name="page" value="home">
+                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                        </form>
+                                                    </td>
+                                                @else
+                                                    <td>
+                                                        <form method="post" action="/permissionToTrue">
+                                                            @csrf
+                                                            <button class="btn btn-danger"
+                                                                style="cursor: pointer; width: 100px">Inactive</button>
+
+                                                            <input type="hidden" name="page" value="home">
+                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                        </form>
+                                                    </td>
+                                                @endif
                                             </tr>
                                             {{-- kelola customer --}}
                                             <tr>
@@ -54,7 +74,8 @@
                                                 <th scope="row">1</th>
                                                 <td>Tambah Customer baru</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger" style="cursor: pointer; width: 100px"
+                                                    <a type="button" class="btn btn-danger"
+                                                        style="cursor: pointer; width: 100px"
                                                         href="/manageHistory">Inactive</a>
                                                 </td>
                                             </tr>
@@ -62,21 +83,23 @@
                                                 <th scope="row">2</th>
                                                 <td>Data Customer</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger" style="cursor: pointer; width: 100px"
+                                                    <a type="button" class="btn btn-danger"
+                                                        style="cursor: pointer; width: 100px"
                                                         href="/manageHistory">Inactive</a>
                                                 </td>
                                             </tr>
                                             {{-- kelola brand --}}
                                             <tr>
                                                 <th class="table-secondary" class="width:100%" scope="row">Menu: </th>
-                                                <td class="table-secondary"><strong>Kelola  Brand</strong></td>
+                                                <td class="table-secondary"><strong>Kelola Brand</strong></td>
                                                 <td class="table-secondary"></td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">1</th>
                                                 <td>Tambah Brand baru</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger" style="cursor: pointer; width: 100px"
+                                                    <a type="button" class="btn btn-danger"
+                                                        style="cursor: pointer; width: 100px"
                                                         href="/manageHistory">Inactive</a>
                                                 </td>
                                             </tr>
@@ -84,7 +107,8 @@
                                                 <th scope="row">2</th>
                                                 <td>Data Brand</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger" style="cursor: pointer; width: 100px"
+                                                    <a type="button" class="btn btn-danger"
+                                                        style="cursor: pointer; width: 100px"
                                                         href="/manageHistory">Inactive</a>
                                                 </td>
                                             </tr>
@@ -98,7 +122,8 @@
                                                 <th scope="row">1</th>
                                                 <td>Laporan Stok by pcs</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger" style="cursor: pointer; width: 100px"
+                                                    <a type="button" class="btn btn-danger"
+                                                        style="cursor: pointer; width: 100px"
                                                         href="/manageHistory">Inactive</a>
                                                 </td>
                                             </tr>
@@ -106,7 +131,8 @@
                                                 <th scope="row">2</th>
                                                 <td>Tambah Barang Baru</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger" style="cursor: pointer; width: 100px"
+                                                    <a type="button" class="btn btn-danger"
+                                                        style="cursor: pointer; width: 100px"
                                                         href="/manageHistory">Inactive</a>
                                                 </td>
                                             </tr>
@@ -114,7 +140,8 @@
                                                 <th scope="row">3</th>
                                                 <td>Data Barang</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger" style="cursor: pointer; width: 100px"
+                                                    <a type="button" class="btn btn-danger"
+                                                        style="cursor: pointer; width: 100px"
                                                         href="/manageHistory">Inactive</a>
                                                 </td>
                                             </tr>
@@ -122,7 +149,8 @@
                                                 <th scope="row">4</th>
                                                 <td>Barang Datang</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger" style="cursor: pointer; width: 100px"
+                                                    <a type="button" class="btn btn-danger"
+                                                        style="cursor: pointer; width: 100px"
                                                         href="/manageHistory">Inactive</a>
                                                 </td>
                                             </tr>
@@ -130,7 +158,8 @@
                                                 <th scope="row">5</th>
                                                 <td>Barang Keluar</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger" style="cursor: pointer; width: 100px"
+                                                    <a type="button" class="btn btn-danger"
+                                                        style="cursor: pointer; width: 100px"
                                                         href="/manageHistory">Inactive</a>
                                                 </td>
                                             </tr>
@@ -138,7 +167,8 @@
                                                 <th scope="row">6</th>
                                                 <td>History Stok by pcs</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger" style="cursor: pointer; width: 100px"
+                                                    <a type="button" class="btn btn-danger"
+                                                        style="cursor: pointer; width: 100px"
                                                         href="/manageHistory">Inactive</a>
                                                 </td>
                                             </tr>
@@ -152,7 +182,8 @@
                                                 <th scope="row">1</th>
                                                 <td>Laporan Stok by palet</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger" style="cursor: pointer; width: 100px"
+                                                    <a type="button" class="btn btn-danger"
+                                                        style="cursor: pointer; width: 100px"
                                                         href="/manageHistory">Inactive</a>
                                                 </td>
                                             </tr>
@@ -160,7 +191,8 @@
                                                 <th scope="row">2</th>
                                                 <td>Palet Masuk</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger" style="cursor: pointer; width: 100px"
+                                                    <a type="button" class="btn btn-danger"
+                                                        style="cursor: pointer; width: 100px"
                                                         href="/manageHistory">Inactive</a>
                                                 </td>
                                             </tr>
@@ -168,15 +200,17 @@
                                                 <th scope="row">3</th>
                                                 <td>Palet Keluar</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-success" style="cursor: pointer; width: 100px"
-                                                        href="/manageHistory">Inactive</a>
+                                                    <a type="button" class="btn btn-success"
+                                                        style="cursor: pointer; width: 100px"
+                                                        href="/manageHistory">Active</a>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">4</th>
                                                 <td>History Stok by palet</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-danger" style="cursor: pointer; width: 100px"
+                                                    <a type="button" class="btn btn-danger"
+                                                        style="cursor: pointer; width: 100px"
                                                         href="/manageHistory">Inactive</a>
                                                 </td>
                                             </tr>
