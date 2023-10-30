@@ -241,7 +241,7 @@
                     </div>
                     <ul class="nav">
                         <li class="nav-item @yield('home')">
-                            <a href="home">
+                            <a href="/home">
                                 <i class="fas fa-home"></i>
                                 <p>Home</p>
                                 {{-- <span class="badge badge-count">5</span> --}}
@@ -285,7 +285,7 @@
                                             </li>
                                             <li class="@yield('managebrand')">
                                                 <a href="/manageBrand">
-                                                    <span class="sub-item">Data Brands</span>
+                                                    <span class="sub-item">Data Brand</span>
                                                 </a>
                                             </li>
                                         </ul>
