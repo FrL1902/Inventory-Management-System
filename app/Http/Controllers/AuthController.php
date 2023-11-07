@@ -30,7 +30,8 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             // return 'sukses';
-            return redirect(route('home'));
+            // return redirect(route('/home'));
+            return redirect('home');
         } else {
             // return 'Gagal. Informasi yang dimasukkan salah';
             // return redirect()->back()->withErrors('Gagal. informasi yang dimasukkan salah');
