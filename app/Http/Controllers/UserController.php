@@ -71,65 +71,68 @@ class UserController extends Controller
         //     $access->save();
         // }
 
-        DB::table('user_permissions')->insert([
-            [
-                'name' => $request->usernameform,
-                'page' => 'tambah_customer_baru',
-                'status' => '0',
-            ], [
-                'name' => $request->usernameform,
-                'page' => 'data_customer',
-                'status' => '0',
-            ], [
-                'name' => $request->usernameform,
-                'page' => 'tambah_brand_baru',
-                'status' => '0',
-            ], [
-                'name' => $request->usernameform,
-                'page' => 'data_brand',
-                'status' => '0',
-            ], [
-                'name' => $request->usernameform,
-                'page' => 'laporan_stok_by_pcs',
-                'status' => '0',
-            ], [
-                'name' => $request->usernameform,
-                'page' => 'tambah_barang_baru',
-                'status' => '0',
-            ], [
-                'name' => $request->usernameform,
-                'page' => 'data_barang',
-                'status' => '0',
-            ], [
-                'name' => $request->usernameform,
-                'page' => 'barang_datang',
-                'status' => '0',
-            ], [
-                'name' => $request->usernameform,
-                'page' => 'barang_keluar',
-                'status' => '0',
-            ], [
-                'name' => $request->usernameform,
-                'page' => 'history_stok_by_pcs',
-                'status' => '0',
-            ], [
-                'name' => $request->usernameform,
-                'page' => 'laporan_stok_by_palet',
-                'status' => '0',
-            ], [
-                'name' => $request->usernameform,
-                'page' => 'palet_masuk',
-                'status' => '0',
-            ], [
-                'name' => $request->usernameform,
-                'page' => 'palet_keluar',
-                'status' => '0',
-            ], [
-                'name' => $request->usernameform,
-                'page' => 'history_stok_by_palet',
-                'status' => '0',
-            ]
-        ]);
+        if ($request->optionsRadios == "user") {
+            DB::table('user_permissions')->insert([
+                [
+                    'name' => $request->usernameform,
+                    'page' => 'tambah_customer_baru',
+                    'status' => '0',
+                ], [
+                    'name' => $request->usernameform,
+                    'page' => 'data_customer',
+                    'status' => '0',
+                ], [
+                    'name' => $request->usernameform,
+                    'page' => 'tambah_brand_baru',
+                    'status' => '0',
+                ], [
+                    'name' => $request->usernameform,
+                    'page' => 'data_brand',
+                    'status' => '0',
+                ], [
+                    'name' => $request->usernameform,
+                    'page' => 'laporan_stok_by_pcs',
+                    'status' => '0',
+                ], [
+                    'name' => $request->usernameform,
+                    'page' => 'tambah_barang_baru',
+                    'status' => '0',
+                ], [
+                    'name' => $request->usernameform,
+                    'page' => 'data_barang',
+                    'status' => '0',
+                ], [
+                    'name' => $request->usernameform,
+                    'page' => 'barang_datang',
+                    'status' => '0',
+                ], [
+                    'name' => $request->usernameform,
+                    'page' => 'barang_keluar',
+                    'status' => '0',
+                ], [
+                    'name' => $request->usernameform,
+                    'page' => 'history_stok_by_pcs',
+                    'status' => '0',
+                ], [
+                    'name' => $request->usernameform,
+                    'page' => 'laporan_stok_by_palet',
+                    'status' => '0',
+                ], [
+                    'name' => $request->usernameform,
+                    'page' => 'palet_masuk',
+                    'status' => '0',
+                ], [
+                    'name' => $request->usernameform,
+                    'page' => 'palet_keluar',
+                    'status' => '0',
+                ], [
+                    'name' => $request->usernameform,
+                    'page' => 'history_stok_by_palet',
+                    'status' => '0',
+                ]
+            ]);
+        }
+
 
         $userAdded = $request->usernameform . " [" . $request->optionsRadios . "] " . "berhasil di tambahkan";
         $request->session()->flash('sukses_add', $userAdded);
@@ -148,6 +151,8 @@ class UserController extends Controller
         }
 
         $user = User::find($decrypted);
+
+        DB::table('user_permissions')->where('name', $user->name)->delete();
 
         $deletedUser = $user->name;
 
