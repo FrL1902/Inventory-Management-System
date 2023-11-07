@@ -24,28 +24,34 @@ class UserSeeder extends Seeder
             'pass' => 'admin',
         ]);
 
-        DB::table('users')->insert([
-            'name' => 'gudang',
-            'email' => 'gudang@gmail.com',
-            'password' => Hash::make('gudang'),
-            'level' => 'gudang',
-            'pass' => 'gudang',
-        ]);
+        DB::table('users')->insert([[
+            'name' => 'user1',
+            'email' => 'user1@gmail.com',
+            'password' => Hash::make('user1'),
+            'level' => 'user',
+            'pass' => 'user1',
+        ],[
+            'name' => 'user2',
+            'email' => 'user2@gmail.com',
+            'password' => Hash::make('user2'),
+            'level' => 'user',
+            'pass' => 'user2',
+        ]]);
 
-        DB::table('users')->insert([
-            'name' => 'customer',
-            'email' => 'customer@gmail.com',
-            'password' => Hash::make('customer'),
-            'level' => 'customer',
-            'pass' => 'customer',
-        ]);
+        // DB::table('users')->insert([
+        //     'name' => 'customer',
+        //     'email' => 'customer@gmail.com',
+        //     'password' => Hash::make('customer'),
+        //     'level' => 'customer',
+        //     'pass' => 'customer',
+        // ]);
 
-        DB::table('users')->insert([
-            'name' => 'kargo',
-            'email' => 'kargo@gmail.com',
-            'password' => Hash::make('kargo'),
-            'level' => 'cargo',
-            'pass' => 'cargo',
-        ]);
+        // DB::table('users')->insert([
+        //     'name' => 'kargo',
+        //     'email' => 'kargo@gmail.com',
+        //     'password' => Hash::make('kargo'),
+        //     'level' => 'cargo',
+        //     'pass' => 'cargo',
+        // ]);
     }
 }

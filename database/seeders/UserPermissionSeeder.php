@@ -15,126 +15,117 @@ class UserPermissionSeeder extends Seeder
     public function run()
     {
         DB::table('user_permissions')->insert([[
-            'name' => 'kargo',
-            'page' => 'home',
-            'status' => '1',
-        ],[
-            'name' => 'kargo',
+            'name' => 'user1',
             'page' => 'tambah_customer_baru',
             'status' => '1',
-        ],[
-            'name' => 'kargo',
+        ], [
+            'name' => 'user1',
             'page' => 'data_customer',
             'status' => '1',
-        ],[
-            'name' => 'kargo',
+        ], [
+            'name' => 'user1',
             'page' => 'tambah_brand_baru',
             'status' => '1',
-        ],[
-            'name' => 'kargo',
+        ], [
+            'name' => 'user1',
             'page' => 'data_brand',
             'status' => '1',
-        ],[
-            'name' => 'kargo',
+        ], [
+            'name' => 'user1',
             'page' => 'laporan_stok_by_pcs',
             'status' => '1',
-        ],[
-            'name' => 'kargo',
+        ], [
+            'name' => 'user1',
             'page' => 'tambah_barang_baru',
             'status' => '1',
-        ],[
-            'name' => 'kargo',
+        ], [
+            'name' => 'user1',
             'page' => 'data_barang',
             'status' => '1',
-        ],[
-            'name' => 'kargo',
+        ], [
+            'name' => 'user1',
             'page' => 'barang_datang',
             'status' => '1',
-        ],[
-            'name' => 'kargo',
+        ], [
+            'name' => 'user1',
             'page' => 'barang_keluar',
             'status' => '1',
-        ],[
-            'name' => 'kargo',
+        ], [
+            'name' => 'user1',
             'page' => 'history_stok_by_pcs',
             'status' => '1',
-        ],[
-            'name' => 'kargo',
+        ], [
+            'name' => 'user1',
             'page' => 'laporan_stok_by_palet',
             'status' => '1',
-        ],[
-            'name' => 'kargo',
+        ], [
+            'name' => 'user1',
             'page' => 'palet_masuk',
             'status' => '1',
-        ],[
-            'name' => 'kargo',
+        ], [
+            'name' => 'user1',
             'page' => 'palet_keluar',
             'status' => '1',
-        ],[
-            'name' => 'kargo',
+        ], [
+            'name' => 'user1',
             'page' => 'history_stok_by_palet',
             'status' => '1',
-        ],[ //ini batas buat misahin kargo sama gudang
-            'name' => 'gudang',
-            'page' => 'home',
-            'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [ //ini batas buat misahin kargo sama gudang td
+            'name' => 'user2',
             'page' => 'tambah_customer_baru',
             'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [
+            'name' => 'user2',
             'page' => 'data_customer',
             'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [
+            'name' => 'user2',
             'page' => 'tambah_brand_baru',
             'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [
+            'name' => 'user2',
             'page' => 'data_brand',
             'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [
+            'name' => 'user2',
             'page' => 'laporan_stok_by_pcs',
             'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [
+            'name' => 'user2',
             'page' => 'tambah_barang_baru',
             'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [
+            'name' => 'user2',
             'page' => 'data_barang',
             'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [
+            'name' => 'user2',
             'page' => 'barang_datang',
             'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [
+            'name' => 'user2',
             'page' => 'barang_keluar',
             'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [
+            'name' => 'user2',
             'page' => 'history_stok_by_pcs',
             'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [
+            'name' => 'user2',
             'page' => 'laporan_stok_by_palet',
             'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [
+            'name' => 'user2',
             'page' => 'palet_masuk',
             'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [
+            'name' => 'user2',
             'page' => 'palet_keluar',
             'status' => '1',
-        ],[
-            'name' => 'gudang',
+        ], [
+            'name' => 'user2',
             'page' => 'history_stok_by_palet',
             'status' => '1',
         ]]);
-
     }
 }
