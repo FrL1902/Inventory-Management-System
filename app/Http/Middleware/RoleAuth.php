@@ -19,23 +19,29 @@ class RoleAuth
     public function handle(Request $request, Closure $next, $page)
     // public function handle(Request $request, Closure $next, ...$roles)
     {
-        // dd('tse');
-        // Cek apakah user telah/masih login atau tidak. Jika tidak akan dibalikkan ke login page
+        // Cek apakah user telah/masih login atau tidak (session habis atau tidak). Jika auth gagal, akan dibalikkan ke login page
         if (!Auth::check()) {
             return redirect('/');
         }
 
+        // untuk mengambil role user
         $user = Auth::user();
 
-        // ADMIN BISA AKSES SEMUANYA (SUPERUSER IT)
-        if ($user->level == 'admin')
+        // Ini untuk yang role admin bisa akses semua page
+        if ($user->level == 'admin') {
             return $next($request);
+        }
 
-        // cek sesuai permission
-        // dd($user->name);
+        // ini buat ngurus middleware bagian page admin, payloadnya 'admin_page' di middleware
+        if ($page == 'admin_page' && $user->level == 'admin') {
+            return $next($request);
+        } else if ($page == 'admin_page' && $user->level != 'admin') {
+            dd('masuk admin');
+            return abort(401);
+        }
+
+        // paling bawah, validasi apakah user mempunyai akses ke page yang ingin dituju
         $pageStatus = UserPermission::where('name', $user->name)->where('page', $page)->first();
-        // dd($pageStatus);
-        // dd(is_null($tes));
         if ($pageStatus->status == 1) {
             return $next($request);
         }
