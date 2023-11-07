@@ -17,13 +17,6 @@
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ session('sukses_addNewCustomer') }}</strong>
                 </div>
-                {{-- @elseif (session('formatError'))
-                <div class="alert alert-danger alert-block" id="alertFailed">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Data Gagal Dimasukkan, {{ session('formatError') }} <span style="color: red"> \ /  : * ? " < > |
-                    </span></strong>
-                </div> --}}
-                gagalEmail_addNewCustomer
             @elseif ($errors->any())
                 <div class="alert alert-danger alert-block" id="alertFailed">
                     <button type="button" class="close" data-dismiss="alert">×</button>

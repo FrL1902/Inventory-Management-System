@@ -133,20 +133,6 @@
                                                                     id="itemImage" name="inPalletImage">
                                                             </div>
 
-                                                            {{-- <div class="form-group">
-                                                                <div class="card mt-5 "> --}}
-                                                                    {{-- <button id="" class="btn btn-primary">Insert
-                                                                        Data</button> --}}
-                                                                    {{-- <button class="btn btn-primary"
-                                                                        onclick="document.getElementById('itemAdd').style.display='inline-block';">
-                                                                        <strong>Insert Data</strong>
-                                                                        <i id="itemAdd" style="display:none"
-                                                                            class="loading-icon fa fa-spinner fa-spin"
-                                                                            aria-hidden="true"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div> --}}
-
                                                             <div class="form-group" id="submitInPalletButtonAdd">
                                                                 <div class="card mt-5 ">
                                                                     {{-- <button id="" class="btn btn-primary">Insert

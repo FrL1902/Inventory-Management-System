@@ -438,11 +438,6 @@
                                                 <th>Deskripsi</th>
                                                 <th>Gambar</th>
                                                 <th>Edit</th>
-                                                {{-- @auth
-                                                    @if (Auth::user()->level == 'admin')
-                                                        <th>Edit (admin)</th>
-                                                    @endif
-                                                @endauth --}}
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -457,11 +452,6 @@
                                                 <th>Deskripsi</th>
                                                 <th>Gambar</th>
                                                 <th>Edit</th>
-                                                {{-- @auth
-                                                    @if (Auth::user()->level == 'admin')
-                                                        <th>Edit (admin)</th>
-                                                    @endif
-                                                @endauth --}}
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -503,28 +493,6 @@
                                                             </a>
                                                         </div>
                                                     </td>
-                                                    {{-- @auth
-                                                        @if (Auth::user()->level == 'admin')
-                                                            <td>
-                                                                <div class="d-flex justify-content-center">
-                                                                    <a style="cursor: pointer" class="mb-2"
-                                                                        data-target="#editModalCenter{{ $incoming->id }}"
-                                                                        data-toggle="modal">
-                                                                        <i class="fa fa-edit mt-3 text-primary"
-                                                                            data-toggle="tooltip"
-                                                                            data-original-title="Edit Data Barang Masuk"></i>
-                                                                    </a>
-                                                                    <a class="ml-3 mb-2" style="cursor: pointer"
-                                                                        data-target="#deleteModal{{ $incoming->id }}"
-                                                                        data-toggle="modal">
-                                                                        <i class="fa fa-times mt-3 text-danger"
-                                                                            data-toggle="tooltip"
-                                                                            data-original-title="Hapus Data Barang Masuk"></i>
-                                                                    </a>
-                                                                </div>
-                                                            </td>
-                                                        @endif
-                                                    @endauth --}}
                                                 </tr>
                                                 {{-- FullSize Gambar --}}
                                                 <div class="modal fade" id="imageModalCenter{{ $incoming->id }}"
@@ -637,9 +605,6 @@
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <div class="card mt-5 ">
-                                                                                    {{-- <button id=""
-                                                                                        class="btn btn-primary">Update
-                                                                                        Data Barang</button> --}}
                                                                                     <button class="btn btn-primary"
                                                                                         onclick="document.getElementById('itemAdd').style.display='inline-block';">
                                                                                         <strong>Update Data

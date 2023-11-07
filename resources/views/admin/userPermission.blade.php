@@ -30,40 +30,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- bagian home --}}
-                                            <tr>
-                                                <th class="table-secondary" class="width:100%" scope="row">Menu: </th>
-                                                <td class="table-secondary"><strong>Home</strong></td>
-                                                <td class="table-secondary"></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Home</td>
-                                                @if (App\Models\UserPermission::checkPageStatus($user->name, 'home') == 1)
-                                                    <td>
-                                                        <form method="post" action="/permissionToFalse">
-                                                            @csrf
-
-                                                            <button class="btn btn-success"
-                                                                style="cursor: pointer; width: 100px">Active</button>
-
-                                                            <input type="hidden" name="page" value="home">
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
-                                                        </form>
-                                                    </td>
-                                                @else
-                                                    <td>
-                                                        <form method="post" action="/permissionToTrue">
-                                                            @csrf
-                                                            <button class="btn btn-danger"
-                                                                style="cursor: pointer; width: 100px">Inactive</button>
-
-                                                            <input type="hidden" name="page" value="home">
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
-                                                        </form>
-                                                    </td>
-                                                @endif
-                                            </tr>
                                             {{-- kelola customer --}}
                                             <tr>
                                                 <th class="table-secondary" class="width:100%" scope="row">Menu: </th>

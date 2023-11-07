@@ -16,15 +16,16 @@ class UserPermission extends Model
         return $this->belongsTo(User::class, 'name');
     }
 
-    public static function checkPageStatus($name, $page){
+    public static function checkPageStatus($name, $page)
+    {
 
-        $userLevel = User::where('name', $name)->first(); //21-24 ini belum tentu bisa
-        if($userLevel->level == 'admin'){
+        $userLevel = User::where('name', $name)->first();
+        if ($userLevel->level == 'admin') {
             return 1;
         }
 
+        // dd($name. ' ' . $page);
         $pageStatus = UserPermission::where('name', $name)->where('page', $page)->first();
-        // dd($pageStatus);
         // dd(is_null($tes));
         if ($pageStatus->status == 1) {
             return 1;

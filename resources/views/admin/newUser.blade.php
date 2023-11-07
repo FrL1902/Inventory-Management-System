@@ -11,6 +11,7 @@
     <div class="content">
         <div class="page-inner">
 
+            {{-- errors --}}
             @if (session('sukses_add'))
                 <div class="alert alert-success alert-block" id="alertSuccess">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -44,9 +45,6 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    {{-- <input type="password" class="form-control" id="password" placeholder="Password"
-                                        name="passwordform" required> --}}
-                                    {{-- contoh "required" kalo lgsg dari htmlnya^, tp sih pake aja yg dari phpnya --}}
                                     <input type="password" class="form-control" id="password" placeholder="Password"
                                         name="passwordform" required>
                                 </div>
@@ -55,39 +53,19 @@
                                     <label class="form-radio-label">
                                         <input class="form-radio-input" type="radio" name="optionsRadios"
                                             value="admin">
-                                            {{-- <input class="form-radio-input" type="radio" name="optionsRadios"
-                                            value="admin" checked=""> --}}
                                         <span class="form-radio-sign">Admin</span>
                                     </label>
                                     <label class="form-radio-label ml-3">
                                         <input class="form-radio-input" type="radio" name="optionsRadios"
-                                            value="gudang">
-                                        <span class="form-radio-sign">Gudang</span>
-                                    </label>
-                                    <label class="form-radio-label ml-3">
-                                        <input class="form-radio-input" type="radio" name="optionsRadios"
-                                            value="customer">
-                                        <span class="form-radio-sign">Customer</span>
-                                    </label>
-                                    <label class="form-radio-label ml-3">
-                                        <input class="form-radio-input" type="radio" name="optionsRadios"
-                                            value="cargo">
-                                        <span class="form-radio-sign">Kargo</span>
+                                            value="user">
+                                        <span class="form-radio-sign">User</span>
                                     </label>
                                 </div>
                                 <div class="card mt-4">
-                                    <button id="" class="btn btn-success">Make New Account</button>
+                                    <button id="" class="btn btn-success">
+                                        <strong>Buat Akun Baru</strong>
+                                    </button>
                                 </div>
-                                {{-- @if ($errors->any())
-                                    <span class="text-danger">{{ $errors->first() }}</span>
-                                @endif --}}
-
-                                {{-- @if ($errors->any())
-                                    @foreach ($errors->all() as $err)
-                                        <li class="text-danger">{{ $err }}</li>
-                                    @endforeach
-                                @endif --}}
-                                {{-- @include('sweetalert::alert') --}}
                             </div>
                         </form>
                     </div>

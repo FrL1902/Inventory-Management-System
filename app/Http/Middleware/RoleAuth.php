@@ -46,7 +46,7 @@ class RoleAuth
             return $next($request);
         }
 
-        // cek apakah user punya salah satu role dari yang diberi di parameter middleware
+        // cek apakah user punya salah satu role dari yang diberi di parameter middleware || udah ngga dipake lagi
         // foreach ($roles as $role) {
         //     if ($user->level == $role)
         //         return $next($request);
