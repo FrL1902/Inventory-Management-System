@@ -31,6 +31,8 @@ Route::get('/', function () {
     return view('login');
 });
 
+Route::get('/home', [HomeController::class, 'index']);
+Route::get('/logout', [AuthController::class, 'logout']);
 // buat login bisa semuanya
 Route::post('/login', [AuthController::class, 'cek_login']);
 
@@ -77,93 +79,171 @@ Route::middleware(['role:admin'])->group(function () {
     Route::post('exportCustomerBrand', [BrandController::class, 'exportCustomerBrand'])->name('exportCustomerBrand');
 });
 
+// NEW CUSTOM MIDDLEWARE TEST============================================================================
+// Page: Tambah Barang Baru
+Route::get('/newItem', [ItemController::class, 'new_item_page'])->middleware('role:tambah_barang_baru');
+Route::post('/makeItem', [ItemController::class, 'makeItem'])->middleware('role:tambah_barang_baru');
+
+// Page: Ubah Data Barang
+Route::get('/manageItem', [ItemController::class, 'manage_item_page'])->middleware('role:data_barang');
+Route::get('/deleteItem/{id}', [ItemController::class, 'deleteItem'])->middleware('role:data_barang');
+Route::post('/updateItem', [ItemController::class, 'updateItem'])->middleware('role:data_barang');
+Route::post('/exportCustomerItem', [ItemController::class, 'exportCustomerItem'])->name('exportCustomerItem')->middleware('role:data_barang');
+Route::post('/exportBrandItem', [ItemController::class, 'exportBrandItem'])->name('exportBrandItem')->middleware('role:data_barang');
+
+// Page: Barang Datang
+Route::post('/addItemStock', [IncomingController::class, 'addItemStock'])->middleware('role:barang_datang');
+Route::get('/newIncoming', [IncomingController::class, 'add_incoming_item_page'])->middleware('role:barang_datang');
+Route::get('/deleteItemIncoming/{id}', [IncomingController::class, 'deleteItemIncoming'])->middleware('role:barang_datang');
+Route::post('/updateIncomingData', [IncomingController::class, 'updateIncomingData'])->middleware('role:barang_datang');
+Route::post('/exportIncoming', [IncomingController::class, 'exportIncoming'])->name('exportIncoming')->middleware('role:barang_datang');
+Route::post('/exportIncomingCustomer', [IncomingController::class, 'exportIncomingCustomer'])->name('exportIncomingCustomer')->middleware('role:barang_datang');
+Route::post('/exportIncomingBrand', [IncomingController::class, 'exportIncomingBrand'])->name('exportIncomingBrand')->middleware('role:barang_datang');
+Route::post('/exportIncomingItem', [IncomingController::class, 'exportIncomingItem'])->name('exportIncomingItem')->middleware('role:barang_datang');
+
+// Page: Barang Keluar
+Route::post('/reduceItemStock', [OutgoingController::class, 'reduceItemStock'])->middleware('role:barang_keluar');
+Route::get('/newOutgoing', [OutgoingController::class, 'add_outgoing_item_page'])->middleware('role:barang_keluar');
+Route::get('/deleteItemOutgoing/{id}', [OutgoingController::class, 'deleteItemOutgoing'])->middleware('role:barang_keluar');
+Route::post('/updateOutgoingData', [OutgoingController::class, 'updateOutgoingData'])->middleware('role:barang_keluar');
+Route::post('/exportOutgoing', [OutgoingController::class, 'exportOutgoing'])->name('exportOutgoing')->middleware('role:barang_keluar');
+Route::post('/exportOutgoingCustomer', [OutgoingController::class, 'exportOutgoingCustomer'])->name('exportOutgoingCustomer')->middleware('role:barang_keluar');
+Route::post('/exportOutgoingBrand', [OutgoingController::class, 'exportOutgoingBrand'])->name('exportOutgoingBrand')->middleware('role:barang_keluar');
+Route::post('/exportOutgoingItem', [OutgoingController::class, 'exportOutgoingItem'])->name('exportOutgoingItem')->middleware('role:barang_keluar');
+
+// Pallet
+// Route::get('/managePallet', [PalletController::class, 'manage_pallet_page'])->middleware('role:admin,gudang,cargo');
+
+// inPallet
+Route::get('/inPallet', [InPalletController::class, 'in_pallet_page'])->middleware('role:palet_masuk');
+Route::post('/addNewPallet', [InPalletController::class, 'add_pallet'])->middleware('role:palet_masuk');
+Route::post('/reducePalletStock', [InPalletController::class, 'reduce_pallet_stock'])->middleware('role:palet_masuk');
+
+// outPallet
+Route::get('/outPallet', [OutPalletController::class, 'out_pallet_page'])->middleware('role:palet_keluar');
+
+
+
+// Page: History Stok by pcs
+Route::get('/manageHistory', [ItemController::class, 'item_history_page']);
+Route::post('/filterHistoryDate', [StockHistoryController::class, 'filterHistoryDate']);
+Route::post('/exportItemHistory', [StockHistoryController::class, 'exportItemHistory'])->name('exportItemHistory');
+Route::post('/exportHistoryByDate', [StockHistoryController::class, 'exportHistoryByDate'])->name('exportHistoryByDate');
+
+// Page: Laporan Stok by pcs
+Route::get('/itemReport', [ItemController::class, 'item_report_page']);
+Route::post('/exportItemReportCustomer', [ItemController::class, 'exportItemReportCustomer']);
+Route::post('/exportItemReportBrand', [ItemController::class, 'exportItemReportBrand']);
+Route::post('/exportItemReportItem', [ItemController::class, 'exportItemReportItem']);
+Route::post('/exportItemReportDate', [ItemController::class, 'exportItemReportDate']);
+
+// Page: Laporan Stok by palet
+Route::get('/palletReport', [PalletController::class, 'pallet_report_page']);
+Route::post('/exportPalletReportCustomer', [PalletController::class, 'exportPalletReportCustomer']);
+Route::post('/exportPalletReportBrand', [PalletController::class, 'exportPalletReportBrand']);
+Route::post('/exportPalletReportItem', [PalletController::class, 'exportPalletReportItem']);
+Route::post('/exportPalletReportDate', [PalletController::class, 'exportPalletReportDate']);
+
+// Page: History Stok by palet
+Route::get('/managePalletHistory', [PalletController::class, 'manage_pallet_history_page']);
+Route::post('/exportPalletItemHistory', [PalletController::class, 'exportPalletItemHistory'])->name('exportPalletItemHistory');
+Route::post('/exportPalletHistoryByDate', [PalletController::class, 'exportPalletHistoryByDate'])->name('exportPalletHistoryByDate');
+Route::post('/filterPalletHistoryDate', [PalletController::class, 'filterPalletHistoryDate']);
+
+// User Credentials
+Route::get('/creds/{id}', [AuthController::class, 'show_creds']);
+Route::post('/updateUser', [AuthController::class, 'updateUser']);
+
+
+// OLD COMBINATION VERSION 2 WITH NO CUSTOM MIDDLEWARE BELOW======================================
+
 //Combination of role middlewares starts here================
 
 // Page: Tambah Barang Baru
-Route::get('/newItem', [ItemController::class, 'new_item_page'])->middleware('role:admin,cargo');
-Route::post('/makeItem', [ItemController::class, 'makeItem'])->middleware('role:admin,cargo');
+// Route::get('/newItem', [ItemController::class, 'new_item_page'])->middleware('role:admin,cargo');
+// Route::post('/makeItem', [ItemController::class, 'makeItem'])->middleware('role:admin,cargo');
 
-// Page: Ubah Data Barang
-Route::get('/manageItem', [ItemController::class, 'manage_item_page'])->middleware('role:admin,cargo');
-Route::get('/deleteItem/{id}', [ItemController::class, 'deleteItem'])->middleware('role:admin,cargo');
-Route::post('/updateItem', [ItemController::class, 'updateItem'])->middleware('role:admin,cargo');
-Route::post('/exportCustomerItem', [ItemController::class, 'exportCustomerItem'])->name('exportCustomerItem')->middleware('role:admin,cargo');
-Route::post('/exportBrandItem', [ItemController::class, 'exportBrandItem'])->name('exportBrandItem')->middleware('role:admin,cargo');
+// // Page: Ubah Data Barang
+// Route::get('/manageItem', [ItemController::class, 'manage_item_page'])->middleware('role:admin,cargo');
+// Route::get('/deleteItem/{id}', [ItemController::class, 'deleteItem'])->middleware('role:admin,cargo');
+// Route::post('/updateItem', [ItemController::class, 'updateItem'])->middleware('role:admin,cargo');
+// Route::post('/exportCustomerItem', [ItemController::class, 'exportCustomerItem'])->name('exportCustomerItem')->middleware('role:admin,cargo');
+// Route::post('/exportBrandItem', [ItemController::class, 'exportBrandItem'])->name('exportBrandItem')->middleware('role:admin,cargo');
 
-// Page: Barang Datang
-Route::post('/addItemStock', [IncomingController::class, 'addItemStock'])->middleware('role:admin,gudang,cargo');
-Route::get('/newIncoming', [IncomingController::class, 'add_incoming_item_page'])->middleware('role:admin,gudang,cargo');
-Route::get('/deleteItemIncoming/{id}', [IncomingController::class, 'deleteItemIncoming'])->middleware('role:admin,gudang,cargo');
-Route::post('/updateIncomingData', [IncomingController::class, 'updateIncomingData'])->middleware('role:admin,gudang,cargo');
-Route::post('/exportIncoming', [IncomingController::class, 'exportIncoming'])->name('exportIncoming')->middleware('role:admin,gudang,cargo');
-Route::post('/exportIncomingCustomer', [IncomingController::class, 'exportIncomingCustomer'])->name('exportIncomingCustomer')->middleware('role:admin,gudang,cargo');
-Route::post('/exportIncomingBrand', [IncomingController::class, 'exportIncomingBrand'])->name('exportIncomingBrand')->middleware('role:admin,gudang,cargo');
-Route::post('/exportIncomingItem', [IncomingController::class, 'exportIncomingItem'])->name('exportIncomingItem')->middleware('role:admin,gudang,cargo');
+// // Page: Barang Datang
+// Route::post('/addItemStock', [IncomingController::class, 'addItemStock'])->middleware('role:admin,gudang,cargo');
+// Route::get('/newIncoming', [IncomingController::class, 'add_incoming_item_page'])->middleware('role:admin,gudang,cargo');
+// Route::get('/deleteItemIncoming/{id}', [IncomingController::class, 'deleteItemIncoming'])->middleware('role:admin,gudang,cargo');
+// Route::post('/updateIncomingData', [IncomingController::class, 'updateIncomingData'])->middleware('role:admin,gudang,cargo');
+// Route::post('/exportIncoming', [IncomingController::class, 'exportIncoming'])->name('exportIncoming')->middleware('role:admin,gudang,cargo');
+// Route::post('/exportIncomingCustomer', [IncomingController::class, 'exportIncomingCustomer'])->name('exportIncomingCustomer')->middleware('role:admin,gudang,cargo');
+// Route::post('/exportIncomingBrand', [IncomingController::class, 'exportIncomingBrand'])->name('exportIncomingBrand')->middleware('role:admin,gudang,cargo');
+// Route::post('/exportIncomingItem', [IncomingController::class, 'exportIncomingItem'])->name('exportIncomingItem')->middleware('role:admin,gudang,cargo');
 
-// Page: Barang Keluar
-Route::post('/reduceItemStock', [OutgoingController::class, 'reduceItemStock'])->middleware('role:admin,gudang,cargo');
-Route::get('/newOutgoing', [OutgoingController::class, 'add_outgoing_item_page'])->middleware('role:admin,gudang,cargo');
-Route::get('/deleteItemOutgoing/{id}', [OutgoingController::class, 'deleteItemOutgoing'])->middleware('role:admin,gudang,cargo');
-Route::post('/updateOutgoingData', [OutgoingController::class, 'updateOutgoingData'])->middleware('role:admin,gudang,cargo');
-Route::post('/exportOutgoing', [OutgoingController::class, 'exportOutgoing'])->name('exportOutgoing')->middleware('role:admin,gudang,cargo');
-Route::post('/exportOutgoingCustomer', [OutgoingController::class, 'exportOutgoingCustomer'])->name('exportOutgoingCustomer')->middleware('role:admin,gudang,cargo');
-Route::post('/exportOutgoingBrand', [OutgoingController::class, 'exportOutgoingBrand'])->name('exportOutgoingBrand')->middleware('role:admin,gudang,cargo');
-Route::post('/exportOutgoingItem', [OutgoingController::class, 'exportOutgoingItem'])->name('exportOutgoingItem')->middleware('role:admin,gudang,cargo');
+// // Page: Barang Keluar
+// Route::post('/reduceItemStock', [OutgoingController::class, 'reduceItemStock'])->middleware('role:admin,gudang,cargo');
+// Route::get('/newOutgoing', [OutgoingController::class, 'add_outgoing_item_page'])->middleware('role:admin,gudang,cargo');
+// Route::get('/deleteItemOutgoing/{id}', [OutgoingController::class, 'deleteItemOutgoing'])->middleware('role:admin,gudang,cargo');
+// Route::post('/updateOutgoingData', [OutgoingController::class, 'updateOutgoingData'])->middleware('role:admin,gudang,cargo');
+// Route::post('/exportOutgoing', [OutgoingController::class, 'exportOutgoing'])->name('exportOutgoing')->middleware('role:admin,gudang,cargo');
+// Route::post('/exportOutgoingCustomer', [OutgoingController::class, 'exportOutgoingCustomer'])->name('exportOutgoingCustomer')->middleware('role:admin,gudang,cargo');
+// Route::post('/exportOutgoingBrand', [OutgoingController::class, 'exportOutgoingBrand'])->name('exportOutgoingBrand')->middleware('role:admin,gudang,cargo');
+// Route::post('/exportOutgoingItem', [OutgoingController::class, 'exportOutgoingItem'])->name('exportOutgoingItem')->middleware('role:admin,gudang,cargo');
 
-// Pallet
-Route::get('/managePallet', [PalletController::class, 'manage_pallet_page'])->middleware('role:admin,gudang,cargo');
-// Route::post('/addNewPallet', [PalletController::class, 'add_pallet'])->middleware('role:admin,gudang,cargo');
-// Route::get('/removePallet/{id}', [PalletController::class, 'remove_pallet'])->middleware('role:admin,gudang,cargo');
-// Route::post('/reducePalletStock', [PalletController::class, 'reduce_pallet_stock'])->middleware('role:admin,gudang,cargo');
+// // Pallet
+// Route::get('/managePallet', [PalletController::class, 'manage_pallet_page'])->middleware('role:admin,gudang,cargo');
+// // Route::post('/addNewPallet', [PalletController::class, 'add_pallet'])->middleware('role:admin,gudang,cargo');
+// // Route::get('/removePallet/{id}', [PalletController::class, 'remove_pallet'])->middleware('role:admin,gudang,cargo');
+// // Route::post('/reducePalletStock', [PalletController::class, 'reduce_pallet_stock'])->middleware('role:admin,gudang,cargo');
 
-// inPallet
-Route::get('/inPallet', [InPalletController::class, 'in_pallet_page'])->middleware('role:admin,gudang,cargo');
-Route::post('/addNewPallet', [InPalletController::class, 'add_pallet'])->middleware('role:admin,gudang,cargo');
-Route::post('/reducePalletStock', [InPalletController::class, 'reduce_pallet_stock'])->middleware('role:admin,gudang,cargo');
+// // inPallet
+// Route::get('/inPallet', [InPalletController::class, 'in_pallet_page'])->middleware('role:admin,gudang,cargo');
+// Route::post('/addNewPallet', [InPalletController::class, 'add_pallet'])->middleware('role:admin,gudang,cargo');
+// Route::post('/reducePalletStock', [InPalletController::class, 'reduce_pallet_stock'])->middleware('role:admin,gudang,cargo');
 
-// outPallet
-Route::get('/outPallet', [OutPalletController::class, 'out_pallet_page'])->middleware('role:admin,gudang,cargo');
+// // outPallet
+// Route::get('/outPallet', [OutPalletController::class, 'out_pallet_page'])->middleware('role:admin,gudang,cargo');
 
 
-//Combination of role middlewares ends here ================
+// //Combination of role middlewares ends here ================
 
-// BISA DIAKSES SEMUA
-Route::middleware(['role:admin,customer,gudang,cargo'])->group(function () {
-    Route::get('/home', [HomeController::class, 'index']);
-    // Route::get('/home', [HomeController::class, 'index'])->name('home'); jadi kalo pake name ini, misal masuk page dynamic kyk creds (Change Password) ato gak kayak "userPagePermission" nanti bakal ngestack jadi kyk http://127.0.0.1:8000/creds/home. nah ini nanti rutenya gagal karena ya ga ada rutenya. jadi jgn pake name
-    Route::get('/logout', [AuthController::class, 'logout']);
+// // BISA DIAKSES SEMUA
+// Route::middleware(['role:admin,customer,gudang,cargo'])->group(function () {
+//     Route::get('/home', [HomeController::class, 'index']);
+//     // Route::get('/home', [HomeController::class, 'index'])->name('home'); jadi kalo pake name ini, misal masuk page dynamic kyk creds (Change Password) ato gak kayak "userPagePermission" nanti bakal ngestack jadi kyk http://127.0.0.1:8000/creds/home. nah ini nanti rutenya gagal karena ya ga ada rutenya. jadi jgn pake name
+//     Route::get('/logout', [AuthController::class, 'logout']);
 
-    // Page: History Stok by pcs
-    Route::get('/manageHistory', [ItemController::class, 'item_history_page']);
-    Route::post('/filterHistoryDate', [StockHistoryController::class, 'filterHistoryDate']);
-    Route::post('/exportItemHistory', [StockHistoryController::class, 'exportItemHistory'])->name('exportItemHistory');
-    Route::post('/exportHistoryByDate', [StockHistoryController::class, 'exportHistoryByDate'])->name('exportHistoryByDate');
+//     // Page: History Stok by pcs
+//     Route::get('/manageHistory', [ItemController::class, 'item_history_page']);
+//     Route::post('/filterHistoryDate', [StockHistoryController::class, 'filterHistoryDate']);
+//     Route::post('/exportItemHistory', [StockHistoryController::class, 'exportItemHistory'])->name('exportItemHistory');
+//     Route::post('/exportHistoryByDate', [StockHistoryController::class, 'exportHistoryByDate'])->name('exportHistoryByDate');
 
-    // Page: Laporan Stok by pcs
-    Route::get('/itemReport', [ItemController::class, 'item_report_page']);
-    // Route::post('/exportItemReport', [ItemController::class, 'exportItemReport']);
-    Route::post('/exportItemReportCustomer', [ItemController::class, 'exportItemReportCustomer']);
-    Route::post('/exportItemReportBrand', [ItemController::class, 'exportItemReportBrand']);
-    Route::post('/exportItemReportItem', [ItemController::class, 'exportItemReportItem']);
-    Route::post('/exportItemReportDate', [ItemController::class, 'exportItemReportDate']);
+//     // Page: Laporan Stok by pcs
+//     Route::get('/itemReport', [ItemController::class, 'item_report_page']);
+//     // Route::post('/exportItemReport', [ItemController::class, 'exportItemReport']);
+//     Route::post('/exportItemReportCustomer', [ItemController::class, 'exportItemReportCustomer']);
+//     Route::post('/exportItemReportBrand', [ItemController::class, 'exportItemReportBrand']);
+//     Route::post('/exportItemReportItem', [ItemController::class, 'exportItemReportItem']);
+//     Route::post('/exportItemReportDate', [ItemController::class, 'exportItemReportDate']);
 
-    // Page: Laporan Stok by palet
-    Route::get('/palletReport', [PalletController::class, 'pallet_report_page']);
-    Route::post('/exportPalletReportCustomer', [PalletController::class, 'exportPalletReportCustomer']);
-    Route::post('/exportPalletReportBrand', [PalletController::class, 'exportPalletReportBrand']);
-    Route::post('/exportPalletReportItem', [PalletController::class, 'exportPalletReportItem']);
-    Route::post('/exportPalletReportDate', [PalletController::class, 'exportPalletReportDate']);
+//     // Page: Laporan Stok by palet
+//     Route::get('/palletReport', [PalletController::class, 'pallet_report_page']);
+//     Route::post('/exportPalletReportCustomer', [PalletController::class, 'exportPalletReportCustomer']);
+//     Route::post('/exportPalletReportBrand', [PalletController::class, 'exportPalletReportBrand']);
+//     Route::post('/exportPalletReportItem', [PalletController::class, 'exportPalletReportItem']);
+//     Route::post('/exportPalletReportDate', [PalletController::class, 'exportPalletReportDate']);
 
-    // Page: History Stok by palet
-    Route::get('/managePalletHistory', [PalletController::class, 'manage_pallet_history_page']);
-    Route::post('/exportPalletItemHistory', [PalletController::class, 'exportPalletItemHistory'])->name('exportPalletItemHistory');
-    Route::post('/exportPalletHistoryByDate', [PalletController::class, 'exportPalletHistoryByDate'])->name('exportPalletHistoryByDate');
-    Route::post('/filterPalletHistoryDate', [PalletController::class, 'filterPalletHistoryDate']);
+//     // Page: History Stok by palet
+//     Route::get('/managePalletHistory', [PalletController::class, 'manage_pallet_history_page']);
+//     Route::post('/exportPalletItemHistory', [PalletController::class, 'exportPalletItemHistory'])->name('exportPalletItemHistory');
+//     Route::post('/exportPalletHistoryByDate', [PalletController::class, 'exportPalletHistoryByDate'])->name('exportPalletHistoryByDate');
+//     Route::post('/filterPalletHistoryDate', [PalletController::class, 'filterPalletHistoryDate']);
 
-    // User Credentials
-    Route::get('/creds/{id}', [AuthController::class, 'show_creds']);
-    Route::post('/updateUser', [AuthController::class, 'updateUser']);
-});
+//     // User Credentials
+//     Route::get('/creds/{id}', [AuthController::class, 'show_creds']);
+//     Route::post('/updateUser', [AuthController::class, 'updateUser']);
+// });
 
 
 // Route::post('/exportExcel', [UserController::class, 'exportExcel'])->name('exportExcel'); //export user kalo ada atribut

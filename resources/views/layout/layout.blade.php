@@ -105,7 +105,7 @@
 
     #overlayPage {
         position: fixed;
-        display:none;
+        display: none;
         top: 0;
         left: 0;
         width: 100%;
@@ -302,15 +302,23 @@
                             {{-- color of the pressed button is style="background-color: #f7f7f7" --}}
                             <div class="collapse @yield('showmanageitem')" id="item">
                                 <ul class="nav nav-collapse">
-                                    @auth
-                                        {{-- @if (Auth::user()->level != 'gudang') --}}
-                                            <li class="@yield('itemreport')">
-                                                <a href="/itemReport">
-                                                    <span class="sub-item">Laporan Stok by pcs</span>
-                                                </a>
-                                            </li>
-                                        {{-- @endif --}}
-                                    @endauth
+                                    @if (App\Models\UserPermission::checkPageStatus(Auth::user()->name, 'laporan_stok_by_pcs') == 1)
+                                        <li class="@yield('itemreport')">
+                                            <a href="/itemReport">
+                                                <span class="sub-item">Laporan Stok by pcs</span>
+                                            </a>
+                                        </li>
+                                    @endif
+
+                                    {{-- @auth --}}
+                                    {{-- @if (Auth::user()->level != 'gudang') --}}
+                                    {{-- <li class="@yield('itemreport')">
+                                        <a href="/itemReport">
+                                            <span class="sub-item">Laporan Stok by pcs</span>
+                                        </a>
+                                    </li> --}}
+                                    {{-- @endif --}}
+                                    {{-- @endauth --}}
                                     @auth
                                         @if (Auth::user()->level == 'admin' || Auth::user()->level == 'cargo')
                                             <li class="@yield('newitem')">
@@ -358,11 +366,11 @@
                                 <ul class="nav nav-collapse">
                                     @auth
                                         {{-- @if (Auth::user()->level != 'gudang') --}}
-                                            <li class="@yield('palletreport')">
-                                                <a href="/palletReport">
-                                                    <span class="sub-item">Laporan Stok by palet</span>
-                                                </a>
-                                            </li>
+                                        <li class="@yield('palletreport')">
+                                            <a href="/palletReport">
+                                                <span class="sub-item">Laporan Stok by palet</span>
+                                            </a>
+                                        </li>
                                         {{-- @endif --}}
                                     @endauth
                                     @auth
