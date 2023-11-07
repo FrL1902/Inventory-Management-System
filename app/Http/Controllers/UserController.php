@@ -64,12 +64,72 @@ class UserController extends Controller
 
         $account->save();
 
-        if ($request->optionsRadios == "customer") {
-            $access = new UserAccess();
-            $access->user_id = $request->usernameform;
-            $access->customer_id = 0;
-            $access->save();
-        }
+        // if ($request->optionsRadios == "customer") {
+        //     $access = new UserAccess();
+        //     $access->user_id = $request->usernameform;
+        //     $access->customer_id = 0;
+        //     $access->save();
+        // }
+
+        DB::table('user_permissions')->insert([
+            [
+                'name' => $request->usernameform,
+                'page' => 'tambah_customer_baru',
+                'status' => '0',
+            ], [
+                'name' => $request->usernameform,
+                'page' => 'data_customer',
+                'status' => '0',
+            ], [
+                'name' => $request->usernameform,
+                'page' => 'tambah_brand_baru',
+                'status' => '0',
+            ], [
+                'name' => $request->usernameform,
+                'page' => 'data_brand',
+                'status' => '0',
+            ], [
+                'name' => $request->usernameform,
+                'page' => 'laporan_stok_by_pcs',
+                'status' => '0',
+            ], [
+                'name' => $request->usernameform,
+                'page' => 'tambah_barang_baru',
+                'status' => '0',
+            ], [
+                'name' => $request->usernameform,
+                'page' => 'data_barang',
+                'status' => '0',
+            ], [
+                'name' => $request->usernameform,
+                'page' => 'barang_datang',
+                'status' => '0',
+            ], [
+                'name' => $request->usernameform,
+                'page' => 'barang_keluar',
+                'status' => '0',
+            ], [
+                'name' => $request->usernameform,
+                'page' => 'history_stok_by_pcs',
+                'status' => '0',
+            ], [
+                'name' => $request->usernameform,
+                'page' => 'laporan_stok_by_palet',
+                'status' => '0',
+            ], [
+                'name' => $request->usernameform,
+                'page' => 'palet_masuk',
+                'status' => '0',
+            ], [
+                'name' => $request->usernameform,
+                'page' => 'palet_keluar',
+                'status' => '0',
+            ], [
+                'name' => $request->usernameform,
+                'page' => 'history_stok_by_palet',
+                'status' => '0',
+            ]
+        ]);
 
         $userAdded = $request->usernameform . " [" . $request->optionsRadios . "] " . "berhasil di tambahkan";
         $request->session()->flash('sukses_add', $userAdded);
@@ -286,7 +346,8 @@ class UserController extends Controller
         return view('admin.userPermission', compact('user'));
     }
 
-    public function permission_true(Request $request){
+    public function permission_true(Request $request)
+    {
         // dd(1);
         // $tes = UserPermission::where('name', $request->name)->where('page', $request->page)->first();
         // dd($tes);
@@ -297,7 +358,8 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function permission_false(Request $request){
+    public function permission_false(Request $request)
+    {
         // dd(2);
         // dd(UserPermission::where('name', $request->name)->where('page', $request->page)->first());
         UserPermission::where('name', $request->name)->where('page', $request->page)->update([
