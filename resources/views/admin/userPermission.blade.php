@@ -33,7 +33,10 @@
                                             {{-- kelola customer --}}
                                             <tr>
                                                 <th class="table-secondary" class="width:100%" scope="row">Menu: </th>
-                                                <td class="table-secondary"><strong>Kelola Customer</strong></td>
+                                                <td class="table-secondary">
+                                                    <i class="fa fa-users mr-2"></i>
+                                                    <strong>Kelola Customer</strong>
+                                                </td>
                                                 <td class="table-secondary"></td>
                                             </tr>
                                             <tr>
@@ -95,7 +98,10 @@
                                             {{-- kelola brand --}}
                                             <tr>
                                                 <th class="table-secondary" class="width:100%" scope="row">Menu: </th>
-                                                <td class="table-secondary"><strong>Kelola Brand</strong></td>
+                                                <td class="table-secondary">
+                                                    <i class="fa fa-th-large mr-2"></i>
+                                                    <strong>Kelola Brand</strong>
+                                                </td>
                                                 <td class="table-secondary"></td>
                                             </tr>
                                             <tr>
@@ -157,7 +163,10 @@
                                             {{-- Kelola Barang --}}
                                             <tr>
                                                 <th class="table-secondary" class="width:100%" scope="row">Menu: </th>
-                                                <td class="table-secondary"><strong>Kelola Barang</strong></td>
+                                                <td class="table-secondary">
+                                                    <i class="fa fa-truck mr-2"></i>
+                                                    <strong>Kelola Barang</strong>
+                                                </td>
                                                 <td class="table-secondary"></td>
                                             </tr>
                                             <tr>
@@ -328,10 +337,13 @@
                                                     </td>
                                                 @endif
                                             </tr>
-                                            {{-- Kelola Barang --}}
+                                            {{-- Kelola Palet --}}
                                             <tr>
                                                 <th class="table-secondary" class="width:100%" scope="row">Menu: </th>
-                                                <td class="table-secondary"><strong>Kelola Palet</strong></td>
+                                                <td class="table-secondary">
+                                                    <i class="fa fa-archive mr-2"></i>
+                                                    <strong>Kelola Palet</strong>
+                                                </td>
                                                 <td class="table-secondary"></td>
                                             </tr>
                                             <tr>
