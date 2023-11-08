@@ -31,8 +31,8 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/home', [HomeController::class, 'index']);
-Route::get('/logout', [AuthController::class, 'logout']);
+Route::get('/home', [HomeController::class, 'index'])->middleware('role:auth');
+Route::get('/logout', [AuthController::class, 'logout'])->middleware('role:auth');
 // buat login bisa semuanya
 Route::post('/login', [AuthController::class, 'cek_login']);
 
@@ -150,5 +150,5 @@ Route::post('/exportPalletHistoryByDate', [PalletController::class, 'exportPalle
 Route::post('/filterPalletHistoryDate', [PalletController::class, 'filterPalletHistoryDate'])->middleware('role:history_stok_by_palet');
 
 // User Credentials
-Route::get('/creds/{id}', [AuthController::class, 'show_creds']);
-Route::post('/updateUser', [AuthController::class, 'updateUser']);
+Route::get('/creds/{id}', [AuthController::class, 'show_creds'])->middleware('role:auth');
+Route::post('/updateUser', [AuthController::class, 'updateUser'])->middleware('role:auth');
