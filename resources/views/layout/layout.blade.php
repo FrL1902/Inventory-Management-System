@@ -247,124 +247,160 @@
                                 {{-- <span class="badge badge-count">5</span> --}}
                             </a>
                         </li>
-                        <li class="nav-item @yield('managecustomerbutton')">
-                            <a data-toggle="collapse" href="#customer">
-                                <i class="fa fa-users"></i>
-                                <p>Kelola Customer</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse @yield('showmanagecustomer')" id="customer">
-                                <ul class="nav nav-collapse">
-                                    <li class="@yield('newcustomer')">
-                                        <a href="/newCustomer">
-                                            <span class="sub-item">Tambah Customer Baru</span>
-                                        </a>
-                                    </li>
-                                    <li class="@yield('managecustomer')">
-                                        <a href="/manageCustomer">
-                                            <span class="sub-item">Data Customer</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item @yield('managebrandbutton')">
-                            <a data-toggle="collapse" href="#brand">
-                                <i class="fa fa-th-large"></i>
-                                <p>Kelola Brand</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse @yield('showmanagebrand')" id="brand">
-                                <ul class="nav nav-collapse">
-                                    <li class="@yield('newbrand')">
-                                        <a href="/newBrand">
-                                            <span class="sub-item">Tambah Brand Baru</span>
-                                        </a>
-                                    </li>
-                                    <li class="@yield('managebrand')">
-                                        <a href="/manageBrand">
-                                            <span class="sub-item">Data Brand</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item @yield('manageitembutton')">
-                            <a data-toggle="collapse" href="#item">
-                                <i class="fa fa-truck"></i>
-                                <p>Kelola Barang</p>
-                                <span class="caret"></span>
-                            </a>
-                            {{-- color of the pressed button is style="background-color: #f7f7f7" --}}
-                            <div class="collapse @yield('showmanageitem')" id="item">
-                                <ul class="nav nav-collapse">
-                                    {{-- @if (App\Models\UserPermission::checkPageStatus(Auth::user()->name, 'laporan_stok_by_pcs') == 1) --}}
-                                    <li class="@yield('itemreport')">
-                                        <a href="/itemReport">
-                                            <span class="sub-item">Laporan Stok by pcs</span>
-                                        </a>
-                                    </li>
-                                    {{-- @endif --}}
-                                    <li class="@yield('newitem')">
-                                        <a href="/newItem">
-                                            <span class="sub-item">Tambah Barang Baru</span>
-                                        </a>
-                                    </li>
-                                    <li class="@yield('manageitem')">
-                                        <a href="/manageItem">
-                                            <span class="sub-item">Data Barang</span>
-                                        </a>
-                                    </li>
-                                    <li class="@yield('newincoming')">
-                                        <a href="/newIncoming">
-                                            <span class="sub-item">Barang Datang</span>
-                                        </a>
-                                    </li>
-                                    <li class="@yield('newoutgoing')">
-                                        <a href="/newOutgoing">
-                                            <span class="sub-item">Barang Keluar</span>
-                                        </a>
-                                    </li>
-                                    <li class="@yield('managehistory')">
-                                        <a href="/manageHistory">
-                                            <span class="sub-item">History Stok by pcs</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item @yield('managepalletbutton')">
-                            <a data-toggle="collapse" href="#pallet">
-                                <i class="fa fa-archive"></i>
-                                <p>Kelola Palet</p>
-                                <span class="caret"></span>
-                            </a>
-                            {{-- color of the pressed button is style="background-color: #f7f7f7" --}}
-                            <div class="collapse @yield('showmanagepallet')" id="pallet">
-                                <ul class="nav nav-collapse">
-                                    <li class="@yield('palletreport')">
-                                        <a href="/palletReport">
-                                            <span class="sub-item">Laporan Stok by palet</span>
-                                        </a>
-                                    </li>
-                                    <li class="@yield('inpallet')">
-                                        <a href="/inPallet">
-                                            <span class="sub-item">Palet Masuk</span>
-                                        </a>
-                                    </li>
-                                    <li class="@yield('outpallet')">
-                                        <a href="/outPallet">
-                                            <span class="sub-item">Palet Keluar</span>
-                                        </a>
-                                    </li>
-                                    <li class="@yield('managepallethistory')">
-                                        <a href="/managePalletHistory">
-                                            <span class="sub-item">History Stok by palet</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                        @if (App\Models\UserPermission::checkMenuCustomer(auth()->user()->name) == true)
+                            <li class="nav-item @yield('managecustomerbutton')">
+                                <a data-toggle="collapse" href="#customer">
+                                    <i class="fa fa-users"></i>
+                                    <p>Kelola Customer</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse @yield('showmanagecustomer')" id="customer">
+                                    <ul class="nav nav-collapse">
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'tambah_customer_baru') == 1)
+                                            <li class="@yield('newcustomer')">
+                                                <a href="/newCustomer">
+                                                    <span class="sub-item">Tambah Customer Baru</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'data_customer') == 1)
+                                            <li class="@yield('managecustomer')">
+                                                <a href="/manageCustomer">
+                                                    <span class="sub-item">Data Customer</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            </li>
+                        @endif
+                        @if (App\Models\UserPermission::checkMenuBrand(auth()->user()->name) == true)
+                            <li class="nav-item @yield('managebrandbutton')">
+                                <a data-toggle="collapse" href="#brand">
+                                    <i class="fa fa-th-large"></i>
+                                    <p>Kelola Brand</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse @yield('showmanagebrand')" id="brand">
+                                    <ul class="nav nav-collapse">
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'tambah_brand_baru') == 1)
+                                            <li class="@yield('newbrand')">
+                                                <a href="/newBrand">
+                                                    <span class="sub-item">Tambah Brand Baru</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'data_brand') == 1)
+                                            <li class="@yield('managebrand')">
+                                                <a href="/manageBrand">
+                                                    <span class="sub-item">Data Brand</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            </li>
+                        @endif
+                        @if (App\Models\UserPermission::checkMenuBarang(auth()->user()->name) == true)
+                            <li class="nav-item @yield('manageitembutton')">
+                                <a data-toggle="collapse" href="#item">
+                                    <i class="fa fa-truck"></i>
+                                    <p>Kelola Barang</p>
+                                    <span class="caret"></span>
+                                </a>
+                                {{-- color of the pressed button is style="background-color: #f7f7f7" --}}
+                                <div class="collapse @yield('showmanageitem')" id="item">
+                                    <ul class="nav nav-collapse">
+                                        {{-- @if (App\Models\UserPermission::checkPageStatus(Auth::user()->name, 'laporan_stok_by_pcs') == 1) --}}
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'laporan_stok_by_pcs') == 1)
+                                            <li class="@yield('itemreport')">
+                                                <a href="/itemReport">
+                                                    <span class="sub-item">Laporan Stok by pcs</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        {{-- @endif --}}
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'tambah_barang_baru') == 1)
+                                            <li class="@yield('newitem')">
+                                                <a href="/newItem">
+                                                    <span class="sub-item">Tambah Barang Baru</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'data_barang') == 1)
+                                            <li class="@yield('manageitem')">
+                                                <a href="/manageItem">
+                                                    <span class="sub-item">Data Barang</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'barang_datang') == 1)
+                                            <li class="@yield('newincoming')">
+                                                <a href="/newIncoming">
+                                                    <span class="sub-item">Barang Datang</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'barang_keluar') == 1)
+                                            <li class="@yield('newoutgoing')">
+                                                <a href="/newOutgoing">
+                                                    <span class="sub-item">Barang Keluar</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'history_stok_by_pcs') == 1)
+                                            <li class="@yield('managehistory')">
+                                                <a href="/manageHistory">
+                                                    <span class="sub-item">History Stok by pcs</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            </li>
+                        @endif
+                        @if (App\Models\UserPermission::checkMenuPalet(auth()->user()->name) == true)
+                            <li class="nav-item @yield('managepalletbutton')">
+                                <a data-toggle="collapse" href="#pallet">
+                                    <i class="fa fa-archive"></i>
+                                    <p>Kelola Palet</p>
+                                    <span class="caret"></span>
+                                </a>
+                                {{-- color of the pressed button is style="background-color: #f7f7f7" --}}
+                                <div class="collapse @yield('showmanagepallet')" id="pallet">
+                                    <ul class="nav nav-collapse">
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'laporan_stok_by_palet') == 1)
+                                            <li class="@yield('palletreport')">
+                                                <a href="/palletReport">
+                                                    <span class="sub-item">Laporan Stok by palet</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'palet_masuk') == 1)
+                                            <li class="@yield('inpallet')">
+                                                <a href="/inPallet">
+                                                    <span class="sub-item">Palet Masuk</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'palet_keluar') == 1)
+                                            <li class="@yield('outpallet')">
+                                                <a href="/outPallet">
+                                                    <span class="sub-item">Palet Keluar</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (App\Models\UserPermission::checkPageStatus(auth()->user()->name, 'history_stok_by_palet') == 1)
+                                            <li class="@yield('managepallethistory')">
+                                                <a href="/managePalletHistory">
+                                                    <span class="sub-item">History Stok by palet</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            </li>
+                        @endif
                         @auth
                             @if (Auth::user()->level == 'admin')
                                 <li class="nav-section">
@@ -442,7 +478,7 @@
             placeholder: 'Pilih Customer'
         });
     </script>
-    
+
 
     {{-- Add New Item --}}
     <script>
