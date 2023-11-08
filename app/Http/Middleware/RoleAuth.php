@@ -27,8 +27,6 @@ class RoleAuth
         // ini untuk page yang ga butuh special permission, tapi cuma harus login doang
         if ($page == 'auth') {
             return $next($request);
-        } else {
-            return redirect('/');
         }
 
         // untuk mengambil role user
