@@ -30,11 +30,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('login');
 });
+// buat login bisa semuanya
+Route::post('/login', [AuthController::class, 'cek_login']);
 
 Route::get('/home', [HomeController::class, 'index'])->middleware('role:auth');
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('role:auth');
-// buat login bisa semuanya
-Route::post('/login', [AuthController::class, 'cek_login']);
+
+// User Credentials
+Route::get('/creds/{id}', [AuthController::class, 'show_creds'])->middleware('role:auth');
+Route::post('/updateUser', [AuthController::class, 'updateUser'])->middleware('role:auth');
 
 // HANYA BISA DIAKSES OLEH ADMIN
 Route::middleware(['role:admin_page'])->group(function () {
@@ -149,6 +153,3 @@ Route::post('/exportPalletItemHistory', [PalletController::class, 'exportPalletI
 Route::post('/exportPalletHistoryByDate', [PalletController::class, 'exportPalletHistoryByDate'])->name('exportPalletHistoryByDate')->middleware('role:history_stok_by_palet');
 Route::post('/filterPalletHistoryDate', [PalletController::class, 'filterPalletHistoryDate'])->middleware('role:history_stok_by_palet');
 
-// User Credentials
-Route::get('/creds/{id}', [AuthController::class, 'show_creds'])->middleware('role:auth');
-Route::post('/updateUser', [AuthController::class, 'updateUser'])->middleware('role:auth');
