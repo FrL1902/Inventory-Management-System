@@ -58,9 +58,9 @@ Route::middleware(['role:admin_page'])->group(function () {
     Route::post('/permissionToTrue', [UserController::class, 'permission_true']);
     Route::post('/permissionToFalse', [UserController::class, 'permission_false']);
 
-    // Page: User Access (LAGI NGGA DIPAKE)
-    // Route::post('/addNewUserAccess', [UserController::class, 'add_new_user_access']);
-    // Route::get('/deleteAccess/{id}', [UserController::class, 'delete_user_access']);
+    // Page: User Access
+    Route::post('/addNewUserAccess', [UserController::class, 'add_new_user_access']);
+    Route::get('/deleteAccess/{id}', [UserController::class, 'delete_user_access']);
 
 });
 
