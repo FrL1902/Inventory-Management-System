@@ -41,7 +41,7 @@ class RoleAuth
         if ($page == 'admin_page' && $user->level == 'admin') {
             return $next($request);
         } else if ($page == 'admin_page' && $user->level != 'admin') {
-            dd('masuk admin');
+            // dd('masuk admin');
             return abort(401);
         }
 
