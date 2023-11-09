@@ -37,4 +37,9 @@ class Customer extends Model
     {
         return $this->hasMany(Item::class, 'customer_id');
     }
+
+    public function user_access()
+    {
+        return $this->hasMany(UserAccess::class, 'customer_id');
+    }
 }

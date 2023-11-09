@@ -9,4 +9,9 @@ class UserAccess extends Model
 {
     use HasFactory;
     protected $table = 'user_accesses';
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
 }

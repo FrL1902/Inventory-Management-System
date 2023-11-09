@@ -153,6 +153,7 @@ class UserController extends Controller
         $user = User::find($decrypted);
 
         DB::table('user_permissions')->where('name', $user->name)->delete();
+        DB::table('user_accesses')->where('user_id', $user->name)->delete();
 
         $deletedUser = $user->name;
 
@@ -186,17 +187,18 @@ class UserController extends Controller
 
     public function user_access_page($id)
     {
-        // dd($id);
         try {
             $decrypted = decrypt($id);
         } catch (DecryptException $e) {
             abort(403);
         }
+        // dd($decrypted);
 
         $user = User::find($decrypted);
+        // dd($user->name);
         $customer = Customer::all();
         // $access = UserAccess::where('user_id', $id)->get();
-        $access = DB::table('user_accesses')->join('customer', 'user_accesses.customer_id', '=', 'customer.id')->select('user_accesses.*', 'customer.customer_name', 'customer.customer_id')->where('user_id', $decrypted)->get();
+        $access = DB::table('user_accesses')->join('customer', 'user_accesses.customer_id', '=', 'customer.customer_id')->select('user_accesses.*', 'customer.customer_name', 'customer.customer_id')->where('user_id', $user->name)->get();
 
         // palletHistory = DB::table('pallet_histories')
         //     ->join('items', 'pallet_histories.item_id', '=', 'items.id') //join('tabel yang mau di tambahin', 'tabel utama.value yang mau dicocokin', '=', 'tabel yang ditambahin.value yang mau dicocokin')
@@ -211,7 +213,7 @@ class UserController extends Controller
 
     public function add_new_user_access(Request $request) //ini juga harus pake name //ntar aja tapi ini mah, fiturnya ga dipake soalnya
     {
-        // dd($request->userIdHidden);
+        // dd($request->customerforaccess);
         $exist = UserAccess::where('user_id', 'LIKE', $request->userIdHidden)->where('customer_id', 'LIKE', $request->customerforaccess)->first();
         // dd($exist->customer_id);
         if (is_null($exist)) {
@@ -286,6 +288,8 @@ class UserController extends Controller
         $access = UserAccess::find($decrypted);
 
         $access->delete();
+
+
 
         session()->flash('deletedAccess', 'Akses user berhasil di hapus');
 
