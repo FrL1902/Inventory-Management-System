@@ -28,9 +28,9 @@ class CreateIncomingsTable extends Migration
             // $table->integer('brand_id');
             // $table->integer('item_id');
             // $table->string('item_name');33
-            $table->integer('stock_before');
+            // $table->integer('stock_before');
             $table->integer('stock_added');
-            $table->integer('stock_now');
+            // $table->integer('stock_now');
             $table->string('description');
             $table->string('item_pictures');
             $table->dateTime('arrive_date');
