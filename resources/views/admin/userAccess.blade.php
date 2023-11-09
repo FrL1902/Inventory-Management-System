@@ -60,13 +60,13 @@
                                                                 <select class="form-control" data-width="100%"
                                                                     id="customerforaccess" name="customerforaccess">
                                                                     @foreach ($customer as $data)
-                                                                        <option value="{{ $data->id }}">
+                                                                        <option value="{{ $data->customer_id }}">
                                                                             {{ $data->customer_name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
                                                             <input type="hidden" class="form-control" name="userIdHidden"
-                                                                value="{{ $user->id }}">
+                                                                value="{{ $user->name }}">
 
                                                             <div class="form-group">
                                                                 <div class="card mt-5 ">

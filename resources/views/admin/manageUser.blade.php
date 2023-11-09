@@ -204,7 +204,7 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                 </i></a>
                                                         @else
                                                             <a style="cursor: pointer"
-                                                            href="/userPagePermission/{{ encrypt($data->id) }}"><i
+                                                                href="/userPagePermission/{{ encrypt($data->id) }}"><i
                                                                     class="fa fa-tasks mt-3 text-primary"
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Edit akses page user">
@@ -216,7 +216,15 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Admin punya semua akses">
                                                                 </i></a>
-                                                        @elseif ($data->level == 'customer')
+                                                        @else
+                                                            <a style="cursor: pointer"
+                                                                    href="/userAccess/{{ encrypt($data->id) }}"><i
+                                                                        class="fa fa-users mt-3 ml-3 text-primary"
+                                                                        data-toggle="tooltip"
+                                                                        data-original-title="Edit customer access">
+                                                                    </i></a>
+                                                        @endif
+                                                        {{-- @elseif ($data->level == 'customer')
                                                             <a style="cursor: pointer"
                                                                 data-target="#editCustomerAccess{{ $data->id }}"
                                                                 data-toggle="modal"><i
@@ -225,18 +233,12 @@ https://www.w3schools.com/css/css3_animations.asp --}}
                                                                     data-original-title="Assign Customer">
                                                                 </i></a>
                                                         @else
-                                                            {{-- <a style="cursor: pointer"
-                                                                href="/userAccess/{{ encrypt($data->id) }}"><i
-                                                                    class="fa fa-users mt-3 text-primary"
-                                                                    data-toggle="tooltip"
-                                                                    data-original-title="edit customer access">
-                                                                </i></a> --}}
                                                             <a style="cursor: pointer"><i
                                                                     class="fa fa-users mt-3 ml-3 text-success"
                                                                     data-toggle="tooltip"
                                                                     data-original-title="gudang & cargo bisa melihat semua customer data">
                                                                 </i></a>
-                                                        @endif
+                                                        @endif --}}
                                                         <a style="cursor: pointer" class="ml-3"
                                                             data-target="#editPasswordCenter{{ $data->id }}"
                                                             data-toggle="modal"><i class="fa fa-key mt-3 text-warning"
