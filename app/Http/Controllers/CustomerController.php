@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Customer;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -14,7 +15,17 @@ class CustomerController extends Controller
 {
     public function manage_customer_page()
     {
-        $customer = Customer::all();
+        $user = Auth::user();
+
+        if ($user->level == 'admin') {
+            $customer = Customer::all();
+        } else {
+            $customer = DB::table('customer')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.customer_id')
+                ->select('customer.*')
+                ->where('user_id', $user->name)->get();
+        }
+
 
         return view('manage_views.manageCustomer', compact('customer'));
     }
@@ -111,7 +122,7 @@ class CustomerController extends Controller
         // $customID = DB::table('customer')
         //     ->orderBy('id', 'desc')
         //     ->first();
-            // dd($customID->id);
+        // dd($customID->id);
 
         $customer = new Customer();
 
@@ -500,6 +511,42 @@ class CustomerController extends Controller
 
     public function exportCustomerExcel()
     {
-        return Excel::download(new customerExport, 'Customer Data.xlsx');
+        $user = Auth::user();
+
+        if ($user->level == 'admin') {
+            $sortAll = Customer::all();
+            // dd(1);
+        } else {
+            // dd(2);
+            $sortAll = DB::table('customer')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.customer_id')
+                ->select('customer.*')
+                ->where('user_id', $user->name)->get();
+        }
+        // dd($sortAll);
+
+        // return Excel::download(new customerExport, 'Customer Data.xlsx');
+        return Excel::download(new customerExport($sortAll), 'Customer Data.xlsx');
     }
+
+    // if ($user->level == 'gudang') {
+    //     $sortAll = DB::table('incomings')
+    //         ->join('customer', 'incomings.customer_id', '=', 'customer.id')
+    //         ->join('brand', 'incomings.brand_id', '=', 'brand.id')
+    //         ->join('items', 'incomings.item_id', '=', 'items.id')
+    //         ->join('user_accesses', 'incomings.customer_id', '=', 'user_accesses.customer_id')
+    //         ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+    //         ->where('user_id', $request->userIdHidden)->whereBetween('arrive_date', [$date_from, $date_to])->get();
+    // } else {
+    //     $sortAll = DB::table('incomings')
+    //         ->join('customer', 'incomings.customer_id', '=', 'customer.id')
+    //         ->join('brand', 'incomings.brand_id', '=', 'brand.id')
+    //         ->join('items', 'incomings.item_id', '=', 'items.id')
+    //         ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+    //         ->whereBetween('arrive_date', [$date_from, $date_to])->get();
+    // }
+
+    // $formatFileName = 'DataBarangDatang ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
+
+    // return Excel::download(new IncomingExport($sortAll), $formatFileName . '.xlsx');
 }

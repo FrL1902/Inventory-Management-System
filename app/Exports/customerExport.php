@@ -15,12 +15,18 @@ class customerExport implements FromCollection, ShouldAutoSize, WithHeadings, Wi
      * @return \Illuminate\Support\Collection
      */
 
+    public function __construct($data)
+    {
+        $this->customerData = $data;
+        // $this->valueSortedBy = $value;
+    }
+
     use Exportable;
 
 
     public function collection()
     {
-        return Customer::all();
+        return $this->customerData;
     }
 
     public function map($item): array
