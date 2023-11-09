@@ -138,9 +138,9 @@ class IncomingController extends Controller
         $incoming->customer_id = $itemInfo->customer_id;
         $incoming->brand_id = $itemInfo->brand_id;
         $incoming->item_id = $request->incomingiditem;
-        $incoming->stock_before = $itemInfo->stocks;
+        // $incoming->stock_before = $itemInfo->stocks;
         $incoming->stock_added = $request->itemAddStock;
-        $incoming->stock_now = $newValue;
+        // $incoming->stock_now = $newValue;
         $incoming->supplier = $request->supplier;
         $incoming->description = $request->incomingItemDesc;
         $incoming->arrive_date = $request->itemArrive;

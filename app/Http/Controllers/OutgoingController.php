@@ -118,21 +118,15 @@ class OutgoingController extends Controller
             return redirect()->back();
         }
 
-        $newValue = $itemInfo->stocks - $request->itemReduceStock;
-
-        Item::where('item_id', $request->outgoingiditem)->update([
-            'stocks' => $newValue,
-        ]);
-
         $outgoing = new Outgoing();
 
         $outgoing->customer_id = $itemInfo->customer_id;
         $outgoing->brand_id = $itemInfo->brand_id;
         $outgoing->item_id = $request->outgoingiditem;
         // $outgoing->item_name = $itemInfo->item_name;
-        $outgoing->stock_before = $itemInfo->stocks;
+        // $outgoing->stock_before = $itemInfo->stocks;
         $outgoing->stock_taken = $request->itemReduceStock;
-        $outgoing->stock_now = $newValue;
+        // $outgoing->stock_now = $newValue;
         $outgoing->description = $request->outgoingItemDesc;
         $outgoing->depart_date = $request->itemDepart;
 
@@ -170,6 +164,12 @@ class OutgoingController extends Controller
         $outgoing->item_pictures = $imageName;
         // $outgoing->picture_link = 'http://127.0.0.1:8000/storage/' . $imageName;
         $outgoing->save();
+
+        $newValue = $itemInfo->stocks - $request->itemReduceStock;
+
+        Item::where('item_id', $request->outgoingiditem)->update([
+            'stocks' => $newValue,
+        ]);
 
 
 
