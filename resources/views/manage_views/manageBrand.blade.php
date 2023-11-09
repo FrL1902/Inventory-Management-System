@@ -121,7 +121,7 @@
 
                                             @foreach ($brand as $brand)
                                                 <tr>
-                                                    <td>{{ $brand->customer->customer_name }}</td>
+                                                    <td>{{ $brand->customer_name }}</td>
                                                     <td>{{ $brand->brand_id }}</td>
                                                     <td>{{ $brand->brand_name }}</td>
                                                     <td>

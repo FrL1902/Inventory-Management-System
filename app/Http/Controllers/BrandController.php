@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\Item;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -15,14 +16,49 @@ class BrandController extends Controller
 {
     public function new_brand_page()
     {
-        $customer = Customer::all();
+        // $customer = Customer::all();
+
+        $user = Auth::user();
+
+        if ($user->level == 'admin') {
+            $customer = Customer::all();
+        } else {
+            $customer = DB::table('customer')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.customer_id')
+                ->select('customer.*')
+                ->where('user_id', $user->name)->get();
+        }
+
         return view('new_views.newBrand', compact('customer'));
     }
 
     public function manage_brand_page()
     {
-        $customer = Customer::all();
-        $brand = Brand::all();
+        // $customer = Customer::all();
+        // $brand = Brand::all();
+
+        $user = Auth::user();
+
+        if ($user->level == 'admin') {
+            $customer = Customer::all();
+            $brand = DB::table('brand')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
+                ->join('customer', 'customer.customer_id', '=', 'brand.customer_id')
+                ->select('brand.*', 'customer.customer_name')
+                ->get();
+        } else {
+            $customer = DB::table('customer')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.customer_id')
+                ->select('customer.*')
+                ->where('user_id', $user->name)->get();
+
+            $brand = DB::table('brand')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
+                ->join('customer', 'customer.customer_id', '=', 'brand.customer_id')
+                ->select('brand.*', 'customer.customer_name')
+                ->where('user_id', $user->name)->get();
+        }
+
         return view('manage_views.manageBrand', compact('brand', 'customer'));
     }
 
