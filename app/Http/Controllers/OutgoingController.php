@@ -25,63 +25,63 @@ class OutgoingController extends Controller
     {
         $user = Auth::user();
 
-        $item = DB::table('items')
-            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
-            ->select('items.item_name', 'items.item_id')->get();
+        // $item = DB::table('items')
+        //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+        //     ->select('items.item_name', 'items.item_id')->get();
 
-        $customer = DB::table('customer')
-            ->select('customer.customer_name', 'customer.customer_id')->get();
+        // $customer = DB::table('customer')
+        //     ->select('customer.customer_name', 'customer.customer_id')->get();
 
-        $outgoing = DB::table('outgoings')
-            ->join('customer', 'outgoings.customer_id', '=', 'customer.customer_id')
-            ->join('brand', 'outgoings.brand_id', '=', 'brand.brand_id')
-            ->join('items', 'outgoings.item_id', '=', 'items.item_id')
-            ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')->get();
+        // $outgoing = DB::table('outgoings')
+        //     ->join('customer', 'outgoings.customer_id', '=', 'customer.customer_id')
+        //     ->join('brand', 'outgoings.brand_id', '=', 'brand.brand_id')
+        //     ->join('items', 'outgoings.item_id', '=', 'items.item_id')
+        //     ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')->get();
 
-        $brand =  DB::table('brand')
-            ->select('brand.brand_id', 'brand.brand_name')->get();
+        // $brand =  DB::table('brand')
+        //     ->select('brand.brand_id', 'brand.brand_name')->get();
 
-        // if ($user->level == 'admin') {
+        if ($user->level == 'admin') {
 
-        //     $item = DB::table('items')
-        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
-        //         ->select('items.item_name', 'items.item_id', 'items.id')->get();
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->select('items.item_name', 'items.item_id', 'items.id')->get();
 
-        //     $customer = DB::table('customer')
-        //         ->select('customer.customer_name', 'customer.customer_id', 'customer.id')->get();
+            $customer = DB::table('customer')
+                ->select('customer.customer_name', 'customer.customer_id', 'customer.customer_id')->get();
 
-        //     $outgoing = DB::table('outgoings')
-        //         ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
-        //         ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
-        //         ->join('items', 'outgoings.item_id', '=', 'items.id')
-        //         ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')->get();
+            $outgoing = DB::table('outgoings')
+                ->join('customer', 'outgoings.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'outgoings.brand_id', '=', 'brand.brand_id')
+                ->join('items', 'outgoings.item_id', '=', 'items.item_id')
+                ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')->get();
 
-        //     $brand =  DB::table('brand')
-        //         ->select('brand.id', 'brand.brand_name')->get();
-        // } else {
-        //     $item = DB::table('items')
-        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
-        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-        //         ->select('items.item_name', 'items.item_id', 'items.id')
-        //         ->where('user_id', $user->id)->get();
+            $brand =  DB::table('brand')
+                ->select('brand.id', 'brand.brand_name')->get();
+        } else {
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('items.item_name', 'items.item_id', 'items.item_id')
+                ->where('user_id', $user->name)->get();
 
-        //     $customer = DB::table('customer')
-        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.id')
-        //         ->select('customer.customer_name', 'customer.customer_id', 'customer.id')
-        //         ->where('user_id', $user->id)->get();
+            $customer = DB::table('customer')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.customer_id')
+                ->select('customer.customer_name', 'customer.customer_id', 'customer.customer_id')
+                ->where('user_id', $user->name)->get();
 
-        //     $outgoing = DB::table('outgoings')
-        //         ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
-        //         ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
-        //         ->join('items', 'outgoings.item_id', '=', 'items.id')
-        //         ->join('user_accesses', 'outgoings.customer_id', '=', 'user_accesses.customer_id')
-        //         ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-        //         ->where('user_id', $user->id)->get();
+            $outgoing = DB::table('outgoings')
+                ->join('customer', 'outgoings.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'outgoings.brand_id', '=', 'brand.brand_id')
+                ->join('items', 'outgoings.item_id', '=', 'items.item_id')
+                ->join('user_accesses', 'outgoings.customer_id', '=', 'user_accesses.customer_id')
+                ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+                ->where('user_id', $user->name)->get();
 
-        //     $brand =  DB::table('brand')
-        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
-        //         ->select('brand.id', 'brand.brand_name')->where('user_id', $user->id)->get();
-        // }
+            $brand =  DB::table('brand')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
+                ->select('brand.brand_id', 'brand.brand_name')->where('user_id', $user->name)->get();
+        }
 
         return view('outgoingItem', compact('outgoing', 'item', 'customer', 'brand'));
     }
@@ -193,34 +193,35 @@ class OutgoingController extends Controller
         $date_from = Carbon::parse($request->startRange)->startOfDay();
         $date_to = Carbon::parse($request->endRange)->endOfDay();
 
-        $user = User::find($request->userIdHidden);
+        $user = Auth::user();
+        // $user = User::find($request->userIdHidden);
 
         // $sortAll = Outgoing::all()->whereBetween('created_at', [$date_from, $date_to]); // versi lama pake created at
         // $sortAll = Outgoing::all()->whereBetween('depart_date', [$date_from, $date_to]);
 
-        $sortAll = DB::table('outgoings')
-            ->join('customer', 'outgoings.customer_id', '=', 'customer.customer_id')
-            ->join('brand', 'outgoings.brand_id', '=', 'brand.brand_id')
-            ->join('items', 'outgoings.item_id', '=', 'items.item_id')
-            ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-            ->whereBetween('depart_date', [$date_from, $date_to])->get();
+        // $sortAll = DB::table('outgoings')
+        //     ->join('customer', 'outgoings.customer_id', '=', 'customer.customer_id')
+        //     ->join('brand', 'outgoings.brand_id', '=', 'brand.brand_id')
+        //     ->join('items', 'outgoings.item_id', '=', 'items.item_id')
+        //     ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //     ->whereBetween('depart_date', [$date_from, $date_to])->get();
 
-        // if ($user->level == 'gudang') {
-        //     $sortAll = DB::table('outgoings')
-        //         ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
-        //         ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
-        //         ->join('items', 'outgoings.item_id', '=', 'items.id')
-        //         ->join('user_accesses', 'outgoings.customer_id', '=', 'user_accesses.customer_id')
-        //         ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-        //         ->where('user_id', $request->userIdHidden)->whereBetween('depart_date', [$date_from, $date_to])->get();
-        // } else {
-        //     $sortAll = DB::table('outgoings')
-        //         ->join('customer', 'outgoings.customer_id', '=', 'customer.id')
-        //         ->join('brand', 'outgoings.brand_id', '=', 'brand.id')
-        //         ->join('items', 'outgoings.item_id', '=', 'items.id')
-        //         ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-        //         ->whereBetween('depart_date', [$date_from, $date_to])->get();
-        // }
+        if ($user->level == 'admin') {
+            $sortAll = DB::table('outgoings')
+                ->join('customer', 'outgoings.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'outgoings.brand_id', '=', 'brand.brand_id')
+                ->join('items', 'outgoings.item_id', '=', 'items.item_id')
+                ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+                ->whereBetween('depart_date', [$date_from, $date_to])->get();
+        } else {
+            $sortAll = DB::table('outgoings')
+                ->join('customer', 'outgoings.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'outgoings.brand_id', '=', 'brand.brand_id')
+                ->join('items', 'outgoings.item_id', '=', 'items.item_id')
+                ->join('user_accesses', 'outgoings.customer_id', '=', 'user_accesses.customer_id')
+                ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+                ->where('user_id', $user->name)->whereBetween('depart_date', [$date_from, $date_to])->get();
+        }
 
         $formatFileName = 'DataBarangKeluar ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 
