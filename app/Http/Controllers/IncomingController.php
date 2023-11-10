@@ -22,67 +22,66 @@ class IncomingController extends Controller
 {
     public function add_incoming_item_page()
     {
-        // $user = Auth::user();
+        $user = Auth::user();
 
-        $item = DB::table('items')
-            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
-            ->select('items.item_name', 'items.item_id')->get();
-
-        $customer = DB::table('customer')
-            ->select('customer.customer_name', 'customer.customer_id')->get();
-
-        $incoming = DB::table('incomings')
-            ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
-            ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
-            ->join('items', 'incomings.item_id', '=', 'items.item_id')
-            ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')->get();
-
-        $brand =  DB::table('brand')
-            ->select('brand.brand_id', 'brand.brand_name')->get();
-
-
-        // old auto filter by user access feature
-        // if ($user->level == 'admin') {
-        //     $item = DB::table('items')
-        //     ->join('customer', 'items.customer_id', '=', 'customer.id')
-        //     ->select('items.item_name', 'items.item_id', 'items.id')->get();
+        // $item = DB::table('items')
+        //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+        //     ->select('items.item_name', 'items.item_id')->get();
 
         // $customer = DB::table('customer')
-        //     ->select('customer.customer_name', 'customer.customer_id', 'customer.id')->get();
+        //     ->select('customer.customer_name', 'customer.customer_id')->get();
 
         // $incoming = DB::table('incomings')
-        //     ->join('customer', 'incomings.customer_id', '=', 'customer.id')
-        //     ->join('brand', 'incomings.brand_id', '=', 'brand.id')
-        //     ->join('items', 'incomings.item_id', '=', 'items.id')
+        //     ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+        //     ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+        //     ->join('items', 'incomings.item_id', '=', 'items.item_id')
         //     ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')->get();
 
         // $brand =  DB::table('brand')
-        //     ->select('brand.id', 'brand.brand_name')->get();
+        //     ->select('brand.brand_id', 'brand.brand_name')->get();
 
-        // } else {
-        //     $item = DB::table('items')
-        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
-        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-        //         ->select('items.item_name', 'items.item_id', 'items.id')
-        //         ->where('user_id', $user->id)->get();
 
-        //     $customer = DB::table('customer')
-        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.id')
-        //         ->select('customer.customer_name', 'customer.customer_id', 'customer.id')
-        //         ->where('user_id', $user->id)->get();
+        // old auto filter by user access feature
+        if ($user->level == 'admin') {
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->select('items.item_name', 'items.item_id')->get();
 
-        //     $incoming = DB::table('incomings')
-        //         ->join('customer', 'incomings.customer_id', '=', 'customer.id')
-        //         ->join('brand', 'incomings.brand_id', '=', 'brand.id')
-        //         ->join('items', 'incomings.item_id', '=', 'items.id')
-        //         ->join('user_accesses', 'incomings.customer_id', '=', 'user_accesses.customer_id')
-        //         ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-        //         ->where('user_id', $user->id)->get();
+            $customer = DB::table('customer')
+                ->select('customer.customer_name', 'customer.customer_id')->get();
 
-        //     $brand =  DB::table('brand')
-        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
-        //         ->select('brand.id', 'brand.brand_name')->where('user_id', $user->id)->get();
-        // }
+            $incoming = DB::table('incomings')
+                ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+                ->join('items', 'incomings.item_id', '=', 'items.item_id')
+                ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')->get();
+
+            $brand =  DB::table('brand')
+                ->select('brand.brand_id', 'brand.brand_name')->get();
+        } else {
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('items.item_name', 'items.item_id', 'items.item_id')
+                ->where('user_id', $user->name)->get();
+
+            $customer = DB::table('customer')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.customer_id')
+                ->select('customer.customer_name', 'customer.customer_id', 'customer.customer_id')
+                ->where('user_id', $user->name)->get();
+
+            $incoming = DB::table('incomings')
+                ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+                ->join('items', 'incomings.item_id', '=', 'items.item_id')
+                ->join('user_accesses', 'incomings.customer_id', '=', 'user_accesses.customer_id')
+                ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+                ->where('user_id', $user->name)->get();
+
+            $brand =  DB::table('brand')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
+                ->select('brand.brand_id', 'brand.brand_name')->where('user_id', $user->name)->get();
+        }
 
         return view('incomingItem', compact('incoming', 'item', 'customer', 'brand'));
     }
@@ -205,7 +204,8 @@ class IncomingController extends Controller
         $date_from = Carbon::parse($request->startRange)->startOfDay();
         $date_to = Carbon::parse($request->endRange)->endOfDay();
 
-        $user = User::find($request->userIdHidden);
+        $user = Auth::user();
+        // $user = User::find($request->userIdHidden);
 
         // return Excel::download(new IncomingExport($sortCustomer), 'dataBarangDatang.xlsx');
         // $sortAll = Incoming::all()->whereBetween('created_at', [$date_from, $date_to]); // versi lama pake created at
@@ -213,29 +213,29 @@ class IncomingController extends Controller
 
         // $sortAll = Incoming::all()->whereBetween('arrive_date', [$date_from, $date_to]);
 
-        $sortAll = DB::table('incomings')
-            ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
-            ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
-            ->join('items', 'incomings.item_id', '=', 'items.item_id')
-            ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-            ->whereBetween('arrive_date', [$date_from, $date_to])->get();
+        // $sortAll = DB::table('incomings')
+        //     ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+        //     ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+        //     ->join('items', 'incomings.item_id', '=', 'items.item_id')
+        //     ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+        //     ->whereBetween('arrive_date', [$date_from, $date_to])->get();
 
-        // if ($user->level == 'gudang') {
-        //     $sortAll = DB::table('incomings')
-        //         ->join('customer', 'incomings.customer_id', '=', 'customer.id')
-        //         ->join('brand', 'incomings.brand_id', '=', 'brand.id')
-        //         ->join('items', 'incomings.item_id', '=', 'items.id')
-        //         ->join('user_accesses', 'incomings.customer_id', '=', 'user_accesses.customer_id')
-        //         ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-        //         ->where('user_id', $request->userIdHidden)->whereBetween('arrive_date', [$date_from, $date_to])->get();
-        // } else {
-        //     $sortAll = DB::table('incomings')
-        //         ->join('customer', 'incomings.customer_id', '=', 'customer.id')
-        //         ->join('brand', 'incomings.brand_id', '=', 'brand.id')
-        //         ->join('items', 'incomings.item_id', '=', 'items.id')
-        //         ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-        //         ->whereBetween('arrive_date', [$date_from, $date_to])->get();
-        // }
+        if ($user->level == 'admin') {
+            $sortAll = DB::table('incomings')
+                ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+                ->join('items', 'incomings.item_id', '=', 'items.item_id')
+                ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+                ->whereBetween('arrive_date', [$date_from, $date_to])->get();
+        } else {
+            $sortAll = DB::table('incomings')
+                ->join('customer', 'incomings.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'incomings.brand_id', '=', 'brand.brand_id')
+                ->join('items', 'incomings.item_id', '=', 'items.item_id')
+                ->join('user_accesses', 'incomings.customer_id', '=', 'user_accesses.customer_id')
+                ->select('incomings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
+                ->where('user_id', $user->name)->whereBetween('arrive_date', [$date_from, $date_to])->get();
+        }
 
         $formatFileName = 'DataBarangDatang ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 
