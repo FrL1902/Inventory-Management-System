@@ -41,7 +41,7 @@ class IncomingController extends Controller
         //     ->select('brand.brand_id', 'brand.brand_name')->get();
 
 
-        // old auto filter by user access feature
+        // old auto filter by user access feature // now back online
         if ($user->level == 'admin') {
             $item = DB::table('items')
                 ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
