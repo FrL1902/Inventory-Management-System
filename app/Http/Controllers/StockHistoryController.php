@@ -21,35 +21,41 @@ class StockHistoryController extends Controller
         $date_to = Carbon::parse($request->endRange)->endOfDay();
 
         $user = Auth::user();
-        $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
-        if ($user->level == "customer" && $cekAll->customer_id != 0) {
-            // $history = StockHistory::all();
-            $history = DB::table('stock_histories')
-                ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->select('stock_histories.*')
-                ->where('items.customer_id', $cekAll->customer_id)->get();
-            $item = Item::all()->where('customer_id', $cekAll->customer_id);
-
-            return view('history_views.itemHistory', compact('history', 'item'));
-        }
-
-
-        $item = Item::all();
-
-        $history = StockHistory::all()->whereBetween('user_action_date', [$date_from, $date_to]);
-
-        // if ($user->level != 'admin') {
+        // $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
+        // if ($user->level == "customer" && $cekAll->customer_id != 0) {
+        //     // $history = StockHistory::all();
         //     $history = DB::table('stock_histories')
         //         ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
-        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
         //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
         //         ->select('stock_histories.*')
-        //         ->where('user_id', $user->id)->whereBetween('stock_histories.created_at', [$date_from, $date_to])->get();
-        //     // dd($sortHistoryDate);
-        // } else {
-        //     $history = StockHistory::all()->whereBetween('created_at', [$date_from, $date_to]);
+        //         ->where('items.customer_id', $cekAll->customer_id)->get();
+        //     $item = Item::all()->where('customer_id', $cekAll->customer_id);
+
+        //     return view('history_views.itemHistory', compact('history', 'item'));
         // }
+
+
+        // $item = Item::all();
+
+        // $history = StockHistory::all()->whereBetween('user_action_date', [$date_from, $date_to]);
+
+        if ($user->level == 'admin') {
+            $item = Item::all();
+            $history = StockHistory::all()->whereBetween('created_at', [$date_from, $date_to]);
+        } else {
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('items.item_name', 'items.item_id')
+                ->where('user_id', $user->name)->get();
+            $history = DB::table('stock_histories')
+                ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('stock_histories.*')
+                ->where('user_id', $user->name)->whereBetween('stock_histories.created_at', [$date_from, $date_to])->get();
+            // dd($sortHistoryDate);
+        }
 
 
         $request->session()->flash('deleteFilterButton', 'yea');
@@ -77,17 +83,17 @@ class StockHistoryController extends Controller
         $sortHistoryDate = StockHistory::all()->whereBetween('user_action_date', [$date_from, $date_to]);
         // dd($sortHistoryDate);
 
-        // if ($user->level != 'admin') {
-        //     $sortHistoryDate = DB::table('stock_histories')
-        //         ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
-        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
-        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-        //         ->select('stock_histories.*')
-        //         ->where('user_id', $user->id)->whereBetween('stock_histories.created_at', [$date_from, $date_to])->get();
-        //     // dd($sortHistoryDate);
-        // } else {
-        //     $sortHistoryDate = StockHistory::all()->whereBetween('created_at', [$date_from, $date_to]);
-        // }
+        if ($user->level == 'admin') {
+            $sortHistoryDate = StockHistory::all()->whereBetween('created_at', [$date_from, $date_to]);
+        } else {
+            $sortHistoryDate = DB::table('stock_histories')
+                ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('stock_histories.*')
+                ->where('user_id', $user->name)->whereBetween('stock_histories.created_at', [$date_from, $date_to])->get();
+            // dd($sortHistoryDate);
+        }
 
 
 

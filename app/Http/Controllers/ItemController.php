@@ -173,42 +173,41 @@ class ItemController extends Controller
         session()->forget('deleteFilterButton');
 
         $user = Auth::user();
-        $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
-        if ($user->level == "customer" && $cekAll->customer_id != 0) {
-            // $history = StockHistory::all();
-            $history = DB::table('stock_histories')
-                ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-                ->select('stock_histories.*')
-                ->where('items.customer_id', $cekAll->customer_id)->get();
-            $item = Item::all()->where('customer_id', $cekAll->customer_id);
-
-            return view('history_views.itemHistory', compact('history', 'item'));
-        }
-
-        // sementara
-        $history = StockHistory::all();
-        $item = Item::all();
-
-        // if ($user->level == 'admin') {
-        //     $history = StockHistory::all();
-        //     $item = Item::all();
-        //     // dd($item);
-        // } else {
+        // $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
+        // if ($user->level == "customer" && $cekAll->customer_id != 0) {
+        //     // $history = StockHistory::all();
         //     $history = DB::table('stock_histories')
         //         ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
-        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
         //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
         //         ->select('stock_histories.*')
-        //         ->where('user_id', $user->id)->get();
+        //         ->where('items.customer_id', $cekAll->customer_id)->get();
+        //     $item = Item::all()->where('customer_id', $cekAll->customer_id);
 
-
-        //     $item = DB::table('items')
-        //         ->join('customer', 'items.customer_id', '=', 'customer.id')
-        //         ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
-        //         ->select('items.item_name', 'items.item_id', 'items.id')
-        //         ->where('user_id', $user->id)->get();
+        //     return view('history_views.itemHistory', compact('history', 'item'));
         // }
+
+        // // sementara
+        // $history = StockHistory::all();
+        // $item = Item::all();
+
+        if ($user->level == 'admin') {
+            $history = StockHistory::all();
+            $item = Item::all();
+        } else {
+            $history = DB::table('stock_histories')
+                ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('stock_histories.*')
+                ->where('user_id', $user->name)->get();
+
+
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('items.item_name', 'items.item_id')
+                ->where('user_id', $user->name)->get();
+        }
 
         return view('history_views.itemHistory', compact('history', 'item'));
     }
