@@ -137,9 +137,34 @@ class ItemController extends Controller
 
     public function manage_item_page()
     {
-        $item = Item::all();
-        $customer = Customer::all();
-        $brand = Brand::all();
+        // $item = Item::all();
+        // $customer = Customer::all();
+        // $brand = Brand::all();
+        // return view('manage_views.manageItem', compact('item', 'customer', 'brand'));
+
+        $user = Auth::user();
+
+        if ($user->level == 'admin') {
+            $customer = Customer::all();
+            $item = Item::all();
+            $brand = Brand::all();
+        } else {
+            $customer = DB::table('customer')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.customer_id')
+                ->select('customer.*')
+                ->where('user_id', $user->name)->get();
+            $brand = DB::table('brand')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
+                ->select('brand.brand_id', 'brand.brand_name')
+                ->where('user_id', $user->name)->get();
+            $item = DB::table('items')
+                ->join('customer', 'customer.customer_id', '=', 'items.customer_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->join('brand', 'brand.brand_id', '=', 'items.brand_id')
+                ->select('items.*', 'customer.customer_name', 'brand.brand_name')
+                ->where('user_id', $user->name)->get();
+        }
+
         return view('manage_views.manageItem', compact('item', 'customer', 'brand'));
     }
 
@@ -365,21 +390,6 @@ class ItemController extends Controller
 
         return view('report_views.itemReport', compact('brand', 'customer', 'item'));
     }
-
-    // public function exportItemReport(Request $request)
-    // {
-    //     $sortCustomerReport = DB::table('pallets')
-    //         ->join('items', 'items.id', '=', 'pallets.item_id') //integer
-    //         ->join('customer', 'items.customer_id', '=', 'customer.id')
-    //         ->join('brand', 'items.brand_id', '=', 'brand.id')
-    //         ->select('pallets.*', 'items.item_name', 'items.item_id', 'customer.id as customer_id', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures', 'brand.brand_id')
-    //         ->where('brand.brand_id', $request->itemIdReportCustomer)->get();
-
-    //     // dd($sortCustomerReport);
-
-    //     // return Excel::download(new CustomerReportExport($sortCustomerReport), 'Laporan Customer' . $sortCustomerReport->customer_name . '.xlsx');
-    //     return Excel::download(new CustomerReportExport($sortCustomerReport), 'Laporan Customer' . '.xlsx');
-    // }
 
     public function exportItemReportCustomer(Request $request)
     {

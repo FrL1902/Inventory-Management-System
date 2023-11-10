@@ -185,8 +185,8 @@
                                         <tbody>
                                             @foreach ($item as $item)
                                                 <tr>
-                                                    <td>{{ $item->customer->customer_name }}</td>
-                                                    <td>{{ $item->brand->brand_name }}</td>
+                                                    <td>{{ $item->customer_name }}</td>
+                                                    <td>{{ $item->brand_name }}</td>
                                                     <td>{{ $item->item_id }}</td>
                                                     <td>{{ $item->item_name }}</td>
                                                     <td>{{ $item->stocks }}</td>
