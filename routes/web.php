@@ -10,6 +10,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OutgoingController;
 use App\Http\Controllers\OutPalletController;
 use App\Http\Controllers\PalletController;
+use App\Http\Controllers\PalletHistoryController;
 use App\Http\Controllers\StockHistoryController;
 use App\Http\Controllers\UserController;
 use App\Models\StockHistory;
@@ -148,8 +149,8 @@ Route::post('/exportPalletReportItem', [PalletController::class, 'exportPalletRe
 Route::post('/exportPalletReportDate', [PalletController::class, 'exportPalletReportDate'])->middleware('role:laporan_stok_by_palet');
 
 // Page: History Stok by palet
-Route::get('/managePalletHistory', [PalletController::class, 'manage_pallet_history_page'])->middleware('role:history_stok_by_palet');
-Route::post('/exportPalletItemHistory', [PalletController::class, 'exportPalletItemHistory'])->name('exportPalletItemHistory')->middleware('role:history_stok_by_palet');
-Route::post('/exportPalletHistoryByDate', [PalletController::class, 'exportPalletHistoryByDate'])->name('exportPalletHistoryByDate')->middleware('role:history_stok_by_palet');
-Route::post('/filterPalletHistoryDate', [PalletController::class, 'filterPalletHistoryDate'])->middleware('role:history_stok_by_palet');
+Route::get('/managePalletHistory', [PalletHistoryController::class, 'manage_pallet_history_page'])->middleware('role:history_stok_by_palet');
+Route::post('/exportPalletItemHistory', [PalletHistoryController::class, 'exportPalletItemHistory'])->name('exportPalletItemHistory')->middleware('role:history_stok_by_palet');
+Route::post('/exportPalletHistoryByDate', [PalletHistoryController::class, 'exportPalletHistoryByDate'])->name('exportPalletHistoryByDate')->middleware('role:history_stok_by_palet');
+Route::post('/filterPalletHistoryDate', [PalletHistoryController::class, 'filterPalletHistoryDate'])->middleware('role:history_stok_by_palet');
 

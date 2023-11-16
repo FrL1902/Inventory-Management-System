@@ -20,17 +20,35 @@ class InPalletController extends Controller
     //
     public function in_pallet_page()
     {
-        // return view('inPallet');
-        $inpallet = DB::table('inpallet')
-            ->join('items', 'inpallet.item_id', '=', 'items.item_id')
-            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
-            ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-            ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')->get();
-        // dd($pallet);
+        $user = Auth::user();
 
-        $item = DB::table('items')
-            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
-            ->select('items.item_name', 'items.item_id')->get();
+        if ($user->level == 'admin') {
+            $inpallet = DB::table('inpallet')
+                ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+                ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')->get();
+
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->select('items.item_name', 'items.item_id')->get();
+        } else {
+            $inpallet = DB::table('inpallet')
+                ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+                ->join('user_accesses', 'items.customer_id', '=', 'user_accesses.customer_id')
+                ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')
+                ->where('user_id', $user->name)
+                ->get();
+
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('items.item_name', 'items.item_id')
+                ->where('user_id', $user->name)
+                ->get();
+        }
 
         return view('inPallet', compact('inpallet', 'item'));
     }
