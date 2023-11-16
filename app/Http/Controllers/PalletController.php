@@ -63,141 +63,6 @@ class PalletController extends Controller
         return view('manage_views.managePallet', compact('pallet', 'item'));
     }
 
-    // public function add_pallet(Request $request)
-    // {
-    //     $itemInfo = Item::where('item_id', $request->itemidforpallet)->first();
-    //     $totalInPalletCurrently = Pallet::where('item_id', $request->itemidforpallet)->sum('stock'); //INI BISA DAPET TOTALNYA
-
-    //     // stok total yg di palet pada suatu item tidak boleh melebihi stok item di tabel items
-    //     $availableStock = $itemInfo->stocks - $totalInPalletCurrently;
-
-    //     // dd($availableStock);
-    //     if ($availableStock < $request->palletStock) {
-    //         session()->flash('gagalMasukPaletVALUE', 'stok ke palet melebihi stok barang');
-    //         return redirect()->back();
-    //     }
-
-    //     $request->validate([
-    //         'palletDesc' => 'min:1|max:50',
-    //         'bin' => 'max:10'
-    //     ], [
-    //         'palletDesc.min' => 'Deskripsi minimal 1 karakter',
-    //         'palletDesc.max' => 'Deskripsi maksimal 50 karakter',
-    //         'bin.max' => 'BIN maksimal 10 karakter',
-    //     ]);
-
-    //     // memasukkan data ke tabel palet
-    //     $pallet = new Pallet();
-    //     $pallet->item_id = $request->itemidforpallet;
-    //     $pallet->stock = $request->palletStock;
-    //     $pallet->bin = $request->bin;
-    //     $pallet->description = $request->palletDesc;
-
-    //     $pallet->save();
-
-
-    //     // memasukkan data ke tabel sejarah palet
-    //     $history = new PalletHistory();
-    //     // $history->item_id = $request->itemidforpallet;
-    //     $history->item_id = $itemInfo->item_id;
-    //     $history->stock = $request->palletStock;
-    //     $history->bin = $request->bin;
-    //     $history->status = 'DALAM INVENTORY';
-    //     $history->user = $request->userIdHidden;
-
-    //     $history->save();
-
-    //     session()->flash('suksesMasukPaletVALUE', 'Stok barang dimasukkan ke palet');
-
-    //     return redirect()->back();
-    // }
-
-    // public function reduce_pallet_stock(Request $request)
-    // {
-    //     // dd($request->palletIdHidden);
-    //     $palletInfo = Pallet::where('id', $request->palletIdHidden)->first();
-    //     // dd($palletInfo);
-    //     // $itemInfo = Item::where('item_id',$palletInfo->item_id)->first();
-
-    //     $itemInfo = DB::table('pallets')
-    //         ->join('items', 'items.item_id', '=', 'pallets.item_id')
-    //         ->select('items.*')->where('pallets.id', $request->palletIdHidden)->first();
-
-    //     // dd($itemInfo);
-    //     $id = Auth::user()->id;
-
-    //     if ($palletInfo->stock < $request->palletStockOut) {
-    //         session()->flash('gagalStokPalletKeluar', 'stok yang ingin dikeluarkan lebih besar dari stok di palet');
-    //         return redirect()->back();
-    //     } else if ($palletInfo->stock == $request->palletStockOut) { //ini kalau keluar semua stoknya
-    //         $palletInfo->delete();
-
-    //         // memasukkan data ke tabel sejarah palet
-    //         $history = new PalletHistory();
-    //         $history->item_id = $itemInfo->item_id;
-    //         $history->stock = $palletInfo->stock;
-    //         $history->bin = $palletInfo->bin;
-    //         $history->status = 'KELUAR';
-    //         $history->user = $id;
-
-    //         $history->save();
-
-    //         session()->flash('suksesPaletKeluar', 'Barang Berhasil Dikeluarkan dari Palet');
-    //         return redirect()->back();
-    //     } else if ($palletInfo->stock > $request->palletStockOut) { //ini kalau keluar sebagian stoknya
-    //         $newValue = $palletInfo->stock - $request->palletStockOut;
-    //         // memasukkan data ke tabel sejarah palet
-    //         $history = new PalletHistory();
-    //         // dd($itemInfo->item_id);
-    //         $history->item_id = $itemInfo->item_id;
-    //         // dd('s');
-    //         $history->stock = $newValue;
-    //         $history->bin = $palletInfo->bin;
-    //         $history->status = 'KELUAR SEBAGIAN ' . '(' . (string)$request->palletStockOut . ')';
-    //         $history->user = $id;
-
-    //         Pallet::where('id', $request->palletIdHidden)->update([
-    //             'stock' => $newValue
-    //         ]);
-
-    //         $history->save();
-
-    //         session()->flash('suksesPaletKeluar2', 'Barang Berhasil Dikeluarkan Sebanyak ' . $request->palletStockOut);
-    //         return redirect()->back();
-    //     }
-    // }
-
-    // public function remove_pallet($id)
-    // {
-    //     try {
-    //         $decrypted = decrypt($id);
-    //     } catch (DecryptException $e) {
-    //         abort(403);
-    //     }
-    //     $palletInfo = Pallet::where('id', $decrypted)->first();
-    //     $id = Auth::user()->id;
-
-    //     // dd($decrypted);
-    //     // dd($palletInfo->item_id);
-
-
-    //     // $palletInfo = Pallet::where('id', $decrypted)->first();
-
-    //     $palletInfo->delete();
-
-    //     // memasukkan data ke tabel sejarah palet
-    //     $history = new PalletHistory();
-    //     $history->item_id = $palletInfo->item_id;
-    //     $history->stock = $palletInfo->stock;
-    //     $history->bin = $palletInfo->bin;
-    //     $history->status = 'KELUAR';
-    //     $history->user = $id;
-
-    //     $history->save();
-
-    //     session()->flash('suksesPaletKeluar', 'Barang Berhasil Dikeluarkan dari Palet');
-    //     return redirect()->back();
-    // }
 
     public function manage_pallet_history_page()
     {
@@ -374,20 +239,41 @@ class PalletController extends Controller
 
     public function pallet_report_page()
     {
-        // return view('inPallet');
-
         $user = Auth::user();
-        $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
-        if ($user->level == "customer" && $cekAll->customer_id != 0) {
-            // $history = StockHistory::all();
-            $brand = Brand::all()->where('customer_id', $cekAll->customer_id);
-            $customer = Customer::all()->where('customer_id', $cekAll->customer_id);
-            // $inpallet = DB::table('inpallet')
-            //     ->join('items', 'inpallet.item_id', '=', 'items.item_id')
-            //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
-            //     ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-            //     ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')
-            //     ->where('items.customer_id', $cekAll->customer_id)->get();
+
+        if ($user->level == 'user') {
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->select('items.item_name', 'items.item_id')
+                ->where('user_id', $user->name)->get();
+
+            $customer = DB::table('customer')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.customer_id')
+                ->select('customer.customer_name', 'customer.customer_id')
+                ->where('user_id', $user->name)->get();
+
+            $brand =  DB::table('brand')
+                ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
+                ->select('brand.brand_id', 'brand.brand_name')
+                ->where('user_id', $user->name)->get();
+
+            $inpallet = DB::table('inpallet')
+                ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+                ->join('user_accesses', 'items.customer_id', '=', 'user_accesses.customer_id')
+                ->select('inpallet.bin', 'inpallet.item_id', 'items.item_name', 'items.item_pictures', 'customer.customer_name', 'brand.brand_name', DB::raw("SUM(inpallet.stock) as jumlah_stok"), DB::raw("MAX(inpallet.user_date) as tanggal"))
+                ->groupBy('inpallet.item_id', 'inpallet.bin', 'items.item_name', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
+                ->where('user_id', $user->name)
+                ->get();
+        } else {
+            $customer = Customer::all();
+            $brand = Brand::all();
+
+            $item = DB::table('items')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->select('items.item_name', 'items.item_id')->get();
 
             $inpallet = DB::table('inpallet')
                 ->join('items', 'inpallet.item_id', '=', 'items.item_id')
@@ -395,41 +281,10 @@ class PalletController extends Controller
                 ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
                 ->select('inpallet.bin', 'inpallet.item_id', 'items.item_name', 'items.item_pictures', 'customer.customer_name', 'brand.brand_name', DB::raw("SUM(inpallet.stock) as jumlah_stok"), DB::raw("MAX(inpallet.user_date) as tanggal"))
                 ->groupBy('inpallet.item_id', 'inpallet.bin', 'items.item_name', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
-                ->where('items.customer_id', $cekAll->customer_id)->get();
-
-            $item = Item::all()->where('customer_id', $cekAll->customer_id);
-
-            return view('report_views.palletReport', compact('inpallet', 'item', 'customer', 'brand'));
+                ->get();
         }
 
-        // $inpallet = DB::table('inpallet')
-        //     ->join('items', 'inpallet.item_id', '=', 'items.item_id')
-        //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
-        //     ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-        //     ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')->get();
-
-        $inpallet = DB::table('inpallet')
-            ->join('items', 'inpallet.item_id', '=', 'items.item_id')
-            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
-            ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-            ->select('inpallet.bin', 'inpallet.item_id', 'items.item_name', 'items.item_pictures', 'customer.customer_name', 'brand.brand_name', DB::raw("SUM(inpallet.stock) as jumlah_stok"), DB::raw("MAX(inpallet.user_date) as tanggal"))
-            ->groupBy('inpallet.item_id', 'inpallet.bin', 'items.item_name', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
-            ->get();
-        // ->selectRaw("SUM(inpallet.stock) as jumlah_stok", "MAX(inpallet.user_date) as tanggal")->get();
-
-
-        // dd($inpallet);
-
-        $item = DB::table('items')
-            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
-            ->select('items.item_name', 'items.item_id')->get();
-
-        $brand = Brand::all();
-        $customer = Customer::all();
-
-
         return view('report_views.palletReport', compact('inpallet', 'item', 'customer', 'brand'));
-        // return view('report_views.palletReport');
     }
 
     public function exportPalletReportCustomer(Request $request)
@@ -507,42 +362,27 @@ class PalletController extends Controller
         $date_to = Carbon::parse($request->endRange)->endOfDay();
 
         $user = Auth::user();
-        $cekAll = UserAccess::where('user_id', 'LIKE', $user->name)->first();
-        if ($user->level == "customer" && $cekAll->customer_id != 0) {
-            // $sortAll = DB::table('inpallet')
-            //     ->join('items', 'inpallet.item_id', '=', 'items.item_id')
-            //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
-            //     ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-            //     ->select('inpallet.*', 'items.item_name', 'customer.customer_name', 'brand.brand_name')
-            //     ->where('items.customer_id', $cekAll->customer_id)
-            //     ->whereBetween('user_date', [$date_from, $date_to])->get();
 
+        if ($user->level == 'admin') {
             $sortAll = DB::table('inpallet')
                 ->join('items', 'inpallet.item_id', '=', 'items.item_id')
                 ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
                 ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
                 ->select('inpallet.bin', 'inpallet.item_id', 'items.item_name', 'items.item_pictures', 'customer.customer_name', 'brand.brand_name', DB::raw("SUM(inpallet.stock) as jumlah_stok"), DB::raw("MAX(inpallet.user_date) as tanggal"))
                 ->groupBy('inpallet.item_id', 'inpallet.bin', 'items.item_name', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
-                ->where('items.customer_id', $cekAll->customer_id)
                 ->whereBetween('user_date', [$date_from, $date_to])->get();
-
-            $formatFileName = 'Laporan Stok by palet ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
-            return Excel::download(new PalletReportExport($sortAll), $formatFileName . '.xlsx');
+        } else {
+            $sortAll = DB::table('inpallet')
+                ->join('items', 'inpallet.item_id', '=', 'items.item_id')
+                ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
+                ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
+                ->join('user_accesses', 'items.customer_id', '=', 'user_accesses.customer_id')
+                ->select('inpallet.bin', 'inpallet.item_id', 'items.item_name', 'items.item_pictures', 'customer.customer_name', 'brand.brand_name', DB::raw("SUM(inpallet.stock) as jumlah_stok"), DB::raw("MAX(inpallet.user_date) as tanggal"))
+                ->groupBy('inpallet.item_id', 'inpallet.bin', 'items.item_name', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
+                ->whereBetween('user_date', [$date_from, $date_to])
+                ->where('user_id', $user->name)
+                ->get();
         }
-
-        // $sortAll = DB::table('inpallet')
-        //     ->join('items', 'inpallet.item_id', '=', 'items.item_id')
-        //     ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
-        //     ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-        //     ->select('inpallet.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')
-        //     ->whereBetween('user_date', [$date_from, $date_to])->get();
-        $sortAll = DB::table('inpallet')
-            ->join('items', 'inpallet.item_id', '=', 'items.item_id')
-            ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
-            ->join('brand', 'items.brand_id', '=', 'brand.brand_id')
-            ->select('inpallet.bin', 'inpallet.item_id', 'items.item_name', 'items.item_pictures', 'customer.customer_name', 'brand.brand_name', DB::raw("SUM(inpallet.stock) as jumlah_stok"), DB::raw("MAX(inpallet.user_date) as tanggal"))
-            ->groupBy('inpallet.item_id', 'inpallet.bin', 'items.item_name', 'customer.customer_name', 'brand.brand_name', 'items.item_pictures')
-            ->whereBetween('user_date', [$date_from, $date_to])->get();
 
         $formatFileName = 'Laporan Stok by palet ALL ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
         return Excel::download(new PalletReportExport($sortAll), $formatFileName . '.xlsx');
