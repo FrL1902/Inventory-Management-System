@@ -24,19 +24,19 @@ class UserSeeder extends Seeder
             'pass' => 'admin',
         ]);
 
-        DB::table('users')->insert([[
-            'name' => 'user1',
-            'email' => 'user1@gmail.com',
-            'password' => Hash::make('user1'),
-            'level' => 'user',
-            'pass' => 'user1',
-        ],[
-            'name' => 'user2',
-            'email' => 'user2@gmail.com',
-            'password' => Hash::make('user2'),
-            'level' => 'user',
-            'pass' => 'user2',
-        ]]);
+        // DB::table('users')->insert([[
+        //     'name' => 'user1',
+        //     'email' => 'user1@gmail.com',
+        //     'password' => Hash::make('user1'),
+        //     'level' => 'user',
+        //     'pass' => 'user1',
+        // ],[
+        //     'name' => 'user2',
+        //     'email' => 'user2@gmail.com',
+        //     'password' => Hash::make('user2'),
+        //     'level' => 'user',
+        //     'pass' => 'user2',
+        // ]]);
 
         // DB::table('users')->insert([
         //     'name' => 'customer',
