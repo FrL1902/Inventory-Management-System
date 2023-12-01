@@ -145,9 +145,26 @@ class ItemController extends Controller
         $user = Auth::user();
 
         if ($user->level == 'admin') {
-            $customer = Customer::all();
-            $item = Item::all();
-            $brand = Brand::all();
+            // $customer = Customer::all();
+            // $item = Item::all();
+            // $brand = Brand::all();
+            $customer = DB::table('customer')
+                // ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.customer_id')
+                ->select('customer.*')
+                // ->where('user_id', $user->name)
+                ->get();
+            $brand = DB::table('brand')
+                // ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
+                ->select('brand.brand_id', 'brand.brand_name')
+                // ->where('user_id', $user->name)
+                ->get();
+            $item = DB::table('items')
+                ->join('customer', 'customer.customer_id', '=', 'items.customer_id')
+                // ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->join('brand', 'brand.brand_id', '=', 'items.brand_id')
+                ->select('items.*', 'customer.customer_name', 'brand.brand_name')
+                // ->where('user_id', $user->name)
+                ->get();
         } else {
             $customer = DB::table('customer')
                 ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.customer_id')
@@ -367,9 +384,26 @@ class ItemController extends Controller
         $user = Auth::user();
 
         if ($user->level == 'admin') {
-            $customer = Customer::all();
-            $item = Item::all();
-            $brand = Brand::all();
+            // $customer = Customer::all();
+            // $item = Item::all();
+            // $brand = Brand::all();
+            $customer = DB::table('customer')
+                // ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.customer_id')
+                ->select('customer.*')
+                // ->where('user_id', $user->name)
+                ->get();
+            $brand = DB::table('brand')
+                // ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
+                ->select('brand.brand_id', 'brand.brand_name')
+                // ->where('user_id', $user->name)
+                ->get();
+            $item = DB::table('items')
+                ->join('customer', 'customer.customer_id', '=', 'items.customer_id')
+                // ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+                ->join('brand', 'brand.brand_id', '=', 'items.brand_id')
+                ->select('items.*', 'customer.customer_name', 'brand.brand_name')
+                // ->where('user_id', $user->name)
+                ->get();
         } else {
             $customer = DB::table('customer')
                 ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.customer_id')
