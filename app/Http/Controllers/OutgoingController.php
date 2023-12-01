@@ -45,7 +45,7 @@ class OutgoingController extends Controller
 
             $item = DB::table('items')
                 ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
-                ->select('items.item_name', 'items.item_id', 'items.id')->get();
+                ->select('items.item_name', 'items.item_id', 'items.item_id')->get();
 
             $customer = DB::table('customer')
                 ->select('customer.customer_name', 'customer.customer_id', 'customer.customer_id')->get();
@@ -57,7 +57,7 @@ class OutgoingController extends Controller
                 ->select('outgoings.*', 'customer.customer_name', 'brand.brand_name', 'items.item_name', 'items.item_id', 'brand.brand_id')->get();
 
             $brand =  DB::table('brand')
-                ->select('brand.id', 'brand.brand_name')->get();
+                ->select('brand.brand_id', 'brand.brand_name')->get();
         } else {
             $item = DB::table('items')
                 ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
