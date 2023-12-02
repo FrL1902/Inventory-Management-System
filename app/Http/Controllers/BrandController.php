@@ -34,15 +34,11 @@ class BrandController extends Controller
 
     public function manage_brand_page()
     {
-        // $customer = Customer::all();
-        // $brand = Brand::all();
-
         $user = Auth::user();
 
         if ($user->level == 'admin') {
             $customer = Customer::all();
             $brand = DB::table('brand')
-                ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
                 ->join('customer', 'customer.customer_id', '=', 'brand.customer_id')
                 ->select('brand.*', 'customer.customer_name')
                 ->get();
