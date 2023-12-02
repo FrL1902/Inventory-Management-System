@@ -379,7 +379,7 @@ class OutgoingController extends Controller
 
                 Outgoing::where('id', $request->outgoingIdHidden)->update([
                     'stock_taken' => $request->outgoingEdit,
-                    'stock_now' => $newStockNow
+                    // 'stock_now' => $newStockNow
                 ]);
 
                 session()->flash('suksesUpdateOutgoing', 'Sukses update data keluar barang ' . $itemInfo->item_name);

@@ -405,7 +405,7 @@ class IncomingController extends Controller
 
                 Incoming::where('id', $request->incomingIdHidden)->update([
                     'stock_added' => $request->incomingEdit,
-                    'stock_now' => $newStockNow
+                    // 'stock_now' => $newStockNow
                 ]);
 
                 session()->flash('suksesUpdateIncoming', 'Sukses update data kedatangan barang ' . $itemInfo->item_name);
