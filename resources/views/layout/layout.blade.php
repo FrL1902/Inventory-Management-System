@@ -673,6 +673,8 @@
 
         // https://stackoverflow.com/questions/45944210/laravel-carbon-reloading-current-time
     </script>
+
+    @yield('script')
 </body>
 
 </html>

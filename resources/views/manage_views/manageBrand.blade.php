@@ -38,6 +38,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
+
+
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title"><strong>Mengelola Brand</strong></h4>
@@ -98,6 +100,8 @@
                                     </div>
                                 </div>
                             </div>
+
+
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="add-row" class="display table table-striped table-hover">
@@ -118,7 +122,6 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-
                                             @foreach ($brand as $brand)
                                                 <tr>
                                                     <td>{{ $brand->customer_name }}</td>
@@ -134,13 +137,18 @@
                                                                     data-original-title="Edit Brand"></i>
                                                             </a>
                                                             @if (App\Models\Item::checkNullItemBrand($brand->brand_id) == 'kosong')
-                                                                <a class="ml-3 mb-2" style="cursor: pointer"
+                                                                {{-- <a class="ml-3 mb-2" style="cursor: pointer"
                                                                     data-target="#deleteModal{{ $brand->brand_id }}"
                                                                     data-toggle="modal">
                                                                     <i class="fa fa-times mt-3 text-danger"
                                                                         data-toggle="tooltip"
                                                                         data-original-title="Hapus Brand"></i>
-                                                                </a>
+                                                                </a> --}}
+                                                                <button type="button" class="btn btn-primary"
+                                                                data-toggle="modal"
+                                                                data-target="#deleteModal"
+                                                                data-brand_name="{{$brand->brand_name}}"
+                                                                data-brand_id="{{$brand->brand_id}}">edit</button>
                                                             @else
                                                                 <a class="ml-3 mb-2" style="cursor: pointer">
                                                                     <i class="fa fa-ban mt-3 text-danger"
@@ -150,7 +158,7 @@
                                                             @endif
                                                         </div>
 
-                                                        <div class="modal fade" id="deleteModal{{ $brand->brand_id }}">
+                                                        {{-- <div class="modal fade" id="deleteModal{{ $brand->brand_id }}">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -178,7 +186,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="modal fade"
                                                             id="editModalCenter{{ $brand->brand_id }}" tabindex="-1"
                                                             role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -234,7 +242,63 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class="modal fade" id="deleteModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLabel" style="font-weight: bold">
+                                    {{-- <strong>PENGHAPUSAN BRAND</strong> --}}
+                                </h3>
+                                <button type="button" class="close"
+                                    data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="modal-text"></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    id="close-modal"
+                                    data-dismiss="modal">Tidak</button>
+                                <a href="/deleteBrand/ttt" class="deleteBrand btn btn-danger">YAKIN
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
+@endsection
+
+
+@section('script')
+<script type="text/javascript">
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var brand_name = button.data('brand_name')
+        var brand_id = button.data('brand_id')
+        var route = $('.deleteBrand').attr('href')
+
+        let text1 = "/deleteBrand/{{encrypt(";
+        let text2 = brand_id;
+        let text3 = ")}}";
+
+        let result = text1.concat(" ", text2, " ", text3);
+        var modal = $(this)
+
+
+        modal.find('.modal-title').text('HAPUS "' + brand_name + '"')
+        modal.find('.modal-text').text('Apa anda yakin untuk menghapus "' + result + '" ?')
+        modal.find('.deleteBrand').attr('href', "/deleteBrand/" + brand_id)
+
+        // modal.find('.modal-body input').val(recipient)
+    })
+</script>
+
 @endsection

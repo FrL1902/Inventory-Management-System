@@ -98,13 +98,18 @@ class BrandController extends Controller
 
     public function deleteBrand($id)
     {
-        try {
-            $decrypted = decrypt($id);
-        } catch (DecryptException $e) {
-            abort(403);
-        }
+        // dd($id);
+        // try {
+        //     $decrypted = decrypt($id);
+        // } catch (DecryptException $e) {
+        //     abort(403);
+        // }
+        // dd($decrypted);
+        $decrypted = $id;
+        // dd($decrypted);
 
         $brand = Brand::find($decrypted);
+        // dd($brand);
         $deletedBrand = $brand->brand_name;
 
         // cek kalo brand yang mau di delete mempunyai item atau tidak
