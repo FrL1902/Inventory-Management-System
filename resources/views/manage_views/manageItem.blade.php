@@ -190,21 +190,14 @@
                                                     <td>{{ $item->item_id }}</td>
                                                     <td>{{ $item->item_name }}</td>
                                                     <td>{{ $item->stocks }}</td>
-                                                    {{-- <td>{{ $item->created_at }}</td> --}}
                                                     {{-- <td>{{ date_format(date_create($item->created_at), 'D H:i:s d-m-Y') }}</td> --}}
                                                     <td>{{ $item->created_at }}</td>
-                                                    {{-- <td>{{ $item->updated_at }}</td> --}}
-                                                    {{-- <td>{{ date_format(date_create($item->updated_at), 'D H:i:s d-m-Y') }}</td> --}}
                                                     <td>{{ $item->updated_at }}</td>
                                                     <td>
-                                                        {{-- <img class="rounded mx-auto d-block"
-                                                            style="width: 100px;
-                                                        height: auto;"
-                                                            src="{{ Storage::url($item->item_pictures) }}"
-                                                            alt="no picture"> --}}
-                                                        <a style="cursor: pointer"
-                                                            data-target="#imageModalCenter{{ $item->item_id }}"
-                                                            data-toggle="modal">
+                                                        <a style="cursor: pointer" data-target="#imageModalCenter"
+                                                            data-toggle="modal" data-item_id="{{ $item->item_id }}"
+                                                            data-pic_url="{{ Storage::url($item->item_pictures) }}"
+                                                            data-item_name="{{ $item->item_name }}">
                                                             <img class="rounded mx-auto d-block"
                                                                 style="width: 100px; height: auto;"
                                                                 src="{{ Storage::url($item->item_pictures) }}"
@@ -213,20 +206,6 @@
                                                     </td>
                                                     <td>
                                                         <div class="d-flex justify-content-center">
-                                                            {{-- <a style="cursor: pointer"
-                                                                data-target="#addModalCenter{{ $item->id }}"
-                                                                data-toggle="modal">
-                                                                <i class="fa fa-arrow-up mt-3 text-warning"
-                                                                    data-toggle="tooltip"
-                                                                    data-original-title="Add Stock"></i>
-                                                            </a>
-                                                            <a class="ml-3 mb-2" style="cursor: pointer"
-                                                                data-target="#reduceModalCenter{{ $item->id }}"
-                                                                data-toggle="modal">
-                                                                <i class="fa fa-arrow-down mt-3 text-warning"
-                                                                    data-toggle="tooltip"
-                                                                    data-original-title="Reduce Stock"></i>
-                                                            </a> --}}
                                                             <a style="cursor: pointer" class="mb-2"
                                                                 data-target="#editModalCenter{{ $item->item_id }}"
                                                                 data-toggle="modal">
@@ -465,31 +444,6 @@
                                                         </div> --}}
                                                     </td>
                                                 </tr>
-                                                <div class="modal fade" id="imageModalCenter{{ $item->item_id }}"
-                                                    tabindex="-1" role="dialog"
-                                                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered modal-lg"
-                                                        role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h3 class="modal-title" id="exampleModalLongTitle">
-                                                                    <strong>Gambar barang "
-                                                                        {{ $item->item_name }}"</strong>
-                                                                </h3>
-                                                                <button type="button" class="close"
-                                                                    data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <img class="rounded mx-auto d-block"
-                                                                    style="width: 750px; height: auto;"
-                                                                    src="{{ Storage::url($item->item_pictures) }}"
-                                                                    alt="no picture" loading="lazy">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -498,7 +452,43 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="modal fade" id="imageModalCenter" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLongTitle"></h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <img class="img-place rounded mx-auto d-block" style="width: 750px; height: auto;"
+                                    src="#" alt="no picture" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        $('#imageModalCenter').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var item_name = button.data('item_name')
+            var item_id = button.data('item_id')
+            var pic_url = button.data('pic_url')
+            var modal = $(this)
+
+
+            modal.find('.modal-title').text('IMAGE')
+            modal.find('.img-place').attr('src', pic_url)
+        })
+    </script>
+
 @endsection
