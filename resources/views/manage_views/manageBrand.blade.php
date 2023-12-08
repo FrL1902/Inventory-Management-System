@@ -110,7 +110,7 @@
                                                 <th>Pemilik (customer)</th>
                                                 <th>ID Brand</th>
                                                 <th>Nama Brand</th>
-                                                <th style="width: 10%">Edit</th>
+                                                <th style="width: 6%">Edit</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -130,8 +130,10 @@
                                                     <td>
                                                         <div class="d-flex justify-content-center">
                                                             <a style="cursor: pointer"
-                                                                data-target="#editModalCenter{{ $brand->brand_id }}"
-                                                                data-toggle="modal">
+                                                                data-target="#editModalCenter"
+                                                                data-toggle="modal"
+                                                                data-brand_id="{{ $brand->brand_id }}"
+                                                                data-brand_name="{{ $brand->brand_name }}">
                                                                 <i class="fa fa-edit mt-3 text-primary"
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Edit Brand"></i>
@@ -141,7 +143,8 @@
                                                                     data-target="#deleteModal"
                                                                     data-toggle="modal"
                                                                     data-brand_name="{{ $brand->brand_name }}"
-                                                                    data-brand_id="{{ $brand->brand_id }}">
+                                                                    data-brand_id="{{ $brand->brand_id }}"
+                                                                    data-brand_id_enc="{{ encrypt($brand->brand_id) }}">
                                                                     <i class="fa fa-times mt-3 text-danger"
                                                                         data-toggle="tooltip"
                                                                         data-original-title="Hapus Brand"></i>
@@ -165,7 +168,7 @@
                     </div>
                 </div>
 
-
+                {{-- modal untuk delete brand --}}
                 <div class="modal fade" id="deleteModal">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -188,16 +191,15 @@
                     </div>
                 </div>
 
-                <div class="modal fade" id="editModalCenter{{ $brand->brand_id }}"
+                {{-- modal untuk update brand --}}
+                <div class="modal fade" id="editModalCenter"
                     tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h3 class="modal-title"
-                                    id="exampleModalLongTitle">
-                                    <strong>Update data untuk
-                                        "{{ $brand->brand_name }}"</strong>
+                                    id="exampleModalLongTitle" style="font-weight: bold"></strong>
                                 </h3>
                                 <button type="button" class="close"
                                     data-dismiss="modal" aria-label="Close">
@@ -211,7 +213,7 @@
                                         <div class="form-group">
                                             <label>Nama Brand</label>
                                             <input type="text"
-                                                class="form-control"
+                                                class="form-control brand_update_field"
                                                 placeholder="masukkan nama brand"
                                                 aria-label=""
                                                 aria-describedby="basic-addon1"
@@ -222,16 +224,15 @@
                                                     Data Brand</button>
                                             </div>
                                         </div>
-                                        <input type="hidden" class="form-control"
+                                        <input type="hidden" class="form-control brandIdHidden"
                                             name="brandIdHidden"
-                                            value="{{ $brand->brand_id }}">
+                                            value="#">
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -244,21 +245,33 @@
             var button = $(event.relatedTarget)
             var brand_name = button.data('brand_name')
             var brand_id = button.data('brand_id')
-            // var route = $('.deleteBrand').attr('href')
-
-            // let text1 = "/deleteBrand/{{ encrypt(";
-                    // let text2 = brand_id;
-                    // let text3 = ") }}";
-
-            // let result = text1.concat(" ", text2, " ", text3);
+            var brand_id_enc = button.data('brand_id_enc')
             var modal = $(this)
 
 
             modal.find('.modal-title').text('HAPUS BRAND')
             modal.find('.modal-text').text('Apa anda yakin untuk menghapus brand "' + brand_name + '" ?')
-            modal.find('.deleteBrand').attr('href', "/deleteBrand/" + brand_id)
+            modal.find('.deleteBrand').attr('href', '/deleteBrand/' + brand_id_enc)
 
-            // modal.find('.modal-body input').val(recipient)
+        })
+
+        // empty inputs after clicking on the 'a' that opens the modal for update brand name. i think this can be used for other things, ye bisa ternyata
+        $(document).ready(function(){
+                $("a").on("click",function(){
+                    $(".brand_update_field").val("");
+                })
+            });
+
+
+        $('#editModalCenter').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var brand_id = button.data('brand_id')
+            var brand_name = button.data('brand_name')
+            var modal = $(this)
+
+            modal.find('.modal-title').text('UPDATE BRAND "' + brand_name + '"')
+            modal.find('.brandIdHidden').attr('value', brand_id)
+
         })
     </script>
 

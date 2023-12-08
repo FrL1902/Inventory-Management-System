@@ -16,8 +16,6 @@ class BrandController extends Controller
 {
     public function new_brand_page()
     {
-        // $customer = Customer::all();
-
         $user = Auth::user();
 
         if ($user->level == 'admin') {
@@ -61,19 +59,11 @@ class BrandController extends Controller
     public function makeBrand(Request $request)
     {
         $request->validate([
-            'customeridforbrand' => 'required',
-            'brandid' => 'required',
-            'brandname' => 'required',
-        ], [
             'customeridforbrand.required' => 'Kolom "Pemilik Brand" harus dipilih',
-            'brandid.required' => 'Kolom "ID Brand" Harus Diisi',
-            'brandname.required' => 'Kolom "Nama Brand" Harus Diisi'
-        ]);
-
-        $request->validate([
             'brandid' => 'required|unique:App\Models\Brand,brand_id|min:3|max:20|alpha_dash',
             'brandname' => 'required|min:2|max:50|regex:/^[\pL\s\-\0-9]+$/u', //regex lama tanpa angka /^[\pL\s\-]+$/u
         ], [
+            'customeridforbrand' => 'required',
             'brandid.required' => 'Kolom "ID Brand" Harus Diisi',
             'brandid.unique' => '"ID Brand" yang diisi sudah terambil, masukkan ID yang lain',
             'brandid.min' => '"ID Brand" minimal 3 karakter',
@@ -98,18 +88,13 @@ class BrandController extends Controller
 
     public function deleteBrand($id)
     {
-        // dd($id);
-        // try {
-        //     $decrypted = decrypt($id);
-        // } catch (DecryptException $e) {
-        //     abort(403);
-        // }
-        // dd($decrypted);
-        $decrypted = $id;
-        // dd($decrypted);
+        try {
+            $decrypted = decrypt($id);
+        } catch (DecryptException $e) {
+            abort(403);
+        }
 
         $brand = Brand::find($decrypted);
-        // dd($brand);
         $deletedBrand = $brand->brand_name;
 
         // cek kalo brand yang mau di delete mempunyai item atau tidak
@@ -142,9 +127,7 @@ class BrandController extends Controller
             'brand_name' => $request->brandnameformupdate,
         ]);
 
-        $request->session()->flash('sukses_editBrand', $request->brandnameformupdate);
-        // return redirect('manageBrand');
-        return redirect()->back();
+        return redirect()->back()->with('sukses_editBrand', $request->brandnameformupdate);
     }
 
     public function exportCustomerBrand(Request $request)
