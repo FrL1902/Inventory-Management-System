@@ -66,7 +66,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Export barang milik customer
+                                                            EXPORT BARANG BERDASARKAN CUSTOMER
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -74,13 +74,14 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
+                                                <form method="post" action="/exportCustomerItem">
+                                                    @csrf
                                                 <div class="modal-body">
-                                                    <form method="post" action="/exportCustomerItem">
-                                                        @csrf
 
                                                         <div class="card-body">
-                                                            <div class="form-group">
-                                                                <label for="customerLabelExport">Customer</label>
+                                                            {{-- <div class="form-group"> --}}
+                                                                <label for="customerLabelExport"
+                                                                    style="font-weight: bold">Customer</label>
                                                                 <select class="form-control" data-width="100%"
                                                                     id="customerLabelExport" name="customerItemExport"
                                                                     required>
@@ -91,17 +92,15 @@
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div>
+                                                            {{-- </div> --}}
 
-                                                            <div class="form-group">
-                                                                <div class="card mt-5 ">
-                                                                    <button id="" class="btn btn-primary">Export
-                                                                        Data</button>
-                                                                </div>
-                                                            </div>
                                                         </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary">Export
+                                                            Data</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -113,7 +112,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Export barang milik Brand
+                                                            EXPORT BARANG BERDASARKAN BRAND
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -121,33 +120,30 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <form method="post" action="/exportBrandItem">
-                                                        @csrf
-
+                                                <form method="post" action="/exportBrandItem">
+                                                    @csrf
+                                                    <div class="modal-body">
                                                         <div class="card-body">
-                                                            <div class="form-group">
-                                                                <label for="brandLabelExport">Brand</label>
-                                                                <select class="form-control" id="brandLabelExport"
-                                                                    data-width="100%" name="brandItemExport" required>
-                                                                    <option></option>
-                                                                    @foreach ($brand as $data)
-                                                                        <option value="{{ $data->brand_id }}">
-                                                                            {{ $data->brand_name }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div class="card mt-5 ">
-                                                                    <button id="" class="btn btn-primary">Export
-                                                                        Data</button>
-                                                                </div>
-                                                            </div>
+                                                            {{-- <div class="form-group"> --}}
+                                                            <label for="brandLabelExport"
+                                                                style="font-weight: bold">Brand</label>
+                                                            <select class="form-control" id="brandLabelExport"
+                                                                data-width="100%" name="brandItemExport" required>
+                                                                <option></option>
+                                                                @foreach ($brand as $data)
+                                                                    <option value="{{ $data->brand_id }}">
+                                                                        {{ $data->brand_name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            {{-- </div> --}}
                                                         </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary">Export
+                                                            Data</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -455,17 +451,18 @@
                 </div>
 
                 <div class="modal fade" id="imageModalCenter" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content">
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="padding: 0">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+                        style="min-width: auto; max-width: fit-content;">
+                        <div class="modal-content" style="min-width:auto">
                             <div class="modal-header">
                                 <h3 class="modal-title" id="exampleModalLongTitle"></h3>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <img class="img-place rounded mx-auto d-block" style="width: 750px; height: auto;"
+                            <div class="modal-body modal-img">
+                                <img class="img-place rounded mx-auto d-block" style="height: 422px;  width:auto"
                                     src="#" alt="no picture" loading="lazy">
                             </div>
                         </div>
@@ -480,6 +477,8 @@
 @section('script')
     <script type="text/javascript">
         $('#imageModalCenter').on('show.bs.modal', function(event) {
+            $(".modal-img").css("padding", '0px');
+            $(".modal-img").css("margin", '0px');
             var button = $(event.relatedTarget)
             var item_name = button.data('item_name')
             var item_id = button.data('item_id')
@@ -488,6 +487,23 @@
 
 
             modal.find('.modal-title').text('IMAGE')
+            modal.find('.img-place').attr('src', pic_url)
+        })
+    </script>
+
+
+    <script type="text/javascript">
+        $('#imageModalCenter').on('show.bs.modal', function(event) {
+            $(".modal-img").css("padding", '0px');
+            $(".modal-img").css("margin", '0px');
+            var button = $(event.relatedTarget)
+            var item_name = button.data('item_name')
+            var item_id = button.data('item_id')
+            var pic_url = button.data('pic_url')
+            var modal = $(this)
+
+
+            modal.find('.modal-title').text('GAMBAR "' + item_name + '"')
             modal.find('.img-place').attr('src', pic_url)
         })
     </script>

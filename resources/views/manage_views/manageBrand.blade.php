@@ -61,7 +61,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Export semua brand milik customer:
+                                                            EXPORT BRAND BERDASARKAN CUSTOMER
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -69,32 +69,30 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <form method="post" action="/exportCustomerBrand">
-                                                        @csrf
+                                                <form method="post" action="/exportCustomerBrand">
+                                                    @csrf
+                                                    <div class="modal-body">
                                                         <div class="card-body">
-                                                            <div class="form-group">
-                                                                <label for="customerLabelExportBrand">Customer</label>
-                                                                <select class="form-control" id="customerLabelExportBrand"
-                                                                    data-width="100%" name="customerBrandExport">
-                                                                    @foreach ($customer as $data)
-                                                                        <option></option>
-                                                                        <option value="{{ $data->customer_id }}">
-                                                                            {{ $data->customer_name }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div class="card mt-5 ">
-                                                                    <button id="" class="btn btn-primary">Export
-                                                                        Data</button>
-                                                                </div>
-                                                            </div>
+                                                            {{-- <div class="form-group"> --}}
+                                                            <label for="customerLabelExportBrand"
+                                                                style="font-weight: bold">Customer</label>
+                                                            <select class="form-control" id="customerLabelExportBrand"
+                                                                data-width="100%" name="customerBrandExport">
+                                                                @foreach ($customer as $data)
+                                                                    <option></option>
+                                                                    <option value="{{ $data->customer_id }}">
+                                                                        {{ $data->customer_name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            {{-- </div> --}}
                                                         </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary">Export
+                                                            Data</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
