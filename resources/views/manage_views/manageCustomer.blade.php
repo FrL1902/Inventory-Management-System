@@ -72,7 +72,7 @@
                                             <th>Nama PIC</th>
                                             <th>PIC Nomor Telpon</th>
                                             <th>NPWP</th>
-                                            <th style="width: 10%">Edit</th>
+                                            <th style="width: 6%">Edit</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
