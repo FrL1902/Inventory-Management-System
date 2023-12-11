@@ -16,6 +16,28 @@ class UserPermission extends Model
         return $this->belongsTo(User::class, 'name');
     }
 
+    public static function checkPageStatusLayout($page)
+    {
+
+        // $userLevel = User::where('name', $name)->first();
+
+        // check if admin
+        $userInfo = auth()->user();
+        if ($userInfo->level == 'admin') {
+            return 1;
+        }
+
+        // dd($name. ' ' . $page);
+
+        $pageStatus = UserPermission::where('name', $userInfo->name)->where('page', $page)->first();
+        // dd(is_null($tes));
+        if ($pageStatus->status == 1) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     public static function checkPageStatus($name, $page)
     {
 
@@ -34,15 +56,19 @@ class UserPermission extends Model
         }
     }
 
-    public static function checkMenuCustomer($name)
+    public static function checkMenuCustomer()
     {
-        $userLevel = User::where('name', $name)->first();
-        if ($userLevel->level == 'admin') {
+        // $userLevel = User::where('name', $name)->first();
+        $userInfo = auth()->user();
+
+        // cek kalo admin
+        if ($userInfo->level == 'admin') {
             return true;
         }
 
-        $tambah_customer_baru = UserPermission::where('name', $name)->where('page', 'tambah_customer_baru')->first();
-        $data_customer = UserPermission::where('name', $name)->where('page', 'data_customer')->first();
+        // cek kalo bukan admin
+        $tambah_customer_baru = UserPermission::where('name', $userInfo->name)->where('page', 'tambah_customer_baru')->first();
+        $data_customer = UserPermission::where('name', $userInfo->name)->where('page', 'data_customer')->first();
 
         $check = $data_customer->status + $tambah_customer_baru->status;
 
@@ -53,15 +79,19 @@ class UserPermission extends Model
         }
     }
 
-    public static function checkMenuBrand($name)
+    public static function checkMenuBrand()
     {
-        $userLevel = User::where('name', $name)->first();
-        if ($userLevel->level == 'admin') {
+        // $userLevel = User::where('name', $name)->first();
+        $userInfo = auth()->user();
+
+        // cek kalo admin
+        if ($userInfo->level == 'admin') {
             return true;
         }
 
-        $tambah_brand_baru = UserPermission::where('name', $name)->where('page', 'tambah_brand_baru')->first();
-        $data_brand = UserPermission::where('name', $name)->where('page', 'data_brand')->first();
+        // cek kalo bukan admin
+        $tambah_brand_baru = UserPermission::where('name', $userInfo->name)->where('page', 'tambah_brand_baru')->first();
+        $data_brand = UserPermission::where('name', $userInfo->name)->where('page', 'data_brand')->first();
 
         $check = $tambah_brand_baru->status + $data_brand->status;
 
@@ -72,19 +102,23 @@ class UserPermission extends Model
         }
     }
 
-    public static function checkMenuBarang($name)
+    public static function checkMenuBarang()
     {
-        $userLevel = User::where('name', $name)->first();
-        if ($userLevel->level == 'admin') {
+        // $userLevel = User::where('name', $name)->first();
+        $userInfo = auth()->user();
+
+        // cek kalo admin
+        if ($userInfo->level == 'admin') {
             return true;
         }
 
-        $laporan_stok_by_pcs = UserPermission::where('name', $name)->where('page', 'laporan_stok_by_pcs')->first();
-        $tambah_barang_baru = UserPermission::where('name', $name)->where('page', 'tambah_barang_baru')->first();
-        $data_barang = UserPermission::where('name', $name)->where('page', 'data_barang')->first();
-        $barang_datang = UserPermission::where('name', $name)->where('page', 'barang_datang')->first();
-        $barang_keluar = UserPermission::where('name', $name)->where('page', 'barang_keluar')->first();
-        $history_stok_by_pcs = UserPermission::where('name', $name)->where('page', 'history_stok_by_pcs')->first();
+        // cek kalo bukan admin
+        $laporan_stok_by_pcs = UserPermission::where('name', $userInfo->name)->where('page', 'laporan_stok_by_pcs')->first();
+        $tambah_barang_baru = UserPermission::where('name', $userInfo->name)->where('page', 'tambah_barang_baru')->first();
+        $data_barang = UserPermission::where('name', $userInfo->name)->where('page', 'data_barang')->first();
+        $barang_datang = UserPermission::where('name', $userInfo->name)->where('page', 'barang_datang')->first();
+        $barang_keluar = UserPermission::where('name', $userInfo->name)->where('page', 'barang_keluar')->first();
+        $history_stok_by_pcs = UserPermission::where('name', $userInfo->name)->where('page', 'history_stok_by_pcs')->first();
 
 
         $check = $laporan_stok_by_pcs->status +
@@ -101,17 +135,21 @@ class UserPermission extends Model
         }
     }
 
-    public static function checkMenuPalet($name)
+    public static function checkMenuPalet()
     {
-        $userLevel = User::where('name', $name)->first();
-        if ($userLevel->level == 'admin') {
+        // $userLevel = User::where('name', $name)->first();
+        $userInfo = auth()->user();
+
+        // cek kalo admin
+        if ($userInfo->level == 'admin') {
             return true;
         }
 
-        $laporan_stok_by_palet = UserPermission::where('name', $name)->where('page', 'laporan_stok_by_palet')->first();
-        $palet_masuk = UserPermission::where('name', $name)->where('page', 'palet_masuk')->first();
-        $palet_keluar = UserPermission::where('name', $name)->where('page', 'palet_keluar')->first();
-        $history_stok_by_palet = UserPermission::where('name', $name)->where('page', 'history_stok_by_palet')->first();
+        // cek kalo bukan admin
+        $laporan_stok_by_palet = UserPermission::where('name', $userInfo->name)->where('page', 'laporan_stok_by_palet')->first();
+        $palet_masuk = UserPermission::where('name', $userInfo->name)->where('page', 'palet_masuk')->first();
+        $palet_keluar = UserPermission::where('name', $userInfo->name)->where('page', 'palet_keluar')->first();
+        $history_stok_by_palet = UserPermission::where('name', $userInfo->name)->where('page', 'history_stok_by_palet')->first();
 
         $check = $laporan_stok_by_palet->status +
             $palet_masuk->status +
