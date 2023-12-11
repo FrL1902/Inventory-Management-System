@@ -213,19 +213,20 @@
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Edit Data Barang"></i>
                                                             </a>
-                                                            @if (App\Models\Item::checkItemDeletable($item->item_id) == 'kosong')
+                                                            {{-- @if (App\Models\Item::checkItemDeletable($item->item_id) == true) --}}
+                                                            @if ($item->incoming_exists == true || $item->outgoing_exists == true)
+                                                                <a class="ml-3 mb-2" style="cursor: pointer">
+                                                                    <i class="fa fa-ban mt-3 text-danger"
+                                                                        data-toggle="tooltip"
+                                                                        data-original-title="Cannot Delete Item, has history"></i>
+                                                                </a>
+                                                            @else
                                                                 <a class="ml-3 mb-2" style="cursor: pointer"
                                                                     data-target="#deleteModal{{ $item->item_id }}"
                                                                     data-toggle="modal">
                                                                     <i class="fa fa-times mt-3 text-danger"
                                                                         data-toggle="tooltip"
                                                                         data-original-title="Hapus Barang"></i>
-                                                                </a>
-                                                            @else
-                                                                <a class="ml-3 mb-2" style="cursor: pointer">
-                                                                    <i class="fa fa-ban mt-3 text-danger"
-                                                                        data-toggle="tooltip"
-                                                                        data-original-title="Cannot Delete Item, has history"></i>
                                                                 </a>
                                                             @endif
                                                         </div>

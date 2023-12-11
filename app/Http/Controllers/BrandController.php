@@ -36,9 +36,11 @@ class BrandController extends Controller
 
         if ($user->level == 'admin') {
             $customer = Customer::all();
-            $brand = DB::table('brand')
+            $brand = Brand::query()
                 ->join('customer', 'customer.customer_id', '=', 'brand.customer_id')
                 ->select('brand.*', 'customer.customer_name')
+                ->with(['item'])
+                ->withExists('item')
                 ->get();
         } else {
             $customer = DB::table('customer')
@@ -46,10 +48,12 @@ class BrandController extends Controller
                 ->select('customer.*')
                 ->where('user_id', $user->name)->get();
 
-            $brand = DB::table('brand')
+            $brand = Brand::query()
                 ->join('user_accesses', 'user_accesses.customer_id', '=', 'brand.customer_id')
                 ->join('customer', 'customer.customer_id', '=', 'brand.customer_id')
                 ->select('brand.*', 'customer.customer_name')
+                ->with(['item'])
+                ->withExists('item')
                 ->where('user_id', $user->name)->get();
         }
 

@@ -56,25 +56,40 @@ class Item extends Model
         return $this->hasMany(OutPallet::class, 'item_id');
     }
 
-    public static function checkNullItemBrand($id)
-    {
-        $nullCheckItem = Item::where('brand_id', $id)->first();
-        if (is_null($nullCheckItem)) {
-            return "kosong";
-        } else {
-            return "ada";
-        }
-    }
+    // public static function checkNullItemBrand($id)
+    // {
+    //     // $nullCheckItem = Item::where('brand_id', $id)->first();
+    //     // if (is_null($nullCheckItem)) {
+    //     //     return "kosong";
+    //     // } else {
+    //     //     return "ada";
+    //     // }
 
-    public static function checkItemDeletable($id)
-    {
-        $itemIncoming = Incoming::where('item_id', $id)->first();
-        $itemOutgoing = Outgoing::where('item_id', $id)->first();
 
-        if (is_null($itemIncoming) && is_null($itemOutgoing)) {
-            return "kosong";
-        } else {
-            return "ada";
-        }
-    }
+    //     // this is v2, above this is v1
+    //     if (Item::where('brand_id', $id)->exists()) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+    // public static function checkItemDeletable($id)
+    // {
+    //     // $itemIncoming = Incoming::where('item_id', $id)->first();
+    //     // $itemOutgoing = Outgoing::where('item_id', $id)->first();
+
+    //     // if (is_null($itemIncoming) && is_null($itemOutgoing)) {
+    //     //     return "kosong";
+    //     // } else {
+    //     //     return "ada";
+    //     // }
+
+    //     this is v2, above this is v1
+    //     if (Incoming::where('item_id', $id)->exists() || Outgoing::where('item_id', $id)->exists()) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 }

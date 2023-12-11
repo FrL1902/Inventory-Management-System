@@ -158,13 +158,36 @@ class ItemController extends Controller
                 ->select('brand.brand_id', 'brand.brand_name')
                 // ->where('user_id', $user->name)
                 ->get();
-            $item = DB::table('items')
+            // $item = DB::table('items')
+            //     ->join('customer', 'customer.customer_id', '=', 'items.customer_id')
+            //     // ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
+            //     ->join('brand', 'brand.brand_id', '=', 'items.brand_id')
+            //     ->select('items.*', 'customer.customer_name', 'brand.brand_name')
+            //     // ->where('user_id', $user->name)
+            //     ->get();
+
+            // $item = Item::withCount('incoming')->first();
+            // $item = Item::query()
+            //     ->with(['incoming'])
+            //     ->withExists('incoming')
+            //     ->get();
+
+
+            $item = Item::query()
                 ->join('customer', 'customer.customer_id', '=', 'items.customer_id')
                 // ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
                 ->join('brand', 'brand.brand_id', '=', 'items.brand_id')
                 ->select('items.*', 'customer.customer_name', 'brand.brand_name')
+                ->with(['incoming'])
+                ->with(['outgoing'])
+                ->withExists('incoming')
+                ->withExists('outgoing')
                 // ->where('user_id', $user->name)
                 ->get();
+
+            // dd($item);
+
+
         } else {
             $customer = DB::table('customer')
                 ->join('user_accesses', 'user_accesses.customer_id', '=', 'customer.customer_id')
