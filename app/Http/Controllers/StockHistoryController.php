@@ -41,7 +41,7 @@ class StockHistoryController extends Controller
 
         if ($user->level == 'admin') {
             $item = Item::all();
-            $history = StockHistory::all()->whereBetween('created_at', [$date_from, $date_to]);
+            $history = StockHistory::all()->whereBetween('user_action_date', [$date_from, $date_to]);
         } else {
             $item = DB::table('items')
                 ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
@@ -53,7 +53,7 @@ class StockHistoryController extends Controller
                 ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
                 ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
                 ->select('stock_histories.*')
-                ->where('user_id', $user->name)->whereBetween('stock_histories.created_at', [$date_from, $date_to])->get();
+                ->where('user_id', $user->name)->whereBetween('stock_histories.user_action_date', [$date_from, $date_to])->get();
             // dd($sortHistoryDate);
         }
 
@@ -80,23 +80,20 @@ class StockHistoryController extends Controller
 
         $user = Auth::user();
 
-        $sortHistoryDate = StockHistory::all()->whereBetween('user_action_date', [$date_from, $date_to]);
+        // $sortHistoryDate = StockHistory::all()->whereBetween('user_action_date', [$date_from, $date_to]);
         // dd($sortHistoryDate);
 
         if ($user->level == 'admin') {
-            $sortHistoryDate = StockHistory::all()->whereBetween('created_at', [$date_from, $date_to]);
+            $sortHistoryDate = StockHistory::all()->whereBetween('user_action_date', [$date_from, $date_to]);
         } else {
             $sortHistoryDate = DB::table('stock_histories')
                 ->join('items', 'stock_histories.item_id', '=', 'items.item_id')
                 ->join('customer', 'items.customer_id', '=', 'customer.customer_id')
                 ->join('user_accesses', 'user_accesses.customer_id', '=', 'items.customer_id')
                 ->select('stock_histories.*')
-                ->where('user_id', $user->name)->whereBetween('stock_histories.created_at', [$date_from, $date_to])->get();
+                ->where('user_id', $user->name)->whereBetween('stock_histories.user_action_date', [$date_from, $date_to])->get();
             // dd($sortHistoryDate);
         }
-
-
-
 
         $formatFileName = 'DataHistoryItem ' . date_format($date_from, "d-m-Y") . ' hingga ' . date_format($date_to, "d-m-Y");
 
