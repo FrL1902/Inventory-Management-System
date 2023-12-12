@@ -59,7 +59,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Tambahkan Data Barang di Palet
+                                                            TAMBAHKAN DATA BARANG DI PALET
                                                         </strong>
                                                     </h3>
                                                     <button id="addInPalletClose" style="display:inline-block" type="button" class="close" data-dismiss="modal"
@@ -69,14 +69,14 @@
                                                 </div>
 
                                                 {{-- memasukkan data palet baru --}}
-                                                <div class="modal-body">
+                                                <div class="modal-body" style="padding:0">
                                                     <form enctype="multipart/form-data" method="post"
                                                         action="/addNewPallet">
                                                         @csrf
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="itemidforpallet">Nama Barang<span
+                                                                <label for="itemidforpallet" style="font-weight: bold">Nama Barang<span
                                                                         style="color: red"> (harus dipilih)
                                                                     </span></label>
                                                                 <select class="form-control" data-width="100%"
@@ -90,50 +90,48 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="quantity">Stok<span style="color: red"> (harus
+                                                                <label for="quantity" style="font-weight: bold">Stok<span style="color: red"> (harus
                                                                         diisi)
                                                                     </span></label>
-                                                                <input type="text" id="quantity" name="palletStock"
-                                                                style="width: 100%"
-                                                                    class="form-control" placeholder="min 1, max 999999999"
-                                                                    >
+                                                                <input type="text" id="quantity" name="palletStock" style="width: 100%; border-color: #aaaaaa"
+                                                                    class="form-control form-control-sm" placeholder="min 1, max 999999999">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="largeInput">BIN <span style="color: red"> (harus
+                                                                <label for="largeInput" style="font-weight: bold">BIN <span style="color: red"> (harus
                                                                         diisi)
                                                                     </span></label>
-                                                                <input type="text" class="form-control form-control"
+                                                                <input type="text" class="form-control form-control-sm" style="width: 100%; border-color: #aaaaaa"
                                                                     placeholder="Contoh: J2.1" id="bin" name="bin"
                                                                     >
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="startRange">Tanggal Palet Masuk<span
+                                                                <label for="startRange" style="font-weight: bold">Tanggal Palet Masuk<span
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
-                                                                <input type="date" class="form-control" id="startRange"
+                                                                <input type="date" class="form-control form-control-sm" id="startRange" style="width: 100%; border-color: #aaaaaa"
                                                                      name="palletArrive">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="incomingItemDesc">Keterangan<span
+                                                                <label for="incomingItemDesc" style="font-weight: bold">Keterangan<span
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
-                                                                <textarea class="form-control" id="incomingItemDesc" rows="3" placeholder="deskripsi barang masuk"
+                                                                <textarea class="form-control form-control-sm" id="incomingItemDesc" rows="3" placeholder="deskripsi barang masuk" style="width: 100%; border-color: #aaaaaa"
                                                                     name="palletDesc" ></textarea>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="largeInput">Gambar Palet/Barang Datang<span
+                                                                <label for="largeInput" style="font-weight: bold">Gambar Palet/Barang Datang<span
                                                                         style="color: red"> (harus diisi dan harus dibawah
                                                                         10MB)
                                                                     </span></label>
-                                                                <input type="file" class="form-control form-control"
+                                                                <input type="file" class="form-control form-control-sm" style="width: 100%; border-color: #aaaaaa"
                                                                     id="itemImage" name="inPalletImage">
                                                             </div>
 
-                                                            <div class="form-group" id="submitInPalletButtonAdd">
+                                                            <div class="form-group" id="submitInPalletButtonAdd" style="padding-top:0; padding-bottom:0">
                                                                 <div class="card mt-5 ">
                                                                     {{-- <button id="" class="btn btn-primary">Insert
                                                                         Data</button> --}}
@@ -150,7 +148,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="form-group" id="submitInPalletButtonAddAfter" style="display:none">
+                                                            <div class="form-group" id="submitInPalletButtonAddAfter" style="display:none; padding-top:0; padding-bottom:0">
                                                                 <div class="card mt-5 ">
                                                                     <button class="btn btn-primary" disabled>
                                                                         <strong>loading</strong>
@@ -184,8 +182,8 @@
                                                 <th>BIN</th>
                                                 <th>Tanggal Masuk</th>
                                                 <th>Deskripsi</th>
-                                                <th>Gambar</th>
-                                                <th style="width: 5%">Keluar</th>
+                                                <th style="width: 11%">Gambar</th>
+                                                <th style="width: 6%">Keluar</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -219,7 +217,7 @@
                                                             data-target="#imageModalCenter{{ $data->id }}"
                                                             data-toggle="modal">
                                                             <img class="rounded mx-auto d-block"
-                                                                style="width: 100px; height: auto;"
+                                                                style="width: 100px; height: 50px; object-fit: cover;"
                                                                 src="{{ Storage::url($data->item_pictures) }}"
                                                                 alt="no picture" loading="lazy">
                                                         </a>
