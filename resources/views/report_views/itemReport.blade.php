@@ -218,7 +218,7 @@
                                                         <td>{{ $item->updated_at }}</td>
                                                         <td>
                                                             <a style="cursor: pointer" data-target="#imageModalCenter"
-                                                                data-toggle="modal" data-item_id="{{ $item->item_id }}"
+                                                                data-toggle="modal"
                                                                 data-pic_url="{{ Storage::url($item->item_pictures) }}"
                                                                 data-item_name="{{ $item->item_name }}">
                                                                 <img class="rounded mx-auto d-block" {{-- style="width: 100px; height: auto;" --}}
@@ -270,7 +270,6 @@
             $(".modal-img").css("margin", '0px');
             var button = $(event.relatedTarget)
             var item_name = button.data('item_name')
-            var item_id = button.data('item_id')
             var pic_url = button.data('pic_url')
             var modal = $(this)
 
