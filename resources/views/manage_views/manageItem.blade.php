@@ -76,10 +76,10 @@
                                                 </div>
                                                 <form method="post" action="/exportCustomerItem">
                                                     @csrf
-                                                <div class="modal-body">
+                                                <div class="modal-body" style="padding:0">
 
                                                         <div class="card-body">
-                                                            {{-- <div class="form-group"> --}}
+                                                            <div class="form-group">
                                                                 <label for="customerLabelExport"
                                                                     style="font-weight: bold">Customer</label>
                                                                 <select class="form-control" data-width="100%"
@@ -92,7 +92,7 @@
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
-                                                            {{-- </div> --}}
+                                                            </div>
 
                                                         </div>
                                                     </div>
@@ -122,9 +122,9 @@
                                                 </div>
                                                 <form method="post" action="/exportBrandItem">
                                                     @csrf
-                                                    <div class="modal-body">
+                                                    <div class="modal-body" style="padding:0">
                                                         <div class="card-body">
-                                                            {{-- <div class="form-group"> --}}
+                                                            <div class="form-group">
                                                             <label for="brandLabelExport"
                                                                 style="font-weight: bold">Brand</label>
                                                             <select class="form-control" id="brandLabelExport"
@@ -136,7 +136,7 @@
                                                                     </option>
                                                                 @endforeach
                                                             </select>
-                                                            {{-- </div> --}}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -161,8 +161,8 @@
                                                 <th>Stok</th>
                                                 <th>Tanggal</th>
                                                 <th>Tanggal Terakhir Diupdate</th>
-                                                <th>Gambar Barang</th>
-                                                <th style="width: 10%">Edit</th>
+                                                <th style="width: 11%">Gambar</th>
+                                                <th style="width: 6%">Edit</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -174,7 +174,7 @@
                                                 <th>Stok</th>
                                                 <th>Tanggal</th>
                                                 <th>Tanggal Terakhir Diupdate</th>
-                                                <th>Gambar Barang</th>
+                                                <th>Gambar</th>
                                                 <th>Edit</th>
                                             </tr>
                                         </tfoot>
@@ -191,11 +191,11 @@
                                                     <td>{{ $item->updated_at }}</td>
                                                     <td>
                                                         <a style="cursor: pointer" data-target="#imageModalCenter"
-                                                            data-toggle="modal" data-item_id="{{ $item->item_id }}"
+                                                            data-toggle="modal"
                                                             data-pic_url="{{ Storage::url($item->item_pictures) }}"
                                                             data-item_name="{{ $item->item_name }}">
                                                             <img class="rounded mx-auto d-block"
-                                                                style="width: 100px; height: auto;"
+                                                                style="width: 100px; height: 50px; object-fit: cover;"
                                                                 src="{{ Storage::url($item->item_pictures) }}"
                                                                 alt="no picture" loading="lazy">
                                                         </a>
@@ -218,8 +218,10 @@
                                                                 </a>
                                                             @else
                                                                 <a class="ml-3 mb-2" style="cursor: pointer"
-                                                                    data-target="#deleteModal{{ $item->item_id }}"
-                                                                    data-toggle="modal">
+                                                                    data-target="#deleteModal"
+                                                                    data-toggle="modal"
+                                                                    data-item_name="{{ $item->item_name }}"
+                                                                    data-item_id_enc="{{ encrypt($item->item_id) }}">
                                                                     <i class="fa fa-times mt-3 text-danger"
                                                                         data-toggle="tooltip"
                                                                         data-original-title="Hapus Barang"></i>
@@ -227,35 +229,6 @@
                                                             @endif
                                                         </div>
 
-                                                        <div class="modal fade" id="deleteModal{{ $item->item_id }}">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                                            <strong>PENGHAPUSAN ITEM</strong>
-                                                                        </h5>
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <p>Apakah anda yakin untuk menghapus item
-                                                                            "{{ $item->item_name }}" ?</p>
-                                                                        <p>Jika dihapus, stock yang dimiliki item
-                                                                            ini juga terhapus</p>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary"
-                                                                            id="close-modal"
-                                                                            data-dismiss="modal">Tidak</button>
-                                                                        <a href="/deleteItem/{{ encrypt($item->item_id) }}"
-                                                                            class="btn btn-danger">YAKIN
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
 
                                                         <div class="modal fade" id="editModalCenter{{ $item->item_id }}"
                                                             tabindex="-1" role="dialog"
@@ -450,19 +423,46 @@
                     </div>
                 </div>
 
+                {{-- Delete Modal --}}
+                <div class="modal fade" id="deleteModal">
+                    <div class="modal-dialog modal-dialog-centered" >
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLabel" style="font-weight: bold"></h3>
+                                <button type="button" class="close"
+                                    data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="modal-text"></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    id="close-modal"
+                                    data-dismiss="modal">Tidak</button>
+                                <a href="#"
+                                    class="deleteItem btn btn-danger">YAKIN
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Image Modal --}}
                 <div class="modal fade" id="imageModalCenter" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="padding: 0">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
                         style="min-width: auto; max-width: fit-content;">
                         <div class="modal-content" style="min-width:auto">
                             <div class="modal-header">
-                                <h3 class="modal-title" id="exampleModalLongTitle"></h3>
+                                <h3 class="modal-title" id="exampleModalLongTitle" style="font-weight: bold"></h3>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body modal-img">
-                                <img class="img-place rounded mx-auto d-block" style="height: 422px;  width:auto"
+                                <img class="img-place rounded mx-auto d-block" style="height: 500px;  width:auto"
                                     src="#" alt="no picture" loading="lazy">
                             </div>
                         </div>
@@ -476,29 +476,24 @@
 
 @section('script')
     <script type="text/javascript">
-        $('#imageModalCenter').on('show.bs.modal', function(event) {
-            $(".modal-img").css("padding", '0px');
-            $(".modal-img").css("margin", '0px');
+        $('#deleteModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
             var item_name = button.data('item_name')
-            var item_id = button.data('item_id')
-            var pic_url = button.data('pic_url')
+            var item_id_enc = button.data('item_id_enc')
             var modal = $(this)
 
 
-            modal.find('.modal-title').text('IMAGE')
-            modal.find('.img-place').attr('src', pic_url)
+            modal.find('.modal-title').text('HAPUS BARANG')
+            modal.find('.modal-text').text('Apa anda yakin untuk menghapus barang "' + item_name + '" ?')
+            modal.find('.deleteItem').attr('href', '/deleteItem/' + item_id_enc)
+
         })
-    </script>
 
-
-    <script type="text/javascript">
         $('#imageModalCenter').on('show.bs.modal', function(event) {
             $(".modal-img").css("padding", '0px');
             $(".modal-img").css("margin", '0px');
             var button = $(event.relatedTarget)
             var item_name = button.data('item_name')
-            var item_id = button.data('item_id')
             var pic_url = button.data('pic_url')
             var modal = $(this)
 
