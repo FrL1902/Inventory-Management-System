@@ -85,7 +85,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Export barang datang berdasarkan Customer
+                                                            EXPORT BARANG DATANG BERDASARKAN CUSTOMER
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -93,13 +93,12 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <form method="post" action="/exportIncomingCustomer">
-                                                        @csrf
-
+                                                <form method="post" action="/exportIncomingCustomer">
+                                                    @csrf
+                                                    <div class="modal-body" style="padding:0">
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="customerLabelExportIncoming">Customer</label>
+                                                                <label for="customerLabelExportIncoming" style="font-weight: bold">Customer</label>
                                                                 <select class="form-control"
                                                                     id="customerLabelExportIncoming" data-width="100%"
                                                                     name="customerIncoming" required>
@@ -113,26 +112,30 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="startRange">Dari Tanggal</label>
-                                                                <input type="date" class="form-control"
+                                                                <label for="startRange" style="font-weight: bold">Dari Tanggal</label>
+                                                                <input type="date" class="form-control form-control-sm" style="border-color: #aaaaaa"
                                                                     id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">Hingga Tanggal</label>
-                                                                <input type="date" class="form-control" id="endRange"
+                                                                <label for="endRange" style="font-weight: bold">Hingga Tanggal</label>
+                                                                <input type="date" class="form-control form-control-sm" id="endRange" style="border-color: #aaaaaa"
                                                                     required name="endRange">
                                                             </div>
 
-                                                            <div class="form-group">
+                                                            {{-- <div class="form-group">
                                                                 <div class="card mt-5 ">
                                                                     <button id="" class="btn btn-primary">Export
                                                                         Data</button>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary">Export
+                                                            Data</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -145,7 +148,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Export barang datang berdasarkan Brand
+                                                            EXPORT BARANG DATANG BERDASARKAN BRAND
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -153,13 +156,12 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <form method="post" action="/exportIncomingBrand">
-                                                        @csrf
-
+                                                <form method="post" action="/exportIncomingBrand">
+                                                    @csrf
+                                                    <div class="modal-body" style="padding:0">
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="brandLabelExportincoming">Brand</label>
+                                                                <label for="brandLabelExportincoming" style="font-weight: bold">Brand</label>
                                                                 <select class="form-control" id="brandLabelExportincoming"
                                                                     data-width="100%" name="brandIncoming" required>
                                                                     <option></option>
@@ -172,26 +174,30 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="startRange">Dari Tanggal</label>
-                                                                <input type="date" class="form-control"
+                                                                <label for="startRange" style="font-weight: bold">Dari Tanggal</label>
+                                                                <input type="date" class="form-control form-control-sm" style="border-color: #aaaaaa"
                                                                     id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">Hingga Tanggal</label>
-                                                                <input type="date" class="form-control" id="endRange"
+                                                                <label for="endRange" style="font-weight: bold">Hingga Tanggal</label>
+                                                                <input type="date" class="form-control form-control-sm" id="endRange" style="border-color: #aaaaaa"
                                                                     required name="endRange">
                                                             </div>
 
-                                                            <div class="form-group">
+                                                            {{-- <div class="form-group"  style="padding-top:0; padding-bottom:0">
                                                                 <div class="card mt-5 ">
                                                                     <button id="" class="btn btn-primary">Export
                                                                         Data</button>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary">Export
+                                                            Data</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -204,7 +210,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Export barang datang berdasarkan nama barang
+                                                            EXPORT BARANG DATANG BERDASARKAN BARANG
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -212,13 +218,12 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <form method="post" action="/exportIncomingItem">
-                                                        @csrf
-
+                                                <form method="post" action="/exportIncomingItem">
+                                                    @csrf
+                                                    <div class="modal-body" style="padding:0">
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="itemLabelExportincoming">Nama
+                                                                <label for="itemLabelExportincoming" style="font-weight: bold">Nama
                                                                     Barang</label>
                                                                 <select class="form-control" id="itemLabelExportincoming"
                                                                     data-width="100%" name="itemIncoming" required>
@@ -232,26 +237,30 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="startRange">Dari Tanggal</label>
-                                                                <input type="date" class="form-control"
+                                                                <label for="startRange" style="font-weight: bold">Dari Tanggal</label>
+                                                                <input type="date" class="form-control form-control-sm" style="border-color: #aaaaaa"
                                                                     id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">Hingga Tanggal</label>
-                                                                <input type="date" class="form-control" id="endRange"
+                                                                <label for="endRange" style="font-weight: bold">Hingga Tanggal</label>
+                                                                <input type="date" class="form-control form-control-sm" id="endRange" style="border-color: #aaaaaa"
                                                                     required name="endRange">
                                                             </div>
 
-                                                            <div class="form-group">
+                                                            {{-- <div class="form-group">
                                                                 <div class="card mt-5 ">
                                                                     <button id="" class="btn btn-primary">Export
                                                                         Data</button>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary mr-2">Export
+                                                            Data</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -264,7 +273,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Export semua data barang datang
+                                                            EXPORT SEMUA BARANG DATANG
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -272,34 +281,38 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <form method="post" action="/exportIncoming">
-                                                        @csrf
+                                                <form method="post" action="/exportIncoming">
+                                                    @csrf
+                                                    <div class="modal-body" style="padding:0">
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="startRange">Dari Tanggal</label>
-                                                                <input type="date" class="form-control"
+                                                                <label for="startRange" style="font-weight: bold">Dari Tanggal</label>
+                                                                <input type="date" class="form-control form-control-sm" style="border-color: #aaaaaa"
                                                                     id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">Hingga Tanggal</label>
-                                                                <input type="date" class="form-control" id="endRange"
+                                                                <label for="endRange" style="font-weight: bold">Hingga Tanggal</label>
+                                                                <input type="date" class="form-control form-control-sm" id="endRange" style="border-color: #aaaaaa"
                                                                     required name="endRange">
                                                             </div>
 
-                                                            <div class="form-group">
+                                                            {{-- <div class="form-group">
                                                                 <div class="card mt-5 ">
                                                                     <button id="" class="btn btn-primary">Export
                                                                         Data</button>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                         <input type="hidden" class="form-control" name="userIdHidden"
                                                             value="{{ auth()->user()->id }}">
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary">Export
+                                                            Data</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -312,7 +325,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Tambahkan Barang Datang Baru
+                                                            TAMBAHKAN BARANG DATANG BARU
                                                         </strong>
                                                     </h3>
                                                     <button id="addIncomingClose" style="display:inline-block" type="button" class="close" data-dismiss="modal"
@@ -320,14 +333,14 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
+                                                <div class="modal-body" style="padding:0">
                                                     <form enctype="multipart/form-data" method="post"
                                                         action="/addItemStock">
                                                         @csrf
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="incomingidforitem">Nama Barang<span
+                                                                <label for="incomingidforitem" style="font-weight: bold">Nama Barang<span
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
                                                                 <select class="form-control" data-width="100%"
@@ -341,49 +354,49 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="quantity">Stok<span style="color: red"> (harus
+                                                                <label for="quantity" style="font-weight: bold">Stok<span style="color: red"> (harus
                                                                         diisi)
                                                                     </span></label>
-                                                                <input type="text" id="quantity" name="itemAddStock" style="width: 100%"
-                                                                    class="form-control"
+                                                                <input type="text" id="quantity" name="itemAddStock" style="width: 100%; border-color: #aaaaaa"
+                                                                    class="form-control form-control-sm"
                                                                     placeholder="min 1, max 999999999">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="supplier">Supplier<span style="color: red">
+                                                                <label for="supplier" style="font-weight: bold">Supplier<span style="color: red">
                                                                         (harus diisi)
                                                                     </span></label>
-                                                                <input type="text" class="form-control form-control"
+                                                                <input type="text" class="form-control form-control-sm" style="border-color: #aaaaaa"
                                                                     placeholder="supplier barang" id="supplier"
                                                                     name="supplier">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="incomingdescforitem">Deskripsi<span
+                                                                <label for="incomingdescforitem" style="font-weight: bold">Deskripsi<span
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
-                                                                <textarea class="form-control" id="incomingdescforitem" rows="3" placeholder="deskripsi barang masuk"
+                                                                <textarea class="form-control form-control-sm" id="incomingdescforitem" rows="3" placeholder="deskripsi barang masuk" style="border-color: #aaaaaa"
                                                                     name="incomingItemDesc" ></textarea>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="startRange">Tanggal Barang Datang<span
+                                                                <label for="startRange" style="font-weight: bold">Tanggal Barang Datang<span
                                                                         style="color: red"> (harus diisi)
                                                                     </span></label>
-                                                                <input type="date" class="form-control"
+                                                                <input type="date" class="form-control form-control-sm" style="border-color: #aaaaaa"
                                                                     id="startRange" name="itemArrive">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="largeInput">Gambar Barang Datang<span
+                                                                <label for="largeInput" style="font-weight: bold">Gambar Barang Datang<span
                                                                         style="color: red"> (harus diisi dan harus dibawah 10MB)
                                                                     </span></label>
-                                                                <input type="file" class="form-control form-control"
+                                                                <input type="file" class="form-control form-control-sm" style="border-color: #aaaaaa"
                                                                     id="itemImage" name="incomingItemImage">
                                                             </div>
 
 
-                                                            <div class="form-group" id="submitIncomingButtonAdd">
+                                                            <div class="form-group" style="padding-top:0; padding-bottom:0" id="submitIncomingButtonAdd">
                                                                 <div class="card mt-5 ">
                                                                     {{-- <button id="" class="btn btn-primary">Insert
                                                                         Data</button> --}}
@@ -400,7 +413,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="form-group" id="submitIncomingButtonAddAfter" style="display:none">
+                                                            <div class="form-group" id="submitIncomingButtonAddAfter" style="display:none; padding-top:0; padding-bottom:0">
                                                                 <div class="card mt-5 ">
                                                                     <button class="btn btn-primary" disabled>
                                                                         <strong>loading</strong>
@@ -436,8 +449,8 @@
                                                 <th>Tanggal Sampai</th>
                                                 <th>Supplier</th>
                                                 <th>Deskripsi</th>
-                                                <th>Gambar</th>
-                                                <th>Edit</th>
+                                                <th style="width: 11%">Gambar</th>
+                                                <th style="width: 6%">Edit</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -467,10 +480,13 @@
                                                     <td>{{ $incoming->description }}</td>
                                                     <td>
                                                         <a style="cursor: pointer"
-                                                            data-target="#imageModalCenter{{ $incoming->id }}"
-                                                            data-toggle="modal">
+                                                            data-target="#imageModalCenter"
+                                                            data-toggle="modal"
+                                                            data-pic_url="{{ Storage::url($incoming->item_pictures) }}"
+                                                            data-item_name="{{ $incoming->item_name }}"
+                                                            data-item_date="{{ date_format(date_create($incoming->arrive_date), 'd-m-Y') }}">
                                                             <img class="rounded mx-auto d-block"
-                                                                style="width: 100px; height: auto;"
+                                                                style="width: 100px; height: 50px; object-fit: cover;"
                                                                 src="{{ Storage::url($incoming->item_pictures) }}"
                                                                 alt="no picture" loading="lazy">
                                                         </a>
@@ -485,8 +501,11 @@
                                                                     data-original-title="Edit Data Barang Masuk"></i>
                                                             </a>
                                                             <a class="ml-3 mb-2" style="cursor: pointer"
-                                                                data-target="#deleteModal{{ $incoming->id }}"
-                                                                data-toggle="modal">
+                                                                data-target="#deleteModal"
+                                                                data-toggle="modal"
+                                                                data-item_name="{{ $incoming->item_name }}"
+                                                                data-item_id_enc="{{ encrypt($incoming->id) }}"
+                                                                data-item_stock="{{ $incoming->stock_added }}">
                                                                 <i class="fa fa-times mt-3 text-danger"
                                                                     data-toggle="tooltip"
                                                                     data-original-title="Hapus Data Barang Masuk"></i>
@@ -494,66 +513,6 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                {{-- FullSize Gambar --}}
-                                                <div class="modal fade" id="imageModalCenter{{ $incoming->id }}"
-                                                    tabindex="-1" role="dialog"
-                                                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered modal-lg"
-                                                        role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h3 class="modal-title" id="exampleModalLongTitle">
-                                                                    <strong>Barang Datang
-                                                                        "{{ $incoming->item_name }}"
-                                                                        pada
-                                                                        {{ date_format(date_create($incoming->arrive_date), 'd-m-Y') }}</strong>
-                                                                </h3>
-                                                                <button type="button" class="close"
-                                                                    data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <img class="rounded mx-auto d-block"
-                                                                    style="width: 750px; height: auto;"
-                                                                    src="{{ Storage::url($incoming->item_pictures) }}"
-                                                                    alt="no picture" loading="lazy">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {{-- delete incoming data MODALS --}}
-                                                <div class="modal fade" id="deleteModal{{ $incoming->id }}">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">
-                                                                    <strong>PENGHAPUSAN DATA BARANG MASUK</strong>
-                                                                </h5>
-                                                                <button type="button" class="close"
-                                                                    data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>Apakah anda yakin untuk menghapus data barang masuk
-                                                                    "{{ $incoming->item_name }}" ?</p>
-                                                                <p>Jika dihapus, stok yang dimiliki akan berkurang
-                                                                    sebanyak
-                                                                    <strong>{{ $incoming->stock_added }}
-                                                                        barang</strong>
-                                                                </p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    id="close-modal" data-dismiss="modal">Tidak</button>
-                                                                <a href="/deleteItemIncoming/{{ encrypt($incoming->id) }}"
-                                                                    class="btn btn-danger">YAKIN
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 {{-- UPDATE incoming data MODALS --}}
                                                 <div class="modal fade" id="editModalCenter{{ $incoming->id }}"
                                                     tabindex="-1" role="dialog"
@@ -642,7 +601,122 @@
                         </div>
                     </div>
                 </div>
+                {{-- FullSize Gambar --}}
+                <div class="modal fade" id="imageModalCenter"
+                    tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="padding: 0">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+                        style="min-width: auto; max-width: fit-content;">
+                        <div class="modal-content" style="min-width:auto">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLongTitle" style="font-weight: bold"></h3>
+                                <button type="button" class="close"
+                                    data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body modal-img">
+                                <img class="img-place rounded mx-auto d-block"
+                                    style="height: 500px;  width:auto"
+                                    src="#"
+                                    alt="no picture" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- delete incoming data MODALS
+                <div class="modal fade" id="deleteModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                    <strong>PENGHAPUSAN DATA BARANG MASUK</strong>
+                                </h5>
+                                <button type="button" class="close"
+                                    data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Apakah anda yakin untuk menghapus data barang masuk
+                                    "{{ $incoming->item_name }}" ?</p>
+                                <p>Jika dihapus, stok yang dimiliki akan berkurang
+                                    sebanyak
+                                    <strong>{{ $incoming->stock_added }}
+                                        barang</strong>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    id="close-modal" data-dismiss="modal">Tidak</button>
+                                <a href="/deleteItemIncoming/{{ encrypt($incoming->id) }}"
+                                    class="btn btn-danger">YAKIN
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+
+                {{-- Delete Modal --}}
+                <div class="modal fade" id="deleteModal">
+                    <div class="modal-dialog modal-dialog-centered" >
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLabel" style="font-weight: bold"></h3>
+                                <button type="button" class="close"
+                                    data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="modal-text"></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    id="close-modal"
+                                    data-dismiss="modal">Tidak</button>
+                                <a href="#"
+                                    class="deleteIncoming btn btn-danger">YAKIN
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        $('#deleteModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var item_name = button.data('item_name')
+            var item_id_enc = button.data('item_id_enc')
+            var item_stock = button.data('item_stock')
+            var modal = $(this)
+
+
+            modal.find('.modal-title').text('HAPUS BARANG')
+            modal.find('.modal-text').text('Apa anda yakin untuk menghapus data barang masuk "' + item_name + '" ?\n jika dihapus, stok yang dimiliki akan berkurang sebanyak ' + item_stock)
+            modal.find('.deleteIncoming').attr('href', '/deleteItemIncoming/' + item_id_enc)
+
+        })
+
+        $('#imageModalCenter').on('show.bs.modal', function(event) {
+            $(".modal-img").css("padding", '0px');
+            $(".modal-img").css("margin", '0px');
+            var button = $(event.relatedTarget)
+            var item_name = button.data('item_name')
+            var item_date = button.data('item_date')
+            var pic_url = button.data('pic_url')
+            var modal = $(this)
+
+
+            modal.find('.modal-title').text('GAMBAR "' + item_name + '" / ' + item_date)
+            modal.find('.img-place').attr('src', pic_url)
+        })
+    </script>
+
 @endsection
