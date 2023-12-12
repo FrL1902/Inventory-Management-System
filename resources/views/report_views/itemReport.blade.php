@@ -59,9 +59,9 @@
                                                         </div>
 
                                                         {{-- export by customer name --}}
-                                                        <div class="modal-body">
+                                                        <div class="modal-body" style="padding:0">
                                                             <div class="card-body">
-                                                                {{-- <div class="form-group"> --}}
+                                                                <div class="form-group">
                                                                 <label for="customerIdItemReport" class="mb-1"
                                                                     style="font-weight: bold">Customer</label>
                                                                 <select class="form-control" data-width="100%"
@@ -74,7 +74,7 @@
                                                                             {{ $data->customer_name }}</option>
                                                                     @endforeach
                                                                 </select>
-                                                                {{-- </div> --}}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -106,10 +106,10 @@
                                                     {{-- export by brand name --}}
                                                     <form method="post" action="/exportItemReportBrand">
                                                         @csrf
-                                                        <div class="modal-body">
+                                                        <div class="modal-body" style="padding:0">
                                                             <div class="card-body">
-                                                                {{-- <div class="form-group"> --}}
-                                                                <label for="brandIdItemReport" class="mb-1"
+                                                                <div class="form-group">
+                                                                <label for="brandIdItemReport"
                                                                     style="font-weight: bold">Brand</label>
                                                                 <select class="form-control" data-width="100%"
                                                                     id="brandIdItemReport" name="brandIdItemReport"
@@ -120,7 +120,7 @@
                                                                             {{ $data->brand_name }}</option>
                                                                     @endforeach
                                                                 </select>
-                                                                {{-- </div> --}}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -152,9 +152,9 @@
                                                     {{-- export by item name --}}
                                                     <form method="post" action="/exportItemReportItem">
                                                         @csrf
-                                                        <div class="modal-body">
+                                                        <div class="modal-body" style="padding:0">
                                                             <div class="card-body">
-                                                                {{-- <div class="form-group"> --}}
+                                                                <div class="form-group">
                                                                 <label for="itemIdItemReport" class="mb-1"
                                                                     style="font-weight: bold">Item</label>
                                                                 <select class="form-control" data-width="100%"
@@ -166,7 +166,7 @@
                                                                             {{ $data->item_name }}</option>
                                                                     @endforeach
                                                                 </select>
-                                                                {{-- </div> --}}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -191,7 +191,7 @@
                                                     <th>Stok</th>
                                                     <th>Tanggal</th>
                                                     <th>Tanggal Terakhir Diupdate</th>
-                                                    <th>Gambar Barang</th>
+                                                    <th style="width: 11%">Gambar</th>
                                                 </tr>
                                             </thead>
                                             <tfoot>
@@ -203,7 +203,7 @@
                                                     <th>Stok</th>
                                                     <th>Tanggal</th>
                                                     <th>Tanggal Terakhir Diupdate</th>
-                                                    <th>Gambar Barang</th>
+                                                    <th>Gambar</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
@@ -243,13 +243,13 @@
                         style="min-width: auto; max-width: fit-content;">
                         <div class="modal-content" style="min-width:auto">
                             <div class="modal-header">
-                                <h3 class="modal-title" id="exampleModalLongTitle"></h3>
+                                <h3 class="modal-title" id="exampleModalLongTitle" style="font-weight: bold"></h3>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body modal-img">
-                                <img class="img-place rounded mx-auto d-block" style="height: 422px;  width:auto"
+                                <img class="img-place rounded mx-auto d-block" style="height: 500px;  width:auto"
                                     src="#" alt="no picture" loading="lazy">
                             </div>
                         </div>
