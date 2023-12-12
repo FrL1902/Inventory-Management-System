@@ -71,9 +71,9 @@
                                                 </div>
                                                 <form method="post" action="/exportCustomerBrand">
                                                     @csrf
-                                                    <div class="modal-body">
+                                                    <div class="modal-body" style="padding:0">
                                                         <div class="card-body">
-                                                            {{-- <div class="form-group"> --}}
+                                                            <div class="form-group">
                                                             <label for="customerLabelExportBrand"
                                                                 style="font-weight: bold">Customer</label>
                                                             <select class="form-control" id="customerLabelExportBrand"
@@ -85,7 +85,7 @@
                                                                     </option>
                                                                 @endforeach
                                                             </select>
-                                                            {{-- </div> --}}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
