@@ -57,7 +57,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Export Sejarah Suatu Barang
+                                                            EXPORT SEJARAH BARANG
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -67,25 +67,12 @@
                                                 </div>
 
                                                 {{-- export by item name --}}
-                                                <div class="modal-body">
-                                                    <form method="post" action="/exportItemHistory">
-                                                        @csrf
-
+                                                <form method="post" action="/exportItemHistory">
+                                                    @csrf
+                                                    <div class="modal-body" style="padding:0">
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                {{-- <label for="customerLabelExport">Item Name</label>
-                                                                <select class="form-control" id="customerLabelExport"
-                                                                    name="itemHistoryExport">
-                                                                    @foreach ($history as $data)
-                                                                        <option value="{{ $data->item_name }}">
-                                                                            {{ $data->item_name }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select> --}}
-
-                                                                {{-- <label for="largeInput">Item Name (case sensitive)</label>
-                                                                <input type="text" class="form-control form-control"
-                                                                    placeholder="item name" name="itemHistoryExport"> --}}
+                                                                <label for="itemHistoryExport" style="font-weight: bold">Barang</label>
                                                                 <select class="form-control" data-width="100%"
                                                                     id="itemHistoryExport" name="itemHistoryExport"
                                                                     required>
@@ -97,16 +84,13 @@
                                                                 </select>
 
                                                             </div>
-
-                                                            <div class="form-group">
-                                                                <div class="card mt-5 ">
-                                                                    <button id="" class="btn btn-primary">Export
-                                                                        Data</button>
-                                                                </div>
-                                                            </div>
                                                         </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary mr-2">Export
+                                                            Data</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -119,7 +103,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Export Semua Berdasarkan Tanggal
+                                                            EXPORT SEMUA BERDASARKAN TANGGAL
                                                         </strong>
                                                     </h3>
                                                     <button type="button" class="close" data-dismiss="modal"
@@ -127,24 +111,24 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <form method="post" action="/exportHistoryByDate">
-                                                        @csrf
+                                                <form method="post" action="/exportHistoryByDate">
+                                                    @csrf
+                                                    <div class="modal-body" style="padding:0">
 
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="startRange">Dari Tanggal</label>
-                                                                <input type="date" class="form-control" id="startRange"
-                                                                    required name="startRange">
+                                                                <label for="startRange" style="font-weight: bold">Dari Tanggal</label>
+                                                                <input type="date" class="form-control form-control-sm" style="border-color: #aaaaaa"
+                                                                    id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">Hingga Tanggal</label>
-                                                                <input type="date" class="form-control" id="endRange"
+                                                                <label for="endRange" style="font-weight: bold">Hingga Tanggal</label>
+                                                                <input type="date" class="form-control form-control-sm" id="endRange" style="border-color: #aaaaaa"
                                                                     required name="endRange">
                                                             </div>
 
-                                                            <div class="form-group">
+                                                            {{-- <div class="form-group">
                                                                 <div class="card mt-5 ">
                                                                     <button id="" class="btn btn-primary">Export
                                                                         Data</button>
@@ -153,10 +137,14 @@
                                                                     <h5 style="text-align: center;">
                                                                         Export Berdasarkan Tanggal</h5>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary mr-2">Export
+                                                            Data</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -169,7 +157,7 @@
                                                 <div class="modal-header">
                                                     <h3 class="modal-title" id="exampleModalLongTitle">
                                                         <strong>
-                                                            Filter Berdasarkan Tanggal
+                                                            FILTER SEJARAH BERDASARKAN TANGGAL
                                                         </strong>
                                                     </h3>
 
@@ -178,24 +166,23 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <form method="post" action="/filterHistoryDate">
-                                                        @csrf
-
+                                                <form method="post" action="/filterHistoryDate">
+                                                    @csrf
+                                                    <div class="modal-body" style="padding:0">
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label for="startRange">Dari Tanggal</label>
-                                                                <input type="date" class="form-control"
+                                                                <label for="startRange" style="font-weight: bold">Dari Tanggal</label>
+                                                                <input type="date" class="form-control form-control-sm"  style="border-color: #aaaaaa"
                                                                     id="startRange" required name="startRange">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="endRange">Hingga Tanggal</label>
-                                                                <input type="date" class="form-control" id="endRange"
+                                                                <label for="endRange" style="font-weight: bold">Hingga Tanggal</label>
+                                                                <input type="date" class="form-control form-control-sm" id="endRange"  style="border-color: #aaaaaa"
                                                                     required name="endRange">
                                                             </div>
 
-                                                            <div class="form-group">
+                                                            {{-- <div class="form-group">
                                                                 <div class="card mt-5 ">
                                                                     <button id=""
                                                                         class="btn btn-primary">Filter</button>
@@ -204,10 +191,13 @@
                                                                     <h5 style="text-align: center;">
                                                                         Filter Berdasarkan Tanggal</h5>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary mr-2">Filter</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
