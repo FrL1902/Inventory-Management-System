@@ -360,7 +360,14 @@ class UserController extends Controller
         // dd(1);
         // $tes = UserPermission::where('name', $request->name)->where('page', $request->page)->first();
         // dd($tes);
-        UserPermission::where('name', $request->name)->where('page', $request->page)->update([
+        try {
+            $decrypted = decrypt($request->name);
+        } catch (DecryptException $e) {
+            abort(403);
+        }
+
+        // dd($decrypted);
+        UserPermission::where('name', $decrypted)->where('page', $request->page)->update([
             'status' => 1
         ]);
 
@@ -369,9 +376,14 @@ class UserController extends Controller
 
     public function permission_false(Request $request)
     {
+        try {
+            $decrypted = decrypt($request->name);
+        } catch (DecryptException $e) {
+            abort(403);
+        }
         // dd(2);
         // dd(UserPermission::where('name', $request->name)->where('page', $request->page)->first());
-        UserPermission::where('name', $request->name)->where('page', $request->page)->update([
+        UserPermission::where('name', $decrypted)->where('page', $request->page)->update([
             'status' => 0
         ]);
         return redirect()->back();

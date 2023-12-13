@@ -51,7 +51,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="tambah_customer_baru"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -62,7 +62,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="tambah_customer_baru"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
@@ -79,7 +79,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="data_customer"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -90,7 +90,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="data_customer"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
@@ -116,7 +116,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="tambah_brand_baru"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -127,7 +127,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="tambah_brand_baru"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
@@ -144,7 +144,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="data_brand"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -155,7 +155,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="data_brand"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
@@ -181,7 +181,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="laporan_stok_by_pcs"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -192,7 +192,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="laporan_stok_by_pcs"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
@@ -209,7 +209,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="tambah_barang_baru"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -220,7 +220,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="tambah_barang_baru"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
@@ -237,7 +237,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="data_barang"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -248,7 +248,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="data_barang"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
@@ -265,7 +265,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="barang_datang"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -276,7 +276,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="barang_datang"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
@@ -293,7 +293,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="barang_keluar"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -304,7 +304,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="barang_keluar"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
@@ -321,7 +321,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="history_stok_by_pcs"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -332,7 +332,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="history_stok_by_pcs"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
@@ -358,7 +358,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="laporan_stok_by_palet"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -369,7 +369,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="laporan_stok_by_palet"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
@@ -386,7 +386,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="palet_masuk"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -397,7 +397,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="palet_masuk"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
@@ -414,7 +414,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="palet_keluar"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -425,7 +425,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="palet_keluar"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
@@ -442,7 +442,7 @@
                                                                 style="cursor: pointer; width: 100px">Active</button>
 
                                                             <input type="hidden" name="page" value="history_stok_by_palet"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @else
@@ -453,7 +453,7 @@
                                                                 style="cursor: pointer; width: 100px">Inactive</button>
 
                                                             <input type="hidden" name="page" value="history_stok_by_palet"> {{-- change ini --}}
-                                                            <input type="hidden" name="name" value={{ $user->name }}>
+                                                            <input type="hidden" name="name" value={{ encrypt($user->name) }}>
                                                         </form>
                                                     </td>
                                                 @endif
