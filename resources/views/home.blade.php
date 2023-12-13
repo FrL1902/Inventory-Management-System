@@ -6,61 +6,71 @@
 
 <div class="main-panel">
     <div class="content">
-        {{-- ini home page
-        <h3>ini home page tp css</h3> --}}
-
-        {{-- / nothin's here yet for now
-        test home
-        second commit
-
-        DIBAWAH INI MODALNYA BISA, JADI KYK SWEETALERT POP UPS GITU
-
-        <div class="alert alert-success alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>SUCCESS MFSSS</strong>
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Home</h4>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-secondary bubble-shadow-small">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ml-3 ml-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Customer</p>
+                                        <h4 class="card-title">{{$customer}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-warning bubble-shadow-small">
+                                        <i class="fa fa-th-large"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ml-3 ml-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Brand</p>
+                                        <h4 class="card-title">{{$brand}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-success bubble-shadow-small">
+                                        <i class="fa fa-truck"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ml-3 ml-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Barang</p>
+                                        <h4 class="card-title">{{$item}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="alert alert-success" role="alert">
-            This is a success alert—check it out!
-        </div> --}}
     </div>
-
-    {{--
-            <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-      Launch demo modal
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div> --}}
-
-    @if ($message = Session::get('sukses'))
-        <div class="alert alert-success alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ $message }}</strong>
-        </div>
-    @endif
-
-
-
 </div>
 
 
