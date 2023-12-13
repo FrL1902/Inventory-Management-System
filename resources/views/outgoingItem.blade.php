@@ -260,7 +260,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button class="btn btn-primary mr-2">Export
+                                                        <button class="btn btn-primary">Export
                                                             Data</button>
                                                     </div>
                                                 </form>
@@ -390,7 +390,7 @@
                                                                     id="itemImage" name="outgoingItemImage">
                                                             </div>
 
-                                                            <div class="form-group; padding-top:0; padding-bottom:0" id="submitOutgoingButtonAdd">
+                                                            <div class="form-group" style="padding-top:0; padding-bottom:0" id="submitOutgoingButtonAdd">
                                                                 <div class="card mt-5 ">
                                                                     <button class="btn btn-primary"
                                                                         onclick="document.getElementById('itemAdd').style.display='inline-block';
