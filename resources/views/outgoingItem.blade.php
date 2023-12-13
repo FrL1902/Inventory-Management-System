@@ -1,6 +1,6 @@
 @extends('layout.layout')
 
-@section('manageitembutton', 'active')
+@section('manageitembutton', 'active submenu')
 @section('newoutgoing', 'active')
 {{-- ganti yang atas ini aja --}}
 @section('showmanageitem', 'show')
@@ -10,6 +10,26 @@
         <div class="content">
             {{-- tes template, outgoing --}}
             <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">Barang Keluar</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <i class="flaticon-home"></i>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Kelola Barang</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Barang Keluar</a>
+                        </li>
+                    </ul>
+                </div>
 
                 {{-- error goes here --}}
                 @if (session('suksesDeleteOutgoing'))
@@ -56,7 +76,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title"><strong>Barang Keluar</strong></h4>
+                                    <h4 class="card-title">Barang Keluar</h4>
 
                                     <button type="button" class="btn btn-primary ml-3 mr-3" data-target="#outModalCenter"
                                         data-toggle="modal"><strong>ADD</strong></button>

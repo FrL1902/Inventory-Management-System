@@ -1,6 +1,6 @@
 @extends('layout.layout')
 
-@section('manageitembutton', 'active')
+@section('manageitembutton', 'active submenu')
 @section('manageitem', 'active')
 @section('showmanageitem', 'show')
 
@@ -9,7 +9,26 @@
         <div class="content">
             {{-- ini page buat manage item --}}
             <div class="page-inner">
-
+                <div class="page-header">
+                    <h4 class="page-title">Data Barang</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <i class="flaticon-home"></i>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Kelola Barang</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Data Barang</a>
+                        </li>
+                    </ul>
+                </div>
                 @if (session('sukses_delete_item'))
                     <div class="alert alert-warning alert-block" id="alertDelete">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -42,7 +61,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title"><strong>Mengelola Barang</strong></h4>
+                                    <h4 class="card-title">Mengelola Barang</h4>
                                     {{-- <h4 class="card-title">Manage Existing Items and its Stocks</h4> --}}
 
                                     <div class="ml-3 mr-2">

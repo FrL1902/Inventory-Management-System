@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 
-@section('managepalletbutton', 'active') {{-- ini bagian folder nya --}}
+@section('managepalletbutton', 'active submenu') {{-- ini bagian folder nya --}}
 @section('showmanagepallet', 'show') {{-- ini bagian folder nya yang buka tutup --}}
 @section('managepallethistory', 'active') {{-- ini bagian button side panel yang di highlight nya --}}
 
@@ -10,16 +10,34 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">History Stok by palet</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <i class="flaticon-home"></i>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Kelola Palet</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>History Stok by palet</a>
+                        </li>
+                    </ul>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
-
                                     <div class="d-flex flex-row">
                                         <h4 class="card-title mt-1 mr-3">
-                                            <span class="align-middle">
-                                                <strong>Sejarah Palet</strong>
+                                            <span class="align-middle">Sejarah Palet
                                             </span>
                                         </h4>
                                         <div class="ml-3 mr-2 mt-2">

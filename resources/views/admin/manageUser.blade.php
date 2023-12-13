@@ -2,7 +2,7 @@
 
 @section('content')
 
-@section('manageuserbutton', 'active')
+@section('manageuserbutton', 'active submenu')
 @section('showmanageuser', 'show')
 @section('manageuser', 'active')
 

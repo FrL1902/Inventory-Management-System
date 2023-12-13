@@ -1,6 +1,6 @@
 @extends('layout.layout')
 
-@section('manageitembutton', 'active')
+@section('manageitembutton', 'active submenu')
 @section('newincoming', 'active')
 {{-- ganti yang atas ini aja --}}
 @section('showmanageitem', 'show')
@@ -10,7 +10,26 @@
         <div class="content">
             {{-- tes template, incoming --}}
             <div class="page-inner">
-
+                <div class="page-header">
+                    <h4 class="page-title">Barang Datang</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <i class="flaticon-home"></i>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Kelola Barang</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Barang Datang</a>
+                        </li>
+                    </ul>
+                </div>
                 {{-- error goes here --}}
                 @if (session('intOverflow'))
                     <div class="alert alert-danger alert-block" id="alertFailed">
@@ -54,7 +73,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title"><strong>Barang Datang</strong></h4>
+                                    <h4 class="card-title">Barang Datang</h4>
 
                                     <button type="button" class="btn btn-primary ml-3 mr-3" data-target="#addModalCenter"
                                         data-toggle="modal"><strong>ADD</strong></button>

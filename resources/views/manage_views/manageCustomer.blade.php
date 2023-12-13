@@ -2,7 +2,7 @@
 
 @section('content')
 
-@section('managecustomerbutton', 'active')
+@section('managecustomerbutton', 'active submenu')
 @section('managecustomer', 'active')
 @section('showmanagecustomer', 'show')
 
@@ -14,6 +14,26 @@
             @endforeach
         @endif --}}
         <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Data Customer</h4>
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <i class="flaticon-home"></i>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="separator">
+                        <a>Kelola Customer</a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="separator">
+                        <a>Data Customer</a>
+                    </li>
+                </ul>
+            </div>
             @if (session('sukses_delete_customer'))
                 <div class="alert alert-warning alert-block" id="alertDelete">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -50,7 +70,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title"><strong>Mengelola Customer</strong></h4>
+                                <h4 class="card-title">Mengelola Customer</h4>
                                 <a href="/exportCustomerExcel" class="btn btn-secondary ml-3"><strong>EXPORT KE
                                         EXCEL</strong></a>
                             </div>

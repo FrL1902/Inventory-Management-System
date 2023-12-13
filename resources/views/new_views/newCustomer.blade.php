@@ -2,7 +2,7 @@
 
 @section('content')
 
-@section('managecustomerbutton', 'active')
+@section('managecustomerbutton', 'active submenu')
 @section('newcustomer', 'active')
 @section('showmanagecustomer', 'show')
 
@@ -11,7 +11,26 @@
         {{-- ini page buat add new customer --}}
 
         <div class="page-inner">
-
+            <div class="page-header">
+                <h4 class="page-title">Tambah Customer Baru</h4>
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <i class="flaticon-home"></i>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="separator">
+                        <a>Kelola Customer</a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="separator">
+                        <a>Tambah Customer Baru</a>
+                    </li>
+                </ul>
+            </div>
             @if (session('sukses_addNewCustomer'))
                 <div class="alert alert-success alert-block" id="alertSuccess">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -43,7 +62,7 @@
                         <form method="post" action="/makeCustomer">
                             @csrf
                             <div class="card-header">
-                                <div class="card-title"><strong>Masukkan Customer Baru</strong><a class="ml-3 mb-2"
+                                <div class="card-title">Tambah Data Customer Baru<a class="ml-3 mb-2"
                                         style="cursor: pointer">
                                         <i class="fa fa-question-circle text-primary" data-toggle="tooltip"
                                             data-original-title="Jika suatu informasi belum diketahui, tidak perlu diisi (kecuali diharuskan di form). Jika memang tidak ada atau tidak punya informasinya (misal customer tidak punya website), isi dengan strip (-)"></i>
@@ -114,7 +133,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="card mt-4">
-                                        <button class="btn btn-success"><strong>Tambahkan Customer
+                                        <button class="btn btn-success"><strong>Tambah Customer
                                                 Baru</strong></button>
                                     </div>
                                 </div>

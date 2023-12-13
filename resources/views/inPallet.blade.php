@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 
-@section('managepalletbutton', 'active') {{-- ini bagian folder nya --}}
+@section('managepalletbutton', 'active submenu') {{-- ini bagian folder nya --}}
 @section('showmanagepallet', 'show') {{-- ini bagian folder nya yang buka tutup --}}
 @section('inpallet', 'active') {{-- ini bagian button side panel yang di highlight nya --}}
 
@@ -10,6 +10,26 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">Palet Masuk</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <i class="flaticon-home"></i>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Kelola Palet</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Palet Masuk</a>
+                        </li>
+                    </ul>
+                </div>
                 @if (session('gagalMasukPaletVALUE'))
                     <div class="alert alert-danger alert-block" id="alertFailed">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -48,7 +68,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title"><strong>Palet Masuk</strong></h4>
+                                    <h4 class="card-title">Palet Masuk</h4>
                                     <button type="button" class="btn btn-primary ml-3 mr-3" data-target="#addInPalletModal"
                                         data-toggle="modal"><strong>ADD</strong></button>
 

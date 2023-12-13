@@ -1,6 +1,6 @@
 @extends('layout.layout')
 
-@section('managebrandbutton', 'active')
+@section('managebrandbutton', 'active submenu')
 @section('showmanagebrand', 'show')
 @section('newbrand', 'active')
 
@@ -9,7 +9,26 @@
         <div class="content">
             {{-- ini page buat add new brands --}}
             <div class="page-inner">
-
+                <div class="page-header">
+                    <h4 class="page-title">Tambah Brand Baru</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <i class="flaticon-home"></i>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Kelola Brand</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Tambah Brand Baru</a>
+                        </li>
+                    </ul>
+                </div>
                 @if (session('sukses_addNewBrand'))
                     <div class="alert alert-success alert-block" id="alertSuccess">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -28,7 +47,7 @@
                             <form action="/makeBrand" method="post">
                                 @csrf
                                 <div class="card-header">
-                                    <div class="card-title"><strong>Masukkan Brand Baru</strong></div>
+                                    <div class="card-title">Tambah Data Brand Baru</div>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
@@ -58,7 +77,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="card mt-4">
-                                            <button class="btn btn-success"><strong>Buat Brand Baru</strong></button>
+                                            <button class="btn btn-success"><strong>Tambah Brand Baru</strong></button>
                                         </div>
                                     </div>
                                 </div>

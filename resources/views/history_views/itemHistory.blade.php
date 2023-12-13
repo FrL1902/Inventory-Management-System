@@ -1,6 +1,6 @@
 @extends('layout.layout')
 
-@section('manageitembutton', 'active')
+@section('manageitembutton', 'active submenu')
 @section('managehistory', 'active')
 @section('showmanageitem', 'show')
 
@@ -9,6 +9,26 @@
         <div class="content">
             {{-- ini page buat liat history keluar masuk stock tiap produk / item --}}
             <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">History Stok by pcs</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <i class="flaticon-home"></i>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Kelola Barang</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>History Stok by pcs</a>
+                        </li>
+                    </ul>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
@@ -19,8 +39,7 @@
 
                                         </span>
                                         <h4 class="card-title mt-1 mr-3">
-                                            <span class="align-middle">
-                                                <strong>Sejarah Barang</strong>
+                                            <span class="align-middle">Sejarah Barang
                                             </span>
                                         </h4>
                                         <div class="ml-3 mr-2 mt-2">

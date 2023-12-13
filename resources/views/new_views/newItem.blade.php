@@ -2,13 +2,33 @@
 
 @section('content')
 
-@section('manageitembutton', 'active')
+@section('manageitembutton', 'active submenu')
 @section('newitem', 'active')
 @section('showmanageitem', 'show')
 
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Tambah Barang Baru</h4>
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <i class="flaticon-home"></i>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="separator">
+                        <a>Kelola Barang</a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="separator">
+                        <a>Tambah Barang Baru</a>
+                    </li>
+                </ul>
+            </div>
             @if (session('sukses_addNewItem'))
                 <div class="alert alert-success alert-block" id="alertSuccess">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -37,7 +57,7 @@
                         <form enctype="multipart/form-data" method="post" action="/makeItem">
                             @csrf
                             <div class="card-header">
-                                <div class="card-title"><Strong>Masukkan Barang Baru</Strong></div>
+                                <div class="card-title">Tambah Data Barang Baru</div>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
@@ -85,7 +105,7 @@
                                         <button class="btn btn-success"
                                             onclick="document.getElementById('itemAdd').style.display='inline-block'; document.getElementById('overlayPage').style.display='block';">
                                             {{-- <button id="buttonItem" class="btn btn-success"> --}}
-                                            <strong>Masukkan Barang Baru</strong>
+                                            <strong>Tambah Barang Baru</strong>
                                             <i id="itemAdd" style="display:none"
                                                 class="loading-icon fa fa-spinner fa-spin" aria-hidden="true"></i>
                                         </button>

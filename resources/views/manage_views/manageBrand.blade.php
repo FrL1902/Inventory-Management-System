@@ -1,6 +1,6 @@
 @extends('layout.layout')
 
-@section('managebrandbutton', 'active')
+@section('managebrandbutton', 'active submenu')
 @section('managebrand', 'active')
 @section('showmanagebrand', 'show')
 
@@ -8,7 +8,26 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-
+                <div class="page-header">
+                    <h4 class="page-title">Data Brand</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <i class="flaticon-home"></i>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Kelola Brand</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Data Brand</a>
+                        </li>
+                    </ul>
+                </div>
                 @if (session('sukses_delete_brand'))
                     <div class="alert alert-warning alert-block" id="alertDelete">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -42,7 +61,7 @@
 
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title"><strong>Mengelola Brand</strong></h4>
+                                    <h4 class="card-title">Mengelola Brand</h4>
 
                                     <div class="ml-3 mr-2">
                                         Export ke Excel berdasarkan

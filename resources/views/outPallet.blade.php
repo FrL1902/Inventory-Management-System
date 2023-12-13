@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 
-@section('managepalletbutton', 'active') {{-- ini bagian folder nya --}}
+@section('managepalletbutton', 'active submenu') {{-- ini bagian folder nya --}}
 @section('showmanagepallet', 'show') {{-- ini bagian folder nya yang buka tutup --}}
 @section('outpallet', 'active') {{-- ini bagian button side panel yang di highlight nya --}}
 
@@ -10,6 +10,26 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">Palet Keluar</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <i class="flaticon-home"></i>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Kelola Palet</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="separator">
+                            <a>Palet Keluar</a>
+                        </li>
+                    </ul>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">

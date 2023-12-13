@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 
-@section('managepalletbutton', 'active') {{-- ini bagian folder nya --}}
+@section('managepalletbutton', 'active submenu') {{-- ini bagian folder nya --}}
 @section('showmanagepallet', 'show') {{-- ini bagian folder nya yang buka tutup --}}
 @section('managepallet', 'active') {{-- ini bagian button side panel yang di highlight nya --}}
 
