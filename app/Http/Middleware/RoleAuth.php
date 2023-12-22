@@ -21,7 +21,8 @@ class RoleAuth
     {
         // Cek apakah user telah/masih login atau tidak (session habis atau tidak). Jika auth gagal, akan dibalikkan ke login page
         if (!Auth::check()) {
-            return redirect('/');
+            // return redirect('/');
+            return redirect('/loginPage');
         }
 
         // ini untuk page yang ga butuh special permission, tapi cuma harus login doang

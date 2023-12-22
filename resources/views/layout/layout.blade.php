@@ -241,7 +241,7 @@
                     </div>
                     <ul class="nav">
                         <li class="nav-item @yield('home')">
-                            <a href="/home">
+                            <a href="/">
                                 <i class="fas fa-home"></i>
                                 <p>Home</p>
                                 {{-- <span class="badge badge-count">5</span> --}}

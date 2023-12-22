@@ -31,13 +31,14 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             // return 'sukses';
             // return redirect(route('/home'));
-            return redirect('home');
+            return redirect('/');
         } else {
             // return 'Gagal. Informasi yang dimasukkan salah';
             // return redirect()->back()->withErrors('Gagal. informasi yang dimasukkan salah');
             // $failmsg = "informasi yang dimasukkan salah";
             $request->session()->flash('status', 'informasi yang dimasukkan salah');
-            return redirect('/');
+            // return redirect('/loginPage');
+            return redirect()->back();
         }
     }
 

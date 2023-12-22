@@ -28,13 +28,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 // LOGIN PAGE, DEFAULT ROUTE '/'
-Route::get('/', function () {
+// Route::get('/', function () {
+//     return view('login');
+// });
+
+Route::get('/loginPage', function () {
     return view('login');
 });
+
+
+Route::get('/', function () {
+    return view('home');
+})->middleware('role:auth');
+
+
 // buat login bisa semuanya
+Route::get('/', [HomeController::class, 'index'])->middleware('role:auth');
 Route::post('/login', [AuthController::class, 'cek_login']);
 
-Route::get('/home', [HomeController::class, 'index'])->middleware('role:auth');
+// Route::get('/home', [HomeController::class, 'index'])->middleware('role:auth');
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('role:auth');
 
 // User Credentials
