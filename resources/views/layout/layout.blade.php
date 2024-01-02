@@ -669,7 +669,7 @@
             document.getElementById('time').innerHTML = utc.toLocaleTimeString();
         }
 
-        setInterval(showTime, 1000);
+        setInterval(showTime, 10);
 
         // https://stackoverflow.com/questions/45944210/laravel-carbon-reloading-current-time
     </script>
