@@ -67,7 +67,7 @@ class BrandController extends Controller
             'brandid' => 'required|unique:App\Models\Brand,brand_id|min:3|max:20|alpha_dash',
             'brandname' => 'required|min:2|max:50|regex:/^[\pL\s\-\0-9]+$/u', //regex lama tanpa angka /^[\pL\s\-]+$/u
         ], [
-            'customeridforbrand' => 'required',
+            'customeridforbrand' => 'customer ID harus diisi', #ini kok kebalik
             'brandid.required' => 'Kolom "ID Brand" Harus Diisi',
             'brandid.unique' => '"ID Brand" yang diisi sudah terambil, masukkan ID yang lain',
             'brandid.min' => '"ID Brand" minimal 3 karakter',
@@ -122,7 +122,7 @@ class BrandController extends Controller
             'brandnameformupdate' => 'required|min:2|max:50|regex:/^[\pL\s\-\0-9]+$/u',
         ], [
             'brandnameformupdate.required' => 'Kolom "Nama Brand" Harus Diisi',
-            'brandnameformupdate.min' => '"Nama Brand" minimal 3 karakter',
+            'brandnameformupdate.min' => '"Nama Brand" minimal 2 karakter',
             'brandnameformupdate.max' => '"Nama Brand" maksimal 50 karakter',
             'brandnameformupdate.regex' => '"Nama Brand" hanya membolehkan huruf, angka, spasi, dan tanda penghubung(-)',
         ]);
