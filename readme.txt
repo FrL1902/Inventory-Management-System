@@ -35,10 +35,3 @@ sebenernya diatas(commant 4-8) bisa dimasukin ke batch file, tinggal masukin com
 command 4-7 hanya harus dijalankan sekali.
 command 8 itu untuk menjalankan aplikasi
 
-buat ngakses server intan, pake aplikasi tableplus, contoh:
-    DB_CONNECTION=pgsql////
-    DB_HOST=192.168.9.226////
-    DB_PORT=5432////x
-    DB_DATABASE=list_wms////
-    DB_USERNAME=postgres////
-    DB_PASSWORD=intan1122////
