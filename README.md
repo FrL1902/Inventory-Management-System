@@ -1,10 +1,8 @@
 ## About This [Laravel 8](https://laravel.com/docs/8.x/releases) Project
 
-This Web Application is built on top of already made [Inventory Management System](https://github.com/FrL1902/Inventory-Management-System) from this repository
+This is a Web Based Inventory Management System that I built for a logistic company as a project when I was an intern. 
 
-This is a Web Based IT Management System that I built for a logistic company as a project when I was an intern. 
-
-The purpose of this Web Application is to keep track of ALL IT assets in the company. This Web application is only meant to be used by the IT department of the company
+The purpose of this Web Application is to keep track of every single item that goes in and out of the company inventory, make reports out of those items, and for this application to be used by the users and be managed by the admins in the company.
 
 The project is built in the newest version of Laravel 8 and uses these external packages:
 - [Image Intervention v3](https://image.intervention.io/v3)
