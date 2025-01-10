@@ -1,6 +1,6 @@
 ## About This [Laravel 8](https://laravel.com/docs/8.x/releases) Project
 
-This Web Application is built on top of already made [Inventory Management System](https://github.com/FrL1902/IT-Management-System) from this repository
+This Web Application is built on top of already made [Inventory Management System](https://github.com/FrL1902/Inventory-Management-System) from this repository
 
 This is a Web Based IT Management System that I built for a logistic company as a project when I was an intern. 
 
